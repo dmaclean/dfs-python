@@ -75,12 +75,22 @@ class Processor:
 					
 					# Parse HTML
 					self.playerMainParser.feed(data)
+					
+					# Iterate over the totals stats for each season and write to database
 					player.season_totals = self.playerMainParser.totals_stats
 					for k in self.playerMainParser.totals_stats:
 						output.write(str(self.playerMainParser.totals_stats[k]))
 						output.write("\n")
 						if not player.seasonTotalsExist(cnx, player.code, k):
 							player.writeSeasonTotalsToDatabase(cnx, player.code, k)
+					
+					# Iterate over the advanced stats for each season and write to database
+					player.season_advanced = self.playerMainParser.advanced_stats
+					for k in self.playerMainParser.advanced_stats:
+						output.write(str(k) + " - " + str(self.playerMainParser.advanced_stats[k]))
+						output.write("\n")
+						if not player.seasonAdvancedExist(cnx, player.code, k):
+							player.writeSeasonAdvancedStatsToDatabase(cnx, player.code, k)
 						
 				
 				time.sleep( 10 + (10*random.random()) )
@@ -217,19 +227,18 @@ class Player:
 	
 	def seasonAdvancedExist(self, conn, playerId, season):
 		cursor = conn.cursor()
-		query = ("select id from seasons_advanced where player_id = %(id)s and season = %(season)d")
-		data = { 'id': playerId, 'season': season }
-		cursor.execute(query, data)
+		query = ("select id from season_advanced where player_id = '%s' and season = %d") % (playerId, season)
+		cursor.execute(query)
 		
 		for (id) in cursor:
 			return True
 		
 		return False
 	
-	def writeSeasonAdvancedStatsToDatabase(self, conn, playerId, season, seasonAdvanced):
+	def writeSeasonAdvancedStatsToDatabase(self, conn, playerId, season):
 		cursor = conn.cursor()
 		query = """
-				insert into season_totals (
+				insert into season_advanced (
 					player_id,
 					season,
 					age,
@@ -237,65 +246,60 @@ class Player:
 					league,
 					position,
 					games,
-					games_started,
 					minutes_played,
-					field_goals,
-					field_goal_attempts,
-					field_goal_pct,
-					three_point_field_goals,
-					three_point_field_goal_attempts,
-					three_point_field_goal_pct,
-					two_point_field_goals,
-					two_point_field_goal_attempts,
-					two_point_field_goal_pct,
-					free_throws,
-					free_throw_attempts,
-					free_throw_pct,
-					offensive_rebounds,
-					defensive_rebounds,
-					total_rebounds,
-					assists,
-					steals,
-					blocks,
-					turnovers,
-					personal_fouls,
-					points
+					player_efficiency_rating,
+					true_shooting_pct,
+					effective_field_goal_pct,
+					free_throw_attempt_rate,
+					three_point_field_goal_attempt_rate,
+					offensive_rebound_pct,
+					defensive_rebound_pct,
+					total_rebound_pct,
+					assist_pct,
+					steal_pct,
+					block_pct,
+					turnover_pct,
+					usage_pct,
+					offensive_rating,
+					defensive_rating,
+					offensive_win_shares,
+					defensive_win_shares,
+					win_shares,
+					win_shares_per_48_minutes
 				) 
 				values (
-					%s,%d,%d,%s,%s,%s,%d,%d,%d,%d,
-					%f,%d,%d,%f,%d,%d,%f,%d,%d,
-					%f,%d,%d,%d,%d,%d,%d,%d,%d,%d
+					'%s',%d,%d,'%s','%s','%s',%d,%d,%f,%f,
+					%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%d,
+					%f,%f,%f,%f,%f
 				)
 		""" % (
 		playerId,
 		season,
-		seasonAdvanced[season]["age"],
-		seasonAdvanced[season]["team"],
-		seasonAdvanced[season]["league"],
-		seasonAdvanced[season]["position"],
-		seasonAdvanced[season]["games"],
-		seasonAdvanced[season]["minutes_played"],
-		seasonAdvanced[season]["player_efficiency_rating"],
-		seasonAdvanced[season]["true_shooting_pct"],
-		seasonAdvanced[season]["effective_field_goal_pct"],
-		seasonAdvanced[season]["free_throw_attempt_rate"],
-		seasonAdvanced[season]["three_point_field_goal_attempt_rate"],
-		seasonAdvanced[season]["offensive_rebound_pct"],
-		seasonAdvanced[season]["defensive_rebound_pct"],
-		seasonAdvanced[season]["total_rebound_pct"],
-		seasonAdvanced[season]["assist_pct"],
-		seasonAdvanced[season]["steal_pct"],
-		seasonAdvanced[season]["block_pct"],
-		seasonAdvanced[season]["turnover_pct"],
-		seasonAdvanced[season]["usage_pct"],
-		seasonAdvanced[season]["offensive_rating"],
-		seasonAdvanced[season]["defensive_rating"],
-		seasonAdvanced[season]["offensive_win_shares"],
-		seasonAdvanced[season]["defensive_win_shares"],
-		seasonAdvanced[season]["blocks"],
-		seasonAdvanced[season]["turnovers"],
-		seasonAdvanced[season]["personal_fouls"],
-		seasonAdvanced[season]["points"],
+		self.season_advanced[season]["age"],
+		self.season_advanced[season]["team"],
+		self.season_advanced[season]["league"],
+		self.season_advanced[season]["position"],
+		self.season_advanced[season]["games"],
+		self.season_advanced[season]["minutes_played"],
+		self.season_advanced[season]["player_efficiency_rating"],
+		self.season_advanced[season]["true_shooting_pct"],
+		self.season_advanced[season]["effective_field_goal_pct"],
+		self.season_advanced[season]["free_throw_attempt_rate"],
+		self.season_advanced[season]["three_point_field_goal_attempt_rate"],
+		self.season_advanced[season]["offensive_rebound_pct"],
+		self.season_advanced[season]["defensive_rebound_pct"],
+		self.season_advanced[season]["total_rebound_pct"],
+		self.season_advanced[season]["assist_pct"],
+		self.season_advanced[season]["steal_pct"],
+		self.season_advanced[season]["block_pct"],
+		self.season_advanced[season]["turnover_pct"],
+		self.season_advanced[season]["usage_pct"],
+		self.season_advanced[season]["offensive_rating"],
+		self.season_advanced[season]["defensive_rating"],
+		self.season_advanced[season]["offensive_win_shares"],
+		self.season_advanced[season]["defensive_win_shares"],
+		self.season_advanced[season]["win_shares"],
+		self.season_advanced[season]["win_shares_per_48_minutes"]
 		)
 		
 		cursor.execute(query)
@@ -505,6 +509,11 @@ class BasketballReferencePlayerMainParser(HTMLParser):
 		if tag == "tr" and self.table_type == "totals":
 			#print self.totals_stats[self.currentSeason]
 			pass
+		elif tag == "tr" and self.table_type == "advanced":
+			#print self.advanced_stats[self.currentSeason]
+			pass
+		elif tag == "table":
+			self.table_type = ""
 	
 	def handle_data(self, data):
 		if data.strip() == "":
@@ -611,7 +620,15 @@ class BasketballReferencePlayerMainParser(HTMLParser):
 			# Season column
 			if self.current == "a" and self.tdCount == 1:
 				self.currentSeason = int(data.split("-")[0])
-				self.advanced_stats[self.currentSeason] = {}
+				self.advanced_stats[self.currentSeason] = {
+					"position": "",
+					"true_shooting_pct": 0.0,
+					"effective_field_goal_pct": 0.0,
+					"free_throw_attempt_rate": 0.0,
+					"three_point_field_goal_attempt_rate": 0.0,
+					"turnover_pct": 0.0,
+					"offensive_rating": 0
+				}
 			# Age column
 			elif self.current == "td" and self.tdCount == 2:
 				self.advanced_stats[self.currentSeason]["age"] = int(data)
@@ -621,10 +638,72 @@ class BasketballReferencePlayerMainParser(HTMLParser):
 			# League column
 			elif self.current == "a" and self.tdCount == 4:
 				self.advanced_stats[self.currentSeason]["league"] = data
-			
-			
+			# Position
+			elif self.current == "td" and self.tdCount == 5:
+				self.advanced_stats[self.currentSeason]["position"] = data
+			# Games
+			elif self.current == "td" and self.tdCount == 6:
+				self.advanced_stats[self.currentSeason]["games"] = int(data)
+			# Minutes played
+			elif self.current == "td" and self.tdCount == 7:
+				self.advanced_stats[self.currentSeason]["minutes_played"] = int(data)
+			# Player efficiency rating
 			elif self.current == "td" and self.tdCount == 8:
-				self.advanced_stats[self.currentSeason]["per"] = data
+				self.advanced_stats[self.currentSeason]["player_efficiency_rating"] = float(data)
+			# True shooting percentage
+			elif self.current == "td" and self.tdCount == 9:
+				self.advanced_stats[self.currentSeason]["true_shooting_pct"] = float(data)
+			# Effective field goal pct
+			elif self.current == "td" and self.tdCount == 10:
+				self.advanced_stats[self.currentSeason]["effective_field_goal_pct"] = float(data)
+			# Free throw attempt rate
+			elif self.current == "td" and self.tdCount == 11:
+				self.advanced_stats[self.currentSeason]["free_throw_attempt_rate"] = float(data)
+			# Three point attempt rate
+			elif self.current == "td" and self.tdCount == 12:
+				self.advanced_stats[self.currentSeason]["three_point_field_goal_attempt_rate"] = float(data)
+			# Offensive rebound pct
+			elif self.current == "td" and self.tdCount == 13:
+				self.advanced_stats[self.currentSeason]["offensive_rebound_pct"] = float(data)
+			# Defensive rebound pct
+			elif self.current == "td" and self.tdCount == 14:
+				self.advanced_stats[self.currentSeason]["defensive_rebound_pct"] = float(data)
+			# Total rebound pct
+			elif self.current == "td" and self.tdCount == 15:
+				self.advanced_stats[self.currentSeason]["total_rebound_pct"] = float(data)
+			# Assist pct
+			elif self.current == "td" and self.tdCount == 16:
+				self.advanced_stats[self.currentSeason]["assist_pct"] = float(data)
+			# Steal pct
+			elif self.current == "td" and self.tdCount == 17:
+				self.advanced_stats[self.currentSeason]["steal_pct"] = float(data)
+			# Block pct
+			elif self.current == "td" and self.tdCount == 18:
+				self.advanced_stats[self.currentSeason]["block_pct"] = float(data)
+			# Turnover pct
+			elif self.current == "td" and self.tdCount == 19:
+				self.advanced_stats[self.currentSeason]["turnover_pct"] = float(data)
+			# Usage pct
+			elif self.current == "td" and self.tdCount == 20:
+				self.advanced_stats[self.currentSeason]["usage_pct"] = float(data)
+			# Offensive rating
+			elif self.current == "td" and self.tdCount == 21:
+				self.advanced_stats[self.currentSeason]["offensive_rating"] = int(data)
+			# Defensive rating
+			elif self.current == "td" and self.tdCount == 22:
+				self.advanced_stats[self.currentSeason]["defensive_rating"] = int(data)
+			# Offensive win shares
+			elif self.current == "td" and self.tdCount == 23:
+				self.advanced_stats[self.currentSeason]["offensive_win_shares"] = float(data)
+			# Defensive win shares
+			elif self.current == "td" and self.tdCount == 24:
+				self.advanced_stats[self.currentSeason]["defensive_win_shares"] = float(data)
+			# Win shares
+			elif self.current == "td" and self.tdCount == 25:
+				self.advanced_stats[self.currentSeason]["win_shares"] = float(data)
+			# Win shares per 48 minutes
+			elif self.current == "td" and self.tdCount == 26:
+				self.advanced_stats[self.currentSeason]["win_shares_per_48_minutes"] = float(data)
 	
 ###############################
 # Parses a player's game log.
