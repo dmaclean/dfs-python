@@ -52,7 +52,8 @@ class Processor:
 				print resp.status, "for",letter
 				data = resp.read()
 				
-				# Parse 
+				# Parse the HTML for the list of players at this letter and iterate
+				# over the players found.
 				self.listParser.feed(data)
 				for player in self.listParser.players:
 					if not player.playerExists(cnx):
@@ -75,24 +76,49 @@ class Processor:
 					
 					# Parse HTML
 					self.playerMainParser.feed(data)
+					conn2.close()
 					
+					#######################################################################
 					# Iterate over the totals stats for each season and write to database
+					#######################################################################
 					player.season_totals = self.playerMainParser.totals_stats
 					for k in self.playerMainParser.totals_stats:
 						output.write(str(self.playerMainParser.totals_stats[k]))
 						output.write("\n")
 						if not player.seasonTotalsExist(cnx, player.code, k):
 							player.writeSeasonTotalsToDatabase(cnx, player.code, k)
+						
+						######################
+						# Grab the game logs.
+						######################
+						time.sleep( 10 + (10*random.random()) )
+						gameLogUrl = "/players/" + letter + "/" + player.code + "/gamelog/" + str(k+1)
+						conn2 = httplib.HTTPConnection("www.basketball-reference.com")
+						conn2.request("GET", gameLogUrl)
+						resp = conn2.getresponse()
+						data = resp.read()
+						print "Fetched game log for",player.code,"-",gameLogUrl
+						
+						self.playerGameLogParser.basic_game_stats = {}
+						self.playerGameLogParser.advanced_game_stats = {}
+						self.playerGameLogParser.feed(data)
+						player.game_basic = self.playerGameLogParser.basic_game_stats
+						player.game_advanced = self.playerGameLogParser.advanced_game_stats
+						
+						for game_number in player.game_basic:
+							if not player.basicGameLogStatsExist(cnx, player.code, k, game_number):
+								player.writeBasicGameLogStatsToDatabase(cnx, player.code, k, game_number)
 					
+					#########################################################################
 					# Iterate over the advanced stats for each season and write to database
+					#########################################################################
 					player.season_advanced = self.playerMainParser.advanced_stats
 					for k in self.playerMainParser.advanced_stats:
 						output.write(str(k) + " - " + str(self.playerMainParser.advanced_stats[k]))
 						output.write("\n")
 						if not player.seasonAdvancedExist(cnx, player.code, k):
 							player.writeSeasonAdvancedStatsToDatabase(cnx, player.code, k)
-						
-				
+					
 				time.sleep( 10 + (10*random.random()) )
 		else:
 			f = open(self.source,"r")
@@ -120,6 +146,8 @@ class Player:
 		
 		self.season_totals = {}
 		self.season_advanced = {}
+		self.game_basic = {}
+		self.game_advanced = {}
 	
 	def playerExists(self, conn):
 		cursor = conn.cursor()
@@ -304,6 +332,102 @@ class Player:
 		
 		cursor.execute(query)
 		cursor.close()
+	
+	################################################################
+	# Checks to see if basic game log stats exist for a particular
+	# player/season/game combination.
+	################################################################
+	def basicGameLogStatsExist(self, conn, playerId, season, game_number):
+		cursor = conn.cursor()
+		query = ("select id from game_totals_basic where player_id = '%s' and season = %d and game_number = %d") % (playerId, season, game_number)
+		cursor.execute(query)
+		
+		for (id) in cursor:
+			return True
+		
+		return False
+	
+	#######################################################################
+	# Writes data for a single game for a player into the database in the 
+	# game_totals_basic table.
+	#######################################################################
+	def writeBasicGameLogStatsToDatabase(self, conn, playerId, season, game_number):
+		cursor = conn.cursor()
+		query = """
+			insert into game_totals_basic (
+				player_id,
+				season,
+				game_number,
+				date,
+				age,
+				team,
+				home,
+				opponent,
+				result,
+				games_started,
+				minutes_played,
+				field_goals,
+				field_goal_attempts,
+				field_goal_pct,
+				three_point_field_goals,
+				three_point_field_goal_attempts,
+				three_point_field_goal_pct,
+				free_throws,
+				free_throw_attempts,
+				free_throw_pct,
+				offensive_rebounds,
+				defensive_rebounds,
+				total_rebounds,
+				assists,
+				steals,
+				blocks,
+				turnovers,
+				personal_fouls,
+				points,
+				game_score,
+				plus_minus
+			) values (
+				'%s',%d,%d,'%s',%d,'%s',%d,'%s','%s',%d,
+				%f,%d,%d,%f,%d,%d,%f,%d,%d,%f,%d,%d,%d,
+				%d,%d,%d,%d,%d,%d,%f,%d
+			)
+		""" % (
+			playerId,
+			season,
+			game_number,
+			self.game_basic[game_number]["date"],
+			self.game_basic[game_number]["age"],
+			self.game_basic[game_number]["team"],
+			self.game_basic[game_number]["home"],
+			self.game_basic[game_number]["opponent"],
+			self.game_basic[game_number]["result"],
+			self.game_basic[game_number]["games_started"],
+			self.game_basic[game_number]["minutes_played"],
+			self.game_basic[game_number]["field_goals"],
+			self.game_basic[game_number]["field_goal_attempts"],
+			self.game_basic[game_number]["field_goal_pct"],
+			self.game_basic[game_number]["three_point_field_goals"],
+			self.game_basic[game_number]["three_point_field_goal_attempts"],
+			self.game_basic[game_number]["three_point_field_goal_pct"],
+			self.game_basic[game_number]["free_throws"],
+			self.game_basic[game_number]["free_throw_attempts"],
+			self.game_basic[game_number]["free_throw_pct"],
+			self.game_basic[game_number]["offensive_rebounds"],
+			self.game_basic[game_number]["defensive_rebounds"],
+			self.game_basic[game_number]["total_rebounds"],
+			self.game_basic[game_number]["assists"],
+			self.game_basic[game_number]["steals"],
+			self.game_basic[game_number]["blocks"],
+			self.game_basic[game_number]["turnovers"],
+			self.game_basic[game_number]["personal_fouls"],
+			self.game_basic[game_number]["points"],
+			self.game_basic[game_number]["game_score"],
+			self.game_basic[game_number]["plus_minus"]
+		)
+		
+		cursor.execute(query)
+		cursor.close()
+		
 
 class SeasonTotals:
 	def __init__(self):
@@ -735,11 +859,15 @@ class BasketballReferenceGameLogParser(HTMLParser):
 		# We've reached the end of the pgl_basic table.  Tell the app that we're done with it.
 		if tag == "table" and self.tableType == "pgl_basic":
 			self.tableType = ""
-		#elif tag == "tr" and self.tableType == "pgl_basic":
-		#	print self.basic_game_stats[self.game_number]
+		elif tag == "tr" and self.tableType == "pgl_basic":
+			print self.basic_game_stats[self.game_number]
 		elif tag == "tr" and self.tableType == "pgl_advanced":
-			print self.advanced_game_stats[self.game_number]
+			#print self.advanced_game_stats[self.game_number]
+			pass
 		elif tag == "td" and self.tdCount == 6:
+			# Properly set the home/away value.  On the site, this is denoted
+			# as an "@" sign, which means if we don't collect anything then it's
+			# a home game.  Therefore, we have a catch block to set the value to True.
 			try:
 				if self.tableType == "pgl_basic":
 					self.basic_game_stats[self.game_number]["home"]
@@ -760,7 +888,13 @@ class BasketballReferenceGameLogParser(HTMLParser):
 			# Game number
 			if self.current == "span" and self.tdCount == 2:
 				self.game_number = int(data)
-				self.basic_game_stats[self.game_number] = {}
+				self.basic_game_stats[self.game_number] = {
+					"result": "",
+					"field_goal_pct": 0.0,
+					"three_point_field_goal_pct": 0.0,
+					"free_throw_pct": 0.0,
+					"plus_minus": 0
+				}
 			# Date
 			elif self.current == "a" and self.tdCount == 3:
 				self.basic_game_stats[self.game_number]["date"] = data
@@ -800,13 +934,13 @@ class BasketballReferenceGameLogParser(HTMLParser):
 				self.basic_game_stats[self.game_number]["field_goal_pct"] = float(data)
 			# 3 pointers
 			elif self.current == "td" and self.tdCount == 14:
-				self.basic_game_stats[self.game_number]["3pt_field_goals"] = int(data)
+				self.basic_game_stats[self.game_number]["three_point_field_goals"] = int(data)
 			# 3 point attempts
 			elif self.current == "td" and self.tdCount == 15:
-				self.basic_game_stats[self.game_number]["3pt_field_goal_attempts"] = int(data)
+				self.basic_game_stats[self.game_number]["three_point_field_goal_attempts"] = int(data)
 			# 3 pointer pct
 			elif self.current == "td" and self.tdCount == 16:
-				self.basic_game_stats[self.game_number]["3pt_field_goal_pct"] = float(data)
+				self.basic_game_stats[self.game_number]["three_point_field_goal_pct"] = float(data)
 			# Free throws
 			elif self.current == "td" and self.tdCount == 17:
 				self.basic_game_stats[self.game_number]["free_throws"] = int(data)

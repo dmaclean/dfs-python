@@ -77,6 +77,7 @@ create table season_advanced (
 create table game_totals_basic (
 	id int auto_increment primary key,
 	player_id varchar(50) not null,
+	season int not null,
 	game_number int not null,
 	date timestamp not null,
 	age int not null,
@@ -112,6 +113,7 @@ create table game_totals_basic (
 create table game_totals_advanced (
 	id int auto_increment primary key,
 	player_id varchar(50) not null,
+	season int not null,
 	game_number int not null,
 	date timestamp not null,
 	age int not null,
