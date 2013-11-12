@@ -108,6 +108,10 @@ class Processor:
 						for game_number in player.game_basic:
 							if not player.basicGameLogStatsExist(cnx, player.code, k, game_number):
 								player.writeBasicGameLogStatsToDatabase(cnx, player.code, k, game_number)
+						
+						for game_number in player.game_advanced:
+							if not player.advancedGameLogStatsExist(cnx, player.code, k, game_number):
+								player.writeAdvancedGameLogStatsToDatabase(cnx, player.code, k, game_number)
 					
 					#########################################################################
 					# Iterate over the advanced stats for each season and write to database
@@ -427,7 +431,120 @@ class Player:
 		
 		cursor.execute(query)
 		cursor.close()
+	
+	###################################################################
+	# Checks to see if advanced game log stats exist for a particular
+	# player/season/game combination.
+	###################################################################
+	def advancedGameLogStatsExist(self, conn, playerId, season, game_number):
+		cursor = conn.cursor()
+		query = ("select id from game_totals_advanced where player_id = '%s' and season = %d and game_number = %d") % (playerId, season, game_number)
+		cursor.execute(query)
 		
+		for (id) in cursor:
+			return True
+		
+		return False
+	
+	#######################################################################
+	# Writes data for a single game for a player into the database in the 
+	# game_totals_basic table.
+	#######################################################################
+	def writeAdvancedGameLogStatsToDatabase(self, conn, playerId, season, game_number):
+		cursor = conn.cursor()
+		query = """
+			insert into game_totals_advanced (
+				player_id,
+				game_number,
+				season,
+				date,
+				age,
+				team,
+				home,
+				opponent,
+				result,
+				games_started,
+				minutes_played,
+				true_shooting_pct,
+				effective_field_goal_pct,
+				offensive_rebound_pct,
+				defensive_rebound_pct,
+				total_rebound_pct,
+				assist_pct,
+				steal_pct,
+				block_pct,
+				turnover_pct,
+				usage_pct,
+				offensive_rating,
+				defensive_rating,
+				game_score
+			) values (
+				'%s',%d,%d,'%s',%d,'%s',%d,'%s','%s',%d,
+				%d,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%d,%d,%f
+			)
+		""" % (
+			playerId,
+			game_number,
+			season,
+			self.game_advanced[game_number]["date"],
+			self.game_advanced[game_number]["age"],
+			self.game_advanced[game_number]["team"],
+			self.game_advanced[game_number]["home"],
+			self.game_advanced[game_number]["opponent"],
+			self.game_advanced[game_number]["result"],
+			self.game_advanced[game_number]["games_started"],
+			self.game_advanced[game_number]["minutes_played"],
+			self.game_advanced[game_number]["true_shooting_pct"],
+			self.game_advanced[game_number]["effective_field_goal_pct"],
+			self.game_advanced[game_number]["offensive_rebound_pct"],
+			self.game_advanced[game_number]["defensive_rebound_pct"],
+			self.game_advanced[game_number]["total_rebound_pct"],
+			self.game_advanced[game_number]["assist_pct"],
+			self.game_advanced[game_number]["steal_pct"],
+			self.game_advanced[game_number]["block_pct"],
+			self.game_advanced[game_number]["turnover_pct"],
+			self.game_advanced[game_number]["usage_pct"],
+			self.game_advanced[game_number]["offensive_rating"],
+			self.game_advanced[game_number]["defensive_rating"],
+			self.game_advanced[game_number]["game_score"]
+		)
+		
+		cursor.execute(query)
+		cursor.close()
+	
+	##################################################################################
+	# Checks to see if splits exist for a particular player/season/game combination.
+	##################################################################################
+	def splitsExist(self, conn, playerId, splitType, splitSubType):
+		cursor = conn.cursor()
+		query = "select * from splits where player_id = '%s' and type = '%s' and subtype = '%s'" % (playerId, splitType, splitSubType)
+		cursor.execute(query)
+		
+		for (id) in cursor:
+			cursor.close()
+			return True
+		
+		cursor.close()
+		return False
+	
+	def writeSplitToDatabase(self, conn, playerId, splitType, splitSubType):
+		cursor = conn.cursor()
+		query = """
+			insert into splits (
+				player_id,
+				type,
+				subtype,
+				games,
+				games_started,
+				minutes_played,
+				field_goals,
+			) values (
+				'%s','%s','%s',%d,%d,%d,%d
+			)
+		"""
+		
+		cursor.execute(query)
+		cursor.close()
 
 class SeasonTotals:
 	def __init__(self):
@@ -860,7 +977,8 @@ class BasketballReferenceGameLogParser(HTMLParser):
 		if tag == "table" and self.tableType == "pgl_basic":
 			self.tableType = ""
 		elif tag == "tr" and self.tableType == "pgl_basic":
-			print self.basic_game_stats[self.game_number]
+			#print self.basic_game_stats[self.game_number]
+			pass
 		elif tag == "tr" and self.tableType == "pgl_advanced":
 			#print self.advanced_game_stats[self.game_number]
 			pass
@@ -988,7 +1106,21 @@ class BasketballReferenceGameLogParser(HTMLParser):
 			# Game number
 			if self.current == "td" and self.tdCount == 2:
 				self.game_number = int(data)
-				self.advanced_game_stats[self.game_number] = {}
+				self.advanced_game_stats[self.game_number] = {
+					"result": "",
+					"true_shooting_pct": 0.0,
+					"effective_field_goal_pct": 0.0,
+					"offensive_rebound_pct": 0.0,
+					"defensive_rebound_pct": 0.0,
+					"total_rebound_pct": 0.0,
+					"assist_pct": 0.0,
+					"steal_pct": 0.0,
+					"block_pct": 0.0,
+					"turnover_pct": 0.0,
+					"usage_pct": 0.0,
+					"offensive_rating": 0,
+					"defensive_rating": 0
+				}
 			# Date
 			elif self.current == "a" and self.tdCount == 3:
 				self.advanced_game_stats[self.game_number]["date"] = data
