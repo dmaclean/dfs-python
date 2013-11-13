@@ -97,6 +97,7 @@ class Processor:
 						conn2.request("GET", gameLogUrl)
 						resp = conn2.getresponse()
 						data = resp.read()
+						conn2.close()
 						print "Fetched game log for",player.code,"-",gameLogUrl
 						
 						self.playerGameLogParser.basic_game_stats = {}
@@ -112,6 +113,28 @@ class Processor:
 						for game_number in player.game_advanced:
 							if not player.advancedGameLogStatsExist(cnx, player.code, k, game_number):
 								player.writeAdvancedGameLogStatsToDatabase(cnx, player.code, k, game_number)
+					
+						####################
+						# Grab the splits.
+						####################
+						time.sleep( 10 + (10*random.random()) )
+						splitUrl = "/players/" + letter + "/" + player.code + "/splits/" + str(k+1)
+						conn2 = httplib.HTTPConnection("www.basketball-reference.com")
+						conn2.request("GET", splitUrl)
+						resp = conn2.getresponse()
+						data = resp.read()
+						conn2.close()
+						print "Fetched splits for",player.code,"-",splitUrl
+						
+						self.playerSplitsParser.stats = {}
+						self.playerSplitsParser.feed(data)
+						player.splits = self.playerSplitsParser.stats
+						
+						for type in player.splits:
+							for subtype in player.splits[type]:
+								if not player.splitsExist(cnx, player.code, k, type, subtype):
+									#print "Writing",player.code,"/",k,"/",type,"/",subtype,"to database."
+									player.writeSplitToDatabase(cnx, player.code, k, type, subtype)
 					
 					#########################################################################
 					# Iterate over the advanced stats for each season and write to database
@@ -134,7 +157,7 @@ class Processor:
 				parser = BasketballReferencePlayerMainParser()
 			elif self.source == "player_gamelog.html":
 				parser = BasketballReferenceGameLogParser()
-			elif self.source == "player_splits.html":
+			elif self.source == "player_splits.html" or self.source == "player_splits_no_plusminus.html":
 				parser = BasketballReferenceSplitsParser()
 			parser.feed(data)
 
@@ -152,6 +175,7 @@ class Player:
 		self.season_advanced = {}
 		self.game_basic = {}
 		self.game_advanced = {}
+		self.splits = {}
 	
 	def playerExists(self, conn):
 		cursor = conn.cursor()
@@ -515,9 +539,9 @@ class Player:
 	##################################################################################
 	# Checks to see if splits exist for a particular player/season/game combination.
 	##################################################################################
-	def splitsExist(self, conn, playerId, splitType, splitSubType):
+	def splitsExist(self, conn, playerId, season, splitType, splitSubType):
 		cursor = conn.cursor()
-		query = "select * from splits where player_id = '%s' and type = '%s' and subtype = '%s'" % (playerId, splitType, splitSubType)
+		query = "select * from splits where player_id = '%s' and season = %d and type = '%s' and subtype = '%s'" % (playerId, season, splitType, splitSubType)
 		cursor.execute(query)
 		
 		for (id) in cursor:
@@ -527,21 +551,160 @@ class Player:
 		cursor.close()
 		return False
 	
-	def writeSplitToDatabase(self, conn, playerId, splitType, splitSubType):
+	def writeSplitToDatabase(self, conn, playerId, season, splitType, splitSubType):
 		cursor = conn.cursor()
-		query = """
-			insert into splits (
-				player_id,
-				type,
-				subtype,
-				games,
-				games_started,
-				minutes_played,
-				field_goals,
-			) values (
-				'%s','%s','%s',%d,%d,%d,%d
+		query = ""
+		
+		if self.splits[splitType][splitSubType]["plus_minus"] != None:
+			query = """
+				insert into splits (
+					player_id,
+					season,
+					type,
+					subtype,
+					games,
+					games_started,
+					minutes_played,
+					field_goals,
+					field_goal_attempts,
+					three_point_field_goals,
+					three_point_field_goal_attempts,
+					free_throws,
+					free_throw_attempts,
+					offensive_rebounds,
+					defensive_rebounds,
+					total_rebounds,
+					assists,
+					steals,
+					blocks,
+					turnovers,
+					personal_fouls,
+					points,
+					field_goal_pct,
+					three_point_field_goal_pct,
+					free_throw_pct,
+					true_shooting_pct,
+					offensive_rating,
+					defensive_rating,
+					plus_minus,
+					minutes_played_per_game,
+					points_per_game,
+					total_rebounds_per_game,
+					assists_per_game
+				) values (
+					'%s',%d,'%s','%s',%d,%d,%d,%d,%d,%d,%d,
+					%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%f,
+					%f,%f,%f,%d,%d,%f,%f,%f,%f,%f
+				)
+			""" % (
+				playerId,
+				season,
+				splitType,
+				splitSubType,
+				self.splits[splitType][splitSubType]["games"],
+				self.splits[splitType][splitSubType]["games_started"],
+				self.splits[splitType][splitSubType]["minutes_played"],
+				self.splits[splitType][splitSubType]["field_goals"],
+				self.splits[splitType][splitSubType]["field_goal_attempts"],
+				self.splits[splitType][splitSubType]["three_point_field_goals"],
+				self.splits[splitType][splitSubType]["three_point_field_goal_attempts"],
+				self.splits[splitType][splitSubType]["free_throws"],
+				self.splits[splitType][splitSubType]["free_throw_attempts"],
+				self.splits[splitType][splitSubType]["offensive_rebounds"],
+				self.splits[splitType][splitSubType]["defensive_rebounds"],
+				self.splits[splitType][splitSubType]["total_rebounds"],
+				self.splits[splitType][splitSubType]["assists"],
+				self.splits[splitType][splitSubType]["steals"],
+				self.splits[splitType][splitSubType]["blocks"],
+				self.splits[splitType][splitSubType]["turnovers"],
+				self.splits[splitType][splitSubType]["personal_fouls"],
+				self.splits[splitType][splitSubType]["points"],
+				self.splits[splitType][splitSubType]["field_goal_pct"],
+				self.splits[splitType][splitSubType]["three_point_field_goal_pct"],
+				self.splits[splitType][splitSubType]["free_throw_pct"],
+				self.splits[splitType][splitSubType]["true_shooting_pct"],
+				self.splits[splitType][splitSubType]["offensive_rating"],
+				self.splits[splitType][splitSubType]["defensive_rating"],
+				self.splits[splitType][splitSubType]["plus_minus"],
+				self.splits[splitType][splitSubType]["minutes_played_per_game"],
+				self.splits[splitType][splitSubType]["points_per_game"],
+				self.splits[splitType][splitSubType]["total_rebounds_per_game"],
+				self.splits[splitType][splitSubType]["assists_per_game"]
 			)
-		"""
+		else:
+			query = """
+				insert into splits (
+					player_id,
+					season,
+					type,
+					subtype,
+					games,
+					games_started,
+					minutes_played,
+					field_goals,
+					field_goal_attempts,
+					three_point_field_goals,
+					three_point_field_goal_attempts,
+					free_throws,
+					free_throw_attempts,
+					offensive_rebounds,
+					defensive_rebounds,
+					total_rebounds,
+					assists,
+					steals,
+					blocks,
+					turnovers,
+					personal_fouls,
+					points,
+					field_goal_pct,
+					three_point_field_goal_pct,
+					free_throw_pct,
+					true_shooting_pct,
+					offensive_rating,
+					defensive_rating,
+					minutes_played_per_game,
+					points_per_game,
+					total_rebounds_per_game,
+					assists_per_game
+				) values (
+					'%s',%d,'%s','%s',%d,%d,%d,%d,%d,%d,%d,
+					%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%f,
+					%f,%f,%f,%d,%d,%f,%f,%f,%f
+				)
+			""" % (
+				playerId,
+				season,
+				splitType,
+				splitSubType,
+				self.splits[splitType][splitSubType]["games"],
+				self.splits[splitType][splitSubType]["games_started"],
+				self.splits[splitType][splitSubType]["minutes_played"],
+				self.splits[splitType][splitSubType]["field_goals"],
+				self.splits[splitType][splitSubType]["field_goal_attempts"],
+				self.splits[splitType][splitSubType]["three_point_field_goals"],
+				self.splits[splitType][splitSubType]["three_point_field_goal_attempts"],
+				self.splits[splitType][splitSubType]["free_throws"],
+				self.splits[splitType][splitSubType]["free_throw_attempts"],
+				self.splits[splitType][splitSubType]["offensive_rebounds"],
+				self.splits[splitType][splitSubType]["defensive_rebounds"],
+				self.splits[splitType][splitSubType]["total_rebounds"],
+				self.splits[splitType][splitSubType]["assists"],
+				self.splits[splitType][splitSubType]["steals"],
+				self.splits[splitType][splitSubType]["blocks"],
+				self.splits[splitType][splitSubType]["turnovers"],
+				self.splits[splitType][splitSubType]["personal_fouls"],
+				self.splits[splitType][splitSubType]["points"],
+				self.splits[splitType][splitSubType]["field_goal_pct"],
+				self.splits[splitType][splitSubType]["three_point_field_goal_pct"],
+				self.splits[splitType][splitSubType]["free_throw_pct"],
+				self.splits[splitType][splitSubType]["true_shooting_pct"],
+				self.splits[splitType][splitSubType]["offensive_rating"],
+				self.splits[splitType][splitSubType]["defensive_rating"],
+				self.splits[splitType][splitSubType]["minutes_played_per_game"],
+				self.splits[splitType][splitSubType]["points_per_game"],
+				self.splits[splitType][splitSubType]["total_rebounds_per_game"],
+				self.splits[splitType][splitSubType]["assists_per_game"]
+			)
 		
 		cursor.execute(query)
 		cursor.close()
@@ -1199,6 +1362,7 @@ class BasketballReferenceSplitsParser(HTMLParser):
 	current = ""
 	type = ""
 	subtype = ""
+	usingPlusMinus = False
 	
 	######################################################################################
 	# Map of main types of splits (i.e. Conference, Division, Opponent).  The value of
@@ -1211,6 +1375,8 @@ class BasketballReferenceSplitsParser(HTMLParser):
 	def handle_starttag(self, tag, attrs):
 		if tag == "table" and len(attrs) > 1 and attrs[1][1] == "stats":
 			self.found_table = True
+			self.type = ""
+			self.subtype = ""
 		elif tag == "tbody":
 			self.tbodyCount = self.tbodyCount + 1
 		elif tag == "tr":
@@ -1222,11 +1388,11 @@ class BasketballReferenceSplitsParser(HTMLParser):
 	
 	def handle_endtag(self, tag):
 		if tag == "tr" and self.type != "" and self.subtype != "":
-			print self.type+"/"+self.subtype, self.stats[self.type][self.subtype],"\n"
+			#print self.type+"/"+self.subtype, self.stats[self.type][self.subtype],"\n"
 			self.isDataRow = False
 	
 	def handle_data(self, data):
-		if data.strip() == "":
+		if data.strip() == "" or not self.found_table:
 			return
 	
 		#########################################################################################
@@ -1235,7 +1401,7 @@ class BasketballReferenceSplitsParser(HTMLParser):
 		# - If it contains any text other than "Split" then it is the first row of a split.
 		# - If it contains the text "Split" then it is a header row and can be ignored.
 		#########################################################################################
-		if self.current == "td" and self.found_table and self.tdCount == 1:
+		if self.current == "td" and self.tdCount == 1:
 			self.type = data
 			self.stats[data] = {}
 				
@@ -1249,7 +1415,18 @@ class BasketballReferenceSplitsParser(HTMLParser):
 				self.stats[self.type] = {}
 			
 			self.subtype = data
-			self.stats[self.type][self.subtype] = {}
+			self.stats[self.type][self.subtype] = {
+				"field_goal_pct": 0.0,
+				"three_point_field_goals": 0,
+				"three_point_field_goal_attempts": 0,
+				"defensive_rebounds": 0,
+				"three_point_field_goal_pct": 0.0,
+				"free_throw_pct": 0.0,
+				"true_shooting_pct": 0.0,
+				"usage_pct": 0.0,
+				"assists_per_game": 0.0,
+				"plus_minus": None
+			}
 		# Games
 		elif self.current == "td" and self.tdCount == 3:
 			#print "Data is",data
@@ -1323,21 +1500,40 @@ class BasketballReferenceSplitsParser(HTMLParser):
 		# Defensive rating
 		elif self.current == "td" and self.tdCount == 26:
 			self.stats[self.type][self.subtype]["defensive_rating"] = int(data)
-		# Plus/minus
+		###########################################################################################
+		# Plus/minus (or minutes played per game)
+		# We don't get the plus/minus stat until the player gets 200 possessions (or something
+		# like that), so we need to detect when the column isn't there and adjust for all future
+		# columns.
+		###########################################################################################
 		elif self.current == "td" and self.tdCount == 27:
-			self.stats[self.type][self.subtype]["plus_minus"] = float(data)
-		# Minutes played per game
+			self.usingPlusMinus = data.find("+") > -1 or data.find("-") > -1
+			if self.usingPlusMinus:
+				self.stats[self.type][self.subtype]["plus_minus"] = float(data)
+			else:
+				self.stats[self.type][self.subtype]["minutes_played_per_game"] = float(data)
+		# Minutes played per game (or points per game)
 		elif self.current == "td" and self.tdCount == 28:
-			self.stats[self.type][self.subtype]["minutes_played_per_game"] = float(data)
-		# Points per game
+			if self.usingPlusMinus:
+				self.stats[self.type][self.subtype]["minutes_played_per_game"] = float(data)
+			else:
+				self.stats[self.type][self.subtype]["points_per_game"] = float(data)
+		# Points per game (or total rebounds per game)
 		elif self.current == "td" and self.tdCount == 29:
-			self.stats[self.type][self.subtype]["points_per_game"] = float(data)
-		# Total rebounds per game
+			if self.usingPlusMinus:
+				self.stats[self.type][self.subtype]["points_per_game"] = float(data)
+			else:
+				self.stats[self.type][self.subtype]["total_rebounds_per_game"] = float(data)
+		# Total rebounds per game (or assists per game)
 		elif self.current == "td" and self.tdCount == 30:
-			self.stats[self.type][self.subtype]["total_rebounds_per_game"] = float(data)
-		# Assists per game
+			if self.usingPlusMinus:
+				self.stats[self.type][self.subtype]["total_rebounds_per_game"] = float(data)
+			else:
+				self.stats[self.type][self.subtype]["assists_per_game"] = float(data)
+		# Assists per game (or nothing)
 		elif self.current == "td" and self.tdCount == 31:
-			self.stats[self.type][self.subtype]["assists_per_game"] = float(data)
+			if self.usingPlusMinus:
+				self.stats[self.type][self.subtype]["assists_per_game"] = float(data)
 
 
 processor = Processor()
