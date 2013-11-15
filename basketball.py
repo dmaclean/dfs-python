@@ -32,7 +32,7 @@ class Processor:
 				if pieces[0] == "source":
 					self.source = pieces[1]
 				elif pieces[0] == "file":
-					self.file = pieces[1]					
+					self.file = pieces[1]
 	
 	def process(self):
 		parser = None
@@ -43,7 +43,7 @@ class Processor:
 		if self.source == "site":
 			cnx = mysql.connector.connect(user='fantasy', password='fantasy', host='localhost', database='basketball_reference')
 			conn = httplib.HTTPConnection("www.basketball-reference.com")
-			alphabet = ["a"]
+			alphabet = ["g","h"]
 			
 			for letter in alphabet:
 				conn.request("GET", "/players/"+letter+"/")
@@ -584,6 +584,7 @@ class Player:
 					three_point_field_goal_pct,
 					free_throw_pct,
 					true_shooting_pct,
+					usage_pct,
 					offensive_rating,
 					defensive_rating,
 					plus_minus,
@@ -594,7 +595,7 @@ class Player:
 				) values (
 					'%s',%d,'%s','%s',%d,%d,%d,%d,%d,%d,%d,
 					%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%f,
-					%f,%f,%f,%d,%d,%f,%f,%f,%f,%f
+					%f,%f,%f,%f,%d,%d,%f,%f,%f,%f,%f
 				)
 			""" % (
 				playerId,
@@ -623,6 +624,7 @@ class Player:
 				self.splits[splitType][splitSubType]["three_point_field_goal_pct"],
 				self.splits[splitType][splitSubType]["free_throw_pct"],
 				self.splits[splitType][splitSubType]["true_shooting_pct"],
+				self.splits[splitType][splitSubType]["usage_pct"],
 				self.splits[splitType][splitSubType]["offensive_rating"],
 				self.splits[splitType][splitSubType]["defensive_rating"],
 				self.splits[splitType][splitSubType]["plus_minus"],
@@ -660,6 +662,7 @@ class Player:
 					three_point_field_goal_pct,
 					free_throw_pct,
 					true_shooting_pct,
+					usage_pct,
 					offensive_rating,
 					defensive_rating,
 					minutes_played_per_game,
@@ -669,7 +672,7 @@ class Player:
 				) values (
 					'%s',%d,'%s','%s',%d,%d,%d,%d,%d,%d,%d,
 					%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%f,
-					%f,%f,%f,%d,%d,%f,%f,%f,%f
+					%f,%f,%f,%f,%d,%d,%f,%f,%f,%f
 				)
 			""" % (
 				playerId,
@@ -698,6 +701,7 @@ class Player:
 				self.splits[splitType][splitSubType]["three_point_field_goal_pct"],
 				self.splits[splitType][splitSubType]["free_throw_pct"],
 				self.splits[splitType][splitSubType]["true_shooting_pct"],
+				self.splits[splitType][splitSubType]["usage_pct"],
 				self.splits[splitType][splitSubType]["offensive_rating"],
 				self.splits[splitType][splitSubType]["defensive_rating"],
 				self.splits[splitType][splitSubType]["minutes_played_per_game"],
