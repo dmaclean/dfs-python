@@ -34,6 +34,31 @@ class Processor:
 				elif pieces[0] == "file":
 					self.file = pieces[1]
 	
+	##############################################################################
+	# Make an HTTP GET request to the server and return the data that comes back
+	# in the response.
+	##############################################################################
+	def fetchData(self, url, logToConsole):
+		conn = httplib.HTTPConnection("www.basketball-reference.com")
+		successful = False
+		data = ""
+		
+		while not successful:
+			try:
+				conn.request("GET", url)
+				resp = conn.getresponse()			
+		
+				if logToConsole:
+					print resp.status,"for",url
+				data = resp.read()
+				conn.close()
+				successful = True
+			except:
+				print "Issue connecting to basketball-reference.  Retrying in 5 seconds..."
+				time.sleep( 10 )
+		
+		return data
+	
 	def process(self):
 		parser = None
 		output = open("output.txt","w")
@@ -42,18 +67,14 @@ class Processor:
 	
 		if self.source == "site":
 			cnx = mysql.connector.connect(user='fantasy', password='fantasy', host='localhost', database='basketball_reference')
-			conn = httplib.HTTPConnection("www.basketball-reference.com")
-			alphabet = ["g","h"]
+			alphabet = ["l","m"]
 			
 			for letter in alphabet:
-				conn.request("GET", "/players/"+letter+"/")
-				resp = conn.getresponse()
-
-				print resp.status, "for",letter
-				data = resp.read()
+				data = self.fetchData("/players/"+letter+"/", True)
 				
 				# Parse the HTML for the list of players at this letter and iterate
 				# over the players found.
+				self.listParser.players = []
 				self.listParser.feed(data)
 				for player in self.listParser.players:
 					if not player.playerExists(cnx):
@@ -63,12 +84,7 @@ class Processor:
 					output.write(s)
 					
 					time.sleep( 10 + (10*random.random()) )
-					conn2 = httplib.HTTPConnection("www.basketball-reference.com")
-					conn2.request("GET", player.url)
-					resp = conn2.getresponse()
-
-					print resp.status, "for",player.name
-					data = resp.read()
+					data = self.fetchData(player.url, True)
 					
 					# Reset the stats maps before we parse the HTML
 					self.playerMainParser.totals_stats = {}
@@ -76,7 +92,6 @@ class Processor:
 					
 					# Parse HTML
 					self.playerMainParser.feed(data)
-					conn2.close()
 					
 					#######################################################################
 					# Iterate over the totals stats for each season and write to database
@@ -93,12 +108,7 @@ class Processor:
 						######################
 						time.sleep( 10 + (10*random.random()) )
 						gameLogUrl = "/players/" + letter + "/" + player.code + "/gamelog/" + str(k+1)
-						conn2 = httplib.HTTPConnection("www.basketball-reference.com")
-						conn2.request("GET", gameLogUrl)
-						resp = conn2.getresponse()
-						data = resp.read()
-						conn2.close()
-						print "Fetched game log for",player.code,"-",gameLogUrl
+						data = self.fetchData(gameLogUrl, True)
 						
 						self.playerGameLogParser.basic_game_stats = {}
 						self.playerGameLogParser.advanced_game_stats = {}
@@ -119,12 +129,7 @@ class Processor:
 						####################
 						time.sleep( 10 + (10*random.random()) )
 						splitUrl = "/players/" + letter + "/" + player.code + "/splits/" + str(k+1)
-						conn2 = httplib.HTTPConnection("www.basketball-reference.com")
-						conn2.request("GET", splitUrl)
-						resp = conn2.getresponse()
-						data = resp.read()
-						conn2.close()
-						print "Fetched splits for",player.code,"-",splitUrl
+						data = self.fetchData(splitUrl, True)
 						
 						self.playerSplitsParser.stats = {}
 						self.playerSplitsParser.feed(data)
@@ -133,7 +138,6 @@ class Processor:
 						for type in player.splits:
 							for subtype in player.splits[type]:
 								if not player.splitsExist(cnx, player.code, k, type, subtype):
-									#print "Writing",player.code,"/",k,"/",type,"/",subtype,"to database."
 									player.writeSplitToDatabase(cnx, player.code, k, type, subtype)
 					
 					#########################################################################
@@ -1030,12 +1034,25 @@ class BasketballReferencePlayerMainParser(HTMLParser):
 				self.currentSeason = int(data.split("-")[0])
 				self.advanced_stats[self.currentSeason] = {
 					"position": "",
+					"player_efficiency_rating": 0.0,
 					"true_shooting_pct": 0.0,
 					"effective_field_goal_pct": 0.0,
 					"free_throw_attempt_rate": 0.0,
 					"three_point_field_goal_attempt_rate": 0.0,
+					"offensive_rebound_pct": 0.0,
+					"defensive_rebound_pct": 0.0,
+					"total_rebound_pct": 0.0,
+					"assist_pct": 0.0,
+					"steal_pct": 0.0,
+					"block_pct": 0.0,
 					"turnover_pct": 0.0,
-					"offensive_rating": 0
+					"usage_pct": 0.0,
+					"offensive_rating": 0,
+					"defensive_rating": 0,
+					"offensive_win_shares": 0.0,
+					"defensive_win_shares": 0.0,
+					"win_shares": 0.0,
+					"win_shares_per_48_minutes": 0.0
 				}
 			# Age column
 			elif self.current == "td" and self.tdCount == 2:
