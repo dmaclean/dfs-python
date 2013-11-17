@@ -39,12 +39,12 @@ class Processor:
 	# in the response.
 	##############################################################################
 	def fetchData(self, url, logToConsole):
-		conn = httplib.HTTPConnection("www.basketball-reference.com")
 		successful = False
 		data = ""
 		
 		while not successful:
 			try:
+				conn = httplib.HTTPConnection("www.basketball-reference.com")
 				conn.request("GET", url)
 				resp = conn.getresponse()			
 		
@@ -67,7 +67,7 @@ class Processor:
 	
 		if self.source == "site":
 			cnx = mysql.connector.connect(user='fantasy', password='fantasy', host='localhost', database='basketball_reference')
-			alphabet = ["l","m"]
+			alphabet = ["w","x","y","z"]
 			
 			for letter in alphabet:
 				data = self.fetchData("/players/"+letter+"/", True)
@@ -880,7 +880,7 @@ class BasketballReferencePlayerListParser(HTMLParser):
 			return
 		
 		if self.current == "a" and self.isActive and self.tdCount == 1:
-			self.player.name = data
+			self.player.name = data.replace("'","")
 		# Fourth column - position.
 		elif self.current == "td" and self.isActive and self.tdCount == 4:
 			pieces = data.split("-")
