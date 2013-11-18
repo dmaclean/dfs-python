@@ -9,6 +9,7 @@ from HTMLParser import HTMLParser
 class Processor:
 	source = ""
 	file = ""
+	season = -1
 	
 	listParser = None
 	playerMainParser = None
@@ -22,6 +23,7 @@ class Processor:
 		self.playerMainParser = BasketballReferencePlayerMainParser()
 		self.playerGameLogParser = BasketballReferenceGameLogParser()
 		self.playerSplitsParser = BasketballReferenceSplitsParser()
+		self.playerGameSplitsParser = BasketballReferenceTeamSplitsParser()
 	
 	def readCLI(self):
 		for arg in sys.argv:
@@ -33,6 +35,9 @@ class Processor:
 					self.source = pieces[1]
 				elif pieces[0] == "file":
 					self.file = pieces[1]
+				elif pieces[0] == "season":
+					self.season = int(pieces[1])
+					
 	
 	##############################################################################
 	# Make an HTTP GET request to the server and return the data that comes back
@@ -54,7 +59,7 @@ class Processor:
 				conn.close()
 				successful = True
 			except:
-				print "Issue connecting to basketball-reference.  Retrying in 5 seconds..."
+				print "Issue connecting to basketball-reference.  Retrying in 10 seconds..."
 				time.sleep( 10 )
 		
 		return data
@@ -67,7 +72,7 @@ class Processor:
 	
 		if self.source == "site":
 			cnx = mysql.connector.connect(user='fantasy', password='fantasy', host='localhost', database='basketball_reference')
-			alphabet = ["w","x","y","z"]
+			alphabet = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
 			
 			for letter in alphabet:
 				data = self.fetchData("/players/"+letter+"/", True)
@@ -98,10 +103,16 @@ class Processor:
 					#######################################################################
 					player.season_totals = self.playerMainParser.totals_stats
 					for k in self.playerMainParser.totals_stats:
-						output.write(str(self.playerMainParser.totals_stats[k]))
-						output.write("\n")
+						if self.season != -1 and k != self.season:
+							print "Skipping",k,"- only interested in", self.season
+							continue
+						else:
+							print "Processing season", k
+					
 						if not player.seasonTotalsExist(cnx, player.code, k):
 							player.writeSeasonTotalsToDatabase(cnx, player.code, k)
+						else:
+							player.updateSeasonTotalsInDatabase(cnx, player.code, k)
 						
 						######################
 						# Grab the game logs.
@@ -139,6 +150,8 @@ class Processor:
 							for subtype in player.splits[type]:
 								if not player.splitsExist(cnx, player.code, k, type, subtype):
 									player.writeSplitToDatabase(cnx, player.code, k, type, subtype)
+								else:
+									player.updateSplitInDatabase(cnx, player.code, k, type, subtype)
 					
 					#########################################################################
 					# Iterate over the advanced stats for each season and write to database
@@ -149,10 +162,12 @@ class Processor:
 						output.write("\n")
 						if not player.seasonAdvancedExist(cnx, player.code, k):
 							player.writeSeasonAdvancedStatsToDatabase(cnx, player.code, k)
+						else:
+							player.updateSeasonAdvancedStatsInDatabase(cnx, player.code, k)
 					
 				time.sleep( 10 + (10*random.random()) )
 		else:
-			f = open(self.source,"r")
+			f = open("tests/" + self.source,"r")
 			data = f.read().replace("\n","")
 			
 			if self.source == "player_list.html":
@@ -163,6 +178,10 @@ class Processor:
 				parser = BasketballReferenceGameLogParser()
 			elif self.source == "player_splits.html" or self.source == "player_splits_no_plusminus.html":
 				parser = BasketballReferenceSplitsParser()
+			elif self.source == "team_splits.html":
+				parser = BasketballReferenceTeamSplitsParser()
+			elif self.source == "team_gamelog.html":
+				parser = BasketballReferenceTeamGameLogParser()
 			parser.feed(data)
 
 
@@ -285,6 +304,75 @@ class Player:
 		cursor.execute(query)
 		cursor.close()
 	
+	def updateSeasonTotalsInDatabase(self, conn, playerId, season):
+		cursor = conn.cursor()
+		query = """
+				update season_totals set
+					age = %d,
+					team = '%s',
+					league = '%s',
+					position = '%s',
+					games = %d,
+					games_started = %d,
+					minutes_played = %d,
+					field_goals = %d,
+					field_goal_attempts = %d,
+					field_goal_pct = %f,
+					three_point_field_goals = %d,
+					three_point_field_goal_attempts = %d,
+					three_point_field_goal_pct = %f,
+					two_point_field_goals = %d,
+					two_point_field_goal_attempts = %d,
+					two_point_field_goal_pct = %f,
+					free_throws = %d,
+					free_throw_attempts = %d,
+					free_throw_pct = %f,
+					offensive_rebounds = %d,
+					defensive_rebounds = %d,
+					total_rebounds = %d,
+					assists = %d,
+					steals = %d,
+					blocks = %d,
+					turnovers = %d,
+					personal_fouls = %d,
+					points = %d
+				where player_id = '%s' and season = %d
+		""" % (
+		self.season_totals[season]["age"],
+		self.season_totals[season]["team"],
+		self.season_totals[season]["league"],
+		self.season_totals[season]["position"],
+		self.season_totals[season]["games"],
+		self.season_totals[season]["games_started"],
+		self.season_totals[season]["minutes_played"],
+		self.season_totals[season]["field_goals"],
+		self.season_totals[season]["field_goal_attempts"],
+		self.season_totals[season]["field_goal_pct"],
+		self.season_totals[season]["three_point_field_goals"],
+		self.season_totals[season]["three_point_field_goal_attempts"],
+		self.season_totals[season]["three_point_field_goal_pct"],
+		self.season_totals[season]["two_point_field_goals"],
+		self.season_totals[season]["two_point_field_goal_attempts"],
+		self.season_totals[season]["two_point_field_goal_pct"],
+		self.season_totals[season]["free_throws"],
+		self.season_totals[season]["free_throw_attempts"],
+		self.season_totals[season]["free_throw_pct"],
+		self.season_totals[season]["offensive_rebounds"],
+		self.season_totals[season]["defensive_rebounds"],
+		self.season_totals[season]["total_rebounds"],
+		self.season_totals[season]["assists"],
+		self.season_totals[season]["steals"],
+		self.season_totals[season]["blocks"],
+		self.season_totals[season]["turnovers"],
+		self.season_totals[season]["personal_fouls"],
+		self.season_totals[season]["points"],
+		playerId,
+		season
+		)
+		
+		cursor.execute(query)
+		cursor.close()
+	
 	def seasonAdvancedExist(self, conn, playerId, season):
 		cursor = conn.cursor()
 		query = ("select id from season_advanced where player_id = '%s' and season = %d") % (playerId, season)
@@ -360,6 +448,69 @@ class Player:
 		self.season_advanced[season]["defensive_win_shares"],
 		self.season_advanced[season]["win_shares"],
 		self.season_advanced[season]["win_shares_per_48_minutes"]
+		)
+		
+		cursor.execute(query)
+		cursor.close()
+	
+	def updateSeasonAdvancedStatsInDatabase(self, conn, playerId, season):
+		cursor = conn.cursor()
+		query = """
+				update season_advanced set
+					age = %d,
+					team = '%s',
+					league = '%s',
+					position = '%s',
+					games = %d,
+					minutes_played = %d,
+					player_efficiency_rating = %f,
+					true_shooting_pct = %f,
+					effective_field_goal_pct = %f,
+					free_throw_attempt_rate = %f,
+					three_point_field_goal_attempt_rate = %f,
+					offensive_rebound_pct = %f,
+					defensive_rebound_pct = %f,
+					total_rebound_pct = %f,
+					assist_pct = %f,
+					steal_pct = %f,
+					block_pct = %f,
+					turnover_pct = %f,
+					usage_pct = %f,
+					offensive_rating = %d,
+					defensive_rating = %d,
+					offensive_win_shares = %f,
+					defensive_win_shares = %f,
+					win_shares = %f,
+					win_shares_per_48_minutes = %f
+				where player_id = '%s' and season = %d
+		""" % (
+		self.season_advanced[season]["age"],
+		self.season_advanced[season]["team"],
+		self.season_advanced[season]["league"],
+		self.season_advanced[season]["position"],
+		self.season_advanced[season]["games"],
+		self.season_advanced[season]["minutes_played"],
+		self.season_advanced[season]["player_efficiency_rating"],
+		self.season_advanced[season]["true_shooting_pct"],
+		self.season_advanced[season]["effective_field_goal_pct"],
+		self.season_advanced[season]["free_throw_attempt_rate"],
+		self.season_advanced[season]["three_point_field_goal_attempt_rate"],
+		self.season_advanced[season]["offensive_rebound_pct"],
+		self.season_advanced[season]["defensive_rebound_pct"],
+		self.season_advanced[season]["total_rebound_pct"],
+		self.season_advanced[season]["assist_pct"],
+		self.season_advanced[season]["steal_pct"],
+		self.season_advanced[season]["block_pct"],
+		self.season_advanced[season]["turnover_pct"],
+		self.season_advanced[season]["usage_pct"],
+		self.season_advanced[season]["offensive_rating"],
+		self.season_advanced[season]["defensive_rating"],
+		self.season_advanced[season]["offensive_win_shares"],
+		self.season_advanced[season]["defensive_win_shares"],
+		self.season_advanced[season]["win_shares"],
+		self.season_advanced[season]["win_shares_per_48_minutes"],
+		playerId,
+		season
 		)
 		
 		cursor.execute(query)
@@ -712,6 +863,152 @@ class Player:
 				self.splits[splitType][splitSubType]["points_per_game"],
 				self.splits[splitType][splitSubType]["total_rebounds_per_game"],
 				self.splits[splitType][splitSubType]["assists_per_game"]
+			)
+		
+		cursor.execute(query)
+		cursor.close()
+	
+	def updateSplitInDatabase(self, conn, playerId, season, splitType, splitSubType):
+		cursor = conn.cursor()
+		query = ""
+		
+		if self.splits[splitType][splitSubType]["plus_minus"] != None:
+			query = """
+				update splits set
+					games = %d,
+					games_started = %d,
+					minutes_played = %d,
+					field_goals = %d,
+					field_goal_attempts = %d,
+					three_point_field_goals = %d,
+					three_point_field_goal_attempts = %d,
+					free_throws = %d,
+					free_throw_attempts = %d,
+					offensive_rebounds = %d,
+					defensive_rebounds = %d,
+					total_rebounds = %d,
+					assists = %d,
+					steals = %d,
+					blocks = %d,
+					turnovers = %d,
+					personal_fouls = %d,
+					points = %d,
+					field_goal_pct = %f,
+					three_point_field_goal_pct = %f,
+					free_throw_pct = %f,
+					true_shooting_pct = %f,
+					usage_pct = %f,
+					offensive_rating = %d,
+					defensive_rating = %d,
+					plus_minus = %f,
+					minutes_played_per_game = %f,
+					points_per_game = %f,
+					total_rebounds_per_game = %f,
+					assists_per_game = %f
+				where player_id = '%s' and season = %d and type = '%s' and subtype = '%s'
+			""" % (
+				self.splits[splitType][splitSubType]["games"],
+				self.splits[splitType][splitSubType]["games_started"],
+				self.splits[splitType][splitSubType]["minutes_played"],
+				self.splits[splitType][splitSubType]["field_goals"],
+				self.splits[splitType][splitSubType]["field_goal_attempts"],
+				self.splits[splitType][splitSubType]["three_point_field_goals"],
+				self.splits[splitType][splitSubType]["three_point_field_goal_attempts"],
+				self.splits[splitType][splitSubType]["free_throws"],
+				self.splits[splitType][splitSubType]["free_throw_attempts"],
+				self.splits[splitType][splitSubType]["offensive_rebounds"],
+				self.splits[splitType][splitSubType]["defensive_rebounds"],
+				self.splits[splitType][splitSubType]["total_rebounds"],
+				self.splits[splitType][splitSubType]["assists"],
+				self.splits[splitType][splitSubType]["steals"],
+				self.splits[splitType][splitSubType]["blocks"],
+				self.splits[splitType][splitSubType]["turnovers"],
+				self.splits[splitType][splitSubType]["personal_fouls"],
+				self.splits[splitType][splitSubType]["points"],
+				self.splits[splitType][splitSubType]["field_goal_pct"],
+				self.splits[splitType][splitSubType]["three_point_field_goal_pct"],
+				self.splits[splitType][splitSubType]["free_throw_pct"],
+				self.splits[splitType][splitSubType]["true_shooting_pct"],
+				self.splits[splitType][splitSubType]["usage_pct"],
+				self.splits[splitType][splitSubType]["offensive_rating"],
+				self.splits[splitType][splitSubType]["defensive_rating"],
+				self.splits[splitType][splitSubType]["plus_minus"],
+				self.splits[splitType][splitSubType]["minutes_played_per_game"],
+				self.splits[splitType][splitSubType]["points_per_game"],
+				self.splits[splitType][splitSubType]["total_rebounds_per_game"],
+				self.splits[splitType][splitSubType]["assists_per_game"],
+				playerId,
+				season,
+				splitType,
+				splitSubType
+			)
+		else:
+			query = """
+				update splits set
+					games = %d,
+					games_started = %d,
+					minutes_played = %d,
+					field_goals = %d,
+					field_goal_attempts = %d,
+					three_point_field_goals = %d,
+					three_point_field_goal_attempts = %d,
+					free_throws = %d,
+					free_throw_attempts = %d,
+					offensive_rebounds = %d,
+					defensive_rebounds = %d,
+					total_rebounds = %d,
+					assists = %d,
+					steals = %d,
+					blocks = %d,
+					turnovers = %d,
+					personal_fouls = %d,
+					points = %d,
+					field_goal_pct = %f,
+					three_point_field_goal_pct = %f,
+					free_throw_pct = %f,
+					true_shooting_pct = %f,
+					usage_pct = %f,
+					offensive_rating = %d,
+					defensive_rating = %d,
+					minutes_played_per_game = %f,
+					points_per_game = %f,
+					total_rebounds_per_game = %f,
+					assists_per_game = %f
+				where player_id = '%s' and season = %d and type = '%s' and subtype = '%s'
+			""" % (
+				self.splits[splitType][splitSubType]["games"],
+				self.splits[splitType][splitSubType]["games_started"],
+				self.splits[splitType][splitSubType]["minutes_played"],
+				self.splits[splitType][splitSubType]["field_goals"],
+				self.splits[splitType][splitSubType]["field_goal_attempts"],
+				self.splits[splitType][splitSubType]["three_point_field_goals"],
+				self.splits[splitType][splitSubType]["three_point_field_goal_attempts"],
+				self.splits[splitType][splitSubType]["free_throws"],
+				self.splits[splitType][splitSubType]["free_throw_attempts"],
+				self.splits[splitType][splitSubType]["offensive_rebounds"],
+				self.splits[splitType][splitSubType]["defensive_rebounds"],
+				self.splits[splitType][splitSubType]["total_rebounds"],
+				self.splits[splitType][splitSubType]["assists"],
+				self.splits[splitType][splitSubType]["steals"],
+				self.splits[splitType][splitSubType]["blocks"],
+				self.splits[splitType][splitSubType]["turnovers"],
+				self.splits[splitType][splitSubType]["personal_fouls"],
+				self.splits[splitType][splitSubType]["points"],
+				self.splits[splitType][splitSubType]["field_goal_pct"],
+				self.splits[splitType][splitSubType]["three_point_field_goal_pct"],
+				self.splits[splitType][splitSubType]["free_throw_pct"],
+				self.splits[splitType][splitSubType]["true_shooting_pct"],
+				self.splits[splitType][splitSubType]["usage_pct"],
+				self.splits[splitType][splitSubType]["offensive_rating"],
+				self.splits[splitType][splitSubType]["defensive_rating"],
+				self.splits[splitType][splitSubType]["minutes_played_per_game"],
+				self.splits[splitType][splitSubType]["points_per_game"],
+				self.splits[splitType][splitSubType]["total_rebounds_per_game"],
+				self.splits[splitType][splitSubType]["assists_per_game"],
+				playerId,
+				season,
+				splitType,
+				splitSubType
 			)
 		
 		cursor.execute(query)
@@ -1215,7 +1512,7 @@ class BasketballReferenceGameLogParser(HTMLParser):
 				self.basic_game_stats[self.game_number]["opponent"] = data
 			# Win or Loss
 			elif self.current == "td" and self.tdCount == 8:
-				self.basic_game_stats[self.game_number]["winloss"] = data
+				self.basic_game_stats[self.game_number]["result"] = data
 			# Games started
 			elif self.current == "td" and self.tdCount == 9:
 				self.basic_game_stats[self.game_number]["games_started"] = int(data)
@@ -1323,7 +1620,7 @@ class BasketballReferenceGameLogParser(HTMLParser):
 				self.advanced_game_stats[self.game_number]["opponent"] = data
 			# Win or Loss
 			elif self.current == "td" and self.tdCount == 8:
-				self.advanced_game_stats[self.game_number]["winloss"] = data
+				self.advanced_game_stats[self.game_number]["result"] = data
 			# Games started
 			elif self.current == "td" and self.tdCount == 9:
 				self.advanced_game_stats[self.game_number]["games_started"] = int(data)
@@ -1373,6 +1670,156 @@ class BasketballReferenceGameLogParser(HTMLParser):
 			elif self.current == "td" and self.tdCount == 23:
 				self.advanced_game_stats[self.game_number]["game_score"] = float(data)
 
+###############################
+# Parses a player's game log.
+###############################
+class BasketballReferenceTeamGameLogParser(HTMLParser):
+	current = ""
+	tableType = ""
+	tdCount = 0
+	game_number = 0
+	game_stats = {}
+
+	def handle_starttag(self, tag, attrs):
+		if tag == "table" and len(attrs) > 1 and attrs[1][1] == "stats":
+			self.tableType = "stats"
+		if tag == "tr" and self.tableType == "stats":
+			self.tdCount = 0
+			self.game_number = 0
+		elif tag == "td":
+			self.tdCount = self.tdCount + 1
+		
+		self.current = tag
+	
+	def handle_endtag(self, tag):
+		# We've reached the end of the stats table.  Tell the app that we're done with it.
+		if tag == "table" and self.tableType == "stats":
+			self.tableType = ""
+		# End of the row.  Print out the stats we've acquired.
+		elif tag == "tr" and self.tableType == "stats" and self.game_number > 0:
+			print self.game_stats[self.game_number]
+			#pass
+		elif tag == "td" and self.tdCount == 6:
+			# Properly set the home/away value.  On the site, this is denoted
+			# as an "@" sign, which means if we don't collect anything then it's
+			# a home game.  Therefore, we have a catch block to set the value to True.
+			try:
+				self.game_stats[self.game_number]["home"]
+			except:
+				self.game_stats[self.game_number]["home"] = True					
+	
+	def handle_data(self, data):
+		if data.strip() == "":
+			return
+
+		# Game number
+		if self.current == "span" and self.tdCount == 2:
+			self.game_number = int(data)
+			self.game_stats[self.game_number] = {
+				"result": ""
+			}
+		# Date
+		elif self.current == "a" and self.tdCount == 3:
+			self.game_stats[self.game_number]["date"] = data
+		# Home or Away
+		elif self.current == "td" and self.tdCount == 4:
+			self.game_stats[self.game_number]["home"] = data != "@"
+		# Opponent
+		elif self.current == "a" and self.tdCount == 5:
+			self.game_stats[self.game_number]["opponent"] = data
+		# Game Result (Win or loss)
+		elif self.current == "td" and self.tdCount == 6:
+			self.game_stats[self.game_number]["result"] = data
+		# Minutes played
+		elif self.current == "td" and self.tdCount == 7:
+			self.game_stats[self.game_number]["minutes_played"] = int(data)
+		# Field goals
+		elif self.current == "td" and self.tdCount == 8:
+			self.game_stats[self.game_number]["field_goals"] = int(data)
+		# Field goal attempts
+		elif self.current == "td" and self.tdCount == 9:
+			self.game_stats[self.game_number]["field_goal_attempts"] = int(data)
+		# 3 pointers
+		elif self.current == "td" and self.tdCount == 10:
+			self.game_stats[self.game_number]["three_point_field_goals"] = int(data)
+		# 3 point attempts
+		elif self.current == "td" and self.tdCount == 11:
+			self.game_stats[self.game_number]["three_point_field_goal_attempts"] = int(data)
+		# Free throws
+		elif self.current == "td" and self.tdCount == 12:
+			self.game_stats[self.game_number]["free_throws"] = int(data)
+		# Free throws attempted
+		elif self.current == "td" and self.tdCount == 13:
+			self.game_stats[self.game_number]["free_throw_attempts"] = int(data)
+		# Offensive rebounds
+		elif self.current == "td" and self.tdCount == 14:
+			self.game_stats[self.game_number]["offensive_rebounds"] = int(data)
+		# Total rebounds
+		elif self.current == "td" and self.tdCount == 15:
+			self.game_stats[self.game_number]["total_rebounds"] = int(data)
+		# Assists
+		elif self.current == "td" and self.tdCount == 16:
+			self.game_stats[self.game_number]["assists"] = int(data)
+		# Steals
+		elif self.current == "td" and self.tdCount == 17:
+			self.game_stats[self.game_number]["steals"] = int(data)
+		# Blocks
+		elif self.current == "td" and self.tdCount == 18:
+			self.game_stats[self.game_number]["blocks"] = int(data)
+		# Turnovers
+		elif self.current == "td" and self.tdCount == 19:
+			self.game_stats[self.game_number]["turnovers"] = int(data)
+		# Personal fouls
+		elif self.current == "td" and self.tdCount == 20:
+			self.game_stats[self.game_number]["personal_fouls"] = int(data)
+		# Points
+		elif self.current == "td" and self.tdCount == 21:
+			self.game_stats[self.game_number]["points"] = int(data)
+		# Opponent Field goals
+		elif self.current == "td" and self.tdCount == 22:
+			self.game_stats[self.game_number]["opp_field_goals"] = int(data)
+		# Opponent Field goal attempts
+		elif self.current == "td" and self.tdCount == 23:
+			self.game_stats[self.game_number]["opp_field_goal_attempts"] = int(data)
+		# Opponent 3 pointers
+		elif self.current == "td" and self.tdCount == 24:
+			self.game_stats[self.game_number]["opp_three_point_field_goals"] = int(data)
+		# Opponent 3 point attempts
+		elif self.current == "td" and self.tdCount == 25:
+			self.game_stats[self.game_number]["opp_three_point_field_goal_attempts"] = int(data)
+		# Opponent Free throws
+		elif self.current == "td" and self.tdCount == 26:
+			self.game_stats[self.game_number]["opp_free_throws"] = int(data)
+		# Opponent Free throws attempted
+		elif self.current == "td" and self.tdCount == 27:
+			self.game_stats[self.game_number]["opp_free_throw_attempts"] = int(data)
+		# Opponent Offensive rebounds
+		elif self.current == "td" and self.tdCount == 28:
+			self.game_stats[self.game_number]["opp_offensive_rebounds"] = int(data)
+		# Opponent Total rebounds
+		elif self.current == "td" and self.tdCount == 29:
+			self.game_stats[self.game_number]["opp_total_rebounds"] = int(data)
+		# Opponent Assists
+		elif self.current == "td" and self.tdCount == 30:
+			self.game_stats[self.game_number]["opp_assists"] = int(data)
+		# Opponent Steals
+		elif self.current == "td" and self.tdCount == 31:
+			self.game_stats[self.game_number]["opp_steals"] = int(data)
+		# Opponent Blocks
+		elif self.current == "td" and self.tdCount == 32:
+			self.game_stats[self.game_number]["opp_blocks"] = int(data)
+		# Opponent Turnovers
+		elif self.current == "td" and self.tdCount == 33:
+			self.game_stats[self.game_number]["opp_turnovers"] = int(data)
+		# Opponent Personal fouls
+		elif self.current == "td" and self.tdCount == 34:
+			self.game_stats[self.game_number]["opp_personal_fouls"] = int(data)
+		# Opponent Points
+		elif self.current == "td" and self.tdCount == 35:
+			self.game_stats[self.game_number]["opp_points"] = int(data)
+		
+		
+		
 ###################################################				
 # Parse the splits page for an individual player.
 ###################################################
@@ -1466,10 +1913,10 @@ class BasketballReferenceSplitsParser(HTMLParser):
 			self.stats[self.type][self.subtype]["field_goal_attempts"] = int(data)
 		# 3-pointers
 		elif self.current == "td" and self.tdCount == 8:
-			self.stats[self.type][self.subtype]["three_pointers"] = int(data)
+			self.stats[self.type][self.subtype]["three_point_field_goals"] = int(data)
 		# 3-pointer attempts
 		elif self.current == "td" and self.tdCount == 9:
-			self.stats[self.type][self.subtype]["three_pointer_attempts"] = int(data)
+			self.stats[self.type][self.subtype]["three_point_field_goal_attempts"] = int(data)
 		# Free throws
 		elif self.current == "td" and self.tdCount == 10:
 			self.stats[self.type][self.subtype]["free_throws"] = int(data)
@@ -1505,7 +1952,7 @@ class BasketballReferenceSplitsParser(HTMLParser):
 			self.stats[self.type][self.subtype]["field_goal_pct"] = float(data)
 		# 3-Point pct
 		elif self.current == "td" and self.tdCount == 21:
-			self.stats[self.type][self.subtype]["three_point_pct"] = float(data)
+			self.stats[self.type][self.subtype]["three_point_field_goal_pct"] = float(data)
 		# Free throw pct
 		elif self.current == "td" and self.tdCount == 22:
 			self.stats[self.type][self.subtype]["free_throw_pct"] = float(data)
@@ -1556,6 +2003,167 @@ class BasketballReferenceSplitsParser(HTMLParser):
 			if self.usingPlusMinus:
 				self.stats[self.type][self.subtype]["assists_per_game"] = float(data)
 
+
+#####################################
+# Parse the splits page for a team.
+#####################################
+class BasketballReferenceTeamSplitsParser(HTMLParser):
+	found_table = False
+	tbodyCount = 0
+	tdCount = 0
+	current = ""
+	type = ""
+	subtype = ""
+	usingPlusMinus = False
+	
+	######################################################################################
+	# Map of main types of splits (i.e. Conference, Division, Opponent).  The value of
+	# each key will be a map the subtypes for each type (i.e. Opponent will have each of
+	# the teams that a player played against.).  Inside of those maps will be a map
+	# containing the stats for that split.
+	######################################################################################
+	stats = {}
+
+	def handle_starttag(self, tag, attrs):
+		if tag == "table" and len(attrs) > 1 and attrs[1][1] == "stats":
+			self.found_table = True
+			self.type = ""
+			self.subtype = ""
+		elif tag == "tbody":
+			self.tbodyCount = self.tbodyCount + 1
+		elif tag == "tr":
+			self.tdCount = 0
+		elif tag == "td":
+			self.tdCount = self.tdCount + 1
+		
+		self.current = tag
+	
+	def handle_endtag(self, tag):
+		if tag == "tr" and self.type != "" and self.subtype != "":
+			print self.type+"/"+self.subtype, self.stats[self.type][self.subtype],"\n"
+			self.isDataRow = False
+	
+	def handle_data(self, data):
+		if data.strip() == "" or not self.found_table:
+			return
+	
+		#########################################################################################
+		# Look at the first td of a row.
+		# - If it is blank then we're likely looking at the second or subsequent row of a split.
+		# - If it contains any text other than "Split" then it is the first row of a split.
+		# - If it contains the text "Split" then it is a header row and can be ignored.
+		#########################################################################################
+		if self.current == "td" and self.tdCount == 1:
+			self.type = data
+			self.stats[data] = {}
+				
+		# Set up the sub-map for each split type (i.e. Win/Loss for the Result map).
+		elif (self.current == "td" or self.current == "a") and self.tdCount == 2:
+			#print "Found a new split type - ", data
+		
+			# This is the row for totals, not sure what to do with it yet.
+			if data == "Total":
+				self.type = data
+				self.stats[self.type] = {}
+			
+			self.subtype = data
+			self.stats[self.type][self.subtype] = {
+
+			}
+		# Games
+		elif self.current == "td" and self.tdCount == 3:
+			#print "Data is",data
+			self.stats[self.type][self.subtype]["games"] = int(data)
+		# Wins
+		elif self.current == "td" and self.tdCount == 4:
+			self.stats[self.type][self.subtype]["wins"] = int(data)
+		# Losses
+		elif self.current == "td" and self.tdCount == 5:
+			self.stats[self.type][self.subtype]["losses"] = int(data)
+		# Field goals
+		elif self.current == "td" and self.tdCount == 6:
+			self.stats[self.type][self.subtype]["field_goals"] = float(data)
+		# Field goal attempts
+		elif self.current == "td" and self.tdCount == 7:
+			self.stats[self.type][self.subtype]["field_goal_attempts"] = float(data)
+		# 3-pointers
+		elif self.current == "td" and self.tdCount == 8:
+			self.stats[self.type][self.subtype]["three_point_field_goals"] = float(data)
+		# 3-pointer attempts
+		elif self.current == "td" and self.tdCount == 9:
+			self.stats[self.type][self.subtype]["three_point_field_goal_attempts"] = float(data)
+		# Free throws
+		elif self.current == "td" and self.tdCount == 10:
+			self.stats[self.type][self.subtype]["free_throws"] = float(data)
+		# Free throw attempts
+		elif self.current == "td" and self.tdCount == 11:
+			self.stats[self.type][self.subtype]["free_throw_attempts"] = float(data)
+		# Offensive rebounds
+		elif self.current == "td" and self.tdCount == 12:
+			self.stats[self.type][self.subtype]["offensive_rebounds"] = float(data)
+		# Total rebounds
+		elif self.current == "td" and self.tdCount == 13:
+			self.stats[self.type][self.subtype]["total_rebounds"] = float(data)
+		# Assists
+		elif self.current == "td" and self.tdCount == 14:
+			self.stats[self.type][self.subtype]["assists"] = float(data)
+		# Steals
+		elif self.current == "td" and self.tdCount == 15:
+			self.stats[self.type][self.subtype]["steals"] = float(data)
+		# Blocks
+		elif self.current == "td" and self.tdCount == 16:
+			self.stats[self.type][self.subtype]["blocks"] = float(data)
+		# Turnovers
+		elif self.current == "td" and self.tdCount == 17:
+			self.stats[self.type][self.subtype]["turnovers"] = float(data)
+		# Personal fouls
+		elif self.current == "td" and self.tdCount == 18:
+			self.stats[self.type][self.subtype]["personal_fouls"] = float(data)
+		# Points (total)
+		elif self.current == "td" and self.tdCount == 19:
+			self.stats[self.type][self.subtype]["points"] = float(data)
+		# Opponent Field goals
+		elif self.current == "td" and self.tdCount == 20:
+			self.stats[self.type][self.subtype]["opp_field_goals"] = float(data)
+		# Opponent Field goal attempts
+		elif self.current == "td" and self.tdCount == 21:
+			self.stats[self.type][self.subtype]["opp_field_goal_attempts"] = float(data)
+		# Opponent 3-pointers
+		elif self.current == "td" and self.tdCount == 22:
+			self.stats[self.type][self.subtype]["opp_three_point_field_goals"] = float(data)
+		# Opponent 3-pointer attempts
+		elif self.current == "td" and self.tdCount == 23:
+			self.stats[self.type][self.subtype]["opp_three_point_field_goal_attempts"] = float(data)
+		# Opponent Free throws
+		elif self.current == "td" and self.tdCount == 24:
+			self.stats[self.type][self.subtype]["opp_free_throws"] = float(data)
+		# Opponent Free throw attempts
+		elif self.current == "td" and self.tdCount == 25:
+			self.stats[self.type][self.subtype]["opp_free_throw_attempts"] = float(data)
+		# Opponent Offensive rebounds
+		elif self.current == "td" and self.tdCount == 26:
+			self.stats[self.type][self.subtype]["opp_offensive_rebounds"] = float(data)
+		# OpponentTotal rebounds
+		elif self.current == "td" and self.tdCount == 27:
+			self.stats[self.type][self.subtype]["opp_total_rebounds"] = float(data)
+		# Opponent Assists
+		elif self.current == "td" and self.tdCount == 28:
+			self.stats[self.type][self.subtype]["opp_assists"] = float(data)
+		# Opponent Steals
+		elif self.current == "td" and self.tdCount == 29:
+			self.stats[self.type][self.subtype]["opp_steals"] = float(data)
+		# Opponent Blocks
+		elif self.current == "td" and self.tdCount == 30:
+			self.stats[self.type][self.subtype]["opp_blocks"] = float(data)
+		# Opponent Turnovers
+		elif self.current == "td" and self.tdCount == 31:
+			self.stats[self.type][self.subtype]["opp_turnovers"] = float(data)
+		# Opponent Personal fouls
+		elif self.current == "td" and self.tdCount == 32:
+			self.stats[self.type][self.subtype]["opp_personal_fouls"] = float(data)
+		# Opponent Points (total)
+		elif self.current == "td" and self.tdCount == 33:
+			self.stats[self.type][self.subtype]["opp_points"] = float(data)
 
 processor = Processor()
 processor.process()
