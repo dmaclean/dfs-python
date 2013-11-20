@@ -176,3 +176,104 @@ create table splits (
 	assists_per_game float not null,
 	foreign key (player_id) references players(id)
 );
+
+/*
+ * Team tables
+ */
+create table team_game_totals(
+	id int auto_increment primary key,
+	team varchar(3) not null,
+	season int not null,
+	game int not null,
+	date timestamp not null,
+	home boolean not null,
+	opponent varchar(3) not null,
+	result varchar(1) not null,
+	minutes_played int not null,
+	field_goals float not null,
+	field_goal_attempts float not null,
+	three_point_field_goals float not null,
+	three_point_field_goal_attempts float not null,
+	free_throws float not null,
+	free_throw_attempts float not null,
+	offensive_rebounds float not null,
+	total_rebounds float not null,
+	assists float not null,
+	steals float not null,
+	blocks float not null,
+	turnovers float not null,
+	personal_fouls float not null,
+	points float not null,
+	opp_field_goals float not null,
+	opp_field_goal_attempts float not null,
+	opp_three_point_field_goals float not null,
+	opp_three_point_field_goal_attempts float not null,
+	opp_free_throws float not null,
+	opp_free_throw_attempts float not null,
+	opp_offensive_rebounds float not null,
+	opp_total_rebounds float not null,
+	opp_assists float not null,
+	opp_steals float not null,
+	opp_blocks float not null,
+	opp_turnovers float not null,
+	opp_personal_fouls float not null,
+	opp_points float not null
+);
+
+create table team_splits(
+	id int auto_increment primary key,
+	team varchar(3) not null,
+	season int not null,
+	type varchar(50) not null,
+	subtype varchar(50) not null,
+	games int not null,
+	wins int not null,
+	losses int not null,
+	field_goals float not null,
+	field_goal_attempts float not null,
+	three_point_field_goals float not null,
+	three_point_field_goal_attempts float not null,
+	free_throws float not null,
+	free_throw_attempts float not null,
+	offensive_rebounds float not null,
+	total_rebounds float not null,
+	assists float not null,
+	steals float not null,
+	blocks float not null,
+	turnovers float not null,
+	personal_fouls float not null,
+	points float not null,
+	opp_field_goals float not null,
+	opp_field_goal_attempts float not null,
+	opp_three_point_field_goals float not null,
+	opp_three_point_field_goal_attempts float not null,
+	opp_free_throws float not null,
+	opp_free_throw_attempts float not null,
+	opp_offensive_rebounds float not null,
+	opp_total_rebounds float not null,
+	opp_assists float not null,
+	opp_steals float not null,
+	opp_blocks float not null,
+	opp_turnovers float not null,
+	opp_personal_fouls float not null,
+	opp_points float not null
+);
+
+create table salaries (
+	id int auto_increment primary key,
+	player_id varchar(100) not null,
+	site varchar(50) not null,
+	salary int not null,
+	date timestamp not null default CURRENT_TIMESTAMP,
+	foreign key (player_id) references players(id)
+);
+
+create table fantasy_points (
+	id int auto_increment primary key,
+	player_id varchar(100) not null,
+	site varchar(50) not null,
+	season int not null,
+	game_number int not null,
+	points float not null,
+	foreign key (player_id) references players(id)
+);
