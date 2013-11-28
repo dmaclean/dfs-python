@@ -10,11 +10,14 @@ class Processor:
 	source = ""
 	file = ""
 	season = -1
+	type = "players"
 	
 	listParser = None
 	playerMainParser = None
 	playerGameLogParser = None
 	playerSplitsParser = None
+	teamGameLogParser = None
+	teamSplitsParser = None
 	
 	def __init__(self):
 		self.source = "file"
@@ -23,7 +26,9 @@ class Processor:
 		self.playerMainParser = BasketballReferencePlayerMainParser()
 		self.playerGameLogParser = BasketballReferenceGameLogParser()
 		self.playerSplitsParser = BasketballReferenceSplitsParser()
-		self.playerGameSplitsParser = BasketballReferenceTeamSplitsParser()
+		self.teamSplitsParser = BasketballReferenceTeamSplitsParser()
+		self.teamGameLogParser = BasketballReferenceTeamGameLogParser()
+		
 	
 	def readCLI(self):
 		for arg in sys.argv:
@@ -37,6 +42,8 @@ class Processor:
 					self.file = pieces[1]
 				elif pieces[0] == "season":
 					self.season = int(pieces[1])
+				elif pieces[0] == "type":
+					self.type = pieces[1]
 					
 	
 	##############################################################################
@@ -65,11 +72,20 @@ class Processor:
 		return data
 	
 	def process(self):
+		self.readCLI()
+		if self.type == "teams":
+			self.processTeams()
+		else:
+			self.processPlayers()
+	
+	##############################################################
+	# Process the individual data, season totals, game logs, and 
+	# splits for a particular player.
+	##############################################################
+	def processPlayers(self):
 		parser = None
 		output = open("output.txt","w")
 		
-		self.readCLI()
-	
 		if self.source == "site":
 			cnx = mysql.connector.connect(user='fantasy', password='fantasy', host='localhost', database='basketball_reference')
 			alphabet = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
@@ -88,7 +104,7 @@ class Processor:
 					s = "%s,%s,%d,%d,%s\n" % (player.name, player.positions, player.height, player.weight, player.url) 
 					output.write(s)
 					
-					time.sleep( 10 + (10*random.random()) )
+					time.sleep( 5 + (5*random.random()) )
 					data = self.fetchData(player.url, True)
 					
 					# Reset the stats maps before we parse the HTML
@@ -117,7 +133,7 @@ class Processor:
 						######################
 						# Grab the game logs.
 						######################
-						time.sleep( 10 + (10*random.random()) )
+						time.sleep( 5 + (5*random.random()) )
 						gameLogUrl = "/players/" + letter + "/" + player.code + "/gamelog/" + str(k+1)
 						data = self.fetchData(gameLogUrl, True)
 						
@@ -138,7 +154,7 @@ class Processor:
 						####################
 						# Grab the splits.
 						####################
-						time.sleep( 10 + (10*random.random()) )
+						time.sleep( 5 + (5*random.random()) )
 						splitUrl = "/players/" + letter + "/" + player.code + "/splits/" + str(k+1)
 						data = self.fetchData(splitUrl, True)
 						
@@ -165,7 +181,80 @@ class Processor:
 						else:
 							player.updateSeasonAdvancedStatsInDatabase(cnx, player.code, k)
 					
-				time.sleep( 10 + (10*random.random()) )
+				time.sleep( 5 + (5*random.random()) )
+		else:
+			f = open("tests/" + self.source,"r")
+			data = f.read().replace("\n","")
+			
+			if self.source == "player_list.html":
+				parser = BasketballReferencePlayerListParser()
+			elif self.source == "player_main.html":
+				parser = BasketballReferencePlayerMainParser()
+			elif self.source == "player_gamelog.html":
+				parser = BasketballReferenceGameLogParser()
+			elif self.source == "player_splits.html" or self.source == "player_splits_no_plusminus.html":
+				parser = BasketballReferenceSplitsParser()
+			elif self.source == "team_splits.html":
+				parser = BasketballReferenceTeamSplitsParser()
+			elif self.source == "team_gamelog.html":
+				parser = BasketballReferenceTeamGameLogParser()
+			parser.feed(data)
+	
+	###################################################################
+	# Process the game logs and splits for each team for each season.
+	###################################################################
+	def processTeams(self):
+		parser = None
+		
+		if self.source == "site":
+			cnx = mysql.connector.connect(user='fantasy', password='fantasy', host='localhost', database='basketball_reference')
+			
+			if self.season != -1:
+				seasons = [self.season]
+			else:
+				seasons = [2010,2011,2012,2013]
+			
+			for season in seasons:			
+				cursor = cnx.cursor()
+				query = ("select distinct team from game_totals_basic where season = %d order by team") % (season)
+				cursor.execute(query)
+				
+				teams = []
+				for (result) in cursor:
+					teams.append(result[0])
+				cursor.close()
+
+				for team_name in teams:
+					#####################################
+					# Get game log data for team/season
+					#####################################
+					time.sleep( 10 + (10*random.random()) )
+					data = self.fetchData("/teams/"+team_name+"/"+str(season+1)+"/gamelog/", True)
+					self.teamGameLogParser.game_stats = {}
+					self.teamGameLogParser.feed(data)
+					
+					team = Team(team_name, self.teamGameLogParser.game_stats)
+					for game in team.game_log_stats:
+						if not team.teamGameLogExists(cnx, season, game):
+							team.writeTeamGameLogToDatabase(cnx, season, game)
+						else:
+							team.updateTeamGameLogInDatabase(cnx, season, game)
+					
+					###################################
+					# Get splits data for team/season
+					###################################
+					time.sleep( 10 + (10*random.random()) )
+					data = self.fetchData("/teams/"+team_name+"/"+str(season+1)+"/splits/", True)
+					self.teamSplitsParser.stats = {}
+					self.teamSplitsParser.feed(data)
+					
+					team.splits_stats = self.teamSplitsParser.stats
+					for type in team.splits_stats:
+						for subtype in team.splits_stats[type]:
+							if not team.teamSplitExists(cnx, season, type, subtype):
+								team.writeTeamSplitToDatabase(cnx, season, type, subtype)
+							else:
+								team.updateTeamSplitInDatabase(cnx, season, type, subtype)
 		else:
 			f = open("tests/" + self.source,"r")
 			data = f.read().replace("\n","")
@@ -184,6 +273,391 @@ class Processor:
 				parser = BasketballReferenceTeamGameLogParser()
 			parser.feed(data)
 
+
+class Team:
+	def __init__(self, name=None, game_log_stats=None, splits_stats=None):
+		self.name = name
+		self.game_log_stats = game_log_stats
+		self.splits_stats = splits_stats
+	
+	#############################################################################
+	# Determine if a game log for a particular team/season/game exists already.
+	#############################################################################
+	def teamGameLogExists(self, conn, season, game_number):
+		cursor = conn.cursor()
+		query = ("select id from team_game_totals where team = '%s' and season = %d and game = %d") % (self.name, season, game_number)
+		
+		try:
+			cursor.execute(query)
+		
+			for (id) in cursor:
+				cursor.close()
+				return True
+		
+			return False
+		finally:
+			cursor.close()
+	
+	#################################################
+	# Write a team's game log data to the database.
+	#################################################
+	def writeTeamGameLogToDatabase(self, conn, season, game_number):
+		cursor = conn.cursor()
+		query = ("""
+			insert into team_game_totals (
+				team,
+				season,
+				game,
+				date,
+				home,
+				opponent,
+				result,
+				minutes_played,
+				field_goals,
+				field_goal_attempts,
+				three_point_field_goals,
+				three_point_field_goal_attempts,
+				free_throws,
+				free_throw_attempts,
+				offensive_rebounds,
+				total_rebounds,
+				assists,
+				steals,
+				blocks,
+				turnovers,
+				personal_fouls,
+				points,
+				opp_field_goals,
+				opp_field_goal_attempts,
+				opp_three_point_field_goals,
+				opp_three_point_field_goal_attempts,
+				opp_free_throws,
+				opp_free_throw_attempts,
+				opp_offensive_rebounds,
+				opp_total_rebounds,
+				opp_assists,
+				opp_steals,
+				opp_blocks,
+				opp_turnovers,
+				opp_personal_fouls,
+				opp_points
+			) values (
+				'%s',%d,%d,'%s',%d,'%s','%s',%d,%d,%d,%d,%d,
+				%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,
+				%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d
+			)
+		""") % (
+			self.name,
+			season,
+			game_number,
+			self.game_log_stats[game_number]["date"],
+			self.game_log_stats[game_number]["home"],
+			self.game_log_stats[game_number]["opponent"],
+			self.game_log_stats[game_number]["result"],
+			self.game_log_stats[game_number]["minutes_played"],
+			self.game_log_stats[game_number]["field_goals"],
+			self.game_log_stats[game_number]["field_goal_attempts"],
+			self.game_log_stats[game_number]["three_point_field_goals"],
+			self.game_log_stats[game_number]["three_point_field_goal_attempts"],
+			self.game_log_stats[game_number]["free_throws"],
+			self.game_log_stats[game_number]["free_throw_attempts"],
+			self.game_log_stats[game_number]["offensive_rebounds"],
+			self.game_log_stats[game_number]["total_rebounds"],
+			self.game_log_stats[game_number]["assists"],
+			self.game_log_stats[game_number]["steals"],
+			self.game_log_stats[game_number]["blocks"],
+			self.game_log_stats[game_number]["turnovers"],
+			self.game_log_stats[game_number]["personal_fouls"],
+			self.game_log_stats[game_number]["points"],
+			self.game_log_stats[game_number]["opp_field_goals"],
+			self.game_log_stats[game_number]["opp_field_goal_attempts"],
+			self.game_log_stats[game_number]["opp_three_point_field_goals"],
+			self.game_log_stats[game_number]["opp_three_point_field_goal_attempts"],
+			self.game_log_stats[game_number]["opp_free_throws"],
+			self.game_log_stats[game_number]["opp_free_throw_attempts"],
+			self.game_log_stats[game_number]["opp_offensive_rebounds"],
+			self.game_log_stats[game_number]["opp_total_rebounds"],
+			self.game_log_stats[game_number]["opp_assists"],
+			self.game_log_stats[game_number]["opp_steals"],
+			self.game_log_stats[game_number]["opp_blocks"],
+			self.game_log_stats[game_number]["opp_turnovers"],
+			self.game_log_stats[game_number]["opp_personal_fouls"],
+			self.game_log_stats[game_number]["opp_points"]
+		)
+		
+		try:
+			cursor.execute(query)
+		finally:
+			cursor.close()
+			
+	def updateTeamGameLogInDatabase(self, conn, season, game_number):
+		cursor = conn.cursor()
+		query = ("""
+			update team_game_totals set
+				date = '%s',
+				home = %d,
+				opponent = '%s',
+				result = '%s',
+				minutes_played = %d,
+				field_goals = %d,
+				field_goal_attempts = %d,
+				three_point_field_goals = %d,
+				three_point_field_goal_attempts = %d,
+				free_throws = %d,
+				free_throw_attempts = %d,
+				offensive_rebounds = %d,
+				total_rebounds = %d,
+				assists = %d,
+				steals = %d,
+				blocks = %d,
+				turnovers = %d,
+				personal_fouls = %d,
+				points = %d,
+				opp_field_goals = %d,
+				opp_field_goal_attempts = %d,
+				opp_three_point_field_goals = %d,
+				opp_three_point_field_goal_attempts = %d,
+				opp_free_throws = %d,
+				opp_free_throw_attempts = %d,
+				opp_offensive_rebounds = %d,
+				opp_total_rebounds = %d,
+				opp_assists = %d,
+				opp_steals = %d,
+				opp_blocks = %d,
+				opp_turnovers = %d,
+				opp_personal_fouls = %d,
+				opp_points = %d
+			where team = '%s' and season = %d and game = %d
+		""") % (
+			self.game_log_stats[game_number]["date"],
+			self.game_log_stats[game_number]["home"],
+			self.game_log_stats[game_number]["opponent"],
+			self.game_log_stats[game_number]["result"],
+			self.game_log_stats[game_number]["minutes_played"],
+			self.game_log_stats[game_number]["field_goals"],
+			self.game_log_stats[game_number]["field_goal_attempts"],
+			self.game_log_stats[game_number]["three_point_field_goals"],
+			self.game_log_stats[game_number]["three_point_field_goal_attempts"],
+			self.game_log_stats[game_number]["free_throws"],
+			self.game_log_stats[game_number]["free_throw_attempts"],
+			self.game_log_stats[game_number]["offensive_rebounds"],
+			self.game_log_stats[game_number]["total_rebounds"],
+			self.game_log_stats[game_number]["assists"],
+			self.game_log_stats[game_number]["steals"],
+			self.game_log_stats[game_number]["blocks"],
+			self.game_log_stats[game_number]["turnovers"],
+			self.game_log_stats[game_number]["personal_fouls"],
+			self.game_log_stats[game_number]["points"],
+			self.game_log_stats[game_number]["opp_field_goals"],
+			self.game_log_stats[game_number]["opp_field_goal_attempts"],
+			self.game_log_stats[game_number]["opp_three_point_field_goals"],
+			self.game_log_stats[game_number]["opp_three_point_field_goal_attempts"],
+			self.game_log_stats[game_number]["opp_free_throws"],
+			self.game_log_stats[game_number]["opp_free_throw_attempts"],
+			self.game_log_stats[game_number]["opp_offensive_rebounds"],
+			self.game_log_stats[game_number]["opp_total_rebounds"],
+			self.game_log_stats[game_number]["opp_assists"],
+			self.game_log_stats[game_number]["opp_steals"],
+			self.game_log_stats[game_number]["opp_blocks"],
+			self.game_log_stats[game_number]["opp_turnovers"],
+			self.game_log_stats[game_number]["opp_personal_fouls"],
+			self.game_log_stats[game_number]["opp_points"],
+			self.name,
+			season,
+			game_number
+		)
+		
+		try:
+			cursor.execute(query)
+		finally:
+			cursor.close()
+	
+	
+	#####################################################################
+	# Determine if a split for a particular team/season exists already.
+	#####################################################################
+	def teamSplitExists(self, conn, season, type, subtype):
+		cursor = conn.cursor()
+		query = ("select id from team_splits where team = '%s' and season = %d and type = '%s' and subtype = '%s'") % (self.name, season, type, subtype)
+		
+		try:
+			cursor.execute(query)
+		
+			for (id) in cursor:
+				cursor.close()
+				return True
+		
+			return False
+		finally:
+			cursor.close()
+	
+	###################################################
+	# Insert a new record into the team_splits table.
+	###################################################
+	def writeTeamSplitToDatabase(self, conn, season, type, subtype):
+		cursor = conn.cursor()
+		query = ("""
+			insert into team_splits (
+				team,
+				season,
+				type,
+				subtype,
+				games,
+				wins,
+				losses,
+				field_goals,
+				field_goal_attempts,
+				three_point_field_goals,
+				three_point_field_goal_attempts,
+				free_throws,
+				free_throw_attempts,
+				offensive_rebounds,
+				total_rebounds,
+				assists,
+				steals,
+				blocks,
+				turnovers,
+				personal_fouls,
+				points,
+				opp_field_goals,
+				opp_field_goal_attempts,
+				opp_three_point_field_goals,
+				opp_three_point_field_goal_attempts,
+				opp_free_throws,
+				opp_free_throw_attempts,
+				opp_offensive_rebounds,
+				opp_total_rebounds,
+				opp_assists,
+				opp_steals,
+				opp_blocks,
+				opp_turnovers,
+				opp_personal_fouls,
+				opp_points
+			) values (
+				'%s',%d,'%s','%s',%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,
+				%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d				
+			)
+		""") % (
+			self.name,
+			season,
+			type,
+			subtype,
+			self.splits_stats[type][subtype]["games"],
+			self.splits_stats[type][subtype]["wins"],
+			self.splits_stats[type][subtype]["losses"],
+			self.splits_stats[type][subtype]["field_goals"],
+			self.splits_stats[type][subtype]["field_goal_attempts"],
+			self.splits_stats[type][subtype]["three_point_field_goals"],
+			self.splits_stats[type][subtype]["three_point_field_goal_attempts"],
+			self.splits_stats[type][subtype]["free_throws"],
+			self.splits_stats[type][subtype]["free_throw_attempts"],
+			self.splits_stats[type][subtype]["offensive_rebounds"],
+			self.splits_stats[type][subtype]["total_rebounds"],
+			self.splits_stats[type][subtype]["assists"],
+			self.splits_stats[type][subtype]["steals"],
+			self.splits_stats[type][subtype]["blocks"],
+			self.splits_stats[type][subtype]["turnovers"],
+			self.splits_stats[type][subtype]["personal_fouls"],
+			self.splits_stats[type][subtype]["points"],
+			self.splits_stats[type][subtype]["opp_field_goals"],
+			self.splits_stats[type][subtype]["opp_field_goal_attempts"],
+			self.splits_stats[type][subtype]["opp_three_point_field_goals"],
+			self.splits_stats[type][subtype]["opp_three_point_field_goal_attempts"],
+			self.splits_stats[type][subtype]["opp_free_throws"],
+			self.splits_stats[type][subtype]["opp_free_throw_attempts"],
+			self.splits_stats[type][subtype]["opp_offensive_rebounds"],
+			self.splits_stats[type][subtype]["opp_total_rebounds"],
+			self.splits_stats[type][subtype]["opp_assists"],
+			self.splits_stats[type][subtype]["opp_steals"],
+			self.splits_stats[type][subtype]["opp_blocks"],
+			self.splits_stats[type][subtype]["opp_turnovers"],
+			self.splits_stats[type][subtype]["opp_personal_fouls"],
+			self.splits_stats[type][subtype]["opp_points"]
+		)
+		
+		try:
+			cursor.execute(query)
+		finally:
+			cursor.close()
+	
+	def updateTeamSplitInDatabase(self, conn, season, type, subtype):
+		cursor = conn.cursor()
+		query = ("""
+			update team_splits set
+				games = %d,
+				wins = %d,
+				losses = %d,
+				field_goals = %d,
+				field_goal_attempts = %d,
+				three_point_field_goals = %d,
+				three_point_field_goal_attempts = %d,
+				free_throws = %d,
+				free_throw_attempts = %d,
+				offensive_rebounds = %d,
+				total_rebounds = %d,
+				assists = %d,
+				steals = %d,
+				blocks = %d,
+				turnovers = %d,
+				personal_fouls = %d,
+				points = %d,
+				opp_field_goals = %d,
+				opp_field_goal_attempts = %d,
+				opp_three_point_field_goals = %d,
+				opp_three_point_field_goal_attempts = %d,
+				opp_free_throws = %d,
+				opp_free_throw_attempts = %d,
+				opp_offensive_rebounds = %d,
+				opp_total_rebounds = %d,
+				opp_assists = %d,
+				opp_steals = %d,
+				opp_blocks = %d,
+				opp_turnovers = %d,
+				opp_personal_fouls = %d,
+				opp_points = %d
+			where team = '%s' and season = %d and type = '%s' and subtype = '%s'
+			""") % (
+			self.splits_stats[type][subtype]["games"],
+			self.splits_stats[type][subtype]["wins"],
+			self.splits_stats[type][subtype]["losses"],
+			self.splits_stats[type][subtype]["field_goals"],
+			self.splits_stats[type][subtype]["field_goal_attempts"],
+			self.splits_stats[type][subtype]["three_point_field_goals"],
+			self.splits_stats[type][subtype]["three_point_field_goal_attempts"],
+			self.splits_stats[type][subtype]["free_throws"],
+			self.splits_stats[type][subtype]["free_throw_attempts"],
+			self.splits_stats[type][subtype]["offensive_rebounds"],
+			self.splits_stats[type][subtype]["total_rebounds"],
+			self.splits_stats[type][subtype]["assists"],
+			self.splits_stats[type][subtype]["steals"],
+			self.splits_stats[type][subtype]["blocks"],
+			self.splits_stats[type][subtype]["turnovers"],
+			self.splits_stats[type][subtype]["personal_fouls"],
+			self.splits_stats[type][subtype]["points"],
+			self.splits_stats[type][subtype]["opp_field_goals"],
+			self.splits_stats[type][subtype]["opp_field_goal_attempts"],
+			self.splits_stats[type][subtype]["opp_three_point_field_goals"],
+			self.splits_stats[type][subtype]["opp_three_point_field_goal_attempts"],
+			self.splits_stats[type][subtype]["opp_free_throws"],
+			self.splits_stats[type][subtype]["opp_free_throw_attempts"],
+			self.splits_stats[type][subtype]["opp_offensive_rebounds"],
+			self.splits_stats[type][subtype]["opp_total_rebounds"],
+			self.splits_stats[type][subtype]["opp_assists"],
+			self.splits_stats[type][subtype]["opp_steals"],
+			self.splits_stats[type][subtype]["opp_blocks"],
+			self.splits_stats[type][subtype]["opp_turnovers"],
+			self.splits_stats[type][subtype]["opp_personal_fouls"],
+			self.splits_stats[type][subtype]["opp_points"],
+			self.name,
+			season,
+			type,
+			subtype
+		)
+		
+		try:
+			cursor.execute(query)
+		finally:
+			cursor.close()
 
 class Player:
 	def __init__(self):
@@ -1697,8 +2171,8 @@ class BasketballReferenceTeamGameLogParser(HTMLParser):
 			self.tableType = ""
 		# End of the row.  Print out the stats we've acquired.
 		elif tag == "tr" and self.tableType == "stats" and self.game_number > 0:
-			print self.game_stats[self.game_number]
-			#pass
+			#print self.game_stats[self.game_number]
+			pass
 		elif tag == "td" and self.tdCount == 6:
 			# Properly set the home/away value.  On the site, this is denoted
 			# as an "@" sign, which means if we don't collect anything then it's
@@ -2040,7 +2514,7 @@ class BasketballReferenceTeamSplitsParser(HTMLParser):
 	
 	def handle_endtag(self, tag):
 		if tag == "tr" and self.type != "" and self.subtype != "":
-			print self.type+"/"+self.subtype, self.stats[self.type][self.subtype],"\n"
+			#print self.type+"/"+self.subtype, self.stats[self.type][self.subtype],"\n"
 			self.isDataRow = False
 	
 	def handle_data(self, data):
