@@ -25,8 +25,12 @@ for line in f:
 		read_header = True
 		continue
 	pieces = line.split(",")
-	name = pieces[1]
-	salary = int(pieces[4])
+	if site == "DRAFT_DAY":
+		name = pieces[1]
+		salary = int(pieces[4])
+	elif site == "DRAFT_KINGS":
+		name = pieces[1]
+		salary = int(pieces[2])
 	
 	salaries[name] = salary
 
