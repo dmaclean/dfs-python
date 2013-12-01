@@ -56,7 +56,7 @@ class Processor:
 		
 		while not successful:
 			try:
-				conn = httplib.HTTPConnection("www.basketball-reference.com")
+				conn = httplib.HTTPConnection("www.basketball-reference.com", timeout=5)
 				conn.request("GET", url)
 				resp = conn.getresponse()			
 		
@@ -66,7 +66,7 @@ class Processor:
 				conn.close()
 				successful = True
 			except:
-				print "Issue connecting to basketball-reference.  Retrying in 10 seconds..."
+				print "Issue connecting to basketball-reference.  Retrying in 10 seconds...", sys.exc_info()[0]
 				time.sleep( 10 )
 		
 		return data
