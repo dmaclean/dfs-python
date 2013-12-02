@@ -7,6 +7,10 @@ cnx = mysql.connector.connect(user='fantasy', password='fantasy', host='localhos
 
 league_averages = {}
 
+##########################################################
+# Retrieves the player information in the players table.
+# Returns a dictionary of the values.
+##########################################################
 def get_player_info(player_id):
 	cursor = cnx.cursor()
 	query = """
@@ -28,6 +32,10 @@ def get_player_info(player_id):
 		
 	return info
 
+####################################################################
+# Determine the team that the player plays for, given the provided
+# season and date.
+####################################################################
 def get_team(player_id, season, date=date.today()):
 	cursor = cnx.cursor()
 	
@@ -49,15 +57,16 @@ def get_team(player_id, season, date=date.today()):
 # played against a team, sum their points, and divide by the number of games
 # the team has played.
 ##############################################################################
-def calculate_defense_vs_position(metric, position, team, season):
+def calculate_defense_vs_position(metric, position, team, season, date=date.today()):
 	cursor = cnx.cursor()
 	
 	query = ""
 	try:
 		if metric == "points":
-			query = """select sum(b.points)/(select max(game) from team_game_totals where team = '%s' and season = %d) 
+			query = """select sum(b.points)/(select max(game) from team_game_totals where team = '%s' and season = %d and date <= '%s') 
 					from players p inner join game_totals_basic b on p.id = b.player_id 
-					where b.season = %d and p.position = '%s' and b.opponent = '%s'""" % (team, season, season, position, team)
+					where b.season = %d and p.position = '%s' and b.opponent = '%s'
+						and date <= '%s'""" % (team, season, date, season, position, team, date)
 		elif metric == "offensive_rebounds":
 			query = """select sum(b.offensive_rebounds)/(select max(game) from team_game_totals where team = '%s' and season = %d) 
 					from players p inner join game_totals_basic b on p.id = b.player_id 
@@ -176,17 +185,17 @@ def calculate_defense_factor_vs_position(position, team, season, league_avg = Fa
 	
 	return factor
 
-def get_baseline(player_id, season, stat):
+def get_baseline(player_id, season, stat, date=date.today()):
 	cursor = cnx.cursor()
 	query = """
-		select avg(%s) from game_totals_basic b where player_id = '%s' and season = %d
-		""" % (stat, player_id, season)
+		select avg(%s) from game_totals_basic b where player_id = '%s' and season = %d and date <= '%s'
+		""" % (stat, player_id, season, date)
 	
 	adv_query = """
 		select avg(usage_pct), avg(offensive_rating), avg(defensive_rating)
 		from game_totals_advanced
-		where player_id = '%s' and season = %d
-	""" % (player_id, season)
+		where player_id = '%s' and season = %d and date <= '%s'
+	""" % (player_id, season, date)
 	
 	avg_stat = 0
 	avg_usage_pct = 0
@@ -212,8 +221,8 @@ def calculate_projection(player_id, season, opponent, date=date.today()):
 	print "%s" % date
 
 	info = get_player_info(player_id)
-	team = get_team(player_id, season)
-	baselines = get_baseline(id,2013,'points')
+	team = get_team(player_id, season, date)
+	baselines = get_baseline(id,2013,'points', date)
 	
 	avg_points = baselines[0]
 	adjusted_points = avg_points
@@ -233,15 +242,19 @@ def calculate_projection(player_id, season, opponent, date=date.today()):
 	# for this player's position.
 	######################################################################
 	league_avg = calculate_league_avg("points", info["position"], season)
-	def_factor = calculate_defense_vs_position("points", info["position"], opponent, season)
+	def_factor = calculate_defense_vs_position("points", info["position"], opponent, season, date)
 	
 	adjusted_points = adjusted_points * float(def_factor/league_avg)
 	
 	return adjusted_points
 
-positions = ["G","F","C"]
-teams = ["ATL","BOS","BRK","LAL"]
+def run():
+	positions = ["G","F","C"]
+	teams = ["ATL","BOS","BRK","LAL"]
 
-id = 'anthoca01'
-game_date = date(2013,11,25)
-print calculate_projection(id, 2013, 'BOS', game_date)
+	id = 'anthoca01'
+	game_date = date(2013,11,01)
+	print calculate_projection(id, 2013, 'BOS', game_date)
+
+if __name__ == '__main__':
+	run()
