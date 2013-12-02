@@ -1680,7 +1680,7 @@ class BasketballReferencePlayerMainParser(HTMLParser):
 		if tag == "tr" and len(attrs) > 1 and attrs[1][1].find("totals") == 0:
 			self.table_type = "totals"
 			self.tdCount = 0
-		elif tag == "tr" and len(attrs) > 1 and attrs[1][1].find("advanced") == 0:
+		elif tag == "tr" and len(attrs) > 1 and attrs[1][1].find("advanced.") == 0:
 			self.table_type = "advanced"
 			self.tdCount = 0
 		elif tag == "td":
