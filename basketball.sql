@@ -92,7 +92,7 @@ create table game_totals_basic (
 	field_goal_pct float not null,
 	three_point_field_goals int not null,
 	three_point_field_goal_attempts int not null,
-	three_point_pct float not null,
+	three_point_field_goal_pct float not null,
 	free_throws int not null,
 	free_throw_attempts int not null,
 	free_throw_pct float not null,
