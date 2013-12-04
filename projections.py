@@ -137,7 +137,7 @@ class Projections:
 	########################################################
 	# Calculates the league average for the provided stat.
 	########################################################
-	def calculate_league_avg(self, stat, position, season):
+	def calculate_league_avg(self, stat, position, season, date=date.today()):
 		##########################################################
 		# This calculation is somewhat expensive, so just return
 		# the cached value if we've already computed it.
@@ -148,12 +148,12 @@ class Projections:
 	
 		cursor = self.cnx.cursor()
 		query = """
-			select sum(%s)/(select max(t.game) from team_game_totals t where t.team = b.opponent and season = %d) as "avg", opponent 
+			select sum(%s)/(select max(t.game) from team_game_totals t where t.team = b.opponent and season = %d and date <= '%s') as "avg", opponent 
 			from game_totals_basic b inner join players p on p.id = b.player_id 
-			where season = %d and position = '%s'
+			where season = %d and position = '%s' and date <= '%s'
 			group by opponent 
 			order by avg desc
-		""" % (stat, season, season, position)
+		""" % (stat, season, date, season, position, date)
 	
 		total = 0
 		count = 0
@@ -197,6 +197,10 @@ class Projections:
 	
 		return factor
 
+	###################################################################################
+	# Retrieves season averages for a player up to a certain date so we can
+	# establish a baseline for the player, prior to adjusting based on matchups, etc.
+	###################################################################################
 	def get_baseline(self, player_id, season, stat, date=date.today()):
 		cursor = self.cnx.cursor()
 		query = """
@@ -230,8 +234,6 @@ class Projections:
 		return (avg_stat, avg_usage_pct, avg_off_rating, avg_def_rating)
 
 	def calculate_projection(self, player_id, season, opponent, date=date.today()):
-		print "%s" % date
-
 		info = get_player_info(player_id)
 		team = get_team(player_id, season, date)
 		baselines = get_baseline(id,2013,'points', date)
