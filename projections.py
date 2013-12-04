@@ -68,41 +68,10 @@ class Projections:
 	
 		query = ""
 		try:
-			if metric == "points":
-				query = """select sum(b.points)/(select max(game) from team_game_totals where team = '%s' and season = %d and date <= '%s') 
-						from players p inner join game_totals_basic b on p.id = b.player_id 
-						where b.season = %d and p.position = '%s' and b.opponent = '%s'
-							and date <= '%s'""" % (team, season, date, season, position, team, date)
-			elif metric == "offensive_rebounds":
-				query = """select sum(b.offensive_rebounds)/(select max(game) from team_game_totals where team = '%s' and season = %d and date <= '%s') 
-						from players p inner join game_totals_basic b on p.id = b.player_id 
-						where b.season = %d and p.position = '%s' and b.opponent = '%s'
-							and date <= '%s' """ % (team, season, date, season, position, team, date)
-			elif metric == "defensive_rebounds":
-				query = """select sum(b.defensive_rebounds)/(select max(game) from team_game_totals where team = '%s' and season = %d and date <= '%s') 
-						from players p inner join game_totals_basic b on p.id = b.player_id 
-						where b.season = %d and p.position = '%s' and b.opponent = '%s'
-							and date <= '%s'""" % (team, season, date, season, position, team, date)
-			elif metric == "assists":
-				query = """select sum(b.assists)/(select max(game) from team_game_totals where team = '%s' and season = %d and date <= '%s') 
-						from players p inner join game_totals_basic b on p.id = b.player_id 
-						where b.season = %d and p.position = '%s' and b.opponent = '%s'
-							and date <= '%s'""" % (team, season, date, season, position, team, date)
-			elif metric == "steals":
-				query = """select sum(b.steals)/(select max(game) from team_game_totals where team = '%s' and season = %d and date <= '%s') 
-						from players p inner join game_totals_basic b on p.id = b.player_id 
-						where b.season = %d and p.position = '%s' and b.opponent = '%s'
-							and date <= '%s'""" % (team, season, date, season, position, team, date)
-			elif metric == "blocks":
-				query = """select sum(b.blocks)/(select max(game) from team_game_totals where team = '%s' and season = %d and date <= '%s') 
-						from players p inner join game_totals_basic b on p.id = b.player_id 
-						where b.season = %d and p.position = '%s' and b.opponent = '%s'
-							and date <= '%s'""" % (team, season, date, season, position, team, date)
-			elif metric == "turnovers":
-				query = """select sum(b.turnovers)/(select max(game) from team_game_totals where team = '%s' and season = %d and date <= '%s') 
-						from players p inner join game_totals_basic b on p.id = b.player_id 
-						where b.season = %d and p.position = '%s' and b.opponent = '%s'
-							and date <= '%s'""" % (team, season, date, season, position, team, date)
+			query = """select sum(b.%s)/(select max(game) from team_game_totals where team = '%s' and season = %d and date <= '%s') 
+					from players p inner join game_totals_basic b on p.id = b.player_id 
+					where b.season = %d and p.position = '%s' and b.opponent = '%s'
+						and date <= '%s'""" % (metric, team, season, date, season, position, team, date)
 			cursor.execute(query)
 		
 			for result in cursor:
