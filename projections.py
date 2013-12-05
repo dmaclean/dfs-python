@@ -201,6 +201,41 @@ class Projections:
 			cursor.close()
 	
 		return (avg_stat, avg_usage_pct, avg_off_rating, avg_def_rating)
+	
+	def normalize_player_avg_stat(self, player_id, stat, season, date=date.today()):
+		cursor = self.cnx.cursor()
+		player_info = self.get_player_info(player_id)
+		
+		league_avg = 0
+		
+		query = """
+			select avg(b.%s) from players p inner join game_totals_basic b on p.id = b.player_id
+			where p.position = '%s' and b.season = %d and b.date <= '%s'
+		""" % (stat, player_info["position"], season, date)
+		
+		try:
+			cursor.execute(query)
+			
+			for result in cursor:
+				league_avg = result[0]
+			
+			# Get all game instances of desired stat for this player.
+			query = """
+				select %s from game_totals_basic b
+				where player_id = '%s' and season = %d and date <= '%s'
+			""" % (stat, player_id, season, date)
+			
+			cursor.execute(query)
+			
+			adjusted = []
+			for result in cursor:
+				adjusted.append( (result[0]/league_avg)*result[0] )
+			
+			return sum(adjusted)/len(adjusted)
+		finally:
+			cursor.close()
+			
+		
 
 	def calculate_projection(self, player_id, season, opponent, date=date.today()):
 		info = get_player_info(player_id)

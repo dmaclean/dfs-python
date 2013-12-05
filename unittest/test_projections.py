@@ -584,6 +584,97 @@ class TestProjections(unittest.TestCase):
 		self.assertTrue(baseline[1] == 10.6)	# usage
 		self.assertTrue(baseline[2] == 100)	# off rating
 		self.assertTrue(baseline[3] == 101)	# def rating
+	
+	def test_normalize_player_avg_stat(self):
+		p = "G"
+	
+		# Create four players
+		self.player_info["id"] = p + "1"
+		self.player_info["name"] = p + " 1"
+		self.player_info["position"] = p
+		self.testUtil.insert_into_players(self.player_info)
+	
+		self.player_info["id"] = p + "2"
+		self.player_info["name"] = p +" 2"
+		self.testUtil.insert_into_players(self.player_info)
 		
+		self.player_info["id"] = p + "3"
+		self.player_info["name"] = p +" 3"
+		self.testUtil.insert_into_players(self.player_info)
+		
+		self.player_info["id"] = p + "4"
+		self.player_info["name"] = p +" 4"
+		self.testUtil.insert_into_players(self.player_info)
+		
+		self.game_totals_basic_info["player_id"] = p+"1"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["game_number"] = 1
+		self.game_totals_basic_info["team"] = "LAL"
+		self.game_totals_basic_info["opponent"] = "ATL"
+		self.game_totals_basic_info["date"] = date(2013,11,1)
+		self.game_totals_basic_info["points"] = 10
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+		
+		self.game_totals_basic_info["player_id"] = p+"1"
+		self.game_totals_basic_info["game_number"] = 2
+		self.game_totals_basic_info["date"] = date(2013,11,2)
+		self.game_totals_basic_info["points"] = 12
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+		
+		self.game_totals_basic_info["player_id"] = p+"2"
+		self.game_totals_basic_info["game_number"] = 1
+		self.game_totals_basic_info["date"] = date(2013,11,1)
+		self.game_totals_basic_info["points"] = 20
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+		
+		self.game_totals_basic_info["player_id"] = p+"2"
+		self.game_totals_basic_info["game_number"] = 2
+		self.game_totals_basic_info["date"] = date(2013,11,2)
+		self.game_totals_basic_info["points"] = 22
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+		
+		self.game_totals_basic_info["player_id"] = p+"3"
+		self.game_totals_basic_info["game_number"] = 1
+		self.game_totals_basic_info["date"] = date(2013,11,1)
+		self.game_totals_basic_info["points"] = 30
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+		
+		self.game_totals_basic_info["player_id"] = p+"3"
+		self.game_totals_basic_info["game_number"] = 2
+		self.game_totals_basic_info["date"] = date(2013,11,2)
+		self.game_totals_basic_info["points"] = 32
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+		
+		self.game_totals_basic_info["player_id"] = p+"4"
+		self.game_totals_basic_info["game_number"] = 1
+		self.game_totals_basic_info["date"] = date(2013,11,1)
+		self.game_totals_basic_info["points"] = 0
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+		
+		self.game_totals_basic_info["player_id"] = p+"4"
+		self.game_totals_basic_info["game_number"] = 2
+		self.game_totals_basic_info["date"] = date(2013,11,2)
+		self.game_totals_basic_info["points"] = 2
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+		
+		# p1 = 10+12 = 22
+		# p2 = 20+22 = 42
+		# p3 = 30+32 = 62
+		# p4 = 0+2   = 2
+		# avg = p1+p2+p3+p4/8 = 16
+		#
+		# p1 game 1 normalized = (10/16)*10 = 6.25
+		# p1 game 2 normalized = (12/16)*12 = 9
+		# p2 game 1 normalized = (20/16)*20 = 25
+		# p2 game 2 normalized = (22/16)*22 = 30.25
+		# p3 game 1 normalized = (30/16)*30 = 56.25
+		# p3 game 2 normalized = (32/16)*32 = 64
+		# p4 game 1 normalized = (0/16)*0 = 0.0
+		# p4 game 2 normalized = (2/16)*2 = 0.125
+		self.assertTrue(self.projections.normalize_player_avg_stat(p+"1", "points", 2013) == 7.625)
+		self.assertTrue(self.projections.normalize_player_avg_stat(p+"2", "points", 2013) == 27.625)
+		self.assertTrue(self.projections.normalize_player_avg_stat(p+"3", "points", 2013) == 60.125)
+		self.assertTrue(self.projections.normalize_player_avg_stat(p+"4", "points", 2013) == 0.125)
+	
 if __name__ == '__main__':
 	unittest.main()
