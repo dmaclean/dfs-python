@@ -202,6 +202,15 @@ class Projections:
 	
 		return (avg_stat, avg_usage_pct, avg_off_rating, avg_def_rating)
 	
+	######################################################################################
+	# Adjusts the specified stat for each game based on the league average at that point
+	# to come up with a real, adjusted value.
+	#
+	# An example would be if, for the first five games of the season, a player scored
+	# 10 points a game.  However, if all of the games were against top-3 defenses, then
+	# those 10-point games are more impressive than 10 points vs a bottom-3 defense, 
+	# and his scoring average will be adjusted accordingly.
+	######################################################################################
 	def normalize_player_avg_stat(self, player_id, stat, season, date=date.today()):
 		cursor = self.cnx.cursor()
 		player_info = self.get_player_info(player_id)
@@ -236,7 +245,10 @@ class Projections:
 			cursor.close()
 			
 		
-
+	##############################################################################
+	# Makes a projection for a player's stat line based on a variety of factors,
+	# starting with their average for the season in each relevant stat.
+	##############################################################################
 	def calculate_projection(self, player_id, season, opponent, date=date.today()):
 		info = get_player_info(player_id)
 		team = get_team(player_id, season, date)
