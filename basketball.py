@@ -3,6 +3,7 @@ import random
 import sys
 import time
 import mysql.connector
+from datetime import date
 from HTMLParser import HTMLParser
 
 
@@ -75,8 +76,41 @@ class Processor:
 		self.readCLI()
 		if self.type == "teams":
 			self.processTeams()
+		elif self.type == "schedule":
+			self.processSchedule()
 		else:
 			self.processPlayers()
+	
+	def processSchedule(self):
+		parser = BasketballReferenceScheduleParser()
+		
+		if self.source == "site":
+			cnx = mysql.connector.connect(user='fantasy', password='fantasy', host='localhost', database='basketball_reference')
+			
+			if self.season != -1:
+				seasons = [self.season]
+			else:
+				seasons = [2010,2011,2012,2013]
+			
+			for season in seasons:
+				url = "/leagues/NBA_%s_games.html" % str(season+1)
+				data = self.fetchData(url, True)
+				parser.feed(data)
+				print parser.data
+				
+				for d in parser.data:
+					print d
+					entry = Schedule(d["date"], d["season"], d["home"], d["visitor"])
+					if not entry.game_exists(cnx):
+						entry.insert_game(cnx)
+								
+		else:
+			f = open("tests/" + self.source,"r")
+			data = f.read().replace("\n","")
+			
+			parser = BasketballReferenceScheduleParser()
+			parser.feed(data)
+			
 	
 	##############################################################
 	# Process the individual data, season totals, game logs, and 
@@ -1609,6 +1643,45 @@ class SeasonTotals:
 		cursor.execute(query)
 		cursor.close()
 
+class Schedule:
+	def __init__(self, date=date.today(), season=date.today().year, home="", visitor=""):
+		self.date = date
+		self.season = season
+		self.home = home
+		self.visitor = visitor
+	
+	def game_exists(self, conn):
+		cursor = conn.cursor()
+		
+		try:
+			query = """
+				select id from schedules where date = '%s' and home = '%s' and visitor = '%s'
+			""" % (self.date, self.home, self.visitor)
+
+			cursor.execute(query)
+			for result in cursor:
+				return True
+			
+			return False
+		except:
+			print "Something went wrong in Schedule.game_exists"
+		finally:
+			cursor.close()
+	
+	def insert_game(self, conn):
+		cursor = conn.cursor()
+		
+		try:
+			query = """
+				insert into schedules (date, season, visitor, home) values ('%s', %d,'%s','%s')
+			""" % (self.date, self.season, self.visitor, self.home)
+			
+			cursor.execute(query)
+		except:
+			print "Something went wrong in Schedule.insert_game"
+		finally:
+			cursor.close()
+
 ################################################################
 # Parses the main list of players to get basic information and
 # the link to their individual page.
@@ -2638,6 +2711,49 @@ class BasketballReferenceTeamSplitsParser(HTMLParser):
 		# Opponent Points (total)
 		elif self.current == "td" and self.tdCount == 33:
 			self.stats[self.type][self.subtype]["opp_points"] = float(data)
+
+
+class BasketballReferenceScheduleParser(HTMLParser):
+	found_table = False
+	tbodyCount = 0
+	tdCount = 0
+	current = ""
+	data = []
+	instance = {}
+	
+	def handle_starttag(self, tag, attrs):
+		if tag == "table" and len(attrs) > 1 and attrs[1][1] == "games":
+			self.found_table = True
+		elif tag == "tbody":
+			self.tbodyCount = self.tbodyCount + 1
+		elif tag == "tr":
+			self.instance = {}
+			self.tdCount = 0
+		elif tag == "td":
+			self.tdCount = self.tdCount + 1
+		elif tag == "a" and self.tdCount == 1 and len(attrs) == 1:
+			pieces = attrs[0][1].split("?")
+			pieces = pieces[1].split("&")
+			
+			month = int(pieces[0].split("=")[1])
+			day = int(pieces[1].split("=")[1])
+			year = int(pieces[2].split("=")[1])
+			
+			self.instance["season"] = year
+			
+			self.instance["date"] = date(year, month, day)
+		elif tag == "a" and self.tdCount == 3 and len(attrs) == 1:
+			self.instance["visitor"] = attrs[0][1].split("/")[2]
+		
+		elif tag == "a" and self.tdCount == 5 and len(attrs) == 1:
+			self.instance["home"] = attrs[0][1].split("/")[2]
+		
+		self.current = tag
+	
+	def handle_endtag(self, tag):
+		if tag == "tr" and self.tbodyCount == 1:
+			self.data.append(self.instance)
+			
 
 processor = Processor()
 processor.process()

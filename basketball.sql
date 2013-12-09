@@ -277,3 +277,14 @@ create table fantasy_points (
 	points float not null,
 	foreign key (player_id) references players(id)
 );
+
+create table schedules (
+	id int auto_increment primary key,
+	season int not null,
+	date timestamp not null,
+	visitor varchar(3) not null,
+	home varchar(3) not null
+);
+create index schedules_date_idx on schedules(date);
+create index schedules_visitor_idx on schedules(visitor);
+create index schedules_home_idx on schedules(home);
