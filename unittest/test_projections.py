@@ -592,6 +592,78 @@ class TestProjections(unittest.TestCase):
 		self.assertTrue(baseline[2] == 100)	# off rating
 		self.assertTrue(baseline[3] == 101)	# def rating
 	
+	def test_get_baseline_defensive_rebounds(self):
+		# Write basic game totals for player
+		self.game_totals_basic_info["player_id"] = "macleda01"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["game_number"] = 1
+		self.game_totals_basic_info["team"] = "LAL"
+		self.game_totals_basic_info["opponent"] = "ATL"
+		self.game_totals_basic_info["date"] = date(2013,11,4)
+		self.game_totals_basic_info["defensive_rebounds"] = 10
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+		
+		self.game_totals_basic_info["game_number"] = 2
+		self.game_totals_basic_info["date"] = date(2013,11,5)
+		self.game_totals_basic_info["defensive_rebounds"] = 20
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+		
+		# Write advanced game totals for player
+		self.game_totals_advanced_info["player_id"] = "macleda01"
+		self.game_totals_advanced_info["date"] = date(2013,11,4)
+		self.game_totals_advanced_info["usage_pct"] = 10.6
+		self.game_totals_advanced_info["offensive_rating"] = 100
+		self.game_totals_advanced_info["defensive_rating"] = 101
+		self.testUtil.insert_into_game_totals_advanced(self.game_totals_advanced_info)
+		
+		self.game_totals_advanced_info["date"] = date(2013,11,5)
+		self.game_totals_advanced_info["usage_pct"] = 12.6
+		self.game_totals_advanced_info["offensive_rating"] = 104
+		self.game_totals_advanced_info["defensive_rating"] = 103
+		self.testUtil.insert_into_game_totals_advanced(self.game_totals_advanced_info)
+		
+		baseline = self.projections.get_baseline("macleda01", 2013, "defensive_rebounds")
+		self.assertTrue(baseline[0] == 15)	# avg defensive rebounds
+		self.assertTrue(baseline[1] == 11.6)	# usage
+		self.assertTrue(baseline[2] == 102)	# off rating
+		self.assertTrue(baseline[3] == 102)	# def rating
+	
+	def test_get_baseline_defensive_rebounds_with_date(self):
+		# Write basic game totals for player
+		self.game_totals_basic_info["player_id"] = "macleda01"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["game_number"] = 1
+		self.game_totals_basic_info["team"] = "LAL"
+		self.game_totals_basic_info["opponent"] = "ATL"
+		self.game_totals_basic_info["date"] = date(2013,11,4)
+		self.game_totals_basic_info["defensive_rebounds"] = 10
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+		
+		self.game_totals_basic_info["game_number"] = 2
+		self.game_totals_basic_info["date"] = date(2013,11,5)
+		self.game_totals_basic_info["defensive_rebounds"] = 20
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+		
+		# Write advanced game totals for player
+		self.game_totals_advanced_info["player_id"] = "macleda01"
+		self.game_totals_advanced_info["date"] = date(2013,11,4)
+		self.game_totals_advanced_info["usage_pct"] = 10.6
+		self.game_totals_advanced_info["offensive_rating"] = 100
+		self.game_totals_advanced_info["defensive_rating"] = 101
+		self.testUtil.insert_into_game_totals_advanced(self.game_totals_advanced_info)
+		
+		self.game_totals_advanced_info["date"] = date(2013,11,5)
+		self.game_totals_advanced_info["usage_pct"] = 12.6
+		self.game_totals_advanced_info["offensive_rating"] = 104
+		self.game_totals_advanced_info["defensive_rating"] = 103
+		self.testUtil.insert_into_game_totals_advanced(self.game_totals_advanced_info)
+		
+		baseline = self.projections.get_baseline("macleda01", 2013, "defensive_rebounds", date(2013,11,4))
+		self.assertTrue(baseline[0] == 10)	# avg defensive_rebounds
+		self.assertTrue(baseline[1] == 10.6)	# usage
+		self.assertTrue(baseline[2] == 100)	# off rating
+		self.assertTrue(baseline[3] == 101)	# def rating
+	
 	def test_normalize_player_avg_stat(self):
 		p = "G"
 	
