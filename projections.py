@@ -243,16 +243,40 @@ class Projections:
 			return sum(adjusted)/len(adjusted)
 		finally:
 			cursor.close()
+	
+	def get_todays_games(self):
+		games = []
+		
+		cursor = self.cnx.cursor()
+		query = """
+			select date, season, visitor, home from schedules where date = '%s'
+		""" % (date.today())
+		
+		try:
+			cursor.execute(query)
+			for result in cursor:
+				datepieces = result[0].split("-")
+				curr = {
+					"date": date(int(datepieces[0]), int(datepieces[1]), int(datepieces[2])),
+					"season": result[1],
+					"visitor": result[2],
+					"home": result[3]
+				}
+				
+				games.append(curr)
+		finally:
+			cursor.close()
 			
+		return games
 		
 	##############################################################################
 	# Makes a projection for a player's stat line based on a variety of factors,
 	# starting with their average for the season in each relevant stat.
 	##############################################################################
-	def calculate_projection(self, player_id, season, opponent, date=date.today()):
-		info = get_player_info(player_id)
-		team = get_team(player_id, season, date)
-		baselines = get_baseline(id,2013,'points', date)
+	def calculate_projection(self, player_id, stat, season, opponent, date=date.today()):
+		info = self.get_player_info(player_id)
+		team = self.get_team(player_id, season, date)
+		baselines = self.get_baseline(player_id,2013,stat, date)
 	
 		avg_points = baselines[0]
 		adjusted_points = avg_points
@@ -260,8 +284,8 @@ class Projections:
 		#######################################
 		# Take pace of the game into account.
 		#######################################
-		team_pace = calculate_pace(team, season)
-		opp_pace = calculate_pace(opponent, season)
+		team_pace = self.calculate_pace(team, season)
+		opp_pace = self.calculate_pace(opponent, season)
 		avg_pace = (team_pace + opp_pace)/2
 		pace_factor = avg_pace/team_pace
 	
@@ -271,9 +295,9 @@ class Projections:
 		# Effectiveness of opponent defense, compared to the league average
 		# for this player's position.
 		######################################################################
-		league_avg = calculate_league_avg("points", info["position"], season)
-		def_factor = calculate_defense_vs_position("points", info["position"], opponent, season, date)
-	
+		league_avg = self.calculate_league_avg(stat, info["position"], season)
+		def_factor = self.calculate_defense_vs_position(stat, info["position"], opponent, season, date)
+
 		adjusted_points = adjusted_points * float(def_factor/league_avg)
 	
 		return adjusted_points
@@ -284,7 +308,7 @@ class Projections:
 
 		id = 'anthoca01'
 		game_date = date(2013,11,01)
-		print calculate_projection(id, 2013, 'BOS', game_date)
+		print self.calculate_projection(id, "points", 2013, 'BOS', game_date)
 
 if __name__ == '__main__':
 	projections = Projections()

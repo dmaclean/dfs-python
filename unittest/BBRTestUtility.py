@@ -309,3 +309,15 @@ class BBRTestUtility():
 			cursor.execute(query)
 		finally:
 			cursor.close()
+	
+	def insert_into_schedules(self, values):
+		cursor = self.conn.cursor()
+		query = """
+			insert into schedules (date, season, visitor, home)
+			values ('%s',%d,'%s','%s')
+		""" % (values["date"], values["season"], values["visitor"], values["home"])
+		
+		try:
+			cursor.execute(query)
+		finally:
+			cursor.close()

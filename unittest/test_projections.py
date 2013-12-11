@@ -124,6 +124,13 @@ class TestProjections(unittest.TestCase):
 			"opp_personal_fouls": 0,
 			"opp_points": 0
 		}
+		
+		self.schedule_info = {
+			"date": date.today(),
+			"season": date.today().year,
+			"visitor": "",
+			"home": ""
+		}
 	
 	def tearDown(self):
 		self.testUtil.conn.close()
@@ -675,6 +682,24 @@ class TestProjections(unittest.TestCase):
 		self.assertTrue(self.projections.normalize_player_avg_stat(p+"2", "points", 2013) == 27.625)
 		self.assertTrue(self.projections.normalize_player_avg_stat(p+"3", "points", 2013) == 60.125)
 		self.assertTrue(self.projections.normalize_player_avg_stat(p+"4", "points", 2013) == 0.125)
+	
+	def test_get_todays_games(self):
+		self.schedule_info["home"] = "BOS"
+		self.schedule_info["visitor"] = "NYK"
+		self.testUtil.insert_into_schedules(self.schedule_info)
+		
+		self.schedule_info["date"] = date(2012,11,1)
+		self.schedule_info["season"] = 2012
+		self.schedule_info["home"] = "PHI"
+		self.schedule_info["visitor"] = "BKN"
+		self.testUtil.insert_into_schedules(self.schedule_info)
+		
+		result = self.projections.get_todays_games()
+		self.assertTrue(len(result) == 1)
+		self.assertTrue(result[0]["date"] == date.today())
+		self.assertTrue(result[0]["season"] == 2013)
+		self.assertTrue(result[0]["visitor"] == "NYK")
+		self.assertTrue(result[0]["home"] == "BOS")
 	
 if __name__ == '__main__':
 	unittest.main()
