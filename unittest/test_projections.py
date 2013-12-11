@@ -683,7 +683,7 @@ class TestProjections(unittest.TestCase):
 		self.assertTrue(self.projections.normalize_player_avg_stat(p+"3", "points", 2013) == 60.125)
 		self.assertTrue(self.projections.normalize_player_avg_stat(p+"4", "points", 2013) == 0.125)
 	
-	def test_get_todays_games(self):
+	def test_get_game_list_today(self):
 		self.schedule_info["home"] = "BOS"
 		self.schedule_info["visitor"] = "NYK"
 		self.testUtil.insert_into_schedules(self.schedule_info)
@@ -694,12 +694,30 @@ class TestProjections(unittest.TestCase):
 		self.schedule_info["visitor"] = "BKN"
 		self.testUtil.insert_into_schedules(self.schedule_info)
 		
-		result = self.projections.get_todays_games()
+		result = self.projections.get_game_list()
 		self.assertTrue(len(result) == 1)
 		self.assertTrue(result[0]["date"] == date.today())
 		self.assertTrue(result[0]["season"] == 2013)
 		self.assertTrue(result[0]["visitor"] == "NYK")
 		self.assertTrue(result[0]["home"] == "BOS")
+	
+	def test_get_game_list_2012_11_1(self):
+		self.schedule_info["home"] = "BOS"
+		self.schedule_info["visitor"] = "NYK"
+		self.testUtil.insert_into_schedules(self.schedule_info)
+		
+		self.schedule_info["date"] = date(2012,11,1)
+		self.schedule_info["season"] = 2012
+		self.schedule_info["home"] = "PHI"
+		self.schedule_info["visitor"] = "BKN"
+		self.testUtil.insert_into_schedules(self.schedule_info)
+		
+		result = self.projections.get_game_list(date(2012,11,1))
+		self.assertTrue(len(result) == 1)
+		self.assertTrue(result[0]["date"] == date(2012,11,1))
+		self.assertTrue(result[0]["season"] == 2012)
+		self.assertTrue(result[0]["visitor"] == "BKN")
+		self.assertTrue(result[0]["home"] == "PHI")
 	
 if __name__ == '__main__':
 	unittest.main()

@@ -244,13 +244,13 @@ class Projections:
 		finally:
 			cursor.close()
 	
-	def get_todays_games(self):
+	def get_game_list(self, d=date.today()):
 		games = []
 		
 		cursor = self.cnx.cursor()
 		query = """
 			select date, season, visitor, home from schedules where date = '%s'
-		""" % (date.today())
+		""" % (d)
 		
 		try:
 			cursor.execute(query)
