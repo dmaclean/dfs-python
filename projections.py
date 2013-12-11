@@ -302,6 +302,32 @@ class Projections:
 	
 		return adjusted_points
 
+	def regression(self):
+		games = []
+		cursor = self.cnx.cursor()
+		
+		try:
+			# Grab all game logs
+			cursor.execute("select player_id, season, game_number, date, team, home, opponent, points from game_totals_basic where season = 2013")
+			
+			for game in cursor:
+				games.append(game)	
+		finally:
+			cursor.close()
+		
+		for game in games:
+			proj_points = self.calculate_projection(game[0], "points", game[1], game[6], game[3])
+			print "%s/%d/%s/%s/%s - Expected: %f, Actual: %f  (RMSE %f)" % (
+				game[0],
+				game[2],
+				game[3],
+				game[4],
+				game[6],
+				proj_points,
+				game[7],
+				(proj_points - game[7])**2
+			)
+	
 	def run(self):
 		positions = ["G","F","C"]
 		teams = ["ATL","BOS","BRK","LAL"]
@@ -312,4 +338,4 @@ class Projections:
 
 if __name__ == '__main__':
 	projections = Projections()
-	projections.run()
+	projections.regression()
