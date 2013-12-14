@@ -249,18 +249,18 @@ class Projections:
 		
 		cursor = self.cnx.cursor()
 		query = """
-			select date, season, visitor, home from schedules where date = '%s'
+			select date, season, visitor, home, rowid from schedules where date = '%s'
 		""" % (d)
-		
+
 		try:
 			cursor.execute(query)
 			for result in cursor:
-				datepieces = result[0].split("-")
 				curr = {
-					"date": date(int(datepieces[0]), int(datepieces[1]), int(datepieces[2])),
+					"date": result[0],
 					"season": result[1],
 					"visitor": result[2],
-					"home": result[3]
+					"home": result[3],
+					"id": result[4]
 				}
 				
 				games.append(curr)
@@ -359,13 +359,13 @@ class Projections:
 		f.close()
 	
 	def run(self):
-		positions = ["G","F","C"]
-		teams = ["ATL","BOS","BRK","LAL"]
+		# Find all games being played today
+		games = self.get_game_list()
+		for game in games:
+			pass
 
-		id = 'anthoca01'
-		game_date = date(2013,11,01)
-		print self.calculate_projection(id, "points", 2013, 'BOS', game_date)
 
 if __name__ == '__main__':
 	projections = Projections()
-	projections.regression()
+	#projections.regression()
+	projections.run()

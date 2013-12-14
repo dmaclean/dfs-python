@@ -768,7 +768,8 @@ class TestProjections(unittest.TestCase):
 		
 		result = self.projections.get_game_list()
 		self.assertTrue(len(result) == 1)
-		self.assertTrue(result[0]["date"] == date.today())
+#		self.assertTrue(result[0]["date"] == date.today())
+		self.assertTrue(result[0]["id"] == 1)
 		self.assertTrue(result[0]["season"] == 2013)
 		self.assertTrue(result[0]["visitor"] == "NYK")
 		self.assertTrue(result[0]["home"] == "BOS")
@@ -786,10 +787,11 @@ class TestProjections(unittest.TestCase):
 		
 		result = self.projections.get_game_list(date(2012,11,1))
 		self.assertTrue(len(result) == 1)
-		self.assertTrue(result[0]["date"] == date(2012,11,1))
+#		self.assertTrue(result[0]["date"] == date(2012,11,1))
+		self.assertTrue(result[0]["id"] == 2)
 		self.assertTrue(result[0]["season"] == 2012)
 		self.assertTrue(result[0]["visitor"] == "BKN")
 		self.assertTrue(result[0]["home"] == "PHI")
-	
+
 if __name__ == '__main__':
 	unittest.main()
