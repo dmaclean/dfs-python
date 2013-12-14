@@ -6,6 +6,7 @@ create table players (
 	weight int,
 	url varchar(100) not null
 );
+create index players_position_idx on players(position);
 
 create table season_totals (
 	id int auto_increment primary key,
@@ -109,6 +110,8 @@ create table game_totals_basic (
 	plus_minus int not null,
 	foreign key (player_id) references players(id)
 );
+create index game_totals_basic_season_idx on game_totals_basic(season);
+create index game_totals_basic_date_idx on game_totals_basic(date);
 
 create table game_totals_advanced (
 	id int auto_increment primary key,
@@ -138,6 +141,8 @@ create table game_totals_advanced (
 	game_score float not null,
 	foreign key (player_id) references players(id)
 );
+create index game_totals_advanced_season_idx on game_totals_advanced(season);
+create index game_totals_advanced_date_idx on game_totals_advanced(date);
 
 create table splits (
 	id int auto_increment primary key,
@@ -219,6 +224,9 @@ create table team_game_totals(
 	opp_personal_fouls float not null,
 	opp_points float not null
 );
+create index team_game_totals_team_idx on team_game_totals(team);
+create index team_game_totals_season_idx on team_game_totals(season);
+create index team_game_totals_date_idx on team_game_totals(date);
 
 create table team_splits(
 	id int auto_increment primary key,
