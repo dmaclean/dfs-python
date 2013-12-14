@@ -308,25 +308,55 @@ class Projections:
 		
 		try:
 			# Grab all game logs
-			cursor.execute("select player_id, season, game_number, date, team, home, opponent, points from game_totals_basic where season = 2013")
+			cursor.execute("""
+				select player_id, season, game_number, date, team, home, opponent, minutes_played, points, assists 
+				from game_totals_basic 
+				where season = 2013 
+				order by player_id, date""")
 			
 			for game in cursor:
 				games.append(game)	
 		finally:
 			cursor.close()
 		
+		f = open("regression.csv", "w")
+		f.write("""player_id,game number,date,team,opponent,
+					projected points,actual points,RMSE,
+					projected assists,actual assists,RMSE\n""")
+		
 		for game in games:
-			proj_points = self.calculate_projection(game[0], "points", game[1], game[6], game[3])
-			print "%s/%d/%s/%s/%s - Expected: %f, Actual: %f  (RMSE %f)" % (
-				game[0],
-				game[2],
-				game[3],
-				game[4],
-				game[6],
+			player_id = game[0]
+			season = game[1]
+			game_number = game[2]
+			date = game[3]
+			team = game[4]
+			opponent = game[6]
+			minutes_played = game[7]
+			actual_points = game[8]
+			actual_assists = game[9]
+		
+			proj_points = 0
+			proj_assists = 0
+			
+			if minutes_played > 0:
+				proj_points = self.calculate_projection(player_id, "points", season, opponent, date)
+				proj_assists = self.calculate_projection(player_id, "assists", season, opponent, date)
+			line = "%s,%d,%s,%s,%s,%f,%f,%f,%f,%f,%f" % (
+				player_id,
+				game_number,
+				date,
+				team,
+				opponent,
 				proj_points,
-				game[7],
-				(proj_points - game[7])**2
+				actual_points,
+				(proj_points - actual_points)**2,
+				proj_assists,
+				actual_assists,
+				(proj_assists - actual_assists)**2
 			)
+			f.write(line + "\n")
+		
+		f.close()
 	
 	def run(self):
 		positions = ["G","F","C"]
