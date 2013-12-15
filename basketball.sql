@@ -112,6 +112,7 @@ create table game_totals_basic (
 );
 create index game_totals_basic_season_idx on game_totals_basic(season);
 create index game_totals_basic_date_idx on game_totals_basic(date);
+create index game_totals_basic_team_idx on game_totals_basic(team);
 
 create table game_totals_advanced (
 	id int auto_increment primary key,
