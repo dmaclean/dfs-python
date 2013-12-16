@@ -244,23 +244,27 @@ class Projections:
 		finally:
 			cursor.close()
 	
+	#################################################################################
+	# Retrieve the list of games being played for a particular date.  Date defaults
+	# to today if none is specified.
+	#################################################################################
 	def get_game_list(self, d=date.today()):
 		games = []
 		
 		cursor = self.cnx.cursor()
 		query = """
-			select date, season, visitor, home, rowid from schedules where date = '%s'
+			select id, date, season, visitor, home from schedules where date = '%s'
 		""" % (d)
 
 		try:
 			cursor.execute(query)
 			for result in cursor:
 				curr = {
-					"date": result[0],
-					"season": result[1],
-					"visitor": result[2],
-					"home": result[3],
-					"id": result[4]
+					"id": result[0],
+					"date": result[1],
+					"season": result[2],
+					"visitor": result[3],
+					"home": result[4]
 				}
 				
 				games.append(curr)
@@ -268,6 +272,36 @@ class Projections:
 			cursor.close()
 			
 		return games
+	
+	##################################################################
+	# Retrieve a list of players participating in the provided game.
+	# The game parameter should take the form of a map containing:
+	# - date
+	# - home
+	# - visitor
+	# - season
+	##################################################################
+	def get_players_in_game(self, game):
+		players = []
+		cursor = self.cnx.cursor()
+		
+		query = """
+			select player_id, opponent from game_totals_basic 
+			where team in ('%s', '%s') and 
+				(date = (select max(date) from game_totals_basic where team = '%s') or 
+				date = (select max(date) from game_totals_basic where team = '%s'))
+			order by date desc
+		""" % (game["home"], game["visitor"], game["home"], game["visitor"])
+		
+		try:
+			cursor.execute(query)
+			
+			for result in cursor:
+				players.append({"player_id": result[0], "opponent": result[1]})
+		finally:
+			cursor.close()
+		
+		return players
 		
 	##############################################################################
 	# Makes a projection for a player's stat line based on a variety of factors,
@@ -362,7 +396,11 @@ class Projections:
 		# Find all games being played today
 		games = self.get_game_list()
 		for game in games:
-			pass
+			players = self.get_players_in_game(game)
+			
+			for player in players:
+				points = self.calculate_projection(player["player_id"], "points", game["season"], player["opponent"])
+				print player["player_id"], points
 
 
 if __name__ == '__main__':
