@@ -2263,7 +2263,9 @@ class BasketballReferenceTeamGameLogParser(HTMLParser):
 		if self.current == "span" and self.tdCount == 2:
 			self.game_number = int(data)
 			self.game_stats[self.game_number] = {
-				"result": ""
+				"result": "",
+				"opp_free_throws": 0,
+				"opp_free_throw_attempts": 0
 			}
 		# Date
 		elif self.current == "a" and self.tdCount == 3:
