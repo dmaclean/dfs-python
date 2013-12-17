@@ -36,6 +36,23 @@ class FantasyPointCalculator():
 			elif triple_or_double_double == 3:
 				fantasy_points = fantasy_points + 2
 		
+		elif self.site == self.DRAFT_KINGS:
+			fantasy_points = stats["points"] + (stats["total_rebounds"] * 1.25) + (stats["assists"] * 1.5) + (stats["steals"] * 2) + (stats["blocks"] * 2) - (stats["turnovers"] * 0.5)
+			
+			# 1 point bonus for 3 pointer made
+			fantasy_points = fantasy_points + (stats["three_point_field_goals"] * 0.5)
+
+			triple_or_double_double = 0
+			criteria = [stats["points"], stats["total_rebounds"], stats["assists"], stats["steals"], stats["blocks"]]
+			for c in criteria:
+				if c >= 10:
+					triple_or_double_double = triple_or_double_double + 1
+
+			if triple_or_double_double == 2:
+				fantasy_points = fantasy_points + 1.5
+			elif triple_or_double_double == 3:
+				fantasy_points = fantasy_points + 3
+		
 		return fantasy_points
 	
 	def run(self):

@@ -284,5 +284,152 @@ class TestFantasyPointCalculator(unittest.TestCase):
 		
 		self.assertTrue(points == 58.5)
 	
+	##################################################
+	# DraftKings - player with no double/triple-double
+	#
+	# 8/10 field goals
+	# 1/2 three pointers
+	# 5/6 free throws
+	# 5 rebounds
+	# 2 assists
+	# 1 steal
+	# 2 blocks
+	# 1 turnover
+	# 24 points
+	#
+	# 24 fantasy points from points
+	# 0.5 on 3pt bonus
+	# 0 on 4 missed shots
+	# 6.25 on rebounds
+	# 3 on assists
+	# 2 on steals
+	# 4 on blocks
+	# -0.5 on turnovers
+	# 0 for double-double
+	# 0 for triple-double
+	# 38.25 total fantasy points
+	##################################################
+	def test_calculate_draft_kings(self):
+		stats = {
+			"player_id": "dmaclean",
+			"season": date.today(),
+			"game_number": 1,
+			"field_goals": 8,
+			"field_goal_attempts": 10,
+			"three_point_field_goals": 1,
+			"three_point_field_goal_attempts": 2,
+			"free_throws": 5,
+			"free_throw_attempts": 6,
+			"total_rebounds": 5,
+			"assists": 2,
+			"steals": 1,
+			"blocks": 2,
+			"turnovers": 1,
+			"points": 24
+		}
+		
+		self.fpc.site = self.fpc.DRAFT_KINGS
+		points = self.fpc.calculate(stats)
+		
+		self.assertTrue(points == 39.25)
+	
+	##################################################
+	# DraftKings - player with double-double
+	#
+	# 8/10 field goals
+	# 1/2 three pointers
+	# 5/6 free throws
+	# 10 rebounds
+	# 2 assists
+	# 1 steal
+	# 2 blocks
+	# 1 turnover
+	# 24 points
+	#
+	# 24 fantasy points from points
+	# 0.5 on 3pt bonus
+	# 0 on 4 missed shots
+	# 12.5 on rebounds
+	# 3 on assists
+	# 2 on steals
+	# 4 on blocks
+	# -0.5 on turnovers
+	# 1.5 for double-double
+	# 0 for triple-double
+	# 46.5 total fantasy points
+	##################################################
+	def test_calculate_draft_kings_double_double(self):
+		stats = {
+			"player_id": "dmaclean",
+			"season": date.today(),
+			"game_number": 1,
+			"field_goals": 8,
+			"field_goal_attempts": 10,
+			"three_point_field_goals": 1,
+			"three_point_field_goal_attempts": 2,
+			"free_throws": 5,
+			"free_throw_attempts": 6,
+			"total_rebounds": 10,
+			"assists": 2,
+			"steals": 1,
+			"blocks": 2,
+			"turnovers": 1,
+			"points": 24
+		}
+		
+		self.fpc.site = self.fpc.DRAFT_KINGS
+		points = self.fpc.calculate(stats)
+		
+		self.assertTrue(points == 47)
+	
+	##################################################
+	# DraftKings - player with triple-double
+	#
+	# 8/10 field goals
+	# 1/2 three pointers
+	# 5/6 free throws
+	# 10 rebounds
+	# 10 assists
+	# 1 steal
+	# 2 blocks
+	# 1 turnover
+	# 24 points
+	#
+	# 24 fantasy points from points
+	# 0.5 on 3pt bonus
+	# 0 on 4 missed shots
+	# 12.5 on rebounds
+	# 15 on assists
+	# 2 on steals
+	# 4 on blocks
+	# -0.5 on turnovers
+	# 0 for double-double
+	# 3 for triple-double
+	# 58.5 total fantasy points
+	##################################################
+	def test_calculate_draft_kings_triple_double(self):
+		stats = {
+			"player_id": "dmaclean",
+			"season": date.today(),
+			"game_number": 1,
+			"field_goals": 8,
+			"field_goal_attempts": 10,
+			"three_point_field_goals": 1,
+			"three_point_field_goal_attempts": 2,
+			"free_throws": 5,
+			"free_throw_attempts": 6,
+			"total_rebounds": 10,
+			"assists": 10,
+			"steals": 1,
+			"blocks": 2,
+			"turnovers": 1,
+			"points": 24
+		}
+		
+		self.fpc.site = self.fpc.DRAFT_KINGS
+		points = self.fpc.calculate(stats)
+		
+		self.assertTrue(points == 60.5)
+	
 if __name__ == '__main__':
 	unittest.main()
