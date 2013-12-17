@@ -20,6 +20,8 @@ f = open(file, "r")
 read_header = False
 salaries = {}
 
+print "Importing salaries for %s" % site
+
 for line in f:
 	if not read_header:
 		read_header = True
@@ -36,7 +38,7 @@ for line in f:
 
 for k in salaries:
 	cursor = cnx.cursor()
-	query = ("select id from players where name = '%s'") % (k.replace("'",""))
+	query = ("select id from players where name = '%s'") % (k.replace("'","").replace("\"",""))
 	cursor.execute(query)
 	
 	player_id = ""
