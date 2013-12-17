@@ -794,6 +794,21 @@ class TestProjections(unittest.TestCase):
 		self.assertTrue(result[0]["home"] == "PHI")
 	
 	def test_get_players_in_game(self):
+		self.player_info["id"] = "player1"
+		self.player_info["name"] =  "Player 1"
+		self.player_info["position"] = "G"
+		self.player_info["height"] = 80
+		self.player_info["weight"] = 200
+		self.player_info["url"] = "something"
+		self.testUtil.insert_into_players(self.player_info)
+		
+		self.player_info["id"] = "player2"
+		self.player_info["name"] =  "Player 2"
+		self.player_info["position"] = "C"
+		self.player_info["height"] = 88
+		self.player_info["weight"] = 250
+		self.testUtil.insert_into_players(self.player_info)
+	
 		# Set up players
 		self.game_totals_basic_info["player_id"] = "player1"
 		self.game_totals_basic_info["season"] = 2013
@@ -822,7 +837,20 @@ class TestProjections(unittest.TestCase):
 
 		self.assertTrue(len(players) == 2)
 		self.assertTrue(players[0]["player_id"] == "player1" and players[0]["opponent"] == "BOS")
+		self.assertTrue(players[0]["player_info"]["id"] == "player1")
+		self.assertTrue(players[0]["player_info"]["name"] == "Player 1")
+		self.assertTrue(players[0]["player_info"]["position"] == "G")
+		self.assertTrue(players[0]["player_info"]["height"] == 80)
+		self.assertTrue(players[0]["player_info"]["weight"] == 200)
+		self.assertTrue(players[0]["player_info"]["url"] == "something")
+
 		self.assertTrue(players[1]["player_id"] == "player2" and players[1]["opponent"] == "NYK")
+		self.assertTrue(players[1]["player_info"]["id"] == "player2")
+		self.assertTrue(players[1]["player_info"]["name"] == "Player 2")
+		self.assertTrue(players[1]["player_info"]["position"] == "C")
+		self.assertTrue(players[1]["player_info"]["height"] == 88)
+		self.assertTrue(players[1]["player_info"]["weight"] == 250)
+		self.assertTrue(players[1]["player_info"]["url"] == "something")
 
 if __name__ == '__main__':
 	unittest.main()

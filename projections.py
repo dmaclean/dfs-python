@@ -1,6 +1,8 @@
 import sys
 import mysql.connector
 
+from fantasy_point_calculator import FantasyPointCalculator
+
 from datetime import date
 
 class Projections:
@@ -301,6 +303,9 @@ class Projections:
 		finally:
 			cursor.close()
 		
+		for player in players:
+			player["player_info"] = self.get_player_info(player["player_id"])
+		
 		return players
 		
 	##############################################################################
@@ -395,13 +400,47 @@ class Projections:
 	def run(self):
 		# Find all games being played today
 		games = self.get_game_list()
+		
+		# The calculator of Fantasy Points for each site.
+		fpc = FantasyPointCalculator()
+		
+		# List of stats to project for each player.
+		stats = ["points", "field_goals", "field_goal_attempts", "three_point_field_goals", "three_point_field_goal_attempts",
+							"free_throws", "free_throw_attempts", "total_rebounds", "assists", "steals", "blocks", "turnovers"]
+		
+		# List of sites to make projections for
+		sites = [ fpc.DRAFT_DAY, fpc.DRAFT_KINGS ]
+		
+		# CSV files to write to
+		files = {}
+		for s in sites:
+			files[s] = open("projections/%s_%s.csv" % (s, date.today()), "w")
+			files[s].write("name,position,projection\n")
+		
+		print "%d games tonight..." % len(games)
 		for game in games:
+			print "Evaluating players in %s vs %s" % (game["home"], game["visitor"])
+		
 			players = self.get_players_in_game(game)
 			
 			for player in players:
-				points = self.calculate_projection(player["player_id"], "points", game["season"], player["opponent"])
-				print player["player_id"], points
-
+				print "\tEvaluating %s" % player["player_info"]["name"]
+			
+				projections = {}
+					
+				for s in stats:
+					projections[s] = self.calculate_projection(player["player_id"], s, game["season"], player["opponent"])
+				
+				for s in sites:
+					fpc.site = s
+					fps = fpc.calculate(projections)
+					print "\t\t%s (%s) is projected for %f points on %s" % (player["player_info"]["name"], player["player_info"]["position"], fps, s)
+					files[s].write("%s,%s,%f\n" % (player["player_info"]["name"], player["player_info"]["position"], fps))
+					
+		
+		# We're done!  Close up the files
+		for f in files:
+			files[f].close()
 
 if __name__ == '__main__':
 	projections = Projections()
