@@ -1,4 +1,5 @@
 import sys
+from datetime import date
 import mysql.connector
 
 cnx = mysql.connector.connect(user='fantasy', password='fantasy', host='localhost', database='basketball_reference')
@@ -43,7 +44,7 @@ for k in salaries:
 	
 	player_id = ""
 	for (id) in cursor:
-		query = ("insert into salaries (player_id, site, salary) values ('%s','%s',%d)") % (id[0],site,salaries[k])
+		query = ("insert into salaries (player_id, site, salary, date) values ('%s','%s',%d, '%s')") % (id[0],site,salaries[k],date.today())
 		cursor.execute(query)
 	
 	cursor.close()

@@ -290,7 +290,7 @@ create table fantasy_points (
 create table schedules (
 	id int auto_increment primary key,
 	season int not null,
-	date timestamp not null,
+	date date not null,
 	visitor varchar(3) not null,
 	home varchar(3) not null
 );
