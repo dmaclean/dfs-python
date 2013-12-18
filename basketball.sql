@@ -297,3 +297,13 @@ create table schedules (
 create index schedules_date_idx on schedules(date);
 create index schedules_visitor_idx on schedules(visitor);
 create index schedules_home_idx on schedules(home);
+
+create table dfs_site_positions (
+	id int auto_increment primary key,
+	player_id varchar(100) not null,
+	site varchar(50) not null,
+	position varchar(10) not null,
+	foreign key (player_id) references players(id)
+);
+create index dfs_site_positions_player_id_idx on dfs_site_positions(player_id);
+create index dfs_site_positions_player_site_idx on dfs_site_positions(site);
