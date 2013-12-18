@@ -431,5 +431,54 @@ class TestFantasyPointCalculator(unittest.TestCase):
 		
 		self.assertTrue(points == 60.5)
 	
+	##################################################
+	# StarStreet
+	#
+	# 8/10 field goals
+	# 1/2 three pointers
+	# 5/6 free throws
+	# 5 rebounds
+	# 2 assists
+	# 1 steal
+	# 2 blocks
+	# 1 turnover
+	# 24 points
+	#
+	# 24 fantasy points from points
+	# 0 on 3pt bonus
+	# 0 on 4 missed shots
+	# 6.25 on rebounds
+	# 3 on assists
+	# 2 on steals
+	# 4 on blocks
+	# -1 on turnovers
+	# 0 for double-double
+	# 0 for triple-double
+	# 38.25 total fantasy points
+	##################################################
+	def test_calculate_starstreet(self):
+		stats = {
+			"player_id": "dmaclean",
+			"season": date.today(),
+			"game_number": 1,
+			"field_goals": 8,
+			"field_goal_attempts": 10,
+			"three_point_field_goals": 1,
+			"three_point_field_goal_attempts": 2,
+			"free_throws": 5,
+			"free_throw_attempts": 6,
+			"total_rebounds": 5,
+			"assists": 2,
+			"steals": 1,
+			"blocks": 2,
+			"turnovers": 1,
+			"points": 24
+		}
+		
+		self.fpc.site = self.fpc.STAR_STREET
+		points = self.fpc.calculate(stats)
+		
+		self.assertTrue(points == 38.25)
+	
 if __name__ == '__main__':
 	unittest.main()
