@@ -321,3 +321,15 @@ class BBRTestUtility():
 			cursor.execute(query)
 		finally:
 			cursor.close()
+	
+	def insert_into_salaries(self, values):
+		cursor = self.conn.cursor()
+		query = """
+			insert into salaries (player_id, site, salary, date)
+			values ('%s','%s',%d,'%s')
+		""" % (values["player_id"], values["site"], values["salary"], values["date"])
+		
+		try:
+			cursor.execute(query)
+		finally:
+			cursor.close()

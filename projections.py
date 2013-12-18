@@ -39,6 +39,23 @@ class Projections:
 			cursor.close()
 		
 		return info
+	
+	####################################################################
+	# Retrieves the salary for a player on a particular site and date.
+	####################################################################
+	def get_salary(self, player_id, site, date=date.today()):
+		cursor = self.cnx.cursor()
+		query = """
+			select salary from salaries where player_id = '%s' and site = '%s' and date = '%s'
+		""" % (player_id, site, date)
+		
+		try:
+			cursor.execute(query)
+			
+			for result in cursor:
+				return result[0]
+		finally:
+			cursor.close()
 
 	####################################################################
 	# Determine the team that the player plays for, given the provided
@@ -434,8 +451,11 @@ class Projections:
 				for s in sites:
 					fpc.site = s
 					fps = fpc.calculate(projections)
+					salary = self.get_salary(player["player_id"], s)
+					salary = -1 if salary == None else salary
+					
 					print "\t\t%s (%s) is projected for %f points on %s" % (player["player_info"]["name"], player["player_info"]["position"], fps, s)
-					files[s].write("%s,%s,%f\n" % (player["player_info"]["name"], player["player_info"]["position"], fps))
+					files[s].write("%s,%s,%f,%d\n" % (player["player_info"]["name"], player["player_info"]["position"], fps, salary) )
 					
 		
 		# We're done!  Close up the files

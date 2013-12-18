@@ -131,6 +131,13 @@ class TestProjections(unittest.TestCase):
 			"visitor": "",
 			"home": ""
 		}
+		
+		self.salary_info = {
+			"player_id": "",
+			"site": "",
+			"salary": 0,
+			"date": date.today()
+		}
 	
 	def tearDown(self):
 		self.testUtil.conn.close()
@@ -851,6 +858,35 @@ class TestProjections(unittest.TestCase):
 		self.assertTrue(players[1]["player_info"]["height"] == 88)
 		self.assertTrue(players[1]["player_info"]["weight"] == 250)
 		self.assertTrue(players[1]["player_info"]["url"] == "something")
+	
+	def test_get_salary(self):
+		self.salary_info["player_id"] = "macleda01"
+		self.salary_info["site"] = "DRAFT_KINGS"
+		self.salary_info["salary"] = 9500
+		self.testUtil.insert_into_salaries(self.salary_info)
+		
+		self.salary_info["player_id"] = "macleda01"
+		self.salary_info["site"] = "DRAFT_DAY"
+		self.salary_info["salary"] = 8000
+		self.testUtil.insert_into_salaries(self.salary_info)
+		
+		self.assertTrue(self.projections.get_salary("macleda01", "DRAFT_KINGS") == 9500)
+		self.assertTrue(self.projections.get_salary("macleda01", "DRAFT_DAY") == 8000)
+	
+	def test_get_salary_with_date(self):
+		self.salary_info["player_id"] = "macleda01"
+		self.salary_info["site"] = "DRAFT_KINGS"
+		self.salary_info["salary"] = 9500
+		self.testUtil.insert_into_salaries(self.salary_info)
+		
+		self.salary_info["player_id"] = "macleda01"
+		self.salary_info["site"] = "DRAFT_KINGS"
+		self.salary_info["salary"] = 8000
+		self.salary_info["date"] = date(2013,12,1)
+		self.testUtil.insert_into_salaries(self.salary_info)
+		
+		self.assertTrue(self.projections.get_salary("macleda01", "DRAFT_KINGS", date(2013,12,1)) == 8000)
+		
 
 if __name__ == '__main__':
 	unittest.main()
