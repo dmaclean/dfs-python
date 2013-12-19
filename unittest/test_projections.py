@@ -138,6 +138,12 @@ class TestProjections(unittest.TestCase):
 			"salary": 0,
 			"date": date.today()
 		}
+		
+		self.dfs_position_info = {
+			"player_id": "",
+			"site": "",
+			"position": ""
+		}
 	
 	def tearDown(self):
 		self.testUtil.conn.close()
@@ -887,6 +893,13 @@ class TestProjections(unittest.TestCase):
 		
 		self.assertTrue(self.projections.get_salary("macleda01", "DRAFT_KINGS", date(2013,12,1)) == 8000)
 		
+	def test_get_position_on_site(self):
+		self.dfs_position_info["player_id"] = "macleda01"
+		self.dfs_position_info["site"] = "DRAFT_KINGS"
+		self.dfs_position_info["position"] = "PG"
+		self.testUtil.insert_into_dfs_site_positions(self.dfs_position_info)
+		
+		self.assertTrue(self.projections.get_position_on_site("macleda01", "DRAFT_KINGS") == "PG")
 
 if __name__ == '__main__':
 	unittest.main()

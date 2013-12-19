@@ -333,3 +333,15 @@ class BBRTestUtility():
 			cursor.execute(query)
 		finally:
 			cursor.close()
+	
+	def insert_into_dfs_site_positions(self, values):
+		cursor = self.conn.cursor()
+		query = """
+			insert into dfs_site_positions (player_id, site, position)
+			values ('%s','%s','%s')
+		""" % (values["player_id"], values["site"], values["position"])
+		
+		try:
+			cursor.execute(query)
+		finally:
+			cursor.close()

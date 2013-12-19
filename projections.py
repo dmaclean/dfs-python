@@ -41,6 +41,24 @@ class Projections:
 		return info
 	
 	####################################################################
+	# Retrieves the position that a player is registered as on a site.
+	####################################################################
+	def get_position_on_site(self, player_id, site):
+		cursor = self.cnx.cursor()
+		query = """
+			select position from dfs_site_positions where player_id = '%s' and site = '%s'
+		""" % (player_id, site)
+		
+		try:
+			cursor.execute(query)
+			for result in cursor:
+				return result[0]
+		finally:
+			cursor.close()
+		
+		return None
+	
+	####################################################################
 	# Retrieves the salary for a player on a particular site and date.
 	####################################################################
 	def get_salary(self, player_id, site, date=date.today()):
@@ -426,13 +444,13 @@ class Projections:
 							"free_throws", "free_throw_attempts", "total_rebounds", "assists", "steals", "blocks", "turnovers"]
 		
 		# List of sites to make projections for
-		sites = [ fpc.DRAFT_DAY, fpc.DRAFT_KINGS ]
+		sites = [ fpc.DRAFT_DAY, fpc.DRAFT_KINGS, fpc.STAR_STREET ]
 		
 		# CSV files to write to
 		files = {}
 		for s in sites:
 			files[s] = open("projections/%s_%s.csv" % (s, date.today()), "w")
-			files[s].write("name,position,projection\n")
+			files[s].write("name,position,projection,salary\n")
 		
 		print "%d games tonight..." % len(games)
 		for game in games:
@@ -454,8 +472,10 @@ class Projections:
 					salary = self.get_salary(player["player_id"], s)
 					salary = -1 if salary == None else salary
 					
-					print "\t\t%s (%s) is projected for %f points on %s" % (player["player_info"]["name"], player["player_info"]["position"], fps, s)
-					files[s].write("%s,%s,%f,%d\n" % (player["player_info"]["name"], player["player_info"]["position"], fps, salary) )
+					site_position = self.get_position_on_site(player["player_id"], s)
+					
+					print "\t\t%s (%s) is projected for %f points on %s" % (player["player_info"]["name"], site_position, fps, s)
+					files[s].write("%s,%s,%f,%d\n" % (player["player_info"]["name"], site_position, fps, salary) )
 					
 		
 		# We're done!  Close up the files
