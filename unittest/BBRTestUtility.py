@@ -345,3 +345,16 @@ class BBRTestUtility():
 			cursor.execute(query)
 		finally:
 			cursor.close()
+	
+	def select_from_dfs_site_positions(self, player_id, site):
+		cursor = self.conn.cursor()
+		query = """
+			select position from dfs_site_positions where player_id = '%s' and site = '%s'
+		""" % (player_id, site)
+		
+		try:
+			cursor.execute(query)
+			for result in cursor:
+				return result[0]
+		finally:
+			cursor.close()
