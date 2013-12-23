@@ -1,6 +1,8 @@
 import sys
 import mysql.connector
 
+from fantasy_point_calculator import FantasyPointCalculator
+
 from datetime import date
 
 class Projections:
@@ -37,6 +39,41 @@ class Projections:
 			cursor.close()
 		
 		return info
+	
+	####################################################################
+	# Retrieves the position that a player is registered as on a site.
+	####################################################################
+	def get_position_on_site(self, player_id, site):
+		cursor = self.cnx.cursor()
+		query = """
+			select position from dfs_site_positions where player_id = '%s' and site = '%s'
+		""" % (player_id, site)
+		
+		try:
+			cursor.execute(query)
+			for result in cursor:
+				return result[0]
+		finally:
+			cursor.close()
+		
+		return None
+	
+	####################################################################
+	# Retrieves the salary for a player on a particular site and date.
+	####################################################################
+	def get_salary(self, player_id, site, date=date.today()):
+		cursor = self.cnx.cursor()
+		query = """
+			select salary from salaries where player_id = '%s' and site = '%s' and date = '%s'
+		""" % (player_id, site, date)
+		
+		try:
+			cursor.execute(query)
+			
+			for result in cursor:
+				return result[0]
+		finally:
+			cursor.close()
 
 	####################################################################
 	# Determine the team that the player plays for, given the provided
@@ -243,16 +280,77 @@ class Projections:
 			return sum(adjusted)/len(adjusted)
 		finally:
 			cursor.close()
+	
+	#################################################################################
+	# Retrieve the list of games being played for a particular date.  Date defaults
+	# to today if none is specified.
+	#################################################################################
+	def get_game_list(self, d=date.today()):
+		games = []
+		
+		cursor = self.cnx.cursor()
+		query = """
+			select id, date, season, visitor, home from schedules where date = '%s'
+		""" % (d)
+
+		try:
+			cursor.execute(query)
+			for result in cursor:
+				curr = {
+					"id": result[0],
+					"date": result[1],
+					"season": result[2],
+					"visitor": result[3],
+					"home": result[4]
+				}
+				
+				games.append(curr)
+		finally:
+			cursor.close()
 			
+		return games
+	
+	##################################################################
+	# Retrieve a list of players participating in the provided game.
+	# The game parameter should take the form of a map containing:
+	# - date
+	# - home
+	# - visitor
+	# - season
+	##################################################################
+	def get_players_in_game(self, game):
+		players = []
+		cursor = self.cnx.cursor()
+		
+		query = """
+			select player_id, opponent from game_totals_basic 
+			where team in ('%s', '%s') and 
+				(date = (select max(date) from game_totals_basic where team = '%s') or 
+				date = (select max(date) from game_totals_basic where team = '%s'))
+			order by date desc
+		""" % (game["home"], game["visitor"], game["home"], game["visitor"])
+		
+		try:
+			cursor.execute(query)
+			
+			for result in cursor:
+				players.append({"player_id": result[0], "opponent": result[1]})
+		finally:
+			cursor.close()
+		
+		for player in players:
+			player["player_info"] = self.get_player_info(player["player_id"])
+		
+		return players
 		
 	##############################################################################
 	# Makes a projection for a player's stat line based on a variety of factors,
 	# starting with their average for the season in each relevant stat.
 	##############################################################################
-	def calculate_projection(self, player_id, season, opponent, date=date.today()):
-		info = get_player_info(player_id)
-		team = get_team(player_id, season, date)
-		baselines = get_baseline(id,2013,'points', date)
+	def calculate_projection(self, player_id, stat, season, opponent, date=date.today()):
+		info = self.get_player_info(player_id)
+		team = self.get_team(player_id, season, date)
+		baselines = self.get_baseline(player_id,2013,stat, date)
 	
 		avg_points = baselines[0]
 		adjusted_points = avg_points
@@ -260,8 +358,8 @@ class Projections:
 		#######################################
 		# Take pace of the game into account.
 		#######################################
-		team_pace = calculate_pace(team, season)
-		opp_pace = calculate_pace(opponent, season)
+		team_pace = self.calculate_pace(team, season)
+		opp_pace = self.calculate_pace(opponent, season)
 		avg_pace = (team_pace + opp_pace)/2
 		pace_factor = avg_pace/team_pace
 	
@@ -271,21 +369,120 @@ class Projections:
 		# Effectiveness of opponent defense, compared to the league average
 		# for this player's position.
 		######################################################################
-		league_avg = calculate_league_avg("points", info["position"], season)
-		def_factor = calculate_defense_vs_position("points", info["position"], opponent, season, date)
-	
+		league_avg = self.calculate_league_avg(stat, info["position"], season)
+		def_factor = self.calculate_defense_vs_position(stat, info["position"], opponent, season, date)
+
 		adjusted_points = adjusted_points * float(def_factor/league_avg)
 	
 		return adjusted_points
 
+	def regression(self):
+		games = []
+		cursor = self.cnx.cursor()
+		
+		try:
+			# Grab all game logs
+			cursor.execute("""
+				select player_id, season, game_number, date, team, home, opponent, minutes_played, points, assists 
+				from game_totals_basic 
+				where season = 2013 
+				order by player_id, date""")
+			
+			for game in cursor:
+				games.append(game)	
+		finally:
+			cursor.close()
+		
+		f = open("regression.csv", "w")
+		f.write("""player_id,game number,date,team,opponent,
+					projected points,actual points,RMSE,
+					projected assists,actual assists,RMSE\n""")
+		
+		for game in games:
+			player_id = game[0]
+			season = game[1]
+			game_number = game[2]
+			date = game[3]
+			team = game[4]
+			opponent = game[6]
+			minutes_played = game[7]
+			actual_points = game[8]
+			actual_assists = game[9]
+		
+			proj_points = 0
+			proj_assists = 0
+			
+			if minutes_played > 0:
+				proj_points = self.calculate_projection(player_id, "points", season, opponent, date)
+				proj_assists = self.calculate_projection(player_id, "assists", season, opponent, date)
+			line = "%s,%d,%s,%s,%s,%f,%f,%f,%f,%f,%f" % (
+				player_id,
+				game_number,
+				date,
+				team,
+				opponent,
+				proj_points,
+				actual_points,
+				(proj_points - actual_points)**2,
+				proj_assists,
+				actual_assists,
+				(proj_assists - actual_assists)**2
+			)
+			f.write(line + "\n")
+		
+		f.close()
+	
 	def run(self):
-		positions = ["G","F","C"]
-		teams = ["ATL","BOS","BRK","LAL"]
-
-		id = 'anthoca01'
-		game_date = date(2013,11,01)
-		print calculate_projection(id, 2013, 'BOS', game_date)
+		# Find all games being played today
+		games = self.get_game_list()
+		
+		# The calculator of Fantasy Points for each site.
+		fpc = FantasyPointCalculator()
+		
+		# List of stats to project for each player.
+		stats = ["points", "field_goals", "field_goal_attempts", "three_point_field_goals", "three_point_field_goal_attempts",
+							"free_throws", "free_throw_attempts", "total_rebounds", "assists", "steals", "blocks", "turnovers"]
+		
+		# List of sites to make projections for
+		sites = [ fpc.DRAFT_DAY, fpc.DRAFT_KINGS, fpc.STAR_STREET ]
+		
+		# CSV files to write to
+		files = {}
+		for s in sites:
+			files[s] = open("projections/%s_%s.csv" % (s, date.today()), "w")
+			files[s].write("name,position,projection,salary\n")
+		
+		print "%d games tonight..." % len(games)
+		for game in games:
+			print "Evaluating players in %s vs %s" % (game["home"], game["visitor"])
+		
+			players = self.get_players_in_game(game)
+			
+			for player in players:
+				print "\tEvaluating %s" % player["player_info"]["name"]
+			
+				projections = {}
+					
+				for s in stats:
+					projections[s] = self.calculate_projection(player["player_id"], s, game["season"], player["opponent"])
+				
+				for s in sites:
+					fpc.site = s
+					fps = fpc.calculate(projections)
+					salary = self.get_salary(player["player_id"], s)
+					salary = -1 if salary == None else salary
+					
+					site_position = self.get_position_on_site(player["player_id"], s)
+					
+					print "\t\t%s (%s) is projected for %f points on %s" % (player["player_info"]["name"], site_position, fps, s)
+					files[s].write("%s,%s,%f,%d\n" % (player["player_info"]["name"], site_position, fps, salary) )
+					
+		
+		# We're done!  Close up the files
+		for f in files:
+			files[f].close()
 
 if __name__ == '__main__':
 	projections = Projections()
+	#projections.regression()
 	projections.run()

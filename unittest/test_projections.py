@@ -124,6 +124,26 @@ class TestProjections(unittest.TestCase):
 			"opp_personal_fouls": 0,
 			"opp_points": 0
 		}
+		
+		self.schedule_info = {
+			"date": date.today(),
+			"season": date.today().year,
+			"visitor": "",
+			"home": ""
+		}
+		
+		self.salary_info = {
+			"player_id": "",
+			"site": "",
+			"salary": 0,
+			"date": date.today()
+		}
+		
+		self.dfs_position_info = {
+			"player_id": "",
+			"site": "",
+			"position": ""
+		}
 	
 	def tearDown(self):
 		self.testUtil.conn.close()
@@ -585,6 +605,78 @@ class TestProjections(unittest.TestCase):
 		self.assertTrue(baseline[2] == 100)	# off rating
 		self.assertTrue(baseline[3] == 101)	# def rating
 	
+	def test_get_baseline_defensive_rebounds(self):
+		# Write basic game totals for player
+		self.game_totals_basic_info["player_id"] = "macleda01"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["game_number"] = 1
+		self.game_totals_basic_info["team"] = "LAL"
+		self.game_totals_basic_info["opponent"] = "ATL"
+		self.game_totals_basic_info["date"] = date(2013,11,4)
+		self.game_totals_basic_info["defensive_rebounds"] = 10
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+		
+		self.game_totals_basic_info["game_number"] = 2
+		self.game_totals_basic_info["date"] = date(2013,11,5)
+		self.game_totals_basic_info["defensive_rebounds"] = 20
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+		
+		# Write advanced game totals for player
+		self.game_totals_advanced_info["player_id"] = "macleda01"
+		self.game_totals_advanced_info["date"] = date(2013,11,4)
+		self.game_totals_advanced_info["usage_pct"] = 10.6
+		self.game_totals_advanced_info["offensive_rating"] = 100
+		self.game_totals_advanced_info["defensive_rating"] = 101
+		self.testUtil.insert_into_game_totals_advanced(self.game_totals_advanced_info)
+		
+		self.game_totals_advanced_info["date"] = date(2013,11,5)
+		self.game_totals_advanced_info["usage_pct"] = 12.6
+		self.game_totals_advanced_info["offensive_rating"] = 104
+		self.game_totals_advanced_info["defensive_rating"] = 103
+		self.testUtil.insert_into_game_totals_advanced(self.game_totals_advanced_info)
+		
+		baseline = self.projections.get_baseline("macleda01", 2013, "defensive_rebounds")
+		self.assertTrue(baseline[0] == 15)	# avg defensive rebounds
+		self.assertTrue(baseline[1] == 11.6)	# usage
+		self.assertTrue(baseline[2] == 102)	# off rating
+		self.assertTrue(baseline[3] == 102)	# def rating
+	
+	def test_get_baseline_defensive_rebounds_with_date(self):
+		# Write basic game totals for player
+		self.game_totals_basic_info["player_id"] = "macleda01"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["game_number"] = 1
+		self.game_totals_basic_info["team"] = "LAL"
+		self.game_totals_basic_info["opponent"] = "ATL"
+		self.game_totals_basic_info["date"] = date(2013,11,4)
+		self.game_totals_basic_info["defensive_rebounds"] = 10
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+		
+		self.game_totals_basic_info["game_number"] = 2
+		self.game_totals_basic_info["date"] = date(2013,11,5)
+		self.game_totals_basic_info["defensive_rebounds"] = 20
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+		
+		# Write advanced game totals for player
+		self.game_totals_advanced_info["player_id"] = "macleda01"
+		self.game_totals_advanced_info["date"] = date(2013,11,4)
+		self.game_totals_advanced_info["usage_pct"] = 10.6
+		self.game_totals_advanced_info["offensive_rating"] = 100
+		self.game_totals_advanced_info["defensive_rating"] = 101
+		self.testUtil.insert_into_game_totals_advanced(self.game_totals_advanced_info)
+		
+		self.game_totals_advanced_info["date"] = date(2013,11,5)
+		self.game_totals_advanced_info["usage_pct"] = 12.6
+		self.game_totals_advanced_info["offensive_rating"] = 104
+		self.game_totals_advanced_info["defensive_rating"] = 103
+		self.testUtil.insert_into_game_totals_advanced(self.game_totals_advanced_info)
+		
+		baseline = self.projections.get_baseline("macleda01", 2013, "defensive_rebounds", date(2013,11,4))
+		self.assertTrue(baseline[0] == 10)	# avg defensive_rebounds
+		self.assertTrue(baseline[1] == 10.6)	# usage
+		self.assertTrue(baseline[2] == 100)	# off rating
+		self.assertTrue(baseline[3] == 101)	# def rating
+	
 	def test_normalize_player_avg_stat(self):
 		p = "G"
 	
@@ -676,5 +768,138 @@ class TestProjections(unittest.TestCase):
 		self.assertTrue(self.projections.normalize_player_avg_stat(p+"3", "points", 2013) == 60.125)
 		self.assertTrue(self.projections.normalize_player_avg_stat(p+"4", "points", 2013) == 0.125)
 	
+	def test_get_game_list_today(self):
+		self.schedule_info["home"] = "BOS"
+		self.schedule_info["visitor"] = "NYK"
+		self.testUtil.insert_into_schedules(self.schedule_info)
+		
+		self.schedule_info["date"] = date(2012,11,1)
+		self.schedule_info["season"] = 2012
+		self.schedule_info["home"] = "PHI"
+		self.schedule_info["visitor"] = "BKN"
+		self.testUtil.insert_into_schedules(self.schedule_info)
+		
+		result = self.projections.get_game_list()
+		self.assertTrue(len(result) == 1)
+#		self.assertTrue(result[0]["date"] == date.today())
+		#self.assertTrue(result[0]["id"] == 1)
+		self.assertTrue(result[0]["season"] == 2013)
+		self.assertTrue(result[0]["visitor"] == "NYK")
+		self.assertTrue(result[0]["home"] == "BOS")
+	
+	def test_get_game_list_2012_11_1(self):
+		self.schedule_info["home"] = "BOS"
+		self.schedule_info["visitor"] = "NYK"
+		self.testUtil.insert_into_schedules(self.schedule_info)
+		
+		self.schedule_info["date"] = date(2012,11,1)
+		self.schedule_info["season"] = 2012
+		self.schedule_info["home"] = "PHI"
+		self.schedule_info["visitor"] = "BKN"
+		self.testUtil.insert_into_schedules(self.schedule_info)
+		
+		result = self.projections.get_game_list(date(2012,11,1))
+		self.assertTrue(len(result) == 1)
+#		self.assertTrue(result[0]["date"] == date(2012,11,1))
+		#self.assertTrue(result[0]["id"] == 2)
+		self.assertTrue(result[0]["season"] == 2012)
+		self.assertTrue(result[0]["visitor"] == "BKN")
+		self.assertTrue(result[0]["home"] == "PHI")
+	
+	def test_get_players_in_game(self):
+		self.player_info["id"] = "player1"
+		self.player_info["name"] =  "Player 1"
+		self.player_info["position"] = "G"
+		self.player_info["height"] = 80
+		self.player_info["weight"] = 200
+		self.player_info["url"] = "something"
+		self.testUtil.insert_into_players(self.player_info)
+		
+		self.player_info["id"] = "player2"
+		self.player_info["name"] =  "Player 2"
+		self.player_info["position"] = "C"
+		self.player_info["height"] = 88
+		self.player_info["weight"] = 250
+		self.testUtil.insert_into_players(self.player_info)
+	
+		# Set up players
+		self.game_totals_basic_info["player_id"] = "player1"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["team"] = "BKN"
+		self.game_totals_basic_info["opponent"] = "BOS"
+		self.game_totals_basic_info["date"] = date(2013,12,1)
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+		
+		self.game_totals_basic_info["player_id"] = "player2"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["game_number"] = 1
+		self.game_totals_basic_info["team"] = "PHI"
+		self.game_totals_basic_info["opponent"] = "NYK"
+		self.game_totals_basic_info["date"] = date(2013,11,30)
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+		
+		# Set up game on schedule
+		self.schedule_info["date"] = date(2012,12,2)
+		self.schedule_info["season"] = 2012
+		self.schedule_info["home"] = "PHI"
+		self.schedule_info["visitor"] = "BKN"
+		self.testUtil.insert_into_schedules(self.schedule_info)
+		
+		game = self.projections.get_game_list(self.schedule_info["date"])[0]
+		players = self.projections.get_players_in_game(game)
+
+		self.assertTrue(len(players) == 2)
+		self.assertTrue(players[0]["player_id"] == "player1" and players[0]["opponent"] == "BOS")
+		self.assertTrue(players[0]["player_info"]["id"] == "player1")
+		self.assertTrue(players[0]["player_info"]["name"] == "Player 1")
+		self.assertTrue(players[0]["player_info"]["position"] == "G")
+		self.assertTrue(players[0]["player_info"]["height"] == 80)
+		self.assertTrue(players[0]["player_info"]["weight"] == 200)
+		self.assertTrue(players[0]["player_info"]["url"] == "something")
+
+		self.assertTrue(players[1]["player_id"] == "player2" and players[1]["opponent"] == "NYK")
+		self.assertTrue(players[1]["player_info"]["id"] == "player2")
+		self.assertTrue(players[1]["player_info"]["name"] == "Player 2")
+		self.assertTrue(players[1]["player_info"]["position"] == "C")
+		self.assertTrue(players[1]["player_info"]["height"] == 88)
+		self.assertTrue(players[1]["player_info"]["weight"] == 250)
+		self.assertTrue(players[1]["player_info"]["url"] == "something")
+	
+	def test_get_salary(self):
+		self.salary_info["player_id"] = "macleda01"
+		self.salary_info["site"] = "DRAFT_KINGS"
+		self.salary_info["salary"] = 9500
+		self.testUtil.insert_into_salaries(self.salary_info)
+		
+		self.salary_info["player_id"] = "macleda01"
+		self.salary_info["site"] = "DRAFT_DAY"
+		self.salary_info["salary"] = 8000
+		self.testUtil.insert_into_salaries(self.salary_info)
+		
+		self.assertTrue(self.projections.get_salary("macleda01", "DRAFT_KINGS") == 9500)
+		self.assertTrue(self.projections.get_salary("macleda01", "DRAFT_DAY") == 8000)
+	
+	def test_get_salary_with_date(self):
+		self.salary_info["player_id"] = "macleda01"
+		self.salary_info["site"] = "DRAFT_KINGS"
+		self.salary_info["salary"] = 9500
+		self.testUtil.insert_into_salaries(self.salary_info)
+		
+		self.salary_info["player_id"] = "macleda01"
+		self.salary_info["site"] = "DRAFT_KINGS"
+		self.salary_info["salary"] = 8000
+		self.salary_info["date"] = date(2013,12,1)
+		self.testUtil.insert_into_salaries(self.salary_info)
+		
+		self.assertTrue(self.projections.get_salary("macleda01", "DRAFT_KINGS", date(2013,12,1)) == 8000)
+		
+	def test_get_position_on_site(self):
+		self.dfs_position_info["player_id"] = "macleda01"
+		self.dfs_position_info["site"] = "DRAFT_KINGS"
+		self.dfs_position_info["position"] = "PG"
+		self.testUtil.insert_into_dfs_site_positions(self.dfs_position_info)
+		
+		self.assertTrue(self.projections.get_position_on_site("macleda01", "DRAFT_KINGS") == "PG")
+
 if __name__ == '__main__':
 	unittest.main()

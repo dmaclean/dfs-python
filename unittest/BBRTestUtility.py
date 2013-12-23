@@ -309,3 +309,65 @@ class BBRTestUtility():
 			cursor.execute(query)
 		finally:
 			cursor.close()
+	
+	def insert_into_schedules(self, values):
+		cursor = self.conn.cursor()
+		query = """
+			insert into schedules (date, season, visitor, home)
+			values ('%s',%d,'%s','%s')
+		""" % (values["date"], values["season"], values["visitor"], values["home"])
+		
+		try:
+			cursor.execute(query)
+		finally:
+			cursor.close()
+	
+	def insert_into_salaries(self, values):
+		cursor = self.conn.cursor()
+		query = """
+			insert into salaries (player_id, site, salary, date)
+			values ('%s','%s',%d,'%s')
+		""" % (values["player_id"], values["site"], values["salary"], values["date"])
+		
+		try:
+			cursor.execute(query)
+		finally:
+			cursor.close()
+	
+	def insert_into_dfs_site_positions(self, values):
+		cursor = self.conn.cursor()
+		query = """
+			insert into dfs_site_positions (player_id, site, position)
+			values ('%s','%s','%s')
+		""" % (values["player_id"], values["site"], values["position"])
+		
+		try:
+			cursor.execute(query)
+		finally:
+			cursor.close()
+	
+	def select_from_dfs_site_positions(self, player_id, site):
+		cursor = self.conn.cursor()
+		query = """
+			select position from dfs_site_positions where player_id = '%s' and site = '%s'
+		""" % (player_id, site)
+		
+		try:
+			cursor.execute(query)
+			for result in cursor:
+				return result[0]
+		finally:
+			cursor.close()
+	
+	def select_from_fantasy_points(self, player_id, site, season, game_number):
+		cursor = self.conn.cursor()
+		query = """
+			select points from fantasy_points where player_id = '%s' and site = '%s' and season = %d and game_number = %d
+		""" % (player_id, site, season, game_number)
+		
+		try:
+			cursor.execute(query)
+			for result in cursor:
+				return result[0]
+		finally:
+			cursor.close()
