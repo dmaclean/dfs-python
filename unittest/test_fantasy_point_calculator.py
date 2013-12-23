@@ -489,6 +489,7 @@ class TestFantasyPointCalculator(unittest.TestCase):
 	# points value exists in the fantasy_points table.
 	###########################################################################
 	def test_run(self):
+		# Player 1
 		self.game_totals_basic_info["player_id"] = "test"
 		self.game_totals_basic_info["season"] = 2013
 		self.game_totals_basic_info["game_number"] = 1
@@ -505,12 +506,22 @@ class TestFantasyPointCalculator(unittest.TestCase):
 		self.game_totals_basic_info["turnovers"] = 1
 		self.game_totals_basic_info["points"] = 24
 		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+		
+		# Player 2
+		self.game_totals_basic_info["player_id"] = "test2"
+		self.game_totals_basic_info["season"] = 2012
+		self.game_totals_basic_info["game_number"] = 2
+		self.game_totals_basic_info["points"] = 23
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
 	
 		self.fpc.site = self.fpc.STAR_STREET
 		self.fpc.run()
 		
-		points = self.testUtil.select_from_fantasy_points("test", self.fpc.site, 2013, self.game_totals_basic_info["game_number"])
+		points = self.testUtil.select_from_fantasy_points("test", self.fpc.site, 2013, 1)
 		self.assertTrue(points == 38.25)
+		
+		points = self.testUtil.select_from_fantasy_points("test2", self.fpc.site, 2012, 2)
+		self.assertTrue(points == 37.25)
 	
 if __name__ == '__main__':
 	unittest.main()
