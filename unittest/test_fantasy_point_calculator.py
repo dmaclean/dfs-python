@@ -480,5 +480,37 @@ class TestFantasyPointCalculator(unittest.TestCase):
 		
 		self.assertTrue(points == 38.25)
 	
+	###########################################################################
+	# Tests the run() function, which queries for all game_totals_basic rows
+	# that don't have corresponding fantasy_points entries and computes and
+	# creates fantasy_points rows.
+	#
+	# This adds a row to game_totals_basic and tests that the proper computed
+	# points value exists in the fantasy_points table.
+	###########################################################################
+	def test_run(self):
+		self.game_totals_basic_info["player_id"] = "test"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["game_number"] = 1
+		self.game_totals_basic_info["field_goals"] = 8
+		self.game_totals_basic_info["field_goal_attempts"] = 10
+		self.game_totals_basic_info["three_point_field_goals"] = 1
+		self.game_totals_basic_info["three_point_field_goal_attempts"] = 2
+		self.game_totals_basic_info["free_throws"] = 5
+		self.game_totals_basic_info["free_throw_attempts"] = 6
+		self.game_totals_basic_info["total_rebounds"] = 5
+		self.game_totals_basic_info["assists"] = 2
+		self.game_totals_basic_info["steals"] = 1
+		self.game_totals_basic_info["blocks"] = 2
+		self.game_totals_basic_info["turnovers"] = 1
+		self.game_totals_basic_info["points"] = 24
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+	
+		self.fpc.site = self.fpc.STAR_STREET
+		self.fpc.run()
+		
+		points = self.testUtil.select_from_fantasy_points("test", self.fpc.site, 2013, self.game_totals_basic_info["game_number"])
+		self.assertTrue(points == 38.25)
+	
 if __name__ == '__main__':
 	unittest.main()
