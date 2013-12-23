@@ -358,3 +358,16 @@ class BBRTestUtility():
 				return result[0]
 		finally:
 			cursor.close()
+	
+	def select_from_fantasy_points(self, player_id, site, season, game_number):
+		cursor = self.conn.cursor()
+		query = """
+			select points from fantasy_points where player_id = '%s' and site = '%s' and season = %d and game_number = %d
+		""" % (player_id, site, season, game_number)
+		
+		try:
+			cursor.execute(query)
+			for result in cursor:
+				return result[0]
+		finally:
+			cursor.close()
