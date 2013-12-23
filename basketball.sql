@@ -286,6 +286,7 @@ create table fantasy_points (
 	points float not null,
 	foreign key (player_id) references players(id)
 );
+create unique index fantasy_points_player_id_site_season_game_number_idx on fantasy_points(player_id, site, season, game_number);
 
 create table schedules (
 	id int auto_increment primary key,
