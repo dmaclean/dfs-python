@@ -118,7 +118,6 @@ class Processor:
 	##############################################################
 	def processPlayers(self):
 		parser = None
-		output = open("output.txt","w")
 		
 		if self.source == "site":
 			cnx = mysql.connector.connect(user='fantasy', password='fantasy', host='localhost', database='basketball_reference')
@@ -136,7 +135,6 @@ class Processor:
 						player.writePlayerInfoToDatabase(cnx)
 					
 					s = "%s,%s,%d,%d,%s\n" % (player.name, player.positions, player.height, player.weight, player.url) 
-					output.write(s)
 					
 					time.sleep( 5 + (5*random.random()) )
 					data = self.fetchData(player.url, True)
@@ -208,8 +206,6 @@ class Processor:
 					#########################################################################
 					player.season_advanced = self.playerMainParser.advanced_stats
 					for k in self.playerMainParser.advanced_stats:
-						output.write(str(k) + " - " + str(self.playerMainParser.advanced_stats[k]))
-						output.write("\n")
 						if not player.seasonAdvancedExist(cnx, player.code, k):
 							player.writeSeasonAdvancedStatsToDatabase(cnx, player.code, k)
 						else:
