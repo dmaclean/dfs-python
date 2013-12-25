@@ -76,7 +76,7 @@ create table season_advanced (
 );
 
 create table game_totals_basic (
-	id int auto_increment primary key,
+	id integer auto_increment primary key,
 	player_id varchar(50) not null,
 	season int not null,
 	game_number int not null,
@@ -279,13 +279,16 @@ create table salaries (
 
 create table fantasy_points (
 	id int auto_increment primary key,
+	game_totals_basic_id int not null,
 	player_id varchar(100) not null,
 	site varchar(50) not null,
 	season int not null,
 	game_number int not null,
 	points float not null,
-	foreign key (player_id) references players(id)
+	foreign key (player_id) references players(id),
+	foreign key (game_totals_basic_id) references game_totals_basic(id)
 );
+create index fantasy_points_site_idx on fantasy_points(site);
 create unique index fantasy_points_player_id_site_season_game_number_idx on fantasy_points(player_id, site, season, game_number);
 
 create table schedules (
