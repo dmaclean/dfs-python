@@ -522,6 +522,15 @@ class TestFantasyPointCalculator(unittest.TestCase):
 		
 		points = self.testUtil.select_from_fantasy_points("test2", self.fpc.site, 2012, 2)
 		self.assertTrue(points == 37.25)
+		
+		self.fpc.site = self.fpc.DRAFT_KINGS
+		self.fpc.run()
+		
+		points = self.testUtil.select_from_fantasy_points("test", self.fpc.site, 2013, 1)
+		self.assertTrue(points == 39.25)
+		
+		points = self.testUtil.select_from_fantasy_points("test2", self.fpc.site, 2012, 2)
+		self.assertTrue(points == 38.25)
 	
 if __name__ == '__main__':
 	unittest.main()
