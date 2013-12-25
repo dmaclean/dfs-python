@@ -31,7 +31,7 @@ class BBRTestUtility():
 		try:
 			content = ""
 			for line in f:
-				content = content + line.replace("\t","").replace("\n","")
+				content = content + line.replace("\t","").replace("\n","").replace("auto_increment","")
 			
 			self.sql = content.split(";")
 		finally:
