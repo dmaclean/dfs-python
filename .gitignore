@@ -1,3 +1,4 @@
 *.pyc
 projections/*
 salaries/*.csv
+output.txt
