@@ -6,6 +6,7 @@ import sqlite3
 import unittest
 import BBRTestUtility
 import projections
+from fantasy_point_calculator import FantasyPointCalculator
 
 class TestProjections(unittest.TestCase):
 	def setUp(self):
@@ -900,6 +901,252 @@ class TestProjections(unittest.TestCase):
 		self.testUtil.insert_into_dfs_site_positions(self.dfs_position_info)
 		
 		self.assertTrue(self.projections.get_position_on_site("macleda01", "DRAFT_KINGS") == "PG")
+	
+	###############################################################################
+	# Tests a player that has played two games, both of which produced floor FPs.
+	###############################################################################
+	def test_calculate_floor_consistency_ceiling_all_floor(self):
+		self.game_totals_basic_info["player_id"] = "test"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["game_number"] = 1
+		self.game_totals_basic_info["field_goals"] = 2
+		self.game_totals_basic_info["field_goal_attempts"] = 3
+		self.game_totals_basic_info["three_point_field_goals"] = 0
+		self.game_totals_basic_info["three_point_field_goal_attempts"] = 2
+		self.game_totals_basic_info["free_throws"] = 1
+		self.game_totals_basic_info["free_throw_attempts"] = 2
+		self.game_totals_basic_info["total_rebounds"] = 0
+		self.game_totals_basic_info["assists"] = 0
+		self.game_totals_basic_info["steals"] = 0
+		self.game_totals_basic_info["blocks"] = 0
+		self.game_totals_basic_info["turnovers"] = 1
+		self.game_totals_basic_info["points"] = 5
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+		
+		self.game_totals_basic_info["game_number"] = 2
+		self.game_totals_basic_info["field_goals"] = 3
+		self.game_totals_basic_info["field_goal_attempts"] = 3
+		self.game_totals_basic_info["three_point_field_goals"] = 0
+		self.game_totals_basic_info["three_point_field_goal_attempts"] = 2
+		self.game_totals_basic_info["free_throws"] = 1
+		self.game_totals_basic_info["free_throw_attempts"] = 2
+		self.game_totals_basic_info["total_rebounds"] = 0
+		self.game_totals_basic_info["assists"] = 0
+		self.game_totals_basic_info["steals"] = 0
+		self.game_totals_basic_info["blocks"] = 0
+		self.game_totals_basic_info["turnovers"] = 1
+		self.game_totals_basic_info["points"] = 7
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+		
+		values = self.projections.calculate_floor_consistency_ceiling("test", 2013, FantasyPointCalculator.STAR_STREET)
+		
+		self.assertTrue(values[0] == 1)
+		self.assertTrue(values[1] == 0)
+		self.assertTrue(values[2] == 0)
+		self.assertTrue(values[3] == 0)
+	
+	####################################################################################
+	# Tests a player that has played two games, both of which produced consistent FPs.
+	####################################################################################
+	def test_calculate_floor_consistency_ceiling_all_consistent(self):
+		self.game_totals_basic_info["player_id"] = "test"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["game_number"] = 1
+		self.game_totals_basic_info["field_goals"] = 2
+		self.game_totals_basic_info["field_goal_attempts"] = 3
+		self.game_totals_basic_info["three_point_field_goals"] = 0
+		self.game_totals_basic_info["three_point_field_goal_attempts"] = 2
+		self.game_totals_basic_info["free_throws"] = 1
+		self.game_totals_basic_info["free_throw_attempts"] = 2
+		self.game_totals_basic_info["total_rebounds"] = 0
+		self.game_totals_basic_info["assists"] = 0
+		self.game_totals_basic_info["steals"] = 0
+		self.game_totals_basic_info["blocks"] = 0
+		self.game_totals_basic_info["turnovers"] = 1
+		self.game_totals_basic_info["points"] = 25
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+		
+		self.game_totals_basic_info["game_number"] = 2
+		self.game_totals_basic_info["field_goals"] = 3
+		self.game_totals_basic_info["field_goal_attempts"] = 3
+		self.game_totals_basic_info["three_point_field_goals"] = 0
+		self.game_totals_basic_info["three_point_field_goal_attempts"] = 2
+		self.game_totals_basic_info["free_throws"] = 1
+		self.game_totals_basic_info["free_throw_attempts"] = 2
+		self.game_totals_basic_info["total_rebounds"] = 0
+		self.game_totals_basic_info["assists"] = 0
+		self.game_totals_basic_info["steals"] = 0
+		self.game_totals_basic_info["blocks"] = 0
+		self.game_totals_basic_info["turnovers"] = 1
+		self.game_totals_basic_info["points"] = 30
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+		
+		values = self.projections.calculate_floor_consistency_ceiling("test", 2013, FantasyPointCalculator.STAR_STREET)
+		
+		self.assertTrue(values[0] == 0)
+		self.assertTrue(values[1] == 1)
+		self.assertTrue(values[2] == 0)
+		self.assertTrue(values[3] == 0)
+	
+	###############################################################################
+	# Tests a player that has played two games, both of which produced ceiling FPs.
+	###############################################################################
+	def test_calculate_floor_consistency_ceiling_all_ceiling(self):
+		self.game_totals_basic_info["player_id"] = "test"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["game_number"] = 1
+		self.game_totals_basic_info["field_goals"] = 2
+		self.game_totals_basic_info["field_goal_attempts"] = 3
+		self.game_totals_basic_info["three_point_field_goals"] = 0
+		self.game_totals_basic_info["three_point_field_goal_attempts"] = 2
+		self.game_totals_basic_info["free_throws"] = 1
+		self.game_totals_basic_info["free_throw_attempts"] = 2
+		self.game_totals_basic_info["total_rebounds"] = 0
+		self.game_totals_basic_info["assists"] = 0
+		self.game_totals_basic_info["steals"] = 0
+		self.game_totals_basic_info["blocks"] = 0
+		self.game_totals_basic_info["turnovers"] = 1
+		self.game_totals_basic_info["points"] = 47
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+		
+		self.game_totals_basic_info["game_number"] = 2
+		self.game_totals_basic_info["field_goals"] = 3
+		self.game_totals_basic_info["field_goal_attempts"] = 3
+		self.game_totals_basic_info["three_point_field_goals"] = 0
+		self.game_totals_basic_info["three_point_field_goal_attempts"] = 2
+		self.game_totals_basic_info["free_throws"] = 1
+		self.game_totals_basic_info["free_throw_attempts"] = 2
+		self.game_totals_basic_info["total_rebounds"] = 0
+		self.game_totals_basic_info["assists"] = 0
+		self.game_totals_basic_info["steals"] = 0
+		self.game_totals_basic_info["blocks"] = 0
+		self.game_totals_basic_info["turnovers"] = 1
+		self.game_totals_basic_info["points"] = 45
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+		
+		values = self.projections.calculate_floor_consistency_ceiling("test", 2013, FantasyPointCalculator.STAR_STREET)
+		
+		self.assertTrue(values[0] == 0)
+		self.assertTrue(values[1] == 1)
+		self.assertTrue(values[2] == 1)
+		self.assertTrue(values[3] == 0)
+	
+	###############################################################################
+	# Tests a player that has played two games, both of which produced ceiling FPs.
+	###############################################################################
+	def test_calculate_floor_consistency_ceiling_all_super_ceiling(self):
+		self.game_totals_basic_info["player_id"] = "test"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["game_number"] = 1
+		self.game_totals_basic_info["field_goals"] = 2
+		self.game_totals_basic_info["field_goal_attempts"] = 3
+		self.game_totals_basic_info["three_point_field_goals"] = 0
+		self.game_totals_basic_info["three_point_field_goal_attempts"] = 2
+		self.game_totals_basic_info["free_throws"] = 1
+		self.game_totals_basic_info["free_throw_attempts"] = 2
+		self.game_totals_basic_info["total_rebounds"] = 0
+		self.game_totals_basic_info["assists"] = 0
+		self.game_totals_basic_info["steals"] = 0
+		self.game_totals_basic_info["blocks"] = 0
+		self.game_totals_basic_info["turnovers"] = 1
+		self.game_totals_basic_info["points"] = 52
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+		
+		self.game_totals_basic_info["game_number"] = 2
+		self.game_totals_basic_info["field_goals"] = 3
+		self.game_totals_basic_info["field_goal_attempts"] = 3
+		self.game_totals_basic_info["three_point_field_goals"] = 0
+		self.game_totals_basic_info["three_point_field_goal_attempts"] = 2
+		self.game_totals_basic_info["free_throws"] = 1
+		self.game_totals_basic_info["free_throw_attempts"] = 2
+		self.game_totals_basic_info["total_rebounds"] = 0
+		self.game_totals_basic_info["assists"] = 0
+		self.game_totals_basic_info["steals"] = 0
+		self.game_totals_basic_info["blocks"] = 0
+		self.game_totals_basic_info["turnovers"] = 1
+		self.game_totals_basic_info["points"] = 55
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+		
+		values = self.projections.calculate_floor_consistency_ceiling("test", 2013, FantasyPointCalculator.STAR_STREET)
+		
+		self.assertTrue(values[0] == 0)
+		self.assertTrue(values[1] == 1)
+		self.assertTrue(values[2] == 1)
+		self.assertTrue(values[3] == 1)
+	
+	###############################################################################
+	# Tests a player that has played four games - 1 floor, 1 consistent, 1 ceiling
+	# and 1 super-ceiling
+	###############################################################################
+	def test_calculate_floor_consistency_ceiling_one_each(self):
+		self.game_totals_basic_info["player_id"] = "test"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["game_number"] = 1
+		self.game_totals_basic_info["field_goals"] = 2
+		self.game_totals_basic_info["field_goal_attempts"] = 3
+		self.game_totals_basic_info["three_point_field_goals"] = 0
+		self.game_totals_basic_info["three_point_field_goal_attempts"] = 2
+		self.game_totals_basic_info["free_throws"] = 1
+		self.game_totals_basic_info["free_throw_attempts"] = 2
+		self.game_totals_basic_info["total_rebounds"] = 0
+		self.game_totals_basic_info["assists"] = 0
+		self.game_totals_basic_info["steals"] = 0
+		self.game_totals_basic_info["blocks"] = 0
+		self.game_totals_basic_info["turnovers"] = 1
+		self.game_totals_basic_info["points"] = 10
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+		
+		self.game_totals_basic_info["game_number"] = 2
+		self.game_totals_basic_info["field_goals"] = 3
+		self.game_totals_basic_info["field_goal_attempts"] = 3
+		self.game_totals_basic_info["three_point_field_goals"] = 0
+		self.game_totals_basic_info["three_point_field_goal_attempts"] = 2
+		self.game_totals_basic_info["free_throws"] = 1
+		self.game_totals_basic_info["free_throw_attempts"] = 2
+		self.game_totals_basic_info["total_rebounds"] = 0
+		self.game_totals_basic_info["assists"] = 0
+		self.game_totals_basic_info["steals"] = 0
+		self.game_totals_basic_info["blocks"] = 0
+		self.game_totals_basic_info["turnovers"] = 1
+		self.game_totals_basic_info["points"] = 25
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+		
+		self.game_totals_basic_info["game_number"] = 3
+		self.game_totals_basic_info["field_goals"] = 3
+		self.game_totals_basic_info["field_goal_attempts"] = 3
+		self.game_totals_basic_info["three_point_field_goals"] = 0
+		self.game_totals_basic_info["three_point_field_goal_attempts"] = 2
+		self.game_totals_basic_info["free_throws"] = 1
+		self.game_totals_basic_info["free_throw_attempts"] = 2
+		self.game_totals_basic_info["total_rebounds"] = 0
+		self.game_totals_basic_info["assists"] = 0
+		self.game_totals_basic_info["steals"] = 0
+		self.game_totals_basic_info["blocks"] = 0
+		self.game_totals_basic_info["turnovers"] = 1
+		self.game_totals_basic_info["points"] = 45
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+		
+		self.game_totals_basic_info["game_number"] = 4
+		self.game_totals_basic_info["field_goals"] = 3
+		self.game_totals_basic_info["field_goal_attempts"] = 3
+		self.game_totals_basic_info["three_point_field_goals"] = 0
+		self.game_totals_basic_info["three_point_field_goal_attempts"] = 2
+		self.game_totals_basic_info["free_throws"] = 1
+		self.game_totals_basic_info["free_throw_attempts"] = 2
+		self.game_totals_basic_info["total_rebounds"] = 0
+		self.game_totals_basic_info["assists"] = 0
+		self.game_totals_basic_info["steals"] = 0
+		self.game_totals_basic_info["blocks"] = 0
+		self.game_totals_basic_info["turnovers"] = 1
+		self.game_totals_basic_info["points"] = 55
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+		
+		values = self.projections.calculate_floor_consistency_ceiling("test", 2013, FantasyPointCalculator.STAR_STREET)
+		
+		self.assertTrue(values[0] == 0.25)
+		self.assertTrue(values[1] == 0.75)
+		self.assertTrue(values[2] == 0.50)
+		self.assertTrue(values[3] == 0.25)
 
 if __name__ == '__main__':
 	unittest.main()

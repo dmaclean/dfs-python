@@ -9,6 +9,9 @@ class Projections:
 	def __init__(self, cnx = None):
 		self.league_averages = {}
 		
+		# The calculator of Fantasy Points for each site.
+		self.fpc = FantasyPointCalculator()
+		
 		# Use dependency injection to determine where the database connection comes from.
 		if(not cnx):
 			self.cnx = mysql.connector.connect(user='fantasy', password='fantasy', host='localhost', database='basketball_reference')
@@ -376,6 +379,68 @@ class Projections:
 	
 		return adjusted_points
 
+	###################################################################################
+	# Calculates the percentage of games that a player reaches the floor, consistent, 
+	# and ceiling thresholds for fantasy points.
+	#
+	# Floor 		- 20 fantasy points
+	# Consistency 	- 21-40 fantasy points
+	# Ceiling 		- 41+ fantasy points
+	# Super Ceiling - 50+ fantasy points
+	###################################################################################
+	def calculate_floor_consistency_ceiling(self, player_id, season, site):
+		cursor = self.cnx.cursor()
+		stat_list = []
+		try:
+			query = ("Select * from game_totals_basic t where player_id = '%s' and season = %d") % (player_id, season)
+			cursor.execute(query)
+
+			# Collect list of stat lines that don't have fantasy points computed.
+			games = 0
+			for (result) in cursor:
+				stats = {}
+			
+				stats["player_id"] = result[1]
+				stats["season"] = result[2]
+				stats["game_number"] = result[3]
+				stats["field_goals"] = result[12]
+				stats["field_goal_attempts"] = result[13]
+				stats["three_point_field_goals"] = result[15]
+				stats["three_point_field_goal_attempts"] = result[16]
+				stats["free_throws"] = result[18]
+				stats["free_throw_attempts"] = result[19]
+				stats["total_rebounds"] = result[23]
+				stats["assists"] = result[24]
+				stats["steals"] = result[25]
+				stats["blocks"] = result[26]
+				stats["turnovers"] = result[27]
+				stats["points"] = result[29]
+			
+				stat_list.append(stats)
+				games = games + 1
+		finally:
+			cursor.close()
+		
+		self.fpc.site = site
+		
+		floor = 0.0
+		consistency = 0.0
+		ceiling = 0.0
+		s_ceiling = 0.0
+		for s in stat_list:
+			fantasy_points = self.fpc.calculate(s)
+						
+			if fantasy_points <= 20:
+				floor = floor + 1
+			if fantasy_points > 20:
+				consistency = consistency + 1
+			if fantasy_points > 40:
+				ceiling = ceiling + 1
+			if fantasy_points > 50:
+				s_ceiling = s_ceiling + 1
+		
+		return (floor/games, consistency/games, ceiling/games, s_ceiling/games)	
+
 	def regression(self):
 		games = []
 		cursor = self.cnx.cursor()
@@ -436,21 +501,18 @@ class Projections:
 		# Find all games being played today
 		games = self.get_game_list()
 		
-		# The calculator of Fantasy Points for each site.
-		fpc = FantasyPointCalculator()
-		
 		# List of stats to project for each player.
 		stats = ["points", "field_goals", "field_goal_attempts", "three_point_field_goals", "three_point_field_goal_attempts",
 							"free_throws", "free_throw_attempts", "total_rebounds", "assists", "steals", "blocks", "turnovers"]
 		
 		# List of sites to make projections for
-		sites = [ fpc.DRAFT_DAY, fpc.DRAFT_KINGS, fpc.STAR_STREET ]
+		sites = [ self.fpc.DRAFT_DAY, self.fpc.DRAFT_KINGS, self.fpc.STAR_STREET ]
 		
 		# CSV files to write to
 		files = {}
 		for s in sites:
 			files[s] = open("projections/%s_%s.csv" % (s, date.today()), "w")
-			files[s].write("name,position,projection,salary\n")
+			files[s].write("name,position,projection,salary,floor,consistency,ceiling\n")
 		
 		print "%d games tonight..." % len(games)
 		for game in games:
@@ -467,15 +529,16 @@ class Projections:
 					projections[s] = self.calculate_projection(player["player_id"], s, game["season"], player["opponent"])
 				
 				for s in sites:
-					fpc.site = s
-					fps = fpc.calculate(projections)
+					self.fpc.site = s
+					fps = self.fpc.calculate(projections)
+					consistency = self.calculate_floor_consistency_ceiling(player["player_id"], game["season"], s)
 					salary = self.get_salary(player["player_id"], s)
 					salary = -1 if salary == None else salary
 					
 					site_position = self.get_position_on_site(player["player_id"], s)
 					
 					print "\t\t%s (%s) is projected for %f points on %s" % (player["player_info"]["name"], site_position, fps, s)
-					files[s].write("%s,%s,%f,%d\n" % (player["player_info"]["name"], site_position, fps, salary) )
+					files[s].write("%s,%s,%f,%d,%f,%f,%f\n" % (player["player_info"]["name"], site_position, fps, salary, consistency[0], consistency[1], consistency[2]) )
 					
 		
 		# We're done!  Close up the files
