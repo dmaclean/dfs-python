@@ -145,8 +145,7 @@ class FantasyPointCalculator():
 				cursor.execute(insert_query)
 				
 				count = count + 1
-				if count % 1000 == 0:
-					print "Processed %d games" % count
+				print "Processed %d games" % count
 		finally:
 			cursor.close()
 
