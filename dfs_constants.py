@@ -1,0 +1,6 @@
+class DFSConstants:
+	# Site names
+	DRAFT_DAY = "DRAFT_DAY"
+	DRAFT_KINGS = "DRAFT_KINGS"
+	FAN_DUEL = "FAN_DUEL"
+	STAR_STREET = "STAR_STREET"

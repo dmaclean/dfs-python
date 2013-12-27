@@ -2,6 +2,7 @@ import sys
 import mysql.connector
 
 from fantasy_point_calculator import FantasyPointCalculator
+from dfs_constants import DFSConstants
 
 from datetime import date
 
@@ -506,7 +507,7 @@ class Projections:
 							"free_throws", "free_throw_attempts", "total_rebounds", "assists", "steals", "blocks", "turnovers"]
 		
 		# List of sites to make projections for
-		sites = [ self.fpc.DRAFT_DAY, self.fpc.DRAFT_KINGS, self.fpc.STAR_STREET ]
+		sites = [ self.fpc.DRAFT_DAY, self.fpc.DRAFT_KINGS, DFSConstants.FAN_DUEL, self.fpc.STAR_STREET ]
 		
 		# CSV files to write to
 		files = {}

@@ -171,6 +171,13 @@ class TestSalaryImporter(unittest.TestCase):
 		
 		self.assertTrue(self.salary_importer.salaries["Kevin Love"] == 18000)
 		self.assertTrue(self.salary_importer.positions["Kevin Love"] == "PF/C")
+
+	def test_process_line_fanduel(self):
+		self.salary_importer.site = "FAN_DUEL"
+		self.salary_importer.process_line("Kevin Love,PF,11700")
+		
+		self.assertTrue(self.salary_importer.salaries["Kevin Love"] == 11700)
+		self.assertTrue(self.salary_importer.positions["Kevin Love"] == "PF")
 	
 if __name__ == '__main__':
 	unittest.main()

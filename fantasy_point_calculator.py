@@ -4,6 +4,7 @@ import mysql.connector
 class FantasyPointCalculator():
 	DRAFT_DAY = "DRAFT_DAY"
 	DRAFT_KINGS = "DRAFT_KINGS"
+	FAN_DUEL = "FAN_DUEL"
 	STAR_STREET = "STAR_STREET"
 	
 	ALL_SITES = [DRAFT_DAY, DRAFT_KINGS, STAR_STREET]
@@ -55,6 +56,9 @@ class FantasyPointCalculator():
 				fantasy_points = fantasy_points + 1.5
 			elif triple_or_double_double == 3:
 				fantasy_points = fantasy_points + 3
+		
+		elif self.site == self.FAN_DUEL:
+			fantasy_points = stats["points"] + (stats["total_rebounds"] * 1.2) + (stats["assists"] * 1.5) + (stats["steals"] * 2) + (stats["blocks"] * 2) - (stats["turnovers"] * 1)
 		
 		elif self.site == self.STAR_STREET:
 			fantasy_points = stats["points"] + (stats["total_rebounds"] * 1.25) + (stats["assists"] * 1.5) + (stats["steals"] * 2) + (stats["blocks"] * 2) - (stats["turnovers"] * 1)

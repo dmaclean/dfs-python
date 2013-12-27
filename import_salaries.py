@@ -2,6 +2,8 @@ import sys
 from datetime import date
 import mysql.connector
 
+from dfs_constants import DFSConstants
+
 class SalaryImporter:
 	
 	def __init__(self, conn=None):
@@ -53,6 +55,13 @@ class SalaryImporter:
 		elif self.site == "DRAFT_KINGS":
 			position = pieces[0].replace("\"", "")
 			name = pieces[1].replace("\"", "").replace("'","")
+			salary = int(pieces[2])
+		###########
+		# FANDUEL
+		###########
+		elif self.site == DFSConstants.FAN_DUEL:
+			name = pieces[0].replace("\"", "").replace("'","")
+			position = pieces[1].replace("\"", "").replace("-","/")
 			salary = int(pieces[2])
 		elif self.site == "STAR_STREET":
 			position = pieces[0].replace("\"", "").replace("-","/")
