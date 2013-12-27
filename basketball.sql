@@ -311,3 +311,18 @@ create table dfs_site_positions (
 );
 create index dfs_site_positions_player_id_idx on dfs_site_positions(player_id);
 create index dfs_site_positions_player_site_idx on dfs_site_positions(site);
+
+create table vegas (
+	id integer auto_increment primary key,
+	date date not null,
+	road_team varchar(5) not null,
+	home_team varchar(5) not null,
+	spread_road float not null,
+	spread_home float not null,
+	over_under float not null,
+	projection_road float not null,
+	projection_home float not null
+);
+create index vegas_date_idx on vegas(date);
+create index vegas_road_team_idx on vegas(road_team);
+create index vegas_home_team_idx on vegas(home_team);
