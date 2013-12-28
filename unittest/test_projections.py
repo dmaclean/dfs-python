@@ -7,6 +7,7 @@ import unittest
 import BBRTestUtility
 import projections
 from fantasy_point_calculator import FantasyPointCalculator
+from dfs_constants import DFSConstants
 
 class TestProjections(unittest.TestCase):
 	def setUp(self):
