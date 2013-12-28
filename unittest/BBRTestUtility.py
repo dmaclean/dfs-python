@@ -371,3 +371,27 @@ class BBRTestUtility():
 				return result[0]
 		finally:
 			cursor.close()
+	
+	def insert_into_player_name_mapping(self, values):
+		cursor = self.conn.cursor()
+		query = """
+			insert into player_name_mapping (bbr_name, site_name, site) values ('%s','%s','%s')
+		""" % (values["bbr_name"], values["site_name"], values["site"])
+		
+		try:
+			cursor.execute(query)
+		finally:
+			cursor.close()
+	
+	def select_from_player_name_mapping(self, values):
+		cursor = self.conn.cursor()
+		query = """
+			select site_name from player_name_mapping where bbr_name = '%s' and site = '%s'
+		""" % (values["bbr_name"], values["site"])
+		
+		try:
+			cursor.execute(query)
+			for result in cursor:
+				return result[0]
+		finally:
+			cursor.close()

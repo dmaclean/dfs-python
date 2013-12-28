@@ -326,3 +326,11 @@ create table vegas (
 create index vegas_date_idx on vegas(date);
 create index vegas_road_team_idx on vegas(road_team);
 create index vegas_home_team_idx on vegas(home_team);
+
+create table player_name_mapping (
+	id integer auto_increment primary key,
+	bbr_name varchar(100) not null,
+	site_name varchar(100) not null,
+	site varchar(50) not null
+);
+create index player_name_mapping_bbr_name_idx on player_name_mapping(bbr_name);

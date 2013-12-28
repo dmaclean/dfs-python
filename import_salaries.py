@@ -40,6 +40,25 @@ class SalaryImporter:
 			cursor.execute(query)
 		finally:
 			cursor.close()
+	
+	################################################################################################
+	# Determines the correct name for a player to be used, based on the site.
+	# 
+	# For example, basketball-reference uses Tim Hardaway while Draft Kings uses Time Hardaway Jr.
+	################################################################################################
+	def get_name_for_site(self, name, site):
+		cursor = self.cnx.cursor()
+		
+		try:
+			query = "select bbr_name from player_name_mapping where site_name = '%s' and site = '%s'" % (name, site)
+			cursor.execute(query)
+			
+			for result in cursor:
+				return result[0]
+		finally:
+			cursor.close()
+		
+		return name
 
 	#######################################################################################
 	# Parses the provided line to properly extract the player name, position, and salary.
@@ -67,12 +86,17 @@ class SalaryImporter:
 			position = pieces[0].replace("\"", "").replace("-","/")
 			name = pieces[1].replace("\"", "").replace("'","")
 			salary = int(pieces[6])
+		
+		# Some player names on a given site won't match up with the name from basketball-reference,
+		# i.e. Tim Hardaway vs. Tim Hardaway Jr.
+		# so we need to look up the name and potentially do a translation.
+		name_for_site = self.get_name_for_site(name, self.site)
 
-		self.salaries[name] = salary
-		if name in self.positions:
-			self.positions[name] = self.positions[name] + "/" + position
+		self.salaries[name_for_site] = salary
+		if name_for_site in self.positions:
+			self.positions[name_for_site] = self.positions[name_for_site] + "/" + position
 		else:
-			self.positions[name] = position
+			self.positions[name_for_site] = position
 
 	def run(self):
 		file = ""

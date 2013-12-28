@@ -6,6 +6,7 @@ import sqlite3
 import unittest
 import BBRTestUtility
 import import_salaries
+from dfs_constants import DFSConstants
 
 class TestSalaryImporter(unittest.TestCase):
 	def setUp(self):
@@ -137,6 +138,12 @@ class TestSalaryImporter(unittest.TestCase):
 			"site": "",
 			"position": ""
 		}
+		
+		self.player_name_mapping_info = {
+			"bbr_name": "",
+			"site_name": "",
+			"site": ""
+		}
 	
 	def tearDown(self):
 		self.testUtil.conn.close()
@@ -178,6 +185,49 @@ class TestSalaryImporter(unittest.TestCase):
 		
 		self.assertTrue(self.salary_importer.salaries["Kevin Love"] == 11700)
 		self.assertTrue(self.salary_importer.positions["Kevin Love"] == "PF")
+	
+	def test_process_line_fanduel_changed_name(self):
+		self.player_name_mapping_info["bbr_name"] = "Tim Hardaway"
+		self.player_name_mapping_info["site_name"] = "Tim Hardaway Jr."
+		self.player_name_mapping_info["site"] = DFSConstants.FAN_DUEL
+		self.testUtil.insert_into_player_name_mapping(self.player_name_mapping_info)
+		
+		self.salary_importer.site = DFSConstants.FAN_DUEL
+		self.salary_importer.process_line("Tim Hardaway Jr.,PF,11700")
+		
+		self.assertTrue(self.salary_importer.salaries["Tim Hardaway"] == 11700)
+		self.assertTrue(self.salary_importer.positions["Tim Hardaway"] == "PF")
+	
+	def test_get_name_for_site(self):
+		self.player_name_mapping_info["bbr_name"] = "Tim Hardaway"
+		self.player_name_mapping_info["site_name"] = "Tim Hardaway Jr."
+		self.player_name_mapping_info["site"] = DFSConstants.DRAFT_KINGS
+		self.testUtil.insert_into_player_name_mapping(self.player_name_mapping_info)
+	
+		self.player_name_mapping_info["bbr_name"] = "Tim Hardaway"
+		self.player_name_mapping_info["site_name"] = "Tim Hardaway Jr"
+		self.player_name_mapping_info["site"] = DFSConstants.STAR_STREET
+		self.testUtil.insert_into_player_name_mapping(self.player_name_mapping_info)
+		
+		name = self.salary_importer.get_name_for_site("Tim Hardaway Jr.", DFSConstants.DRAFT_KINGS)
+		self.assertTrue(name == "Tim Hardaway")
+		
+		name = self.salary_importer.get_name_for_site("Tim Hardaway Jr", DFSConstants.STAR_STREET)
+		self.assertTrue(name == "Tim Hardaway")
+	
+	def test_get_name_for_site_no_hit(self):
+		self.player_name_mapping_info["bbr_name"] = "Tim Hardaway"
+		self.player_name_mapping_info["site_name"] = "Tim Hardaway Jr."
+		self.player_name_mapping_info["site"] = DFSConstants.DRAFT_KINGS
+		self.testUtil.insert_into_player_name_mapping(self.player_name_mapping_info)
+	
+		self.player_name_mapping_info["bbr_name"] = "Tim Hardaway"
+		self.player_name_mapping_info["site_name"] = "Tim Hardaway Jr"
+		self.player_name_mapping_info["site"] = DFSConstants.STAR_STREET
+		self.testUtil.insert_into_player_name_mapping(self.player_name_mapping_info)
+		
+		name = self.salary_importer.get_name_for_site("Kevin Love", DFSConstants.DRAFT_KINGS)
+		self.assertTrue(name == "Kevin Love")
 	
 if __name__ == '__main__':
 	unittest.main()
