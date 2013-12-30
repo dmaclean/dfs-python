@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<!--
+         ______        __          ______       _             __                 
+        / __  /____   / /_ ___    / ____/_____ (_)____   ____/ /___   _____ _____
+       / /_/ // __ \ / __// __ \ / / __ / ___// // __ \ / __  // _ \ / ___// ___/
+      / __  // /_/ // /_ / /_/ // /_/ // /   / // / / // /_/ //  __// /   (__  ) 
+     /_/  \_\\____/ \__/ \____/ \____//_/   /_//_/ /_/ \__,_/ \___//_/   /____/  
+                                                         _____ ____   ____ ___    
+                                                        / ___// __ \ / __ `__ \     
+                                                     _ / /__ / /_/ // / / / / /    
+                                                    (_)\___/ \____//_/ /_/ /_/    
+-->
+<html>
+<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>NBA Vegas Odds Page</title>
+	<link href="/favicon.ico" type="image/x-icon" rel="icon" /><link href="/favicon.ico" type="image/x-icon" rel="shortcut icon" />	
+
+	<link rel="stylesheet" type="text/css" href="http://rical-rg.s3.amazonaws.com/css/layouts_default.css?36.6" />
+	<!--<link rel="stylesheet" type="text/css" href="http://api.picatcha.com/static/client/picatcha.css"/>-->
+	<link rel="stylesheet" type="text/css" href="http://rical-rg.s3.amazonaws.com/css/pages.css?36.6" />	
+	<script type="text/javascript" src="http://rical-global.s3.amazonaws.com/js/jquery-1.4.2.custom.js?36.6"></script>
+
+	<!--<script type="text/javascript" src=""></script>-->
+
+	
+	<script type="text/javascript" src="http://rical-global.s3.amazonaws.com/js/jquery-ui-1.8.5.core.fx.min.js?36.6"></script>
+	<script type="text/javascript" src="http://rical-global.s3.amazonaws.com/js/jquery-ui-1.8.5.widgets.min.js?36.6"></script>
+	<script type="text/javascript" src="http://rical-global.s3.amazonaws.com/js/jquery.fancybox-1.3.1.pack.js?36.6"></script>
+	<script type="text/javascript" src="http://rical-global.s3.amazonaws.com/js/sortable.js?36.6"></script>
+	<script type="text/javascript" src="http://rical-global.s3.amazonaws.com/js/global.js?36.6"></script>
+	<!-- script type="text/javascript" src="http://rical-rg.s3.amazonaws.com/js/H5F/h5f.js?36.6"></script -->
+	
+	<!--<script type="text/javascript" src="http://api.picatcha.com/static/client/picatcha.js"></script>-->
+
+	<script type="text/javascript" src="http://rical-rg.s3.amazonaws.com/js/layouts_default.js?36.6"></script>
+
+	
+	<script type="text/javascript">
+    function _replace_html(html, striplinks){
+
+        if(striplinks=='none'){
+        html = html
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/((http|ftp|https):\/\/[a-z0-9\-_]+(\.[a-z0-9\-_]+)+([a-z0-9_\-\.,@\?^=%&;:\/~\+#]*[a-z0-9_\-@\?^=%&;\/~\+#])?)/ig, '<a href="$1" target="_blank">$1</a>')
+        }
+        html = html
+                        .replace(/(^|["?'?(]|\s)(Fan ?Duel|FD)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://partners.fanduel.com/processing/clickthrgh.asp?btag=a_282b_432" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(DK|Draft ?Kings)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://partners.draftkings.com/aff_c?offer_id=18&aff_id=2" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(D\$|Draft ?Street|DS)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://www.draftstreet.com?r=grinders&pid=635" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(Draft ?Day|DD)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://www.draftday.com/?affiliateRefCode=RotoGrinders" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(Fantasy ?Feud|Fantasy ?Fued|Feud|Fued|FF)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://www.fantasyfeud.com/l/2013-nfl-grinders/?aid=2&subid=x&referral_code=Grinders&cid=1" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(Star ?Street|SS)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="https://www.starstreet.com/?invite_code=RotoGrinders" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(FTD|Fan ?Throw ?Down|Throwdown)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="https://fanthrowdown.com/?user=RotoGrinders" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(StatClash|Stat ?Clash|SC)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="https://statclash.com/account/register/grinders" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(SFL|SF|Star ?Fantasy|Star ?Fantasy ?Leagues)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="https://www.starfantasyleagues.com/?referral=RotoGrinders " target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(SZ|Skyll|Skyll ?Zone)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://www.SKYLLZONE.com?marketingid=501001" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(Fanex)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://fanex.com" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(FantasyAces|Fantasy ?Aces|FA)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://fantasyaces.com/r/RotoGrinders/" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(Draft ?Team|DT)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://www.draftteam.com" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(WD|War ?Draft|WarDraft)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://wardraft.com" target="_blank">$2</a>$3')
+            
+            .replace(/"<``>/g, '"http');
+
+        return html;
+    }
+
+    (function($){
+        $.fn.linkify = function() {
+                this.each(function() {
+                var childNodes = this.childNodes;
+                var i = childNodes.length;
+
+                while(i--) {
+                    var n = childNodes[i];
+
+                    if (n.nodeType == 3) {
+                        var html = n.nodeValue;
+
+                        if (html.length > 1 && /\S/.test(html)) {
+                            var pre = html;
+
+                            html = _replace_html(pre,"none");
+
+                            $(n).after(html).remove();
+                        }
+                    } else if (n.nodeType == 1 && !/^(a|button|textarea)$/i.test(n.tagName)) {
+                        $(n).linkify();
+                    }
+                }
+            });
+        };
+    })(jQuery);
+</script>
+
+	<!--[if IE 7]><link rel="stylesheet" type="text/css" href="http://rical-rg.s3.amazonaws.com/css/ie7.css?36.6" /><![endif]-->
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	
+		
+	
+	<link rel="alternate" type="application/rss+xml" title="Articles RSS Feed" href="http://rotogrinders.com/articles/index.rss">
+	<link rel="alternate" type="application/rss+xml" title="Podcasts RSS Feed" href="http://rotogrinders.com/podcasts/feed.rss">
+
+	 
+</head>
+
+<body id="pages" class="view 81324 page-81324 alt">
+	<script src="http://rical-global.s3.amazonaws.com/js/modernizr-1.1.min.js?36.6"></script>
+	<div id="user-meta">
+		<input type="hidden" id="user-meta-id" value="23229" />
+		<input type="hidden" id="user-meta-username" value="dmaclean" />
+		<input type="hidden" id="user-meta-facebook-id" value="" />
+	</div>
+
+	<!--<div class="hidden">-->
+							<!--</div>-->
+		<header id="layout-header">
+	<div id="logo-and-banner">
+		<h2 id="logo-layout" class="logo"><a href="/">Roto Grinders</a></h2>
+				<div id="main-banner">
+			<a href="/incentives"><img src="http://rical-rg.s3.amazonaws.com/img/20110803-ad_incentives_728.jpg?36.6" alt="" /></a>
+		</div>
+			</div>
+</header>
+	<div id="wrapper">
+		<nav id="mainnav">
+	<div id="first-row" class="top-level-nav">
+		<ul class="nav">
+		    <li id="mainnav-home" class=""><a href="/">Home</a></li>
+		    <li id="mainnav-blogs" class=""><a href="/fantasyblogs">Blogs</a></li>
+			<li id="mainnav-articles" class="has-submenu"><a href="/articles">Articles</a></li>
+		    <li id="mainnav-reviews" class="has-submenu"><a href="/reviews">Reviews</a></li>
+		    <li id="mainnav-podcasts" class=""><a href="/podcasts">Podcasts</a></li>
+		    <li id="mainnav-grindersu" class=""><a href="/lessons/GrindersU_Introduction_Daily_Fantasy_Lessons-177082">GrindersU</a></li>
+				    <li id="mainnav-videos" class=""><a class="" href="/live">GrindersLive</a></li>
+		</ul>
+		<ul id="login-nav" class="nav">
+		   					<li id="mainnav-user" class="has-submenu"><a href="/profiles/dmaclean"><em id="loggedin-username">dmaclean</em></a></li>
+					</ul>
+	</div>
+	<div id="first-row-drawer" class="drawer">
+		<ul id="submenu-user" class="submenu nav">
+			<li><a href="/profiles/dmaclean">Profile</a></li>
+			<li><a href="/users/logout">Sign Out</a></li>
+		</ul>
+
+		<ul id="submenu-articles" class="submenu nav">
+		    <!--<li	class=""><a href="/articles/index">All</a></li>-->
+		    <li	class=""><a href="/articles/index/news">News</a></li>
+		    <li	class=""><a href="/articles/index/promotions">Promotions</a></li>
+		    <li	class=""><a href="/articles/index/strategy">Strategy</a></li>
+		    <li	class=""><a href="/pages/RotoGrinders_Championship_Coverage-100358">Championship Coverage</a></li>
+		    <li	class=""><a href="/articles/index/interviews">Interviews</a></li>
+		</ul>
+		
+		<ul id="submenu-reviews" class="submenu nav">
+									
+												<li class=""><a href="/reviews/FanDuel_Promocode-115"><img src="/img/sites/2/icon_16.png?1328741534" width="16" height="16" class="site-icon sideid-2" title="FanDuel" alt="FanDuel" /> FanDuel</a></li>
+																				<li class=""><a href="/reviews/DraftKings-46814"><img src="/img/sites/20/icon_16.png?1339697206" width="16" height="16" class="site-icon sideid-20" title="DraftKings" alt="DraftKings" /> DraftKings</a></li>
+																				<li class=""><a href="/reviews/DraftStreet-1151"><img src="/img/sites/9/icon_16.png?1328741534" width="16" height="16" class="site-icon sideid-9" title="DraftStreet" alt="DraftStreet" /> DraftStreet</a></li>
+																				<li class=""><a href="/reviews/DraftDay_Review-12991"><img src="/img/sites/15/icon_16.png?1328741534" width="16" height="16" class="site-icon sideid-15" title="DraftDay" alt="DraftDay" /> DraftDay</a></li>
+																				<li class=""><a href="/reviews/Fantasy_Feud_Recruiting_Code-38218"><img src="/img/sites/19/icon_16.png?1332954189" width="16" height="16" class="site-icon sideid-19" title="FantasyFeud" alt="FantasyFeud" /> FantasyFeud</a></li>
+																				<li class=""><a href="/reviews/StarStreet-35703"><img src="/img/sites/18/icon_16.png?1348530355" width="16" height="16" class="site-icon sideid-18" title="StarStreet" alt="StarStreet" /> StarStreet</a></li>
+																									<li class=""><a href="/reviews/FanThrowDown_Review-117343"><img src="/img/sites/24/icon_16.png?1360274435" width="16" height="16" class="site-icon sideid-24" title="FanThrowDown" alt="FanThrowDown" /> FanThrowDown</a></li>
+																				<li class=""><a href="/reviews/index/">See All</a></li>
+							</ul>
+	</div>
+	<div id="second-row" class="top-level-nav">
+		<ul class="nav">
+		    <li id="mainnav-dailyresearch" class='dailyresearch-box-image has-submenu' ><a href="/sites/offers/DraftDay/Basketball">Daily Research</a></li>	
+		    <li id="mainnav-forums" class=""><a href="/threads">Forums</a></li>
+		    <li id="mainnav-rankings" class="has-submenu"><a href="/rankings">Rankings</a></li>
+							<li id="mainnav-lineups" class=" has-submenu"><a href="/lineups">Lineups</a></li>
+					    <li id="mainnav-incentives" class=""><a href="/incentives">Incentives</a></li>
+		</ul>
+		<div id="mainnav-search">
+			<form id="mainnav-player-search" style="width:150px;">
+				<div class="fake-input" style="width:150px;">
+					<input type="hidden" name="player-slug" id="ds-player-slug" value="" />
+					<input type="text" name="player-name" placeholder="Player Search" class="player-autocomplete" id="ds-search-player" value="" />
+					<button class="button" type="submit">Go</button>
+				</div>
+			</form>
+			<form id="mainnav-site-player-search" action="/site_players/search" method="get" style="width:150px;">
+				<div class="fake-input" style="width:150px;">
+					<input type="text" name="player_name" placeholder="Opponent Search" />
+					<button type="submit">search</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div id="second-row-drawer" class="drawer">
+		
+		
+<div id="daily-research" class="">
+	<nav id='daily-research-nav'>
+		<span id="image-preloader" class="hidden"></span>
+		
+		
+		<div id="daily-research-sites" class="filter-list">
+		
+<ul class="nav-list">
+<li ><a href="/sites/offers/FanDuel/Basketball" id="siteid-2"><img src="/img/sites/2/icon_16.png?1328741534" width="16" height="16" class="site-icon sideid-2" title="FanDuel" alt="FanDuel" /> FanDuel</a></li><li ><a href="/sites/offers/DraftKings/Basketball" id="siteid-20"><img src="/img/sites/20/icon_16.png?1339697206" width="16" height="16" class="site-icon sideid-20" title="DraftKings" alt="DraftKings" /> DraftKings</a></li><li ><a href="/sites/offers/DraftStreet/Basketball" id="siteid-9"><img src="/img/sites/9/icon_16.png?1328741534" width="16" height="16" class="site-icon sideid-9" title="DraftStreet" alt="DraftStreet" /> DraftStreet</a></li><li class="active" ><a href="/sites/offers/DraftDay/Basketball" id="siteid-15" class="active"><img src="/img/sites/15/icon_16.png?1328741534" width="16" height="16" class="site-icon sideid-15" title="DraftDay" alt="DraftDay" /> DraftDay</a></li><li ><a href="/sites/offers/FantasyFeud/Basketball" id="siteid-19"><img src="/img/sites/19/icon_16.png?1332954189" width="16" height="16" class="site-icon sideid-19" title="FantasyFeud" alt="FantasyFeud" /> FantasyFeud</a></li><li ><a href="/sites/offers/StarStreet/Basketball" id="siteid-18"><img src="/img/sites/18/icon_16.png?1348530355" width="16" height="16" class="site-icon sideid-18" title="StarStreet" alt="StarStreet" /> StarStreet</a></li><li ><a href="/sites/offers/FanThrowDown/Basketball" id="siteid-24"><img src="/img/sites/24/icon_16.png?1360274435" width="16" height="16" class="site-icon sideid-24" title="FanThrowDown" alt="FanThrowDown" /> FanThrowDown</a></li></ul>
+	
+	</div>
+		
+		<div id="daily-research-sports" class="filter-list">
+		
+<ul class="nav-list">
+<li ><a href="/sites/offers/DraftDay/Football" id="sportid-1"><span class="football sport-icon"></span>Football</a></li><li ><a href="/sites/offers/DraftDay/CFB" id="sportid-7"><span class="CFB sport-icon"></span>CFB</a></li><li ><a href="/sites/offers/DraftDay/Baseball" id="sportid-2"><span class="baseball sport-icon"></span>Baseball</a></li><li class="active" ><a href="/sites/offers/DraftDay/Basketball" id="sportid-3" class="active"><span class="basketball sport-icon"></span>Basketball</a></li><li ><a href="/sites/offers/DraftDay/Hockey" id="sportid-4"><span class="hockey sport-icon"></span>Hockey</a></li><li ><a href="/sites/offers/DraftDay/CBB" id="sportid-8"><span class="CBB sport-icon"></span>CBB</a></li></ul>
+	
+	</div>
+	</nav>
+	<div id="daily-research-drawer" class="alt drawer-menu">
+		<div id="daily-research-results-container" class="grid-10-2">
+			<div id="daily-research-results" class="column-3">
+				<div id="daily-research-results-holder">
+					
+
+	
+<div id="special-ad">
+    <div id="gold-advice">
+
+    <p>Gold Banner Buttons are for DraftDay Incentives Members. &nbsp<strong> Sign Up Instructions</strong></p>
+            <div class="incentives"></div>
+    </div>
+
+    <div class="incentive-box" style="display:none;">
+    <div class="content">
+    <p class="access-text">Gain access to DraftDay Incentives by following these simple steps:</p>	
+    <ul>
+        <li>
+            <span class="number">1</span>
+            <span class="descrip">
+NOTE: This option is for new accounts only.  If you already have a  DraftDay Account you can <a href="http://www.draftday.com/?affiliateRefCode=RotoGrinders"> purchase access to Grinders Incentives through Paypal.</a>  
+            </span>
+        </li>
+        <li>
+            <span class="number">2</span>
+            <span class="descrip">Make a deposit.
+            </span>
+        </li>
+        <li>
+            <span class="number">3</span>
+            <span class="descrip">Be sure your DraftDay Screen Name is listed in your Rotogrinders Profile. When we see your DraftDay username show up in our referral reports we will grant you access to DraftDay incentives.
+            </span>
+        </li>
+    </ul>
+    <p>It's that simple. Feel free to email support as soon as you make your first deposit to speed up the process.</p>
+    <p class='center-incentives-box'><a href="/pages/RotoGrinders_Daily_Research_FAQ-133999">RotoGrinders: Daily Research FAQ</a></p>
+    <!--Content Here--></div>
+    </div>
+</div>
+
+
+<div id="daily-research-boxes">
+
+<ul>
+
+    <li id="dailyOffers"><a href="/projected_stats/index/DraftDay/Basketball" class="nbaPlayerProjections"><span>Player Projections</span></a> <a href="/projected_stats/index/DraftDay/Basketball" class="incentives">Incentives</a></li>
+    <li id="dailyOffers"><a href="/lineups/index/Basketball/DraftDay" class="nbaStartingLineups"><span>NBA Starting Lineups</span></a></li>
+    		<li id="dailyOffers"><a href="/pages/NBA_Expert_Picks_DraftDay-182326" class="grindDown"><span>CrazyGabey's Expert Picks</span></a><a href="/pages/NBA_Expert_Picks_DraftDay-182326" class="incentives">Incentives</a></li>
+			 <li id="dailyOffers"><a href="/pages/NBA_Daily_Matchup_Charts_DraftDay-182174" class="weeklyCheatSheet"><span>Daily Matchups Charts</span></a><a href="/pages/NBA_Daily_Matchup_Charts_DraftDay-182174" class="incentives">Incentives</a></li>
+	         <li id="dailyOffers"><a href="/salaries/projected/DraftDay/Basketball" class="dProjectedLineup"><span>Algorithm-Projected Lineup</span></a></li>
+		<li id="dailyOffers"><a href="http://rotogrinders.com/pages/Lineup_Email_Alerts_NBA-185872" class="lineupsEmailAlerts"><span>Lineup Email Alerts</span></a><a href="" class="incentives">Incentives</a></li>
+		
+			<li id="dailyOffers"><a href="/pages/NBA_Bargain_Bin_Ballers_DraftDay-182088" class="bargainBin"><span>CrazyGabey's Bargain Bin Ballers</span></a><a href="/pages/NBA_Bargain_Bin_Ballers_DraftDay-182088" class="incentives">Incentives</a></li>	
+		<li id="dailyOffers"><a href="/pages/NBA_Player_Stats_Guards-181856" class="nbaPlayerStats"><span>Player Stats</span></a></li>
+	<li id="dailyOffers"><a href="/pages/NBA_Advanced_Player_Stats_Guards-181885" class="advancedStats"><span>Advanced Player Stats</span></a></li>
+	<li id="dailyOffers"><a href="/pages/NBA_Team_Stats_Team_Offense-182041" class="nbaTeamStats"><span>Team Stats</span></a></li>
+	<li id="dailyOffers"><a href="/pages/NBA_Market_Watch-81761" class="marketWatch"><span>NBA Market Watch</span></a></li>
+	<li id="dailyOffers"><a href="/pages/NBA_Minutes_Watch_Point_Guards-81760" class="nbaMinutesWatch"><span>Minutes Watch</span></a></li>
+	<li id="dailyOffers"><a href="/pages/NBA_Offense_vs_Defense_Statistics-70235" class="nbaOffenseDefense"><span>Offense vs. Defense</span></a></li>
+	<li id="dailyOffers"><a href="/pages/NBA_Defense_vs_Position_Stats_Point_Guards-81759" class="nbaDstkickers"><span>Defense vs. Position</span></a></li>
+	<li id="dailyOffers"><a href="/pages/NBA_Ceiling_and_Consistency_Ratings_Guards-119804" class="consistency"><span>Ceiling & Consistency</span></a></li>
+    <li id="dailyOffers"><a href="/pages/NBA_Hottest_Players_Yesterday-176481" class="heatingUp"><span>Heating Up</span></a></li>
+    <li id="dailyOffers"><a href="/pages/NBA_Vegas_Odds_Page-81324" class="vegasOdds"><span>Vegas Odds and Lines</span></a></li>
+    <li id="dailyOffers"><a href="/pages/NBA_Site_Scoring_Comparison-70238" class="siteScoring"><span>Site Scoring Comparison</span></a></li>
+    	 <li id="dailyOffers"><a href="/articles/Daily_Fantasy_Strategy_Vault-17113" class="strategyArchive"><span>Strategy Vault</span></a></li>
+	 	
+
+
+
+
+
+
+
+	
+	
+
+	
+	
+	
+	
+	
+	
+   
+
+
+
+	</ul>
+
+</div>
+
+				</div>
+				<div id="daily-research-results-mask">
+					<div id="daily-research-results-mask-spinner"></div>
+				</div>
+			</div>
+		</div>
+		<div class="clearer"></div>
+	</div>
+</div>
+		
+		<ul id="submenu-rankings" class="submenu nav">
+			<li class=""><a href="/rankings/index/grinder">Grinder Rankings</a></li>
+			<li class=""><a href="/rankings/index/annual">TPOY</a></li>
+			<li class=""><a href="/rankings/index/monthly">Monthly GLB</a></li>
+			<li class=""><a href="/rankings/index/seasonal/all/Football">Seasonal GLB</a></li>
+			<li class=""><a href="/pages/RotoGrinders_Rankings_FAQ-158">FAQ</a></li>
+		</ul>
+
+		<ul id="submenu-lineups" class="submenu nav">
+			<li class=""><span class="football sport-icon"></span><a style="display:inline-block;" href="/lineups/index/Football">Football</a></li>
+			<li class=""><span class="basketball sport-icon"></span><a style="display:inline-block;" href="/lineups/index/Basketball">Basketball</a></li>
+			<li class=""><span class="hockey sport-icon"></span><a style="display:inline-block;" href="/lineups/index/Hockey">Hockey</a></li>
+			<li class=""><span class="baseball sport-icon"></span><a style="display:inline-block;" href="/lineups">Baseball</a></li>
+        	</ul>
+	</div>
+</nav>
+
+<!--<a href="/threads/Guaranteed_Overlay_RG_Only_Quali-212991"><div id="wide-bar">TONIGHT: $2 RG-Only Qualifier for DraftStreet's $100K NBA Christmas Tourney.<span class="orange"> ~$3,000 Guaranteed Overlay</span></div></a>-->
+
+		
+
+		
+				
+		        
+		<div id="middle">
+												<div id="main-section" >
+									<section id="main-content" >
+						
+
+
+	<article id="main-article" class="post">
+		
+
+<!--<p class="by-line">By </p>-->
+
+	<h1><span class="caps">NBA</span> Vegas Odds Page</h1>
+
+	<p>This page brings you what Vegas says about each day&#8217;s <span class="caps">NBA</span> games. Use the game spread and total projected points for the game to adjust your lineups accordingly.</p>
+
+	<table>
+		<tr>
+			<th style="text-align:center;">	<strong><span class="caps">NBA</span> Vegas Odds</strong>	</th>
+			<th style="text-align:center;">	<a href="http://rotogrinders.com/pages/NBA_Vegas_Odds_Player_Prop_Bets-182797"><strong><span class="caps">NBA</span> Player Props</strong></a>	</th>
+		</tr>
+	</table>
+
+	<p><strong>Note:</strong> Table is sortable. Just click on any header to sort by that category! </p>
+
+	<h3><strong>Spreads, Total Points and Projected Scores</strong></h3>
+
+	<h2>December 25</h2>
+
+	<table class="sortable">
+		<tr>
+			<th style="text-align:center;">	<strong>Road Team</strong>	</th>
+			<th style="text-align:center;">	<strong>Home Team</strong>	</th>
+			<th style="text-align:center;">	<strong>Spread (Rd)</strong>	</th>
+			<th style="text-align:center;">	<strong>Spread (Hm)</strong>	</th>
+			<th style="text-align:center;">	<strong>Over/Under</strong>	</th>
+			<th style="text-align:center;">	<strong>Proj. Score (Rd)</strong>	</th>
+			<th style="text-align:center;">	<strong>Proj. Score (Hm)</strong>	</th>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	<img src="http://i1055.photobucket.com/albums/s520/haskele/NBAChicago_zpsb629d913.png" class="clear" alt="" />	</td>
+			<td style="background:white; color:black; text-align:center;">	<img src="http://i1055.photobucket.com/albums/s520/haskele/NBABrooklyn_zps593f4834.png" class="clear" alt="" />	</td>
+			<td style="vertical-align:middle; background:white; color:black; font-size:14pt; text-align:center;">	3.0	</td>
+			<td style="vertical-align:middle; background:white; color:black; font-size:14pt; text-align:center;">	-3.0	</td>
+			<td style="vertical-align:middle; background:#FFB2B2; color:black; font-size:14pt; text-align:center;">	188.0	</td>
+			<td style="vertical-align:middle; background:#FFB2B2; color:black; font-size:14pt; text-align:center;">	92.50	</td>
+			<td style="vertical-align:middle; background:white; color:black; font-size:14pt; text-align:center;">	95.50	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	<img src="http://i1055.photobucket.com/albums/s520/haskele/NBAOklahomaCity_zps066b81e6.png" class="clear" alt="" />	</td>
+			<td style="background:white; color:black; text-align:center;">	<img src="http://i1055.photobucket.com/albums/s520/haskele/NBANewYork_zps8e2409cd.png" class="clear" alt="" />	</td>
+			<td style="vertical-align:middle; background:white; color:black; font-size:14pt; text-align:center;">	-8.0	</td>
+			<td style="vertical-align:middle; background:white; color:black; font-size:14pt; text-align:center;">	8.0	</td>
+			<td style="vertical-align:middle; background:#B8FFB8; color:black; font-size:14pt; text-align:center;">	200.0	</td>
+			<td style="vertical-align:middle; background:#B8FFB8; color:black; font-size:14pt; text-align:center;">	104.00	</td>
+			<td style="vertical-align:middle; background:white; color:black; font-size:14pt; text-align:center;">	96.00	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	<img src="http://i1055.photobucket.com/albums/s520/haskele/NBAMiami_zps6cddb1ba.png" class="clear" alt="" />	</td>
+			<td style="background:white; color:black; text-align:center;">	<img src="http://i1055.photobucket.com/albums/s520/haskele/NBALALakers_zpsa03c5f8b.png" class="clear" alt="" />	</td>
+			<td style="vertical-align:middle; background:white; color:black; font-size:14pt; text-align:center;">	-8.5	</td>
+			<td style="vertical-align:middle; background:white; color:black; font-size:14pt; text-align:center;">	8.5	</td>
+			<td style="vertical-align:middle; background:#B8FFB8; color:black; font-size:14pt; text-align:center;">	206.5	</td>
+			<td style="vertical-align:middle; background:#B8FFB8; color:black; font-size:14pt; text-align:center;">	107.50	</td>
+			<td style="vertical-align:middle; background:white; color:black; font-size:14pt; text-align:center;">	99.00	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	<img src="http://i1055.photobucket.com/albums/s520/haskele/NBAHouston_zps373bff5c.png" class="clear" alt="" />	</td>
+			<td style="background:white; color:black; text-align:center;">	<img src="http://i1055.photobucket.com/albums/s520/haskele/NBASanAntonio_zpsc827a8a6.png" class="clear" alt="" />	</td>
+			<td style="vertical-align:middle; background:white; color:black; font-size:14pt; text-align:center;">	7.0	</td>
+			<td style="vertical-align:middle; background:white; color:black; font-size:14pt; text-align:center;">	-7.0	</td>
+			<td style="vertical-align:middle; background:#B8FFB8; color:black; font-size:14pt; text-align:center;">	210.0	</td>
+			<td style="vertical-align:middle; background:#B8FFB8; color:black; font-size:14pt; text-align:center;">	101.50	</td>
+			<td style="vertical-align:middle; background:#B8FFB8; color:black; font-size:14pt; text-align:center;">	108.50	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	<img src="http://i1055.photobucket.com/albums/s520/haskele/NBALAClippers_zps81adcd39.png" class="clear" alt="" />	</td>
+			<td style="background:white; color:black; text-align:center;">	<img src="http://i1055.photobucket.com/albums/s520/haskele/NBAGoldenState_zps23271bdb.png" class="clear" alt="" />	</td>
+			<td style="vertical-align:middle; background:white; color:black; font-size:14pt; text-align:center;">	2.0	</td>
+			<td style="vertical-align:middle; background:white; color:black; font-size:14pt; text-align:center;">	-2.0	</td>
+			<td style="vertical-align:middle; background:#B8FFB8; color:black; font-size:14pt; text-align:center;">	205.0	</td>
+			<td style="vertical-align:middle; background:#B8FFB8; color:black; font-size:14pt; text-align:center;">	101.50	</td>
+			<td style="vertical-align:middle; background:#B8FFB8; color:black; font-size:14pt; text-align:center;">	103.50	</td>
+		</tr>
+	</table>
+
+	<p><sup>1</sup> Projected team score is an estimated score based on the spread and over/under lines set in the Vegas Odds above.</p>
+
+	<h2>Legend for <span class="caps">NBA</span> Vegas Odds</h2>
+
+	<ul>
+		<li>Total Points &#8211; Combined score for both teams according to Vegas Lines</li>
+		<li>Proj. Score &#8211; Projected Score for each team in that game individually.</li>
+	</ul>
+
+	<h2>Player Prop Bets</h2>
+
+	<p>Player prop bets show the value for a given category that Vegas projects a player to output in tonight&#8217;s game. These can be helpful in finding daily fantasy steals or studs on a given night.</p>
+
+	<p><strong><span class="caps">LEGEND</span>:</strong><br />
+Total Prop (cat) &#8211; Vegas Prop Bet Line for that Category<br />
+ML (Over) &#8211; Money Line that the Player goes <span class="caps">OVER</span> that Prop Bet Line (More Negative values mean a player is more likely to go over)<br />
+ML (Under) &#8211; Money Line that the Player goes <span class="caps">UNDER</span> that Prop Bet Line (More Negative values mean a player is more likely to go under)</p>
+	</article>
+		
+
+					</section>
+								<div class="clearer"></div>
+			</div>
+			<div class="clearer"></div>
+		</div>
+		
+		<footer id="main-footer" class="grid-3-9">
+			<div class="column-1">
+				<a id="footer-logo" href="/">Roto Grinders</a>
+			</div>
+			<div class="column-2">
+				<ul class="nav-list">
+					<li><a href="/">Home</a>					</li><li><a href="/pages/view/1140">Contact Us</a>					</li><li><a href="/pages/terms">Terms of Service</a>					</li><li><a href="/pages/privacy_policy">Privacy Policy</a>					</li><li><a href="/threads">Forums</a>					</li><li><a href="/reviews/FanDuel_Promocode-115">FanDuel Review</a>					</li><li><a href="/reviews/DraftStreet-1151">DraftStreet Review</a>					</li> 
+				</ul>
+				<p>RotoGrinders.com is the home of the daily fantasy sports community.  Our content, rankings, member blogs, promotions and forum discussion all cater to the players that like to create a new fantasy team every day of the week.  Our goal is to help all of our members make more money playing daily fantasy sports!</p>
+			</div>
+			
+			<div id="copyright">RotoGrinders.com &copy; 2013 | 10.250.58.19</div>
+		</footer>
+
+		<div style="display:none;">
+			
+<div id="user-login">
+		<h2>Sign In</h2>
+	
+	<form id="UserAddForm" method="post" action="/users/signin"><fieldset style="display:none;"><input type="hidden" name="_method" value="POST" /></fieldset>		<div class="input text"><label for="UserUsername">Username or E-Mail Address</label><input name="data[User][username]" type="text" class="notEmpty" placeholder="Username" maxlength="32" value="" id="UserUsername" /></div>	<div class="input password"><label for="UserPassword">Password</label><input type="password" name="data[User][password]" placeholder="Password" class="notEmpty" value="" id="UserPassword" /></div>	<div class="input checkbox"><input type="hidden" name="data[User][remember]" id="UserRemember_" value="0" /><input type="checkbox" name="data[User][remember]" checked="checked" value="1" id="UserRemember" /><label for="UserRemember">Remember</label></div>	<input type="hidden" name="data[User][redirect]" value="" id="UserRedirect" />
+	<div class="submit">
+		<button type="submit">Sign In</button>
+	</div>
+	</form>	
+	<div id="signup">
+		<a href="/users/forgot_password" id="forgot-password">Forgot your username or password?</a>		Don&#39;t have an account? <a href="/users/signup" class="button call">Sign Up</a> 
+	</div>
+</div>
+		</div>
+	</div>
+		<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-17399775-1']);
+	_gaq.push(['_trackPageview']);
+
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
+</script>
+    </body>
+</html>
