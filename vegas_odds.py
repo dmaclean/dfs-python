@@ -40,18 +40,32 @@ soup = BeautifulSoup(resp)
 
 # Translation map for full name --> abbreviations
 team_names = {
+	"Atlanta": "ATL",
 	"Bobcats": "CHA",
+	"Boston": "BOS",
+	"Brooklyn": "BRK",
 	"Chicago": "CHI",
+	"Cleveland": "CLE",
 	"Dallas": "DAL",
 	"Denver": "DEN",
 	"Detroit": "DET",
+	"GoldenState": "GSW",
+	"Houston": "HOU",
+	"Indiana": "IND",
 	"LAClippers": "LAC",
+	"LALakers": "LAL",
 	"Memphis": "MEM",
 	"Miami": "MIA",
+	"Milwaukee": "MIL",
 	"Minnesota": "MIN",
 	"NewOrleans": "NOP",
+	"OklahomaCity": "OKC",
+	"Orlando": "ORL",
 	"Phoenix": "PHO",
 	"Portland": "POR",
+	"Sacramento": "SAC",
+	"SanAntonio": "SAS",
+	"Toronto": "TOR",
 	"Utah": "UTA",
 	"Washington": "WAS"
 }
@@ -82,11 +96,15 @@ for tr in table.find_all('tr'):
 	home_team = img_pieces[len(img_pieces)-1].split('_')[0].replace("NBA", "")
 	home_team = team_names[home_team] if home_team in team_names else home_team
 	
-	road_spread = float(tr.find_all('td')[2].text)
-	home_spread = float(tr.find_all('td')[3].text)
-	over_under = float(tr.find_all('td')[4].text)
-	road_score = float(tr.find_all('td')[5].text)
-	home_score = float(tr.find_all('td')[6].text)
+	try:
+		road_spread = float(tr.find_all('td')[2].text)
+		home_spread = float(tr.find_all('td')[3].text)
+		over_under = float(tr.find_all('td')[4].text)
+		road_score = float(tr.find_all('td')[5].text)
+		home_score = float(tr.find_all('td')[6].text)
+	except ValueError:
+		print "Error parsing one of the values.  The odds are probably not fully updated."
+		quit()
 	
 	odds.append( { "date": date.today(), 
 		"road_team": road_team, 
@@ -104,6 +122,7 @@ for tr in table.find_all('tr'):
 cnx = mysql.connector.connect(user='fantasy', password='fantasy', host='localhost', database='basketball_reference')
 
 for o in odds:
+	print "Storing %s/%s to database." % (o["road_team"], o["home_team"])
 	insert_or_update(cnx, o)
 
 cnx.close()
