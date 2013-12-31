@@ -12,6 +12,7 @@ class Processor:
 	file = ""
 	season = -1
 	type = "players"
+	all_players = False
 	
 	listParser = None
 	playerMainParser = None
@@ -45,6 +46,8 @@ class Processor:
 					self.season = int(pieces[1])
 				elif pieces[0] == "type":
 					self.type = pieces[1]
+				elif pieces[0] == "all_players":
+					self.all_players = pieces[1] == "true"
 					
 	
 	##############################################################################
@@ -121,7 +124,8 @@ class Processor:
 		
 		if self.source == "site":
 			cnx = mysql.connector.connect(user='fantasy', password='fantasy', host='localhost', database='basketball_reference')
-			alphabet = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
+			#alphabet = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
+			alphabet = ["a","b","c"]
 			
 			for letter in alphabet:
 				data = self.fetchData("/players/"+letter+"/", True)
@@ -129,6 +133,10 @@ class Processor:
 				# Parse the HTML for the list of players at this letter and iterate
 				# over the players found.
 				self.listParser.players = []
+				
+				# Should we be grabbing all players (not just active)?
+				self.listParser.all_players = self.all_players
+				
 				self.listParser.feed(data)
 				for player in self.listParser.players:
 					if not player.playerExists(cnx):
@@ -218,7 +226,8 @@ class Processor:
 			
 			if self.source == "player_list.html":
 				parser = BasketballReferencePlayerListParser()
-			elif self.source == "player_main.html":
+				parser.all_players = self.all_players
+			elif self.source == "player_main.html" or self.source == "forest_able.html":
 				parser = BasketballReferencePlayerMainParser()
 			elif self.source == "player_gamelog.html":
 				parser = BasketballReferenceGameLogParser()
@@ -1687,6 +1696,7 @@ class BasketballReferencePlayerListParser(HTMLParser):
 	tdCount = 0
 	current = ""
 	isActive = False
+	all_players = False
 	player = Player()
 	
 	players = []
@@ -1697,7 +1707,7 @@ class BasketballReferencePlayerListParser(HTMLParser):
 			self.player = Player()
 			self.rowCount = self.rowCount + 1
 			self.tdCount = 0
-			self.isActive = False
+			self.isActive = self.all_players	# Initially set to False if we're only interested in active players.
 		elif tag == "td":
 			self.tdCount = self.tdCount + 1
 		elif tag == "strong":
@@ -1711,12 +1721,12 @@ class BasketballReferencePlayerListParser(HTMLParser):
 		self.current = tag
 		
 	def handle_endtag(self,tag):
-		if tag == "tr" and self.isActive:
+		if tag == "tr" and self.isActive and self.player.name != "":
 			self.players.append(self.player)
 			print "Player",self.player.name,"(",self.player.url,")/",self.player.code,"/",self.player.positions,"/",self.player.height,"inches/",self.player.weight,"lbs"
 	
 	def handle_data(self, data):
-		if data.strip() == "":
+		if data.strip() == "" or data.strip() == "*":
 			return
 		
 		if self.current == "a" and self.isActive and self.tdCount == 1:
@@ -1742,6 +1752,7 @@ class BasketballReferencePlayerMainParser(HTMLParser):
 	currentSeason = -1
 	table_type = ""
 	tdCount = 0
+	found_footer = False
 	totals_stats = {}
 	advanced_stats = {}
 	
@@ -1754,33 +1765,40 @@ class BasketballReferencePlayerMainParser(HTMLParser):
 			self.tdCount = 0
 		elif tag == "td":
 			self.tdCount = self.tdCount + 1
+		elif tag == "tfoot":
+			found_footer = True
 		
 		self.current = tag
 		
 	def handle_endtag(self, tag):
-		if tag == "tr" and self.table_type == "totals":
-			#print self.totals_stats[self.currentSeason]
-			pass
-		elif tag == "tr" and self.table_type == "advanced":
-			#print self.advanced_stats[self.currentSeason]
-			pass
-		elif tag == "table":
+		if tag == "table":
 			self.table_type = ""
 	
 	def handle_data(self, data):
-		if data.strip() == "":
+		if data.strip() == "" or self.found_footer:
 			return
 		
 		if self.table_type == "totals":
-			# Season column
-			if self.current == "a" and self.tdCount == 1:
+			# Season column (<a> tag for linkable season, <td> for non-linkable)
+			if (self.current == "a" or self.current == "td") and self.tdCount == 1:
 				self.currentSeason = int(data.split("-")[0])
 				self.totals_stats[self.currentSeason] = {
 					"position": "",
+					"games_started": 0,
+					"minutes_played": 0.0,
 					"field_goal_pct": 0.0,
+					"three_point_field_goals": 0,
+					"three_point_field_goal_attempts": 0,
 					"three_point_field_goal_pct": 0.0,
 					"two_point_field_goal_pct": 0.0,
-					"free_throw_pct": 0.0
+					"free_throw_pct": 0.0,
+					"offensive_rebounds": 0,
+					"defensive_rebounds": 0,
+					"total_rebounds": 0,
+					"assists": 0,
+					"steals": 0,
+					"blocks": 0,
+					"turnovers": 0
 				}
 			# Age column
 			elif self.current == "td" and self.tdCount == 2:
@@ -1870,7 +1888,7 @@ class BasketballReferencePlayerMainParser(HTMLParser):
 			
 		elif self.table_type == "advanced":
 			# Season column
-			if self.current == "a" and self.tdCount == 1:
+			if (self.current == "a" or self.current == "td") and self.tdCount == 1:
 				self.currentSeason = int(data.split("-")[0])
 				self.advanced_stats[self.currentSeason] = {
 					"position": "",
@@ -2032,10 +2050,27 @@ class BasketballReferenceGameLogParser(HTMLParser):
 				self.game_number = int(data)
 				self.basic_game_stats[self.game_number] = {
 					"result": "",
+					"games_started": 0,
+					"minutes_played": 0,
+					"field_goals": 0,
+					"field_goal_attempts": 0,
 					"field_goal_pct": 0.0,
+					"three_point_field_goals": 0,
+					"three_point_field_goal_attempts": 0,
 					"three_point_field_goal_pct": 0.0,
+					"free_throws": 0,
+					"free_throw_attempts": 0,
 					"free_throw_pct": 0.0,
-					"plus_minus": 0
+					"offensive_rebounds": 0,
+					"defensive_rebounds": 0,
+					"total_rebounds": 0,
+					"assists": 0,
+					"steals": 0,
+					"blocks": 0,
+					"turnovers": 0,
+					"personal_fouls": 0,
+					"plus_minus": 0,
+					"game_score": 0
 				}
 			# Date
 			elif self.current == "a" and self.tdCount == 3:
@@ -2132,6 +2167,8 @@ class BasketballReferenceGameLogParser(HTMLParser):
 				self.game_number = int(data)
 				self.advanced_game_stats[self.game_number] = {
 					"result": "",
+					"games_started": 0,
+					"minutes_played": 0,
 					"true_shooting_pct": 0.0,
 					"effective_field_goal_pct": 0.0,
 					"offensive_rebound_pct": 0.0,
@@ -2143,7 +2180,8 @@ class BasketballReferenceGameLogParser(HTMLParser):
 					"turnover_pct": 0.0,
 					"usage_pct": 0.0,
 					"offensive_rating": 0,
-					"defensive_rating": 0
+					"defensive_rating": 0,
+					"game_score": 0
 				}
 			# Date
 			elif self.current == "a" and self.tdCount == 3:
@@ -2429,14 +2467,33 @@ class BasketballReferenceSplitsParser(HTMLParser):
 			
 			self.subtype = data
 			self.stats[self.type][self.subtype] = {
-				"field_goal_pct": 0.0,
+				"games_started": 0,
+				"minutes_played": 0,
+				"field_goals": 0,
+				"field_goal_attempts": 0,
 				"three_point_field_goals": 0,
 				"three_point_field_goal_attempts": 0,
+				"free_throws": 0,
+				"free_throw_attempts": 0,
+				"offensive_rebounds": 0,
+				"total_rebounds": 0,
+				"assists": 0,
+				"steals": 0,
+				"blocks": 0,
+				"turnovers": 0,
+				"personal_fouls": 0,
+				"points": 0,
 				"defensive_rebounds": 0,
+				"field_goal_pct": 0.0,
 				"three_point_field_goal_pct": 0.0,
 				"free_throw_pct": 0.0,
 				"true_shooting_pct": 0.0,
 				"usage_pct": 0.0,
+				"offensive_rating": 0.0,
+				"defensive_rating": 0.0,
+				"minutes_played_per_game": 0.0,
+				"points_per_game": 0.0,
+				"total_rebounds_per_game": 0.0,
 				"assists_per_game": 0.0,
 				"plus_minus": None
 			}
