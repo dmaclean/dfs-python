@@ -61,6 +61,7 @@ team_names = {
 	"NewOrleans": "NOP",
 	"OklahomaCity": "OKC",
 	"Orlando": "ORL",
+	"Philadelphia": "PHI",
 	"Phoenix": "PHO",
 	"Portland": "POR",
 	"Sacramento": "SAC",
