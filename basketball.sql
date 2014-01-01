@@ -9,7 +9,7 @@ create table players (
 create index players_position_idx on players(position);
 
 create table season_totals (
-	id int auto_increment primary key,
+	id integer auto_increment primary key,
 	player_id varchar(50) not null,
 	season int not null,
 	age int not null,
@@ -44,7 +44,7 @@ create table season_totals (
 );
 
 create table season_advanced (
-	id int auto_increment primary key,
+	id integer auto_increment primary key,
 	player_id varchar(50) not null,
 	season int not null,
 	age int not null,
@@ -115,7 +115,7 @@ create index game_totals_basic_date_idx on game_totals_basic(date);
 create index game_totals_basic_team_idx on game_totals_basic(team);
 
 create table game_totals_advanced (
-	id int auto_increment primary key,
+	id integer auto_increment primary key,
 	player_id varchar(50) not null,
 	season int not null,
 	game_number int not null,
@@ -146,7 +146,7 @@ create index game_totals_advanced_season_idx on game_totals_advanced(season);
 create index game_totals_advanced_date_idx on game_totals_advanced(date);
 
 create table splits (
-	id int auto_increment primary key,
+	id integer auto_increment primary key,
 	player_id varchar(50) not null,
 	season int not null,
 	type varchar(50) not null,
@@ -187,7 +187,7 @@ create table splits (
  * Team tables
  */
 create table team_game_totals(
-	id int auto_increment primary key,
+	id integer auto_increment primary key,
 	team varchar(3) not null,
 	season int not null,
 	game int not null,
@@ -230,7 +230,7 @@ create index team_game_totals_season_idx on team_game_totals(season);
 create index team_game_totals_date_idx on team_game_totals(date);
 
 create table team_splits(
-	id int auto_increment primary key,
+	id integer auto_increment primary key,
 	team varchar(3) not null,
 	season int not null,
 	type varchar(50) not null,
@@ -269,7 +269,7 @@ create table team_splits(
 );
 
 create table salaries (
-	id int auto_increment primary key,
+	id integer auto_increment primary key,
 	player_id varchar(100) not null,
 	site varchar(50) not null,
 	salary int not null,
@@ -278,7 +278,7 @@ create table salaries (
 );
 
 create table fantasy_points (
-	id int auto_increment primary key,
+	id integer auto_increment primary key,
 	game_totals_basic_id int not null,
 	player_id varchar(100) not null,
 	site varchar(50) not null,
@@ -292,7 +292,7 @@ create index fantasy_points_site_idx on fantasy_points(site);
 create unique index fantasy_points_player_id_site_season_game_number_idx on fantasy_points(player_id, site, season, game_number);
 
 create table schedules (
-	id int auto_increment primary key,
+	id integer auto_increment primary key,
 	season int not null,
 	date date not null,
 	visitor varchar(3) not null,
@@ -303,7 +303,7 @@ create index schedules_visitor_idx on schedules(visitor);
 create index schedules_home_idx on schedules(home);
 
 create table dfs_site_positions (
-	id int auto_increment primary key,
+	id integer auto_increment primary key,
 	player_id varchar(100) not null,
 	site varchar(50) not null,
 	position varchar(10) not null,
