@@ -785,7 +785,7 @@ class TestProjections(unittest.TestCase):
 		self.assertTrue(len(result) == 1)
 #		self.assertTrue(result[0]["date"] == date.today())
 		#self.assertTrue(result[0]["id"] == 1)
-		self.assertTrue(result[0]["season"] == 2013)
+		self.assertTrue(result[0]["season"] == date.today().year)
 		self.assertTrue(result[0]["visitor"] == "NYK")
 		self.assertTrue(result[0]["home"] == "BOS")
 	
