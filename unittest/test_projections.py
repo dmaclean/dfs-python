@@ -554,12 +554,14 @@ class TestProjections(unittest.TestCase):
 		# Write advanced game totals for player
 		self.game_totals_advanced_info["player_id"] = "macleda01"
 		self.game_totals_advanced_info["date"] = date(2013,11,4)
+		self.game_totals_advanced_info["season"] = 2013
 		self.game_totals_advanced_info["usage_pct"] = 10.6
 		self.game_totals_advanced_info["offensive_rating"] = 100
 		self.game_totals_advanced_info["defensive_rating"] = 101
 		self.testUtil.insert_into_game_totals_advanced(self.game_totals_advanced_info)
 		
 		self.game_totals_advanced_info["date"] = date(2013,11,5)
+		self.game_totals_advanced_info["season"] = 2013
 		self.game_totals_advanced_info["usage_pct"] = 12.6
 		self.game_totals_advanced_info["offensive_rating"] = 104
 		self.game_totals_advanced_info["defensive_rating"] = 103
@@ -590,6 +592,7 @@ class TestProjections(unittest.TestCase):
 		# Write advanced game totals for player
 		self.game_totals_advanced_info["player_id"] = "macleda01"
 		self.game_totals_advanced_info["date"] = date(2013,11,4)
+		self.game_totals_advanced_info["season"] = 2013
 		self.game_totals_advanced_info["usage_pct"] = 10.6
 		self.game_totals_advanced_info["offensive_rating"] = 100
 		self.game_totals_advanced_info["defensive_rating"] = 101
@@ -626,6 +629,7 @@ class TestProjections(unittest.TestCase):
 		# Write advanced game totals for player
 		self.game_totals_advanced_info["player_id"] = "macleda01"
 		self.game_totals_advanced_info["date"] = date(2013,11,4)
+		self.game_totals_advanced_info["season"] = 2013
 		self.game_totals_advanced_info["usage_pct"] = 10.6
 		self.game_totals_advanced_info["offensive_rating"] = 100
 		self.game_totals_advanced_info["defensive_rating"] = 101
@@ -662,6 +666,7 @@ class TestProjections(unittest.TestCase):
 		# Write advanced game totals for player
 		self.game_totals_advanced_info["player_id"] = "macleda01"
 		self.game_totals_advanced_info["date"] = date(2013,11,4)
+		self.game_totals_advanced_info["season"] = 2013
 		self.game_totals_advanced_info["usage_pct"] = 10.6
 		self.game_totals_advanced_info["offensive_rating"] = 100
 		self.game_totals_advanced_info["defensive_rating"] = 101
