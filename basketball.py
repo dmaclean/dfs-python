@@ -124,8 +124,7 @@ class Processor:
 		
 		if self.source == "site":
 			cnx = mysql.connector.connect(user='fantasy', password='fantasy', host='localhost', database='basketball_reference')
-			#alphabet = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
-			alphabet = ["a","b","c"]
+			alphabet = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
 			
 			for letter in alphabet:
 				data = self.fetchData("/players/"+letter+"/", True)
@@ -235,7 +234,7 @@ class Processor:
 				parser = BasketballReferenceSplitsParser()
 			elif self.source == "team_splits.html":
 				parser = BasketballReferenceTeamSplitsParser()
-			elif self.source == "team_gamelog.html":
+			elif self.source == "team_gamelog.html" or self.source == "team_gamelog_2012.html":
 				parser = BasketballReferenceTeamGameLogParser()
 			parser.feed(data)
 	
@@ -1892,6 +1891,7 @@ class BasketballReferencePlayerMainParser(HTMLParser):
 				self.currentSeason = int(data.split("-")[0])
 				self.advanced_stats[self.currentSeason] = {
 					"position": "",
+					"minutes_played": 0,
 					"player_efficiency_rating": 0.0,
 					"true_shooting_pct": 0.0,
 					"effective_field_goal_pct": 0.0,
@@ -2322,83 +2322,95 @@ class BasketballReferenceTeamGameLogParser(HTMLParser):
 		# Field goal attempts
 		elif self.current == "td" and self.tdCount == 9:
 			self.game_stats[self.game_number]["field_goal_attempts"] = int(data)
-		# 3 pointers
+		# 2 pointers
 		elif self.current == "td" and self.tdCount == 10:
+			self.game_stats[self.game_number]["two_point_field_goals"] = int(data)
+		# 2 point attempts
+		elif self.current == "td" and self.tdCount == 11:
+			self.game_stats[self.game_number]["two_point_field_goal_attempts"] = int(data)
+		# 3 pointers
+		elif self.current == "td" and self.tdCount == 12:
 			self.game_stats[self.game_number]["three_point_field_goals"] = int(data)
 		# 3 point attempts
-		elif self.current == "td" and self.tdCount == 11:
+		elif self.current == "td" and self.tdCount == 13:
 			self.game_stats[self.game_number]["three_point_field_goal_attempts"] = int(data)
 		# Free throws
-		elif self.current == "td" and self.tdCount == 12:
+		elif self.current == "td" and self.tdCount == 14:
 			self.game_stats[self.game_number]["free_throws"] = int(data)
 		# Free throws attempted
-		elif self.current == "td" and self.tdCount == 13:
+		elif self.current == "td" and self.tdCount == 15:
 			self.game_stats[self.game_number]["free_throw_attempts"] = int(data)
 		# Offensive rebounds
-		elif self.current == "td" and self.tdCount == 14:
+		elif self.current == "td" and self.tdCount == 16:
 			self.game_stats[self.game_number]["offensive_rebounds"] = int(data)
 		# Total rebounds
-		elif self.current == "td" and self.tdCount == 15:
+		elif self.current == "td" and self.tdCount == 17:
 			self.game_stats[self.game_number]["total_rebounds"] = int(data)
 		# Assists
-		elif self.current == "td" and self.tdCount == 16:
+		elif self.current == "td" and self.tdCount == 18:
 			self.game_stats[self.game_number]["assists"] = int(data)
 		# Steals
-		elif self.current == "td" and self.tdCount == 17:
+		elif self.current == "td" and self.tdCount == 19:
 			self.game_stats[self.game_number]["steals"] = int(data)
 		# Blocks
-		elif self.current == "td" and self.tdCount == 18:
+		elif self.current == "td" and self.tdCount == 20:
 			self.game_stats[self.game_number]["blocks"] = int(data)
 		# Turnovers
-		elif self.current == "td" and self.tdCount == 19:
+		elif self.current == "td" and self.tdCount == 21:
 			self.game_stats[self.game_number]["turnovers"] = int(data)
 		# Personal fouls
-		elif self.current == "td" and self.tdCount == 20:
+		elif self.current == "td" and self.tdCount == 22:
 			self.game_stats[self.game_number]["personal_fouls"] = int(data)
 		# Points
-		elif self.current == "td" and self.tdCount == 21:
+		elif self.current == "td" and self.tdCount == 23:
 			self.game_stats[self.game_number]["points"] = int(data)
 		# Opponent Field goals
-		elif self.current == "td" and self.tdCount == 22:
+		elif self.current == "td" and self.tdCount == 24:
 			self.game_stats[self.game_number]["opp_field_goals"] = int(data)
 		# Opponent Field goal attempts
-		elif self.current == "td" and self.tdCount == 23:
+		elif self.current == "td" and self.tdCount == 25:
 			self.game_stats[self.game_number]["opp_field_goal_attempts"] = int(data)
+		# Opponent 2 pointers
+		elif self.current == "td" and self.tdCount == 26:
+			self.game_stats[self.game_number]["opp_two_point_field_goals"] = int(data)
+		# Opponent 2 point attempts
+		elif self.current == "td" and self.tdCount == 27:
+			self.game_stats[self.game_number]["opp_two_point_field_goal_attempts"] = int(data)
 		# Opponent 3 pointers
-		elif self.current == "td" and self.tdCount == 24:
+		elif self.current == "td" and self.tdCount == 28:
 			self.game_stats[self.game_number]["opp_three_point_field_goals"] = int(data)
 		# Opponent 3 point attempts
-		elif self.current == "td" and self.tdCount == 25:
+		elif self.current == "td" and self.tdCount == 29:
 			self.game_stats[self.game_number]["opp_three_point_field_goal_attempts"] = int(data)
 		# Opponent Free throws
-		elif self.current == "td" and self.tdCount == 26:
+		elif self.current == "td" and self.tdCount == 30:
 			self.game_stats[self.game_number]["opp_free_throws"] = int(data)
 		# Opponent Free throws attempted
-		elif self.current == "td" and self.tdCount == 27:
+		elif self.current == "td" and self.tdCount == 31:
 			self.game_stats[self.game_number]["opp_free_throw_attempts"] = int(data)
 		# Opponent Offensive rebounds
-		elif self.current == "td" and self.tdCount == 28:
+		elif self.current == "td" and self.tdCount == 32:
 			self.game_stats[self.game_number]["opp_offensive_rebounds"] = int(data)
 		# Opponent Total rebounds
-		elif self.current == "td" and self.tdCount == 29:
+		elif self.current == "td" and self.tdCount == 33:
 			self.game_stats[self.game_number]["opp_total_rebounds"] = int(data)
 		# Opponent Assists
-		elif self.current == "td" and self.tdCount == 30:
+		elif self.current == "td" and self.tdCount == 34:
 			self.game_stats[self.game_number]["opp_assists"] = int(data)
 		# Opponent Steals
-		elif self.current == "td" and self.tdCount == 31:
+		elif self.current == "td" and self.tdCount == 35:
 			self.game_stats[self.game_number]["opp_steals"] = int(data)
 		# Opponent Blocks
-		elif self.current == "td" and self.tdCount == 32:
+		elif self.current == "td" and self.tdCount == 36:
 			self.game_stats[self.game_number]["opp_blocks"] = int(data)
 		# Opponent Turnovers
-		elif self.current == "td" and self.tdCount == 33:
+		elif self.current == "td" and self.tdCount == 37:
 			self.game_stats[self.game_number]["opp_turnovers"] = int(data)
 		# Opponent Personal fouls
-		elif self.current == "td" and self.tdCount == 34:
+		elif self.current == "td" and self.tdCount == 38:
 			self.game_stats[self.game_number]["opp_personal_fouls"] = int(data)
 		# Opponent Points
-		elif self.current == "td" and self.tdCount == 35:
+		elif self.current == "td" and self.tdCount == 39:
 			self.game_stats[self.game_number]["opp_points"] = int(data)
 		
 		
@@ -2794,7 +2806,10 @@ class BasketballReferenceScheduleParser(HTMLParser):
 			day = int(pieces[1].split("=")[1])
 			year = int(pieces[2].split("=")[1])
 			
-			self.instance["season"] = year
+			if month >= 1 and month <= 8:
+				self.instance["season"] = year-1
+			else:
+				self.instance["season"] = year
 			
 			self.instance["date"] = date(year, month, day)
 		elif tag == "a" and self.tdCount == 3 and len(attrs) == 1:
@@ -2810,5 +2825,6 @@ class BasketballReferenceScheduleParser(HTMLParser):
 			self.data.append(self.instance)
 			
 
-processor = Processor()
-processor.process()
+if __name__ == '__main__':
+	processor = Processor()
+	processor.process()
