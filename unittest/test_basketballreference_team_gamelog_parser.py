@@ -140,4 +140,6 @@ class TestBasketballReferenceTeamGameLogParser(unittest.TestCase):
 		self.processor.teamGameLogParser.feed(data)
 		
 		self.assertTrue(self.processor.teamGameLogParser.game_stats[1]["points"] == 104)
+		self.assertTrue(self.processor.teamGameLogParser.game_stats[1]["opp_points"] == 106)
 		self.assertTrue(self.processor.teamGameLogParser.game_stats[66]["points"] == 87)
+		self.assertTrue(self.processor.teamGameLogParser.game_stats[66]["opp_points"] == 74)
