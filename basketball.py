@@ -1782,6 +1782,7 @@ class BasketballReferencePlayerMainParser(HTMLParser):
 			if (self.current == "a" or self.current == "td") and self.tdCount == 1:
 				self.currentSeason = int(data.split("-")[0])
 				self.totals_stats[self.currentSeason] = {
+					"age": -1,
 					"position": "",
 					"games_started": 0,
 					"minutes_played": 0.0,
@@ -1890,6 +1891,7 @@ class BasketballReferencePlayerMainParser(HTMLParser):
 			if (self.current == "a" or self.current == "td") and self.tdCount == 1:
 				self.currentSeason = int(data.split("-")[0])
 				self.advanced_stats[self.currentSeason] = {
+					"age": -1,
 					"position": "",
 					"minutes_played": 0,
 					"player_efficiency_rating": 0.0,
@@ -2049,6 +2051,7 @@ class BasketballReferenceGameLogParser(HTMLParser):
 			if self.current == "span" and self.tdCount == 2:
 				self.game_number = int(data)
 				self.basic_game_stats[self.game_number] = {
+					"age": -1,
 					"result": "",
 					"games_started": 0,
 					"minutes_played": 0,
@@ -2166,6 +2169,7 @@ class BasketballReferenceGameLogParser(HTMLParser):
 			if self.current == "td" and self.tdCount == 2:
 				self.game_number = int(data)
 				self.advanced_game_stats[self.game_number] = {
+					"age": -1,
 					"result": "",
 					"games_started": 0,
 					"minutes_played": 0,
