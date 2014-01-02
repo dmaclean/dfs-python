@@ -31,6 +31,7 @@ class VegasOdds:
 			"Milwaukee": "MIL",
 			"Minnesota": "MIN",
 			"NewOrleans": "NOP",
+			"NewYork": "NYK",
 			"OklahomaCity": "OKC",
 			"Orlando": "ORL",
 			"Philadelphia": "PHI",
@@ -80,7 +81,8 @@ class VegasOdds:
 		if source == "site":
 			conn = httplib.HTTPConnection("rotogrinders.com", timeout=5)
 			conn.request("GET", "/pages/NBA_Vegas_Odds_Page-81324")
-			data = conn.getresponse()
+			resp = conn.getresponse()
+			data = resp.read()
 			conn.close()
 		else:
 			f = open('../tests/odds.html', 'r')
