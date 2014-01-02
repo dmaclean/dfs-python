@@ -9,6 +9,10 @@ from datetime import date
 class Projections:
 	def __init__(self, cnx = None):
 		self.league_averages = {}
+		self.dvp_cache = {}
+		self.pace_cache = {}
+		self.player_info_cache = {}
+		self.team_cache = {}
 		
 		# The calculator of Fantasy Points for each site.
 		self.fpc = FantasyPointCalculator()
@@ -24,6 +28,9 @@ class Projections:
 	# Returns a dictionary of the values.
 	##########################################################
 	def get_player_info(self,player_id):
+		if player_id in self.player_info_cache:
+			return self.player_info_cache[player_id]
+	
 		cursor = self.cnx.cursor()
 		query = """
 			select * from players p where id = '%s'
@@ -39,6 +46,8 @@ class Projections:
 				info["height"] = result[3]
 				info["weight"] = result[4]
 				info["url"] = result[5]
+			
+			self.player_info_cache[player_id] = info
 		finally:
 			cursor.close()
 		
@@ -84,6 +93,10 @@ class Projections:
 	# season and date.
 	####################################################################
 	def get_team(self, player_id, season, date=date.today()):
+		key = "_".join([player_id, str(season), str(date)])
+		if key in self.team_cache:
+			return self.team_cache[key]
+		
 		cursor = self.cnx.cursor()
 	
 		query = """
@@ -95,6 +108,7 @@ class Projections:
 		try:
 			cursor.execute(query)
 			for result in cursor:
+				self.team_cache[key] = result[0]
 				return result[0]
 		finally:
 			cursor.close()
@@ -105,6 +119,10 @@ class Projections:
 	# the team has played.
 	##############################################################################
 	def calculate_defense_vs_position(self, metric, position, team, season, date=date.today()):
+		key = "_".join([metric, position, team, str(season), str(date)])
+		if key in self.dvp_cache:
+			return self.dvp_cache[key]
+		
 		cursor = self.cnx.cursor()
 	
 		query = ""
@@ -116,12 +134,17 @@ class Projections:
 			cursor.execute(query)
 		
 			for result in cursor:
+				self.dvp_cache[key] = result[0]
 				return result[0]
 			
 		finally:
 			cursor.close()
 
 	def calculate_pace(self, team, season):
+		key = "_".join([team, str(season)])
+		if key in self.pace_cache:
+			return self.pace_cache[key]
+	
 		cursor = self.cnx.cursor()
 		query = """
 			select minutes_played, 0.5 * ((field_goal_attempts + 0.4 * free_throw_attempts - 1.07 * (offensive_rebounds / (offensive_rebounds + (opp_total_rebounds - opp_offensive_rebounds))) * (field_goal_attempts - field_goals) + turnovers) + (opp_field_goal_attempts + 0.4 * opp_free_throw_attempts - 1.07 * ((opp_offensive_rebounds) / (opp_offensive_rebounds + (total_rebounds - offensive_rebounds))) * (opp_field_goal_attempts - opp_field_goals) + opp_turnovers)) as "pace"
@@ -140,6 +163,7 @@ class Projections:
 				else:
 					total = total + (result[1]/result[0])*240
 		
+			self.pace_cache[key] = total/count
 			return total/count
 		finally:
 			cursor.close()
@@ -148,10 +172,8 @@ class Projections:
 	# Calculates the league average for the provided stat.
 	########################################################
 	def calculate_league_avg(self, stat, position, season, date=date.today()):
-		##########################################################
 		# This calculation is somewhat expensive, so just return
 		# the cached value if we've already computed it.
-		##########################################################
 		key = stat + "-" + position
 		if key in self.league_averages:
 			return self.league_averages[key]
@@ -440,16 +462,33 @@ class Projections:
 			if fantasy_points > 50:
 				s_ceiling = s_ceiling + 1
 		
-		return (floor/games, consistency/games, ceiling/games, s_ceiling/games)	
+		return (floor/games, consistency/games, ceiling/games, s_ceiling/games)
+	
+	def get_avg_minutes_past_n_games(self, player_id, season, n):
+		cursor = self.cnx.cursor()
+		
+		query = """
+			select avg(minutes_played) from game_totals_basic where player_id = '%s' and season = %d order by date desc limit %d
+		""" % (player_id, season, n)
+		
+		try:
+			cursor.execute(query)
+			
+			for result in cursor:
+				return result[0]
+		finally:
+			cursor.close()
 
 	def regression(self):
 		games = []
 		cursor = self.cnx.cursor()
 		
+		print "Grabbing all game logs"
 		try:
 			# Grab all game logs
 			cursor.execute("""
-				select player_id, season, game_number, date, team, home, opponent, minutes_played, points, assists 
+				select player_id, season, game_number, date, team, home, opponent, minutes_played, 
+					points, assists, total_rebounds, steals, blocks, turnovers 
 				from game_totals_basic 
 				where season = 2013 
 				order by player_id, date""")
@@ -459,12 +498,16 @@ class Projections:
 		finally:
 			cursor.close()
 		
+		print "Writing projections and actuals out to regression.csv"
 		f = open("regression.csv", "w")
-		f.write("""player_id,game number,date,team,opponent,
-					projected points,actual points,RMSE,
-					projected assists,actual assists,RMSE\n""")
+		f.write("""player_id,game number,date,team,opponent,projected FPs,actual FPs,RMSE,projected points,actual points,RMSE,projected assists,actual assists,RMSE,projected rebounds,actual rebounds,RMSE,projected steals,actual steals,RMSE,projected blocks,actual blocks,RMSE,projected turnovers,actual turnovers,RMSE\n""")
 		
+		self.fpc.site = DFSConstants.STAR_STREET
+		
+		count = 0
 		for game in games:
+			count = count + 1
+		
 			player_id = game[0]
 			season = game[1]
 			game_number = game[2]
@@ -474,6 +517,21 @@ class Projections:
 			minutes_played = game[7]
 			actual_points = game[8]
 			actual_assists = game[9]
+			actual_rebounds = game[10]
+			actual_steals = game[11]
+			actual_blocks = game[12]
+			actual_turnovers = game[13]
+			
+			print "Processing %s/%d/%d/%s/%s/%s (%d/%d)" % (player_id, season, game_number, date, team, opponent, count, len(games))
+			
+			actual_fps = self.fpc.calculate({
+				"points": actual_points,
+				"total_rebounds": actual_rebounds,
+				"assists": actual_assists,
+				"steals": actual_steals,
+				"blocks": actual_blocks,
+				"turnovers": actual_turnovers
+			})
 		
 			proj_points = 0
 			proj_assists = 0
@@ -481,18 +539,47 @@ class Projections:
 			if minutes_played > 0:
 				proj_points = self.calculate_projection(player_id, "points", season, opponent, date)
 				proj_assists = self.calculate_projection(player_id, "assists", season, opponent, date)
-			line = "%s,%d,%s,%s,%s,%f,%f,%f,%f,%f,%f" % (
+				proj_rebounds = self.calculate_projection(player_id, "total_rebounds", season, opponent, date)
+				proj_steals = self.calculate_projection(player_id, "steals", season, opponent, date)
+				proj_blocks = self.calculate_projection(player_id, "blocks", season, opponent, date)
+				proj_turnovers = self.calculate_projection(player_id, "turnovers", season, opponent, date)
+				
+				proj_fps = self.fpc.calculate({
+					"points": proj_points,
+					"total_rebounds": proj_rebounds,
+					"assists": proj_assists,
+					"steals": proj_steals,
+					"blocks": proj_blocks,
+					"turnovers": proj_turnovers
+				})
+			
+			line = "%s,%d,%s,%s,%s,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f" % (
 				player_id,
 				game_number,
 				date,
 				team,
 				opponent,
+				proj_fps,
+				actual_fps,
+				(proj_fps - actual_fps)**2,
 				proj_points,
 				actual_points,
 				(proj_points - actual_points)**2,
 				proj_assists,
 				actual_assists,
-				(proj_assists - actual_assists)**2
+				(proj_assists - actual_assists)**2,
+				proj_rebounds,
+				actual_rebounds,
+				(proj_rebounds - actual_rebounds)**2,
+				proj_steals,
+				actual_steals,
+				(proj_steals - actual_steals)**2,
+				proj_blocks,
+				actual_blocks,
+				(proj_blocks - actual_blocks)**2,
+				proj_turnovers,
+				actual_turnovers,
+				(proj_turnovers - actual_turnovers)**2
 			)
 			f.write(line + "\n")
 		
@@ -513,7 +600,7 @@ class Projections:
 		files = {}
 		for s in sites:
 			files[s] = open("projections/%s_%s.csv" % (s, date.today()), "w")
-			files[s].write("name,position,projection,salary,floor,consistency,ceiling\n")
+			files[s].write("name,position,projection,salary,floor,consistency,ceiling,avg minutes\n")
 		
 		print "%d games tonight..." % len(games)
 		for game in games:
@@ -536,10 +623,12 @@ class Projections:
 					salary = self.get_salary(player["player_id"], s)
 					salary = -1 if salary == None else salary
 					
+					avg_minutes = self.get_avg_minutes_past_n_games(player["player_id"], game["season"], 5)
+					
 					site_position = self.get_position_on_site(player["player_id"], s)
 					
 					print "\t\t%s (%s) is projected for %f points on %s" % (player["player_info"]["name"], site_position, fps, s)
-					files[s].write("%s,%s,%f,%d,%f,%f,%f\n" % (player["player_info"]["name"], site_position, fps, salary, consistency[0], consistency[1], consistency[2]) )
+					files[s].write("%s,%s,%f,%d,%f,%f,%f,%f\n" % (player["player_info"]["name"], site_position, fps, salary, consistency[0], consistency[1], consistency[2], avg_minutes) )
 					
 		
 		# We're done!  Close up the files
@@ -547,6 +636,19 @@ class Projections:
 			files[f].close()
 
 if __name__ == '__main__':
+	regression = False
+	for arg in sys.argv:
+		if arg == "projections.py":
+			pass
+		else:
+			pieces = arg.split("=")
+			if pieces[0] == "regression":
+				regression = pieces[1] == "true"
+
 	projections = Projections()
-	#projections.regression()
-	projections.run()
+	
+	# Run regression if the flag is set to true.  Otherwise, just generate projections.
+	if regression:
+		projections.regression()
+	else:
+		projections.run()
