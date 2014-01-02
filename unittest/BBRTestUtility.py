@@ -395,3 +395,30 @@ class BBRTestUtility():
 				return result[0]
 		finally:
 			cursor.close()
+	
+	def insert_into_vegas(self, values):
+		cursor = self.conn.cursor()
+		query = """
+			insert into vegas (date, road_team, home_team, spread_road, spread_home, over_under, projection_road, projection_home) 
+			values ('%s','%s','%s', %f, %f, %f, %f, %f)
+		""" % (values["date"], values["road_team"], values["home_team"], values["spread_road"], values["spread_home"], 
+				values["over_under"], values["projection_road"], values["projection_home"])
+		
+		try:
+			cursor.execute(query)
+		finally:
+			cursor.close()
+	
+	def select_from_vegas(self, values):
+		cursor = self.conn.cursor()
+		query = """
+			select spread_road, spread_home, over_under, projection_road, projection_home from vegas 
+			where date = '%s' and road_team = '%s' and home_team = '%s'
+		""" % (values["date"], values["road_team"], values["home_team"])
+		
+		try:
+			cursor.execute(query)
+			for result in cursor:
+				return (result[0], result[1], result[2], result[3], result[4])
+		finally:
+			cursor.close()
