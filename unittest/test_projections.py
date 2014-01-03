@@ -944,7 +944,7 @@ class TestProjections(unittest.TestCase):
 		self.game_totals_basic_info["points"] = 7
 		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
 		
-		values = self.projections.calculate_floor_consistency_ceiling("test", 2013, FantasyPointCalculator.STAR_STREET)
+		values = self.projections.calculate_floor_consistency_ceiling_pct("test", 2013, FantasyPointCalculator.STAR_STREET)
 		
 		self.assertTrue(values[0] == 1)
 		self.assertTrue(values[1] == 0)
@@ -987,7 +987,7 @@ class TestProjections(unittest.TestCase):
 		self.game_totals_basic_info["points"] = 30
 		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
 		
-		values = self.projections.calculate_floor_consistency_ceiling("test", 2013, FantasyPointCalculator.STAR_STREET)
+		values = self.projections.calculate_floor_consistency_ceiling_pct("test", 2013, FantasyPointCalculator.STAR_STREET)
 		
 		self.assertTrue(values[0] == 0)
 		self.assertTrue(values[1] == 1)
@@ -1030,7 +1030,7 @@ class TestProjections(unittest.TestCase):
 		self.game_totals_basic_info["points"] = 45
 		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
 		
-		values = self.projections.calculate_floor_consistency_ceiling("test", 2013, FantasyPointCalculator.STAR_STREET)
+		values = self.projections.calculate_floor_consistency_ceiling_pct("test", 2013, FantasyPointCalculator.STAR_STREET)
 		
 		self.assertTrue(values[0] == 0)
 		self.assertTrue(values[1] == 1)
@@ -1073,7 +1073,7 @@ class TestProjections(unittest.TestCase):
 		self.game_totals_basic_info["points"] = 55
 		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
 		
-		values = self.projections.calculate_floor_consistency_ceiling("test", 2013, FantasyPointCalculator.STAR_STREET)
+		values = self.projections.calculate_floor_consistency_ceiling_pct("test", 2013, FantasyPointCalculator.STAR_STREET)
 		
 		self.assertTrue(values[0] == 0)
 		self.assertTrue(values[1] == 1)
@@ -1147,7 +1147,7 @@ class TestProjections(unittest.TestCase):
 		self.game_totals_basic_info["points"] = 55
 		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
 		
-		values = self.projections.calculate_floor_consistency_ceiling("test", 2013, FantasyPointCalculator.STAR_STREET)
+		values = self.projections.calculate_floor_consistency_ceiling_pct("test", 2013, FantasyPointCalculator.STAR_STREET)
 		
 		self.assertTrue(values[0] == 0.25)
 		self.assertTrue(values[1] == 0.75)

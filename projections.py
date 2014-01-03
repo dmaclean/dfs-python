@@ -434,7 +434,7 @@ class Projections:
 	# Ceiling 		- 41+ fantasy points
 	# Super Ceiling - 50+ fantasy points
 	###################################################################################
-	def calculate_floor_consistency_ceiling(self, player_id, season, site):
+	def calculate_floor_consistency_ceiling_pct(self, player_id, season, site):
 		cursor = self.cnx.cursor()
 		stat_list = []
 		try:
@@ -645,7 +645,7 @@ class Projections:
 				for s in sites:
 					self.fpc.site = s
 					fps = self.fpc.calculate(projections)
-					consistency = self.calculate_floor_consistency_ceiling(player["player_id"], game["season"], s)
+					consistency = self.calculate_floor_consistency_ceiling_pct(player["player_id"], game["season"], s)
 					salary = self.get_salary(player["player_id"], s)
 					salary = -1 if salary == None else salary
 					
