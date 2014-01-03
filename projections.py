@@ -1,4 +1,5 @@
 import sys
+import time
 import mysql.connector
 
 from fantasy_point_calculator import FantasyPointCalculator
@@ -13,6 +14,7 @@ class Projections:
 		self.pace_cache = {}
 		self.player_info_cache = {}
 		self.team_cache = {}
+		self.baseline_cache = {}
 		
 		# The calculator of Fantasy Points for each site.
 		self.fpc = FantasyPointCalculator()
@@ -233,11 +235,15 @@ class Projections:
 	# Retrieves season averages for a player up to a certain date so we can
 	# establish a baseline for the player, prior to adjusting based on matchups, etc.
 	###################################################################################
-	def get_baseline(self, player_id, season, stat, date=date.today()):
+	def get_baseline(self, player_id, season, date=date.today()):
+		key = "_".join([player_id, str(season)])
+		if key in self.baseline_cache:
+			return self.baseline_cache[key]
+	
 		cursor = self.cnx.cursor()
 		query = """
-			select avg(%s) from game_totals_basic b where player_id = '%s' and season = %d and date <= '%s'
-			""" % (stat, player_id, season, date)
+			select avg(points), avg(total_rebounds), avg(assists), avg(steals), avg(blocks), avg(turnovers) from game_totals_basic b where player_id = '%s' and season = %d and date <= '%s'
+			""" % (player_id, season, date)
 	
 		adv_query = """
 			select avg(usage_pct), avg(offensive_rating), avg(defensive_rating)
@@ -253,7 +259,12 @@ class Projections:
 		try:
 			cursor.execute(query)
 			for result in cursor:
-				avg_stat = result[0]
+				avg_points = result[0]
+				avg_rebounds = result[1]
+				avg_assists = result[2]
+				avg_steals = result[3]
+				avg_blocks = result[4]
+				avg_turnovers = result[5]
 		
 			cursor.execute(adv_query)
 			for result in cursor:
@@ -263,7 +274,9 @@ class Projections:
 		finally:
 			cursor.close()
 	
-		return (avg_stat, avg_usage_pct, avg_off_rating, avg_def_rating)
+		baselines = (avg_points, avg_rebounds, avg_assists, avg_steals, avg_blocks, avg_turnovers, avg_usage_pct, avg_off_rating, avg_def_rating)
+		self.baseline_cache[key] = baselines
+		return baselines
 	
 	######################################################################################
 	# Adjusts the specified stat for each game based on the league average at that point
@@ -374,12 +387,21 @@ class Projections:
 	# starting with their average for the season in each relevant stat.
 	##############################################################################
 	def calculate_projection(self, player_id, stat, season, opponent, date=date.today()):
+		baseline_stat_index = {
+			"points": 0,
+			"total_rebounds": 1,
+			"assists": 2,
+			"steals": 3,
+			"blocks": 4,
+			"turnovers": 5
+		}
+		
 		info = self.get_player_info(player_id)
 		team = self.get_team(player_id, season, date)
-		baselines = self.get_baseline(player_id,2013,stat, date)
-	
-		avg_points = baselines[0]
-		adjusted_points = avg_points
+		baselines = self.get_baseline(player_id,2013, date)
+		
+		avg_stat = baselines[baseline_stat_index[stat]]		
+		adjusted_stat = avg_stat
 	
 		#######################################
 		# Take pace of the game into account.
@@ -389,18 +411,19 @@ class Projections:
 		avg_pace = (team_pace + opp_pace)/2
 		pace_factor = avg_pace/team_pace
 	
-		adjusted_points = float(avg_points) * float(pace_factor)
+		adjusted_stat = float(avg_stat) * float(pace_factor)
 	
 		######################################################################
 		# Effectiveness of opponent defense, compared to the league average
 		# for this player's position.
 		######################################################################
 		league_avg = self.calculate_league_avg(stat, info["position"], season)
+		
 		def_factor = self.calculate_defense_vs_position(stat, info["position"], opponent, season, date)
 
-		adjusted_points = adjusted_points * float(def_factor/league_avg)
+		adjusted_stat = adjusted_stat * float(def_factor/league_avg)
 	
-		return adjusted_points
+		return adjusted_stat
 
 	###################################################################################
 	# Calculates the percentage of games that a player reaches the floor, consistent, 
@@ -491,7 +514,7 @@ class Projections:
 					points, assists, total_rebounds, steals, blocks, turnovers 
 				from game_totals_basic 
 				where season = 2013 
-				order by player_id, date""")
+				order by player_id, date desc""")
 			
 			for game in cursor:
 				games.append(game)	
@@ -537,12 +560,15 @@ class Projections:
 			proj_assists = 0
 			
 			if minutes_played > 0:
+				start = time.time()
 				proj_points = self.calculate_projection(player_id, "points", season, opponent, date)
 				proj_assists = self.calculate_projection(player_id, "assists", season, opponent, date)
 				proj_rebounds = self.calculate_projection(player_id, "total_rebounds", season, opponent, date)
 				proj_steals = self.calculate_projection(player_id, "steals", season, opponent, date)
 				proj_blocks = self.calculate_projection(player_id, "blocks", season, opponent, date)
 				proj_turnovers = self.calculate_projection(player_id, "turnovers", season, opponent, date)
+				end = time.time()
+				#print "calculate_projections - %f" % ((end-start)/1000.0)
 				
 				proj_fps = self.fpc.calculate({
 					"points": proj_points,
