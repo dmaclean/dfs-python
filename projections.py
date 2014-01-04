@@ -556,6 +556,33 @@ class Projections:
 				return result[0]
 		finally:
 			cursor.close()
+			
+	def get_vegas_odds(self, team, date=date.today()):
+		cursor = self.cnx.cursor()
+		
+		query = """
+			select date, road_team, home_team, spread_road, spread_home, over_under, projection_road, projection_home
+			from vegas where (road_team = '%s' or home_team = '%s') and date = '%s'
+		""" % (team, team, date)
+		
+		try:
+			cursor.execute(query)
+
+			data = {}			
+			for result in cursor:
+				# road team
+				if team == result[1]:
+					data["spread"] = result[3]
+					data["over_under"] = result[5]
+					data["projection"] = result[6]
+				else:
+					data["spread"] = result[4]
+					data["over_under"] = result[5]
+					data["projection"] = result[7]
+			return data
+				
+		finally:
+			cursor.close()
 
 	def regression(self):
 		games = []
@@ -677,7 +704,7 @@ class Projections:
 		files = {}
 		for s in sites:
 			files[s] = open("projections/%s_%s.csv" % (s, date.today()), "w")
-			files[s].write("name,position,projection,salary,floor,consistency,ceiling,avg minutes\n")
+			files[s].write("name,position,projection,salary,floor,consistency,ceiling,avg minutes,spread,O/U,vegas projection\n")
 		
 		print "%d games tonight..." % len(games)
 		for game in games:
@@ -689,6 +716,9 @@ class Projections:
 				print "\tEvaluating %s" % player["player_info"]["name"]
 			
 				projections = {}
+				
+				team = self.get_team(player["player_id"], game["season"])
+				vegas_odds = self.get_vegas_odds(team)
 					
 				for s in self.stats:
 					projections[s] = self.calculate_projection(player["player_id"], s, game["season"], player["opponent"])
@@ -713,7 +743,7 @@ class Projections:
 					
 					print "\t\t%s (%s) is projected for %f points on %s" % (player["player_info"]["name"], site_position, fps, s)
 					#files[s].write("%s,%s,%f,%d,%f,%f,%f,%f\n" % (player["player_info"]["name"], site_position, fps, salary, consistency[0], consistency[1], consistency[2], avg_minutes) )
-					files[s].write("%s,%s,%f,%d,%f,%f,%f,%f\n" % (player["player_info"]["name"], site_position, fps, salary, floor, consistency[1], ceiling, avg_minutes) )
+					files[s].write("%s,%s,%f,%d,%f,%f,%f,%f,%f,%f,%f\n" % (player["player_info"]["name"], site_position, fps, salary, floor, consistency[1], ceiling, avg_minutes, vegas_odds["spread"], vegas_odds["over_under"], vegas_odds["projection"]) )
 					
 		
 		# We're done!  Close up the files

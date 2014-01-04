@@ -146,6 +146,17 @@ class TestProjections(unittest.TestCase):
 			"site": "",
 			"position": ""
 		}
+		
+		self.vegas_info = {
+			"date": date.today(),
+			"road_team": "",
+			"home_team": "",
+			"spread_road": 0,
+			"spread_home": 0,
+			"over_under": 0,
+			"projection_road": 0,
+			"projection_home": 0
+		}
 	
 	def tearDown(self):
 		self.testUtil.conn.close()
@@ -1153,6 +1164,37 @@ class TestProjections(unittest.TestCase):
 		self.assertTrue(values[1] == 0.75)
 		self.assertTrue(values[2] == 0.50)
 		self.assertTrue(values[3] == 0.25)
+	
+	######################################################################
+	# Tests the retrieval of vegas odds for a team, either home or road.
+	######################################################################
+	def test_get_vegas_odds(self):
+		self.vegas_info["road_team"] = "PHI"
+		self.vegas_info["home_team"] = "BOS"
+		self.vegas_info["spread_road"] = -2
+		self.vegas_info["spread_home"] = 2
+		self.vegas_info["over_under"] = 200
+		self.vegas_info["projection_road"] = 101
+		self.vegas_info["projection_home"] = 99
+		self.testUtil.insert_into_vegas(self.vegas_info)
+		
+		v = self.projections.get_vegas_odds("BOS")
+		#self.assertTrue(v[1] == "PHI")
+		#self.assertTrue(v[2] == "BOS")
+		self.assertTrue(v["spread"] == 2)
+		#self.assertTrue(v[4] == 2)
+		self.assertTrue(v["over_under"] == 200)
+		#self.assertTrue(v[6] == 101)
+		self.assertTrue(v["projection"] == 99)
+		
+		v = self.projections.get_vegas_odds("PHI")
+		#self.assertTrue(v[1] == "PHI")
+		#self.assertTrue(v[2] == "BOS")
+		self.assertTrue(v["spread"] == -2)
+		#self.assertTrue(v[4] == 2)
+		self.assertTrue(v["over_under"] == 200)
+		#self.assertTrue(v[6] == 101)
+		self.assertTrue(v["projection"] ==101)
 
 if __name__ == '__main__':
 	unittest.main()
