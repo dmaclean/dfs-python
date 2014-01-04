@@ -15,6 +15,13 @@ class Projections:
 		self.player_info_cache = {}
 		self.team_cache = {}
 		self.baseline_cache = {}
+		self.scoring_stddev_cache = {}
+		
+		self.stats = ["points", "field_goals", "field_goal_attempts", "three_point_field_goals", "three_point_field_goal_attempts",
+							"free_throws", "free_throw_attempts", "total_rebounds", "assists", "steals", "blocks", "turnovers"]
+		
+		# In regression mode?
+		self.regression_mode = False
 		
 		# The calculator of Fantasy Points for each site.
 		self.fpc = FantasyPointCalculator()
@@ -241,8 +248,18 @@ class Projections:
 			return self.baseline_cache[key]
 	
 		cursor = self.cnx.cursor()
-		query = """
-			select avg(points), avg(total_rebounds), avg(assists), avg(steals), avg(blocks), avg(turnovers) from game_totals_basic b where player_id = '%s' and season = %d and date <= '%s'
+		
+		# Construct game_totals_basic query
+		query = "select "
+		count = 1
+		for s in self.stats:
+			query = query + "avg(%s)" % (s)
+			if count < len(self.stats):
+				query = query + ","
+			count = count + 1
+		
+		query = query + """
+			from game_totals_basic b where player_id = '%s' and season = %d and date <= '%s'
 			""" % (player_id, season, date)
 	
 		adv_query = """
@@ -258,23 +275,29 @@ class Projections:
 	
 		try:
 			cursor.execute(query)
+			baselines = []
+			
 			for result in cursor:
-				avg_points = result[0]
-				avg_rebounds = result[1]
-				avg_assists = result[2]
-				avg_steals = result[3]
-				avg_blocks = result[4]
-				avg_turnovers = result[5]
+				for r in result:
+					baselines.append(r)
+				#avg_points = result[0]
+				#avg_rebounds = result[1]
+				#avg_assists = result[2]
+				#avg_steals = result[3]
+				#avg_blocks = result[4]
+				#avg_turnovers = result[5]
 		
 			cursor.execute(adv_query)
 			for result in cursor:
-				avg_usage_pct = result[0]
-				avg_off_rating = result[1]
-				avg_def_rating = result[2]
+				for r in result:
+					baselines.append(r)
+				#avg_usage_pct = result[0]
+				#avg_off_rating = result[1]
+				#avg_def_rating = result[2]
 		finally:
 			cursor.close()
 	
-		baselines = (avg_points, avg_rebounds, avg_assists, avg_steals, avg_blocks, avg_turnovers, avg_usage_pct, avg_off_rating, avg_def_rating)
+		#baselines = (avg_points, avg_rebounds, avg_assists, avg_steals, avg_blocks, avg_turnovers, avg_usage_pct, avg_off_rating, avg_def_rating)
 		self.baseline_cache[key] = baselines
 		return baselines
 	
@@ -389,11 +412,17 @@ class Projections:
 	def calculate_projection(self, player_id, stat, season, opponent, date=date.today()):
 		baseline_stat_index = {
 			"points": 0,
-			"total_rebounds": 1,
-			"assists": 2,
-			"steals": 3,
-			"blocks": 4,
-			"turnovers": 5
+			"field_goals": 1,
+			"field_goal_attempts": 2,
+			"three_point_field_goals": 3,
+			"three_point_field_goal_attempts": 4,
+			"free_throws": 5,
+			"free_throw_attempts": 6,
+			"total_rebounds": 7,
+			"assists": 8,
+			"steals": 9,
+			"blocks": 10,
+			"turnovers": 11
 		}
 		
 		info = self.get_player_info(player_id)
@@ -486,6 +515,32 @@ class Projections:
 				s_ceiling = s_ceiling + 1
 		
 		return (floor/games, consistency/games, ceiling/games, s_ceiling/games)
+	
+	############################################################
+	# Gets the standard deviation of a player's fantasy points
+	############################################################
+	def calculate_scoring_stddev(self, player_id, season, site, date=date.today()):
+		key = "_".join([player_id, site])
+		
+		# Lazy initialization.  Populate the cache on the first request for it.
+		if len(self.scoring_stddev_cache) == 0:	
+			print "Populating stddev cache..."	
+			cursor = self.cnx.cursor()
+
+			query = """
+				select player_id, site, stddev(points) from fantasy_points where season = %d group by player_id, site
+			""" % (season)
+				
+			try:
+				cursor.execute(query)
+			
+				for result in cursor:
+					curr_key = "_".join([result[0], result[1]])
+					self.scoring_stddev_cache[curr_key] = result[2]
+			finally:
+				cursor.close()
+		
+		return self.scoring_stddev_cache[key]
 	
 	def get_avg_minutes_past_n_games(self, player_id, season, n):
 		cursor = self.cnx.cursor()
@@ -615,10 +670,6 @@ class Projections:
 		# Find all games being played today
 		games = self.get_game_list()
 		
-		# List of stats to project for each player.
-		stats = ["points", "field_goals", "field_goal_attempts", "three_point_field_goals", "three_point_field_goal_attempts",
-							"free_throws", "free_throw_attempts", "total_rebounds", "assists", "steals", "blocks", "turnovers"]
-		
 		# List of sites to make projections for
 		sites = [ self.fpc.DRAFT_DAY, self.fpc.DRAFT_KINGS, DFSConstants.FAN_DUEL, self.fpc.STAR_STREET ]
 		
@@ -639,7 +690,7 @@ class Projections:
 			
 				projections = {}
 					
-				for s in stats:
+				for s in self.stats:
 					projections[s] = self.calculate_projection(player["player_id"], s, game["season"], player["opponent"])
 				
 				for s in sites:
@@ -649,12 +700,20 @@ class Projections:
 					salary = self.get_salary(player["player_id"], s)
 					salary = -1 if salary == None else salary
 					
+					# FPs standard deviation
+					stddev = self.calculate_scoring_stddev(player["player_id"], game["season"], s)
+					
 					avg_minutes = self.get_avg_minutes_past_n_games(player["player_id"], game["season"], 5)
 					
 					site_position = self.get_position_on_site(player["player_id"], s)
 					
+					# Floor and ceiling projections
+					floor = fps - stddev
+					ceiling = fps + stddev
+					
 					print "\t\t%s (%s) is projected for %f points on %s" % (player["player_info"]["name"], site_position, fps, s)
-					files[s].write("%s,%s,%f,%d,%f,%f,%f,%f\n" % (player["player_info"]["name"], site_position, fps, salary, consistency[0], consistency[1], consistency[2], avg_minutes) )
+					#files[s].write("%s,%s,%f,%d,%f,%f,%f,%f\n" % (player["player_info"]["name"], site_position, fps, salary, consistency[0], consistency[1], consistency[2], avg_minutes) )
+					files[s].write("%s,%s,%f,%d,%f,%f,%f,%f\n" % (player["player_info"]["name"], site_position, fps, salary, floor, consistency[1], ceiling, avg_minutes) )
 					
 		
 		# We're done!  Close up the files
@@ -675,6 +734,7 @@ if __name__ == '__main__':
 	
 	# Run regression if the flag is set to true.  Otherwise, just generate projections.
 	if regression:
+		projections.regression_mode = True
 		projections.regression()
 	else:
 		projections.run()
