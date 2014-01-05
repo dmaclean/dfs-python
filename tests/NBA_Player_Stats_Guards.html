@@ -1,0 +1,3557 @@
+<!DOCTYPE html>
+<!--
+         ______        __          ______       _             __                 
+        / __  /____   / /_ ___    / ____/_____ (_)____   ____/ /___   _____ _____
+       / /_/ // __ \ / __// __ \ / / __ / ___// // __ \ / __  // _ \ / ___// ___/
+      / __  // /_/ // /_ / /_/ // /_/ // /   / // / / // /_/ //  __// /   (__  ) 
+     /_/  \_\\____/ \__/ \____/ \____//_/   /_//_/ /_/ \__,_/ \___//_/   /____/  
+                                                         _____ ____   ____ ___    
+                                                        / ___// __ \ / __ `__ \     
+                                                     _ / /__ / /_/ // / / / / /    
+                                                    (_)\___/ \____//_/ /_/ /_/    
+-->
+<html>
+<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>NBA Player Stats: Guards</title>
+	<link href="/favicon.ico" type="image/x-icon" rel="icon" /><link href="/favicon.ico" type="image/x-icon" rel="shortcut icon" />	
+
+	<link rel="stylesheet" type="text/css" href="http://rical-rg.s3.amazonaws.com/css/layouts_default.css?36.8" />
+	<!--<link rel="stylesheet" type="text/css" href="http://api.picatcha.com/static/client/picatcha.css"/>-->
+	<link rel="stylesheet" type="text/css" href="http://rical-rg.s3.amazonaws.com/css/pages.css?36.8" />	
+	<script type="text/javascript" src="http://rical-global.s3.amazonaws.com/js/jquery-1.4.2.custom.js?36.8"></script>
+
+	<!--<script type="text/javascript" src=""></script>-->
+
+	
+	<script type="text/javascript" src="http://rical-global.s3.amazonaws.com/js/jquery-ui-1.8.5.core.fx.min.js?36.8"></script>
+	<script type="text/javascript" src="http://rical-global.s3.amazonaws.com/js/jquery-ui-1.8.5.widgets.min.js?36.8"></script>
+	<script type="text/javascript" src="http://rical-global.s3.amazonaws.com/js/jquery.fancybox-1.3.1.pack.js?36.8"></script>
+	<script type="text/javascript" src="http://rical-global.s3.amazonaws.com/js/sortable.js?36.8"></script>
+	<script type="text/javascript" src="http://rical-global.s3.amazonaws.com/js/global.js?36.8"></script>
+	<!-- script type="text/javascript" src="http://rical-rg.s3.amazonaws.com/js/H5F/h5f.js?36.8"></script -->
+	
+	<!--<script type="text/javascript" src="http://api.picatcha.com/static/client/picatcha.js"></script>-->
+
+	<script type="text/javascript" src="http://rical-rg.s3.amazonaws.com/js/layouts_default.js?36.8"></script>
+
+	
+	<script type="text/javascript">
+    function _replace_html(html, striplinks){
+
+        if(striplinks=='none'){
+        html = html
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/((http|ftp|https):\/\/[a-z0-9\-_]+(\.[a-z0-9\-_]+)+([a-z0-9_\-\.,@\?^=%&;:\/~\+#]*[a-z0-9_\-@\?^=%&;\/~\+#])?)/ig, '<a href="$1" target="_blank">$1</a>')
+        }
+        html = html
+                        .replace(/(^|["?'?(]|\s)(Fan ?Duel|FD)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://partners.fanduel.com/processing/clickthrgh.asp?btag=a_282b_432" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(DK|Draft ?Kings)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://partners.draftkings.com/aff_c?offer_id=18&aff_id=2" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(D\$|Draft ?Street|DS)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://www.draftstreet.com?r=grinders&pid=635" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(Draft ?Day|DD)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://www.draftday.com/?affiliateRefCode=RotoGrinders" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(Fantasy ?Feud|Fantasy ?Fued|Feud|Fued|FF)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://www.fantasyfeud.com/l/2013-nfl-grinders/?aid=2&subid=x&referral_code=Grinders&cid=1" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(Star ?Street|SS)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="https://www.starstreet.com/?invite_code=RotoGrinders" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(FTD|Fan ?Throw ?Down|Throwdown)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="https://fanthrowdown.com/?user=RotoGrinders" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(StatClash|Stat ?Clash|SC)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="https://statclash.com/account/register/grinders" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(SFL|SF|Star ?Fantasy|Star ?Fantasy ?Leagues)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="https://www.starfantasyleagues.com/?referral=RotoGrinders " target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(SZ|Skyll|Skyll ?Zone)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://www.SKYLLZONE.com?marketingid=501001" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(Fanex)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://fanex.com" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(FantasyAces|Fantasy ?Aces|FA)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://fantasyaces.com/r/RotoGrinders/" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(Draft ?Team|DT)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://www.draftteam.com" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(WD|War ?Draft|WarDraft)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://wardraft.com" target="_blank">$2</a>$3')
+            
+            .replace(/"<``>/g, '"http');
+
+        return html;
+    }
+
+    (function($){
+        $.fn.linkify = function() {
+                this.each(function() {
+                var childNodes = this.childNodes;
+                var i = childNodes.length;
+
+                while(i--) {
+                    var n = childNodes[i];
+
+                    if (n.nodeType == 3) {
+                        var html = n.nodeValue;
+
+                        if (html.length > 1 && /\S/.test(html)) {
+                            var pre = html;
+
+                            html = _replace_html(pre,"none");
+
+                            $(n).after(html).remove();
+                        }
+                    } else if (n.nodeType == 1 && !/^(a|button|textarea)$/i.test(n.tagName)) {
+                        $(n).linkify();
+                    }
+                }
+            });
+        };
+    })(jQuery);
+</script>
+
+	<!--[if IE 7]><link rel="stylesheet" type="text/css" href="http://rical-rg.s3.amazonaws.com/css/ie7.css?36.8" /><![endif]-->
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	
+		
+	
+	<link rel="alternate" type="application/rss+xml" title="Articles RSS Feed" href="http://rotogrinders.com/articles/index.rss">
+	<link rel="alternate" type="application/rss+xml" title="Podcasts RSS Feed" href="http://rotogrinders.com/podcasts/feed.rss">
+
+	 
+</head>
+
+<body id="pages" class="view 181856 page-181856 alt">
+	<script src="http://rical-global.s3.amazonaws.com/js/modernizr-1.1.min.js?36.8"></script>
+	<div id="user-meta">
+		<input type="hidden" id="user-meta-id" value="23229" />
+		<input type="hidden" id="user-meta-username" value="dmaclean" />
+		<input type="hidden" id="user-meta-facebook-id" value="" />
+	</div>
+
+	<!--<div class="hidden">-->
+							<!--</div>-->
+		<header id="layout-header">
+	<div id="logo-and-banner">
+		<h2 id="logo-layout" class="logo"><a href="/">Roto Grinders</a></h2>
+				<div id="main-banner">
+			<a href="/incentives"><img src="http://rical-rg.s3.amazonaws.com/img/20110803-ad_incentives_728.jpg?36.8" alt="" /></a>
+		</div>
+			</div>
+</header>
+	<div id="wrapper">
+		<nav id="mainnav">
+	<div id="first-row" class="top-level-nav">
+		<ul class="nav">
+		    <li id="mainnav-home" class=""><a href="/">Home</a></li>
+		    <li id="mainnav-blogs" class=""><a href="/fantasyblogs">Blogs</a></li>
+			<li id="mainnav-articles" class="has-submenu"><a href="/articles">Articles</a></li>
+		    <li id="mainnav-reviews" class="has-submenu"><a href="/reviews">Reviews</a></li>
+		    <li id="mainnav-podcasts" class=""><a href="/podcasts">Podcasts</a></li>
+		    <li id="mainnav-grindersu" class=""><a href="/lessons/GrindersU_Introduction_Daily_Fantasy_Lessons-177082">GrindersU</a></li>
+				    <li id="mainnav-videos" class=""><a class="live-button" href="/live">GrindersLive</a></li>
+		</ul>
+		<ul id="login-nav" class="nav">
+		   					<li id="mainnav-user" class="has-submenu"><a href="/profiles/dmaclean"><em id="loggedin-username">dmaclean</em></a></li>
+					</ul>
+	</div>
+	<div id="first-row-drawer" class="drawer">
+		<ul id="submenu-user" class="submenu nav">
+			<li><a href="/profiles/dmaclean">Profile</a></li>
+			<li><a href="/users/logout">Sign Out</a></li>
+		</ul>
+
+		<ul id="submenu-articles" class="submenu nav">
+		    <!--<li	class=""><a href="/articles/index">All</a></li>-->
+		    <li	class=""><a href="/articles/index/news">News</a></li>
+		    <li	class=""><a href="/articles/index/promotions">Promotions</a></li>
+		    <li	class=""><a href="/articles/index/strategy">Strategy</a></li>
+		    <li	class=""><a href="/pages/RotoGrinders_Championship_Coverage-100358">Championship Coverage</a></li>
+		    <li	class=""><a href="/articles/index/interviews">Interviews</a></li>
+		</ul>
+		
+		<ul id="submenu-reviews" class="submenu nav">
+									
+												<li class=""><a href="/reviews/FanDuel_Promocode-115"><img src="/img/sites/2/icon_16.png?1328741534" width="16" height="16" class="site-icon sideid-2" title="FanDuel" alt="FanDuel" /> FanDuel</a></li>
+																				<li class=""><a href="/reviews/DraftKings-46814"><img src="/img/sites/20/icon_16.png?1339697206" width="16" height="16" class="site-icon sideid-20" title="DraftKings" alt="DraftKings" /> DraftKings</a></li>
+																				<li class=""><a href="/reviews/DraftStreet-1151"><img src="/img/sites/9/icon_16.png?1328741534" width="16" height="16" class="site-icon sideid-9" title="DraftStreet" alt="DraftStreet" /> DraftStreet</a></li>
+																				<li class=""><a href="/reviews/DraftDay_Review-12991"><img src="/img/sites/15/icon_16.png?1328741534" width="16" height="16" class="site-icon sideid-15" title="DraftDay" alt="DraftDay" /> DraftDay</a></li>
+																				<li class=""><a href="/reviews/Fantasy_Feud_Recruiting_Code-38218"><img src="/img/sites/19/icon_16.png?1332954189" width="16" height="16" class="site-icon sideid-19" title="FantasyFeud" alt="FantasyFeud" /> FantasyFeud</a></li>
+																				<li class=""><a href="/reviews/StarStreet-35703"><img src="/img/sites/18/icon_16.png?1348530355" width="16" height="16" class="site-icon sideid-18" title="StarStreet" alt="StarStreet" /> StarStreet</a></li>
+																									<li class=""><a href="/reviews/FanThrowDown_Review-117343"><img src="/img/sites/24/icon_16.png?1360274435" width="16" height="16" class="site-icon sideid-24" title="FanThrowDown" alt="FanThrowDown" /> FanThrowDown</a></li>
+																				<li class=""><a href="/reviews/index/">See All</a></li>
+							</ul>
+	</div>
+	<div id="second-row" class="top-level-nav">
+		<ul class="nav">
+		    <li id="mainnav-dailyresearch" class='dailyresearch-box-image has-submenu' ><a href="/sites/offers/FanDuel/Basketball">Daily Research</a></li>	
+		    <li id="mainnav-forums" class=""><a href="/threads">Forums</a></li>
+		    <li id="mainnav-rankings" class="has-submenu"><a href="/rankings">Rankings</a></li>
+							<li id="mainnav-lineups" class=" has-submenu"><a href="/lineups">Lineups</a></li>
+					    <li id="mainnav-incentives" class=""><a href="/incentives">Incentives</a></li>
+		</ul>
+		<div id="mainnav-search">
+			<form id="mainnav-player-search" style="width:150px;">
+				<div class="fake-input" style="width:150px;">
+					<input type="hidden" name="player-slug" id="ds-player-slug" value="" />
+					<input type="text" name="player-name" placeholder="Player Search" class="player-autocomplete" id="ds-search-player" value="" />
+					<button class="button" type="submit">Go</button>
+				</div>
+			</form>
+			<form id="mainnav-site-player-search" action="/site_players/search" method="get" style="width:150px;">
+				<div class="fake-input" style="width:150px;">
+					<input type="text" name="player_name" placeholder="Opponent Search" />
+					<button type="submit">search</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div id="second-row-drawer" class="drawer">
+		
+		
+<div id="daily-research" class="">
+	<nav id='daily-research-nav'>
+		<span id="image-preloader" class="hidden"></span>
+		
+		
+		<div id="daily-research-sites" class="filter-list">
+		
+<ul class="nav-list">
+<li class="active" ><a href="/sites/offers/FanDuel/Basketball" id="siteid-2" class="active"><img src="/img/sites/2/icon_16.png?1328741534" width="16" height="16" class="site-icon sideid-2" title="FanDuel" alt="FanDuel" /> FanDuel</a></li><li ><a href="/sites/offers/DraftKings/Basketball" id="siteid-20"><img src="/img/sites/20/icon_16.png?1339697206" width="16" height="16" class="site-icon sideid-20" title="DraftKings" alt="DraftKings" /> DraftKings</a></li><li ><a href="/sites/offers/DraftStreet/Basketball" id="siteid-9"><img src="/img/sites/9/icon_16.png?1328741534" width="16" height="16" class="site-icon sideid-9" title="DraftStreet" alt="DraftStreet" /> DraftStreet</a></li><li ><a href="/sites/offers/DraftDay/Basketball" id="siteid-15"><img src="/img/sites/15/icon_16.png?1328741534" width="16" height="16" class="site-icon sideid-15" title="DraftDay" alt="DraftDay" /> DraftDay</a></li><li ><a href="/sites/offers/FantasyFeud/Basketball" id="siteid-19"><img src="/img/sites/19/icon_16.png?1332954189" width="16" height="16" class="site-icon sideid-19" title="FantasyFeud" alt="FantasyFeud" /> FantasyFeud</a></li><li ><a href="/sites/offers/StarStreet/Basketball" id="siteid-18"><img src="/img/sites/18/icon_16.png?1348530355" width="16" height="16" class="site-icon sideid-18" title="StarStreet" alt="StarStreet" /> StarStreet</a></li><li ><a href="/sites/offers/FanThrowDown/Basketball" id="siteid-24"><img src="/img/sites/24/icon_16.png?1360274435" width="16" height="16" class="site-icon sideid-24" title="FanThrowDown" alt="FanThrowDown" /> FanThrowDown</a></li></ul>
+	
+	</div>
+		
+		<div id="daily-research-sports" class="filter-list">
+		
+<ul class="nav-list">
+<li class="active" ><a href="/sites/offers/FanDuel/Basketball" id="sportid-3" class="active"><span class="basketball sport-icon"></span>Basketball</a></li><li ><a href="/sites/offers/FanDuel/Baseball" id="sportid-2"><span class="baseball sport-icon"></span>Baseball</a></li><li ><a href="/sites/offers/FanDuel/Football" id="sportid-1"><span class="football sport-icon"></span>Football</a></li><li ><a href="/sites/offers/FanDuel/Hockey" id="sportid-4"><span class="hockey sport-icon"></span>Hockey</a></li><li ><a href="/sites/offers/FanDuel/CFB" id="sportid-7"><span class="CFB sport-icon"></span>CFB</a></li><li ><a href="/sites/offers/FanDuel/CBB" id="sportid-8"><span class="CBB sport-icon"></span>CBB</a></li></ul>
+	
+	</div>
+	</nav>
+	<div id="daily-research-drawer" class="alt drawer-menu">
+		<div id="daily-research-results-container" class="grid-10-2">
+			<div id="daily-research-results" class="column-3">
+				<div id="daily-research-results-holder">
+					
+
+	
+<div id="special-ad">
+    <div id="gold-advice">
+
+    <p>Gold Banner Buttons are for FanDuel Incentives Members. &nbsp<strong> Sign Up Instructions</strong></p>
+            <div class="incentives"></div>
+    </div>
+
+    <div class="incentive-box" style="display:none;">
+    <div class="content">
+    <p class="access-text">Gain access to FanDuel Incentives by following these simple steps:</p>	
+    <ul>
+        <li>
+            <span class="number">1</span>
+            <span class="descrip">
+NOTE: This option is for new accounts only.  If you already have a  FanDuel Account you can <a href="http://partners.fanduel.com/processing/clickthrgh.asp?btag=a_282b_432"> purchase access to Grinders Incentives through Paypal.</a>  
+            </span>
+        </li>
+        <li>
+            <span class="number">2</span>
+            <span class="descrip">Make a deposit.
+            </span>
+        </li>
+        <li>
+            <span class="number">3</span>
+            <span class="descrip">Be sure your FanDuel Screen Name is listed in your Rotogrinders Profile. When we see your FanDuel username show up in our referral reports we will grant you access to FanDuel incentives.
+            </span>
+        </li>
+    </ul>
+    <p>It's that simple. Feel free to email support as soon as you make your first deposit to speed up the process.</p>
+    <p class='center-incentives-box'><a href="/pages/RotoGrinders_Daily_Research_FAQ-133999">RotoGrinders: Daily Research FAQ</a></p>
+    <!--Content Here--></div>
+    </div>
+</div>
+
+
+<div id="daily-research-boxes">
+
+<ul>
+
+    <li id="dailyOffers"><a href="/projected_stats/index/FanDuel/Basketball" class="nbaPlayerProjections"><span>Player Projections</span></a> <a href="/projected_stats/index/FanDuel/Basketball" class="incentives">Incentives</a></li>
+    <li id="dailyOffers"><a href="/lineups/index/Basketball/FanDuel" class="nbaStartingLineups"><span>NBA Starting Lineups</span></a></li>
+    		<li id="dailyOffers"><a href="/pages/NBA_Expert_Picks_FanDuel-182231" class="grindDown"><span>Notorious' Expert Picks</span></a><a href="/pages/NBA_Expert_Picks_FanDuel-182231" class="incentives">Incentives</a></li>
+				<li id="dailyOffers"><a href="/pages/NBA_Fab_5_FanDuel-182095" class="weeklyTopFive"><span>Fab 5: Daily Expert Poll</span></a><a href="/pages/NBA_Fab_5_FanDuel-182095" class="incentives">Incentives</a></li>
+		 <li id="dailyOffers"><a href="/pages/NBA_Daily_Matchup_Charts_FanDuel-182060" class="weeklyCheatSheet"><span>Daily Matchups Charts</span></a><a href="/pages/NBA_Daily_Matchup_Charts_FanDuel-182060" class="incentives">Incentives</a></li>
+	         <li id="dailyOffers"><a href="/salaries/projected/FanDuel/Basketball" class="dProjectedLineup"><span>Algorithm-Projected Lineup</span></a></li>
+		<li id="dailyOffers"><a href="http://rotogrinders.com/pages/Lineup_Email_Alerts_NBA-185872" class="lineupsEmailAlerts"><span>Lineup Email Alerts</span></a><a href="" class="incentives">Incentives</a></li>
+			<li id="dailyOffers"><a href="/pages/expert_chat" class="expertChat"><span>Expert Chat: Notorious</span></a><a href="/pages/expert_chat" class="incentives">Incentives</a></li>
+		
+			<li id="dailyOffers"><a href="/pages/NBA_Bargain_Bin_Ballers_FanDuel-182092" class="bargainBin"><span>Notorious' Bargain Bin Ballers</span></a><a href="/pages/NBA_Bargain_Bin_Ballers_FanDuel-182092" class="incentives">Incentives</a></li>	
+		<li id="dailyOffers"><a href="/pages/NBA_Player_Stats_Guards-181856" class="nbaPlayerStats"><span>Player Stats</span></a></li>
+	<li id="dailyOffers"><a href="/pages/NBA_Advanced_Player_Stats_Guards-181885" class="advancedStats"><span>Advanced Player Stats</span></a></li>
+	<li id="dailyOffers"><a href="/pages/NBA_Team_Stats_Team_Offense-182041" class="nbaTeamStats"><span>Team Stats</span></a></li>
+	<li id="dailyOffers"><a href="/pages/NBA_Market_Watch-81761" class="marketWatch"><span>NBA Market Watch</span></a></li>
+	<li id="dailyOffers"><a href="/pages/NBA_Minutes_Watch_Point_Guards-81760" class="nbaMinutesWatch"><span>Minutes Watch</span></a></li>
+	<li id="dailyOffers"><a href="/pages/NBA_Offense_vs_Defense_Statistics-70235" class="nbaOffenseDefense"><span>Offense vs. Defense</span></a></li>
+	<li id="dailyOffers"><a href="/pages/NBA_Defense_vs_Position_Stats_Point_Guards-81759" class="nbaDstkickers"><span>Defense vs. Position</span></a></li>
+	<li id="dailyOffers"><a href="/pages/NBA_Ceiling_and_Consistency_Ratings_Guards-119804" class="consistency"><span>Ceiling & Consistency</span></a></li>
+    <li id="dailyOffers"><a href="/pages/NBA_Hottest_Players_Yesterday-176481" class="heatingUp"><span>Heating Up</span></a></li>
+    <li id="dailyOffers"><a href="/pages/NBA_Vegas_Odds_Page-81324" class="vegasOdds"><span>Vegas Odds and Lines</span></a></li>
+    <li id="dailyOffers"><a href="/pages/NBA_Site_Scoring_Comparison-70238" class="siteScoring"><span>Site Scoring Comparison</span></a></li>
+    		<li id="dailyOffers"><a href="/pages/Daily_Fantasy_Bankroll_Tracking_FanDuel_Bankroll_Spreadsheet-158034" class="bankrollTracker"><span>Bankroll Tracker</span></a></li>
+		 <li id="dailyOffers"><a href="/articles/Daily_Fantasy_Strategy_Vault-17113" class="strategyArchive"><span>Strategy Vault</span></a></li>
+	 	
+
+
+
+
+
+
+
+	
+	
+
+	
+	
+	
+	
+	
+	
+   
+
+
+
+	</ul>
+
+</div>
+
+				</div>
+				<div id="daily-research-results-mask">
+					<div id="daily-research-results-mask-spinner"></div>
+				</div>
+			</div>
+		</div>
+		<div class="clearer"></div>
+	</div>
+</div>
+		
+		<ul id="submenu-rankings" class="submenu nav">
+			<li class=""><a href="/rankings/index/grinder">Grinder Rankings</a></li>
+			<li class=""><a href="/rankings/index/annual">TPOY</a></li>
+			<li class=""><a href="/rankings/index/monthly">Monthly GLB</a></li>
+			<li class=""><a href="/rankings/index/seasonal/all/Basketball">Seasonal GLB</a></li>
+			<li class=""><a href="/pages/RotoGrinders_Rankings_FAQ-158">FAQ</a></li>
+		</ul>
+
+		<ul id="submenu-lineups" class="submenu nav">
+			<li class=""><span class="football sport-icon"></span><a style="display:inline-block;" href="/lineups/index/Football">Football</a></li>
+			<li class=""><span class="basketball sport-icon"></span><a style="display:inline-block;" href="/lineups/index/Basketball">Basketball</a></li>
+			<li class=""><span class="hockey sport-icon"></span><a style="display:inline-block;" href="/lineups/index/Hockey">Hockey</a></li>
+			<li class=""><span class="baseball sport-icon"></span><a style="display:inline-block;" href="/lineups">Baseball</a></li>
+        	</ul>
+	</div>
+</nav>
+
+<a href="/articles/It_s_Official_Congratulations_to_Al_Smizzle_for_winning_the_2013_Tournament_Player_of_the_Year-216927"><div id="wide-bar">It's Official! Congratulations to Al Smizzle for winning the <span class="orange">2013 Tournament Player of the Year</span>!</div></a>
+
+		
+
+		
+				
+		        
+		<div id="middle">
+												<div id="main-section" >
+									<section id="main-content" >
+						
+
+
+	<article id="main-article" class="post">
+		
+
+<!--<p class="by-line">By </p>-->
+
+	<h1><span class="caps">NBA</span> Player Stats: Guards</h1>
+
+	<table>
+		<tr>
+			<td style="background:#CC5200; color:white; text-align:center;" colspan="3">	<strong>Player Statistics Dashboard</strong>					</td>
+		</tr>
+		<tr>
+			<td style="background:#000066; color:white; text-align:center;">	<strong>Season</strong>	</td>
+			<td style="background:#000066; color:white; text-align:center;">	<strong>Last 10</strong>	</td>
+			<td style="background:#000066; color:white; text-align:center;">	<strong><span class="caps">FPPG</span></strong>	</td>
+		</tr>
+		<tr>
+			<th style="text-align:center;">	<strong><span class="caps">GUARDS</span></strong>	</th>
+			<th style="text-align:center;">	<a href="http://rotogrinders.com/pages/NBA_Player_Stats_Last_10_Guards-181903"><strong><span class="caps">GUARDS</span></strong></a>	</th>
+			<th style="text-align:center;">	<a href="http://rotogrinders.com/pages/NBA_Fantasy_Points_Per_Game_Guards-181860"><strong><span class="caps">GUARDS</span></strong></a>	</th>
+		</tr>
+		<tr>
+			<th style="text-align:center;">	<a href="http://rotogrinders.com/pages/NBA_Player_Stats_Forwards-181857"><strong><span class="caps">FORWARDS</span></strong></a>	</th>
+			<th style="text-align:center;">	<a href="http://rotogrinders.com/pages/NBA_Player_Stats_Last_10_Forwards-181904"><strong><span class="caps">FORWARDS</span></strong></a>	</th>
+			<th style="text-align:center;">	<a href="http://rotogrinders.com/pages/NBA_Fantasy_Points_Per_Game_Forwards-181861"><strong><span class="caps">FORWARDS</span></strong></a>	</th>
+		</tr>
+		<tr>
+			<th style="text-align:center;">	<a href="http://rotogrinders.com/pages/NBA_Player_Stats_Centers-181858"><strong><span class="caps">CENTERS</span></strong></a>	</th>
+			<th style="text-align:center;">	<a href="http://rotogrinders.com/pages/NBA_Player_Stats_Last_10_Centers-181905"><strong><span class="caps">CENTERS</span></strong></a>	</th>
+			<th style="text-align:center;">	<a href="http://rotogrinders.com/pages/NBA_Fantasy_Points_Per_Game_Centers-181862"><strong><span class="caps">CENTERS</span></strong></a>	</th>
+		</tr>
+	</table>
+
+	<p><em>Note: Table below is sortable. Click any column header to sort by that statistic</em></p>
+
+	<h3><strong>Player Stats: <span class="caps">GUARDS</span></strong></h3>
+
+	<table class="sortable">
+		<tr>
+			<th style="text-align:center;">	Player	</th>
+			<th style="text-align:center;">	Team	</th>
+			<th style="text-align:center;">	Pos	</th>
+			<th style="text-align:center;">	GP	</th>
+			<th style="text-align:center;">	<span class="caps">MPG</span>	</th>
+			<th style="text-align:center;">	FG%	</th>
+			<th style="text-align:center;">	FT%	</th>
+			<th style="text-align:center;">	3P%	</th>
+			<th style="text-align:center;">	3PM	</th>
+			<th style="text-align:center;">	<span class="caps">REB</span>	</th>
+			<th style="text-align:center;">	<span class="caps">AST</span>	</th>
+			<th style="text-align:center;">	<span class="caps">STL</span>	</th>
+			<th style="text-align:center;">	<span class="caps">BLK</span>	</th>
+			<th style="text-align:center;">	TO	</th>
+			<th style="text-align:center;">	<span class="caps">PPG</span>	</th>
+			<th style="text-align:center;">	<span class="caps">FPPG</span>	</th>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Stephen_Curry-1079" rel="player-profile">Stephen Curry</a>	</td>
+			<td>	<span class="caps">GSW</span>	</td>
+			<td>	PG	</td>
+			<td>	28	</td>
+			<td>	37.2	</td>
+			<td>	44.5%	</td>
+			<td>	86.6%	</td>
+			<td>	40.9%	</td>
+			<td>	3.21	</td>
+			<td>	4.54	</td>
+			<td>	9.43	</td>
+			<td>	1.89	</td>
+			<td>	0.29	</td>
+			<td>	4.04	</td>
+			<td>	23.21	</td>
+			<td>	43.12	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Damian_Lillard-13900" rel="player-profile">Damian Lillard</a>	</td>
+			<td>	<span class="caps">POR</span>	</td>
+			<td>	PG	</td>
+			<td>	30	</td>
+			<td>	36.2	</td>
+			<td>	41.3%	</td>
+			<td>	89.0%	</td>
+			<td>	43.1%	</td>
+			<td>	3.10	</td>
+			<td>	3.63	</td>
+			<td>	5.80	</td>
+			<td>	0.77	</td>
+			<td>	0.33	</td>
+			<td>	2.33	</td>
+			<td>	21.10	</td>
+			<td>	34.03	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Kyrie_Irving-13334" rel="player-profile">Kyrie Irving</a>	</td>
+			<td>	<span class="caps">CLE</span>	</td>
+			<td>	PG	</td>
+			<td>	29	</td>
+			<td>	35.2	</td>
+			<td>	42.8%	</td>
+			<td>	83.0%	</td>
+			<td>	34.6%	</td>
+			<td>	1.83	</td>
+			<td>	2.97	</td>
+			<td>	6.00	</td>
+			<td>	1.10	</td>
+			<td>	0.34	</td>
+			<td>	3.07	</td>
+			<td>	22.48	</td>
+			<td>	34.85	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Russell_Westbrook-1083" rel="player-profile">Russell Westbrook</a>	</td>
+			<td>	<span class="caps">OKC</span>	</td>
+			<td>	PG	</td>
+			<td>	25	</td>
+			<td>	32.9	</td>
+			<td>	42.4%	</td>
+			<td>	79.3%	</td>
+			<td>	30.9%	</td>
+			<td>	1.36	</td>
+			<td>	5.96	</td>
+			<td>	6.96	</td>
+			<td>	1.76	</td>
+			<td>	0.12	</td>
+			<td>	4.00	</td>
+			<td>	21.32	</td>
+			<td>	38.67	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/John_Wall-1084" rel="player-profile">John Wall</a>	</td>
+			<td>	<span class="caps">WAS</span>	</td>
+			<td>	PG	</td>
+			<td>	27	</td>
+			<td>	37.3	</td>
+			<td>	42.9%	</td>
+			<td>	83.7%	</td>
+			<td>	31.3%	</td>
+			<td>	1.15	</td>
+			<td>	4.19	</td>
+			<td>	9.07	</td>
+			<td>	2.07	</td>
+			<td>	0.41	</td>
+			<td>	3.56	</td>
+			<td>	19.85	</td>
+			<td>	39.88	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Chris_Paul-1087" rel="player-profile">Chris Paul</a>	</td>
+			<td>	<span class="caps">LAC</span>	</td>
+			<td>	PG	</td>
+			<td>	31	</td>
+			<td>	35.3	</td>
+			<td>	46.4%	</td>
+			<td>	87.0%	</td>
+			<td>	33.3%	</td>
+			<td>	1.16	</td>
+			<td>	4.74	</td>
+			<td>	11.39	</td>
+			<td>	2.55	</td>
+			<td>	0.10	</td>
+			<td>	2.48	</td>
+			<td>	19.94	</td>
+			<td>	45.53	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Eric_Bledsoe-1031" rel="player-profile">Eric Bledsoe</a>	</td>
+			<td>	<span class="caps">PHX</span>	</td>
+			<td>	PG	</td>
+			<td>	23	</td>
+			<td>	33.6	</td>
+			<td>	49.2%	</td>
+			<td>	80.6%	</td>
+			<td>	35.4%	</td>
+			<td>	1.22	</td>
+			<td>	4.30	</td>
+			<td>	5.91	</td>
+			<td>	1.52	</td>
+			<td>	0.35	</td>
+			<td>	3.30	</td>
+			<td>	18.43	</td>
+			<td>	32.90	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Isaiah_Thomas-13344" rel="player-profile">Isaiah Thomas</a>	</td>
+			<td>	<span class="caps">SAC</span>	</td>
+			<td>	PG	</td>
+			<td>	28	</td>
+			<td>	31.6	</td>
+			<td>	46.5%	</td>
+			<td>	86.1%	</td>
+			<td>	41.1%	</td>
+			<td>	1.82	</td>
+			<td>	2.75	</td>
+			<td>	5.86	</td>
+			<td>	1.46	</td>
+			<td>	0.00	</td>
+			<td>	2.79	</td>
+			<td>	18.96	</td>
+			<td>	31.18	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Kemba_Walker-13335" rel="player-profile">Kemba Walker</a>	</td>
+			<td>	<span class="caps">CHA</span>	</td>
+			<td>	PG	</td>
+			<td>	31	</td>
+			<td>	35.5	</td>
+			<td>	41.5%	</td>
+			<td>	79.4%	</td>
+			<td>	35.8%	</td>
+			<td>	1.58	</td>
+			<td>	4.26	</td>
+			<td>	4.68	</td>
+			<td>	1.42	</td>
+			<td>	0.55	</td>
+			<td>	2.55	</td>
+			<td>	18.61	</td>
+			<td>	32.13	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Mike_Conley-1062" rel="player-profile">Mike Conley</a>	</td>
+			<td>	<span class="caps">MEM</span>	</td>
+			<td>	PG	</td>
+			<td>	27	</td>
+			<td>	34.1	</td>
+			<td>	44.8%	</td>
+			<td>	82.6%	</td>
+			<td>	33.3%	</td>
+			<td>	1.37	</td>
+			<td>	2.26	</td>
+			<td>	6.15	</td>
+			<td>	1.37	</td>
+			<td>	0.26	</td>
+			<td>	1.93	</td>
+			<td>	16.96	</td>
+			<td>	30.23	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Tony_Parker-982" rel="player-profile">Tony Parker</a>	</td>
+			<td>	<span class="caps">SAS</span>	</td>
+			<td>	PG	</td>
+			<td>	27	</td>
+			<td>	30.6	</td>
+			<td>	49.6%	</td>
+			<td>	75.7%	</td>
+			<td>	41.4%	</td>
+			<td>	0.44	</td>
+			<td>	2.48	</td>
+			<td>	6.04	</td>
+			<td>	0.59	</td>
+			<td>	0.04	</td>
+			<td>	2.41	</td>
+			<td>	17.81	</td>
+			<td>	28.70	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Michael_Carter_Williams-16800" rel="player-profile">Michael Carter-Williams</a>	</td>
+			<td>	<span class="caps">PHI</span>	</td>
+			<td>	PG	</td>
+			<td>	18	</td>
+			<td>	36.3	</td>
+			<td>	41.0%	</td>
+			<td>	68.8%	</td>
+			<td>	31.2%	</td>
+			<td>	1.33	</td>
+			<td>	5.50	</td>
+			<td>	7.67	</td>
+			<td>	3.06	</td>
+			<td>	0.72	</td>
+			<td>	3.61	</td>
+			<td>	18.11	</td>
+			<td>	40.17	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Ty_Lawson-906" rel="player-profile">Ty Lawson</a>	</td>
+			<td>	<span class="caps">DEN</span>	</td>
+			<td>	PG	</td>
+			<td>	27	</td>
+			<td>	34.4	</td>
+			<td>	43.1%	</td>
+			<td>	79.3%	</td>
+			<td>	34.6%	</td>
+			<td>	1.04	</td>
+			<td>	3.44	</td>
+			<td>	7.93	</td>
+			<td>	1.41	</td>
+			<td>	0.19	</td>
+			<td>	3.15	</td>
+			<td>	17.48	</td>
+			<td>	33.55	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Brandon_Jennings-924" rel="player-profile">Brandon Jennings</a>	</td>
+			<td>	<span class="caps">DET</span>	</td>
+			<td>	PG	</td>
+			<td>	30	</td>
+			<td>	36.5	</td>
+			<td>	39.7%	</td>
+			<td>	77.4%	</td>
+			<td>	36.2%	</td>
+			<td>	1.83	</td>
+			<td>	3.43	</td>
+			<td>	8.07	</td>
+			<td>	1.50	</td>
+			<td>	0.10	</td>
+			<td>	3.30	</td>
+			<td>	17.53	</td>
+			<td>	33.65	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Derrick_Rose-1086" rel="player-profile">Derrick Rose</a>	</td>
+			<td>	<span class="caps">CHI</span>	</td>
+			<td>	PG	</td>
+			<td>	10	</td>
+			<td>	31.1	</td>
+			<td>	35.4%	</td>
+			<td>	84.4%	</td>
+			<td>	34.0%	</td>
+			<td>	1.60	</td>
+			<td>	3.20	</td>
+			<td>	4.30	</td>
+			<td>	0.50	</td>
+			<td>	0.10	</td>
+			<td>	3.40	</td>
+			<td>	15.90	</td>
+			<td>	23.99	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Jeff_Teague-1005" rel="player-profile">Jeff Teague</a>	</td>
+			<td>	<span class="caps">ATL</span>	</td>
+			<td>	PG	</td>
+			<td>	30	</td>
+			<td>	33.6	</td>
+			<td>	42.4%	</td>
+			<td>	81.1%	</td>
+			<td>	29.5%	</td>
+			<td>	0.77	</td>
+			<td>	2.77	</td>
+			<td>	8.27	</td>
+			<td>	1.33	</td>
+			<td>	0.13	</td>
+			<td>	3.43	</td>
+			<td>	16.87	</td>
+			<td>	32.09	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Jrue_Holiday-1073" rel="player-profile">Jrue Holiday</a>	</td>
+			<td>	<span class="caps">NOP</span>	</td>
+			<td>	PG	</td>
+			<td>	28	</td>
+			<td>	34.2	</td>
+			<td>	45.3%	</td>
+			<td>	84.9%	</td>
+			<td>	40.6%	</td>
+			<td>	1.00	</td>
+			<td>	4.25	</td>
+			<td>	8.14	</td>
+			<td>	1.61	</td>
+			<td>	0.39	</td>
+			<td>	3.11	</td>
+			<td>	14.75	</td>
+			<td>	32.95	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Kyle_Lowry-1057" rel="player-profile">Kyle Lowry</a>	</td>
+			<td>	<span class="caps">TOR</span>	</td>
+			<td>	PG	</td>
+			<td>	28	</td>
+			<td>	36.8	</td>
+			<td>	42.3%	</td>
+			<td>	83.3%	</td>
+			<td>	37.3%	</td>
+			<td>	2.21	</td>
+			<td>	4.04	</td>
+			<td>	7.25	</td>
+			<td>	1.71	</td>
+			<td>	0.14	</td>
+			<td>	2.32	</td>
+			<td>	15.82	</td>
+			<td>	32.92	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Jeremy_Lin-916" rel="player-profile">Jeremy Lin</a>	</td>
+			<td>	<span class="caps">HOU</span>	</td>
+			<td>	PG	</td>
+			<td>	22	</td>
+			<td>	30.0	</td>
+			<td>	48.1%	</td>
+			<td>	79.5%	</td>
+			<td>	39.0%	</td>
+			<td>	1.36	</td>
+			<td>	2.59	</td>
+			<td>	4.18	</td>
+			<td>	1.09	</td>
+			<td>	0.45	</td>
+			<td>	2.86	</td>
+			<td>	14.50	</td>
+			<td>	24.10	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Kobe_Bryant-1081" rel="player-profile">Kobe Bryant</a>	</td>
+			<td>	<span class="caps">LAL</span>	</td>
+			<td>	PG	</td>
+			<td>	6	</td>
+			<td>	29.5	</td>
+			<td>	42.5%	</td>
+			<td>	85.7%	</td>
+			<td>	18.8%	</td>
+			<td>	0.50	</td>
+			<td>	4.33	</td>
+			<td>	6.33	</td>
+			<td>	1.17	</td>
+			<td>	0.17	</td>
+			<td>	5.67	</td>
+			<td>	13.83	</td>
+			<td>	25.53	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Jordan_Crawford-929" rel="player-profile">Jordan Crawford</a>	</td>
+			<td>	<span class="caps">BOS</span>	</td>
+			<td>	PG	</td>
+			<td>	30	</td>
+			<td>	30.4	</td>
+			<td>	44.0%	</td>
+			<td>	87.2%	</td>
+			<td>	35.5%	</td>
+			<td>	1.43	</td>
+			<td>	3.20	</td>
+			<td>	5.43	</td>
+			<td>	0.90	</td>
+			<td>	0.07	</td>
+			<td>	2.10	</td>
+			<td>	13.80	</td>
+			<td>	25.63	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Tony_Wroten-13970" rel="player-profile">Tony Wroten</a>	</td>
+			<td>	<span class="caps">PHI</span>	</td>
+			<td>	PG	</td>
+			<td>	27	</td>
+			<td>	26.2	</td>
+			<td>	43.1%	</td>
+			<td>	57.9%	</td>
+			<td>	26.3%	</td>
+			<td>	0.96	</td>
+			<td>	3.63	</td>
+			<td>	3.52	</td>
+			<td>	1.00	</td>
+			<td>	0.26	</td>
+			<td>	2.81	</td>
+			<td>	14.07	</td>
+			<td>	23.42	</td>
+		</tr>
+		<tr>
+			<td>	Victor Oladipo	</td>
+			<td>	<span class="caps">ORL</span>	</td>
+			<td>	PG	</td>
+			<td>	29	</td>
+			<td>	30.9	</td>
+			<td>	39.8%	</td>
+			<td>	73.9%	</td>
+			<td>	27.9%	</td>
+			<td>	0.83	</td>
+			<td>	4.28	</td>
+			<td>	3.55	</td>
+			<td>	1.59	</td>
+			<td>	0.72	</td>
+			<td>	3.21	</td>
+			<td>	13.03	</td>
+			<td>	24.90	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Brandon_Knight-13336" rel="player-profile">Brandon Knight</a>	</td>
+			<td>	<span class="caps">MIL</span>	</td>
+			<td>	PG	</td>
+			<td>	22	</td>
+			<td>	28.7	</td>
+			<td>	38.4%	</td>
+			<td>	83.3%	</td>
+			<td>	32.9%	</td>
+			<td>	1.27	</td>
+			<td>	4.05	</td>
+			<td>	4.55	</td>
+			<td>	0.82	</td>
+			<td>	0.14	</td>
+			<td>	2.73	</td>
+			<td>	13.95	</td>
+			<td>	24.83	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Trey_Burke-17029" rel="player-profile">Trey Burke</a>	</td>
+			<td>	<span class="caps">UTA</span>	</td>
+			<td>	PG	</td>
+			<td>	21	</td>
+			<td>	30.0	</td>
+			<td>	39.3%	</td>
+			<td>	92.9%	</td>
+			<td>	35.5%	</td>
+			<td>	1.57	</td>
+			<td>	3.19	</td>
+			<td>	5.10	</td>
+			<td>	0.62	</td>
+			<td>	0.05	</td>
+			<td>	1.86	</td>
+			<td>	13.43	</td>
+			<td>	24.39	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Jameer_Nelson-1049" rel="player-profile">Jameer Nelson</a>	</td>
+			<td>	<span class="caps">ORL</span>	</td>
+			<td>	PG	</td>
+			<td>	26	</td>
+			<td>	33.0	</td>
+			<td>	40.0%	</td>
+			<td>	84.4%	</td>
+			<td>	36.0%	</td>
+			<td>	2.23	</td>
+			<td>	3.77	</td>
+			<td>	6.08	</td>
+			<td>	0.92	</td>
+			<td>	0.12	</td>
+			<td>	2.62	</td>
+			<td>	12.92	</td>
+			<td>	26.02	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Deron_Williams-1080" rel="player-profile">Deron Williams</a>	</td>
+			<td>	<span class="caps">BRK</span>	</td>
+			<td>	PG	</td>
+			<td>	19	</td>
+			<td>	29.5	</td>
+			<td>	46.0%	</td>
+			<td>	76.8%	</td>
+			<td>	40.0%	</td>
+			<td>	1.26	</td>
+			<td>	2.16	</td>
+			<td>	7.16	</td>
+			<td>	0.79	</td>
+			<td>	0.32	</td>
+			<td>	2.84	</td>
+			<td>	12.68	</td>
+			<td>	25.39	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Jose_Calderon-1071" rel="player-profile">Jose Calderon</a>	</td>
+			<td>	<span class="caps">DAL</span>	</td>
+			<td>	PG	</td>
+			<td>	29	</td>
+			<td>	31.2	</td>
+			<td>	48.0%	</td>
+			<td>	89.5%	</td>
+			<td>	47.9%	</td>
+			<td>	2.69	</td>
+			<td>	2.21	</td>
+			<td>	4.72	</td>
+			<td>	0.93	</td>
+			<td>	0.07	</td>
+			<td>	1.21	</td>
+			<td>	12.24	</td>
+			<td>	22.76	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/George_Hill-993" rel="player-profile">George Hill</a>	</td>
+			<td>	<span class="caps">IND</span>	</td>
+			<td>	PG	</td>
+			<td>	26	</td>
+			<td>	31.6	</td>
+			<td>	41.3%	</td>
+			<td>	83.3%	</td>
+			<td>	39.2%	</td>
+			<td>	1.46	</td>
+			<td>	3.62	</td>
+			<td>	3.62	</td>
+			<td>	1.00	</td>
+			<td>	0.50	</td>
+			<td>	1.46	</td>
+			<td>	11.23	</td>
+			<td>	22.54	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Ramon_Sessions-978" rel="player-profile">Ramon Sessions</a>	</td>
+			<td>	<span class="caps">CHA</span>	</td>
+			<td>	PG	</td>
+			<td>	31	</td>
+			<td>	21.2	</td>
+			<td>	40.7%	</td>
+			<td>	78.1%	</td>
+			<td>	23.8%	</td>
+			<td>	0.32	</td>
+			<td>	2.13	</td>
+			<td>	2.90	</td>
+			<td>	0.61	</td>
+			<td>	0.13	</td>
+			<td>	1.55	</td>
+			<td>	10.77	</td>
+			<td>	17.61	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Raymond_Felton-1078" rel="player-profile">Raymond Felton</a>	</td>
+			<td>	<span class="caps">NYK</span>	</td>
+			<td>	PG	</td>
+			<td>	17	</td>
+			<td>	32.0	</td>
+			<td>	39.2%	</td>
+			<td>	77.3%	</td>
+			<td>	29.2%	</td>
+			<td>	1.12	</td>
+			<td>	2.41	</td>
+			<td>	5.12	</td>
+			<td>	0.88	</td>
+			<td>	0.59	</td>
+			<td>	2.06	</td>
+			<td>	10.47	</td>
+			<td>	21.92	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Jarrett_Jack-1024" rel="player-profile">Jarrett Jack</a>	</td>
+			<td>	<span class="caps">CLE</span>	</td>
+			<td>	PG	</td>
+			<td>	29	</td>
+			<td>	27.2	</td>
+			<td>	41.8%	</td>
+			<td>	84.9%	</td>
+			<td>	39.4%	</td>
+			<td>	0.97	</td>
+			<td>	2.79	</td>
+			<td>	3.69	</td>
+			<td>	0.66	</td>
+			<td>	0.31	</td>
+			<td>	1.83	</td>
+			<td>	10.03	</td>
+			<td>	19.02	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Xavier_Henry-997" rel="player-profile">Xavier Henry</a>	</td>
+			<td>	<span class="caps">LAL</span>	</td>
+			<td>	PG	</td>
+			<td>	30	</td>
+			<td>	22.3	</td>
+			<td>	42.9%	</td>
+			<td>	62.2%	</td>
+			<td>	34.5%	</td>
+			<td>	0.67	</td>
+			<td>	2.83	</td>
+			<td>	1.20	</td>
+			<td>	1.10	</td>
+			<td>	0.17	</td>
+			<td>	1.40	</td>
+			<td>	10.43	</td>
+			<td>	16.77	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Greivis_Vasquez-1006" rel="player-profile">Greivis Vasquez</a>	</td>
+			<td>	<span class="caps">TOR</span>	</td>
+			<td>	PG	</td>
+			<td>	26	</td>
+			<td>	23.3	</td>
+			<td>	41.0%	</td>
+			<td>	89.8%	</td>
+			<td>	31.2%	</td>
+			<td>	0.92	</td>
+			<td>	1.96	</td>
+			<td>	4.73	</td>
+			<td>	0.31	</td>
+			<td>	0.04	</td>
+			<td>	1.69	</td>
+			<td>	9.46	</td>
+			<td>	17.92	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Steve_Blake-1028" rel="player-profile">Steve Blake</a>	</td>
+			<td>	<span class="caps">LAL</span>	</td>
+			<td>	PG	</td>
+			<td>	21	</td>
+			<td>	31.8	</td>
+			<td>	39.8%	</td>
+			<td>	80.8%	</td>
+			<td>	40.0%	</td>
+			<td>	1.90	</td>
+			<td>	3.29	</td>
+			<td>	7.71	</td>
+			<td>	0.86	</td>
+			<td>	0.05	</td>
+			<td>	2.48	</td>
+			<td>	9.76	</td>
+			<td>	24.61	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Patrick_Beverley-14108" rel="player-profile">Patrick Beverley</a>	</td>
+			<td>	<span class="caps">HOU</span>	</td>
+			<td>	PG	</td>
+			<td>	25	</td>
+			<td>	31.5	</td>
+			<td>	42.0%	</td>
+			<td>	78.0%	</td>
+			<td>	33.3%	</td>
+			<td>	1.40	</td>
+			<td>	3.88	</td>
+			<td>	2.24	</td>
+			<td>	1.28	</td>
+			<td>	0.40	</td>
+			<td>	1.16	</td>
+			<td>	9.64	</td>
+			<td>	19.86	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Ricky_Rubio-1001" rel="player-profile">Ricky Rubio</a>	</td>
+			<td>	<span class="caps">MIN</span>	</td>
+			<td>	PG	</td>
+			<td>	30	</td>
+			<td>	32.1	</td>
+			<td>	34.5%	</td>
+			<td>	85.2%	</td>
+			<td>	34.5%	</td>
+			<td>	0.63	</td>
+			<td>	4.47	</td>
+			<td>	8.07	</td>
+			<td>	2.80	</td>
+			<td>	0.13	</td>
+			<td>	2.87	</td>
+			<td>	8.87	</td>
+			<td>	29.33	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Jordan_Farmar-16893" rel="player-profile">Jordan Farmar</a>	</td>
+			<td>	<span class="caps">LAL</span>	</td>
+			<td>	PG	</td>
+			<td>	20	</td>
+			<td>	20.3	</td>
+			<td>	42.7%	</td>
+			<td>	75.0%	</td>
+			<td>	37.7%	</td>
+			<td>	1.15	</td>
+			<td>	3.25	</td>
+			<td>	4.45	</td>
+			<td>	0.75	</td>
+			<td>	0.20	</td>
+			<td>	2.20	</td>
+			<td>	9.20	</td>
+			<td>	19.48	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Mo_Williams-962" rel="player-profile">Mo Williams</a>	</td>
+			<td>	<span class="caps">POR</span>	</td>
+			<td>	PG	</td>
+			<td>	29	</td>
+			<td>	24.4	</td>
+			<td>	40.4%	</td>
+			<td>	91.7%	</td>
+			<td>	36.0%	</td>
+			<td>	1.10	</td>
+			<td>	1.93	</td>
+			<td>	4.76	</td>
+			<td>	0.72	</td>
+			<td>	0.28	</td>
+			<td>	2.28	</td>
+			<td>	9.10	</td>
+			<td>	18.28	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Mario_Chalmers-944" rel="player-profile">Mario Chalmers</a>	</td>
+			<td>	<span class="caps">MIA</span>	</td>
+			<td>	PG	</td>
+			<td>	28	</td>
+			<td>	28.5	</td>
+			<td>	43.4%	</td>
+			<td>	75.0%	</td>
+			<td>	38.7%	</td>
+			<td>	1.29	</td>
+			<td>	2.82	</td>
+			<td>	5.14	</td>
+			<td>	1.89	</td>
+			<td>	0.29	</td>
+			<td>	2.21	</td>
+			<td>	9.14	</td>
+			<td>	22.38	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Kirk_Hinrich-1058" rel="player-profile">Kirk Hinrich</a>	</td>
+			<td>	<span class="caps">CHI</span>	</td>
+			<td>	PG	</td>
+			<td>	23	</td>
+			<td>	31.4	</td>
+			<td>	34.8%	</td>
+			<td>	82.0%	</td>
+			<td>	29.6%	</td>
+			<td>	1.04	</td>
+			<td>	3.09	</td>
+			<td>	5.04	</td>
+			<td>	1.26	</td>
+			<td>	0.35	</td>
+			<td>	2.13	</td>
+			<td>	8.30	</td>
+			<td>	20.66	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Patty_Mills-13977" rel="player-profile">Patty Mills</a>	</td>
+			<td>	<span class="caps">SAS</span>	</td>
+			<td>	PG	</td>
+			<td>	30	</td>
+			<td>	16.8	</td>
+			<td>	46.6%	</td>
+			<td>	81.2%	</td>
+			<td>	41.5%	</td>
+			<td>	1.30	</td>
+			<td>	1.37	</td>
+			<td>	1.50	</td>
+			<td>	1.00	</td>
+			<td>	0.10	</td>
+			<td>	0.70	</td>
+			<td>	8.03	</td>
+			<td>	13.42	</td>
+		</tr>
+		<tr>
+			<td>	J.<a href="/fantasyplayers/J_J_Barea-13964" rel="player-profile">J. Barea</a>	</td>
+			<td>	<span class="caps">MIN</span>	</td>
+			<td>	PG	</td>
+			<td>	30	</td>
+			<td>	19.0	</td>
+			<td>	39.4%	</td>
+			<td>	65.5%	</td>
+			<td>	34.1%	</td>
+			<td>	1.00	</td>
+			<td>	1.93	</td>
+			<td>	3.70	</td>
+			<td>	0.37	</td>
+			<td>	0.00	</td>
+			<td>	1.27	</td>
+			<td>	8.23	</td>
+			<td>	15.57	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Darren_Collison-1060" rel="player-profile">Darren Collison</a>	</td>
+			<td>	<span class="caps">LAC</span>	</td>
+			<td>	PG	</td>
+			<td>	32	</td>
+			<td>	18.1	</td>
+			<td>	45.0%	</td>
+			<td>	81.7%	</td>
+			<td>	35.3%	</td>
+			<td>	0.56	</td>
+			<td>	2.06	</td>
+			<td>	1.78	</td>
+			<td>	0.84	</td>
+			<td>	0.22	</td>
+			<td>	1.19	</td>
+			<td>	8.06	</td>
+			<td>	14.13	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Will_Bynum-960" rel="player-profile">Will Bynum</a>	</td>
+			<td>	<span class="caps">DET</span>	</td>
+			<td>	PG	</td>
+			<td>	16	</td>
+			<td>	18.0	</td>
+			<td>	43.2%	</td>
+			<td>	73.7%	</td>
+			<td>	37.5%	</td>
+			<td>	0.38	</td>
+			<td>	1.88	</td>
+			<td>	2.75	</td>
+			<td>	0.81	</td>
+			<td>	0.12	</td>
+			<td>	1.69	</td>
+			<td>	8.50	</td>
+			<td>	15.05	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Jerryd_Bayless-1021" rel="player-profile">Jerryd Bayless</a>	</td>
+			<td>	<span class="caps">MEM</span>	</td>
+			<td>	PG	</td>
+			<td>	27	</td>
+			<td>	20.8	</td>
+			<td>	37.4%	</td>
+			<td>	80.4%	</td>
+			<td>	28.2%	</td>
+			<td>	0.74	</td>
+			<td>	1.96	</td>
+			<td>	2.00	</td>
+			<td>	0.70	</td>
+			<td>	0.19	</td>
+			<td>	0.70	</td>
+			<td>	8.11	</td>
+			<td>	14.54	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Norris_Cole-13351" rel="player-profile">Norris Cole</a>	</td>
+			<td>	<span class="caps">MIA</span>	</td>
+			<td>	PG	</td>
+			<td>	30	</td>
+			<td>	24.7	</td>
+			<td>	47.4%	</td>
+			<td>	77.3%	</td>
+			<td>	41.8%	</td>
+			<td>	0.77	</td>
+			<td>	2.50	</td>
+			<td>	3.30	</td>
+			<td>	0.87	</td>
+			<td>	0.13	</td>
+			<td>	1.57	</td>
+			<td>	7.33	</td>
+			<td>	15.71	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Aaron_Brooks-1047" rel="player-profile">Aaron Brooks</a>	</td>
+			<td>	<span class="caps">HOU</span>	</td>
+			<td>	PG	</td>
+			<td>	27	</td>
+			<td>	17.1	</td>
+			<td>	41.5%	</td>
+			<td>	84.6%	</td>
+			<td>	42.1%	</td>
+			<td>	1.19	</td>
+			<td>	1.56	</td>
+			<td>	2.11	</td>
+			<td>	0.74	</td>
+			<td>	0.11	</td>
+			<td>	1.30	</td>
+			<td>	7.41	</td>
+			<td>	12.85	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Darius_Morris-13345" rel="player-profile">Darius Morris</a>	</td>
+			<td>	<span class="caps">PHI</span>	</td>
+			<td>	PG	</td>
+			<td>	12	</td>
+			<td>	16.1	</td>
+			<td>	43.3%	</td>
+			<td>	71.4%	</td>
+			<td>	41.7%	</td>
+			<td>	0.83	</td>
+			<td>	1.08	</td>
+			<td>	2.58	</td>
+			<td>	0.67	</td>
+			<td>	0.00	</td>
+			<td>	1.58	</td>
+			<td>	6.92	</td>
+			<td>	11.85	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Nate_Wolters-16931" rel="player-profile">Nate Wolters</a>	</td>
+			<td>	<span class="caps">MIL</span>	</td>
+			<td>	PG	</td>
+			<td>	26	</td>
+			<td>	22.2	</td>
+			<td>	40.1%	</td>
+			<td>	72.5%	</td>
+			<td>	11.1%	</td>
+			<td>	0.12	</td>
+			<td>	2.27	</td>
+			<td>	3.54	</td>
+			<td>	0.81	</td>
+			<td>	0.31	</td>
+			<td>	1.12	</td>
+			<td>	6.54	</td>
+			<td>	15.69	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Shelvin_Mack-13354" rel="player-profile">Shelvin Mack</a>	</td>
+			<td>	<span class="caps">ATL</span>	</td>
+			<td>	PG	</td>
+			<td>	24	</td>
+			<td>	18.6	</td>
+			<td>	44.1%	</td>
+			<td>	77.3%	</td>
+			<td>	35.6%	</td>
+			<td>	0.67	</td>
+			<td>	1.96	</td>
+			<td>	3.58	</td>
+			<td>	0.79	</td>
+			<td>	0.00	</td>
+			<td>	0.79	</td>
+			<td>	6.71	</td>
+			<td>	15.22	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Steve_Nash-14067" rel="player-profile">Steve Nash</a>	</td>
+			<td>	<span class="caps">LAL</span>	</td>
+			<td>	PG	</td>
+			<td>	6	</td>
+			<td>	22.5	</td>
+			<td>	26.1%	</td>
+			<td>	91.7%	</td>
+			<td>	38.5%	</td>
+			<td>	0.83	</td>
+			<td>	1.50	</td>
+			<td>	4.83	</td>
+			<td>	0.33	</td>
+			<td>	0.17	</td>
+			<td>	2.00	</td>
+			<td>	6.67	</td>
+			<td>	14.72	</td>
+		</tr>
+		<tr>
+			<td>	C.J. Watson	</td>
+			<td>	<span class="caps">IND</span>	</td>
+			<td>	PG	</td>
+			<td>	28	</td>
+			<td>	19.6	</td>
+			<td>	38.8%	</td>
+			<td>	80.4%	</td>
+			<td>	34.7%	</td>
+			<td>	0.89	</td>
+			<td>	1.75	</td>
+			<td>	1.82	</td>
+			<td>	1.04	</td>
+			<td>	0.14	</td>
+			<td>	0.89	</td>
+			<td>	6.43	</td>
+			<td>	12.73	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Shaun_Livingston-14007" rel="player-profile">Shaun Livingston</a>	</td>
+			<td>	<span class="caps">BRK</span>	</td>
+			<td>	PG	</td>
+			<td>	30	</td>
+			<td>	22.1	</td>
+			<td>	45.0%	</td>
+			<td>	88.1%	</td>
+			<td>	33.3%	</td>
+			<td>	0.03	</td>
+			<td>	2.43	</td>
+			<td>	3.20	</td>
+			<td>	0.83	</td>
+			<td>	0.37	</td>
+			<td>	1.23	</td>
+			<td>	6.47	</td>
+			<td>	15.36	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Andre_Miller-1072" rel="player-profile">Andre Miller</a>	</td>
+			<td>	<span class="caps">DEN</span>	</td>
+			<td>	PG	</td>
+			<td>	29	</td>
+			<td>	19.3	</td>
+			<td>	45.8%	</td>
+			<td>	74.5%	</td>
+			<td>	50.0%	</td>
+			<td>	0.31	</td>
+			<td>	2.45	</td>
+			<td>	3.45	</td>
+			<td>	0.52	</td>
+			<td>	0.24	</td>
+			<td>	1.07	</td>
+			<td>	6.00	</td>
+			<td>	14.57	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Beno_Udrih-1050" rel="player-profile">Beno Udrih</a>	</td>
+			<td>	<span class="caps">NYK</span>	</td>
+			<td>	PG	</td>
+			<td>	23	</td>
+			<td>	19.2	</td>
+			<td>	45.4%	</td>
+			<td>	85.0%	</td>
+			<td>	48.4%	</td>
+			<td>	0.65	</td>
+			<td>	1.91	</td>
+			<td>	3.22	</td>
+			<td>	0.70	</td>
+			<td>	0.04	</td>
+			<td>	1.43	</td>
+			<td>	6.09	</td>
+			<td>	13.26	</td>
+		</tr>
+		<tr>
+			<td>	Brian Roberts	</td>
+			<td>	<span class="caps">NOP</span>	</td>
+			<td>	PG	</td>
+			<td>	22	</td>
+			<td>	15.5	</td>
+			<td>	39.3%	</td>
+			<td>	100.0%	</td>
+			<td>	35.0%	</td>
+			<td>	0.64	</td>
+			<td>	1.18	</td>
+			<td>	2.18	</td>
+			<td>	0.45	</td>
+			<td>	0.09	</td>
+			<td>	0.68	</td>
+			<td>	5.18	</td>
+			<td>	10.27	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Luke_Ridnour-1048" rel="player-profile">Luke Ridnour</a>	</td>
+			<td>	<span class="caps">MIL</span>	</td>
+			<td>	PG	</td>
+			<td>	19	</td>
+			<td>	19.3	</td>
+			<td>	38.5%	</td>
+			<td>	54.5%	</td>
+			<td>	31.0%	</td>
+			<td>	0.47	</td>
+			<td>	1.68	</td>
+			<td>	3.05	</td>
+			<td>	0.84	</td>
+			<td>	0.05	</td>
+			<td>	1.05	</td>
+			<td>	5.21	</td>
+			<td>	12.53	</td>
+		</tr>
+		<tr>
+			<td>	D.J. Augustin	</td>
+			<td>	<span class="caps">CHI</span>	</td>
+			<td>	PG	</td>
+			<td>	18	</td>
+			<td>	18.2	</td>
+			<td>	39.1%	</td>
+			<td>	89.5%	</td>
+			<td>	34.0%	</td>
+			<td>	0.89	</td>
+			<td>	1.00	</td>
+			<td>	3.17	</td>
+			<td>	0.72	</td>
+			<td>	0.00	</td>
+			<td>	1.56	</td>
+			<td>	5.83	</td>
+			<td>	11.67	</td>
+		</tr>
+		<tr>
+			<td>	John Lucas	</td>
+			<td>	<span class="caps">UTA</span>	</td>
+			<td>	PG	</td>
+			<td>	26	</td>
+			<td>	17.6	</td>
+			<td>	32.0%	</td>
+			<td>	77.8%	</td>
+			<td>	31.8%	</td>
+			<td>	0.81	</td>
+			<td>	1.08	</td>
+			<td>	1.38	</td>
+			<td>	0.38	</td>
+			<td>	0.00	</td>
+			<td>	0.58	</td>
+			<td>	4.77	</td>
+			<td>	8.32	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Tyshawn_Taylor-13963" rel="player-profile">Tyshawn Taylor</a>	</td>
+			<td>	<span class="caps">BRK</span>	</td>
+			<td>	PG	</td>
+			<td>	19	</td>
+			<td>	13.3	</td>
+			<td>	34.5%	</td>
+			<td>	80.0%	</td>
+			<td>	25.0%	</td>
+			<td>	0.16	</td>
+			<td>	0.79	</td>
+			<td>	1.84	</td>
+			<td>	0.58	</td>
+			<td>	0.05	</td>
+			<td>	1.47	</td>
+			<td>	4.47	</td>
+			<td>	7.97	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Toney_Douglas-1038" rel="player-profile">Toney Douglas</a>	</td>
+			<td>	<span class="caps">GSW</span>	</td>
+			<td>	PG	</td>
+			<td>	17	</td>
+			<td>	12.0	</td>
+			<td>	38.8%	</td>
+			<td>	62.5%	</td>
+			<td>	37.8%	</td>
+			<td>	1.00	</td>
+			<td>	1.24	</td>
+			<td>	1.00	</td>
+			<td>	0.35	</td>
+			<td>	0.06	</td>
+			<td>	0.88	</td>
+			<td>	4.35	</td>
+			<td>	7.28	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Jimmer_Fredette-13337" rel="player-profile">Jimmer Fredette</a>	</td>
+			<td>	<span class="caps">SAC</span>	</td>
+			<td>	PG	</td>
+			<td>	16	</td>
+			<td>	10.0	</td>
+			<td>	42.2%	</td>
+			<td>	100.0%	</td>
+			<td>	50.0%	</td>
+			<td>	0.56	</td>
+			<td>	1.44	</td>
+			<td>	1.19	</td>
+			<td>	0.44	</td>
+			<td>	0.06	</td>
+			<td>	0.69	</td>
+			<td>	4.38	</td>
+			<td>	8.20	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Pablo_Prigioni-13986" rel="player-profile">Pablo Prigioni</a>	</td>
+			<td>	<span class="caps">NYK</span>	</td>
+			<td>	PG	</td>
+			<td>	24	</td>
+			<td>	18.7	</td>
+			<td>	44.0%	</td>
+			<td>	100.0%	</td>
+			<td>	43.1%	</td>
+			<td>	1.04	</td>
+			<td>	1.88	</td>
+			<td>	3.17	</td>
+			<td>	1.25	</td>
+			<td>	0.04	</td>
+			<td>	0.75	</td>
+			<td>	3.88	</td>
+			<td>	12.72	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Cory_Joseph-13339" rel="player-profile">Cory Joseph</a>	</td>
+			<td>	<span class="caps">SAS</span>	</td>
+			<td>	PG	</td>
+			<td>	21	</td>
+			<td>	8.0	</td>
+			<td>	47.3%	</td>
+			<td>	76.7%	</td>
+			<td>	40.0%	</td>
+			<td>	0.10	</td>
+			<td>	1.00	</td>
+			<td>	1.00	</td>
+			<td>	0.14	</td>
+			<td>	0.00	</td>
+			<td>	0.67	</td>
+			<td>	3.67	</td>
+			<td>	5.98	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Dennis_Schroeder-16913" rel="player-profile">Dennis Schroeder</a>	</td>
+			<td>	<span class="caps">ATL</span>	</td>
+			<td>	PG	</td>
+			<td>	13	</td>
+			<td>	12.4	</td>
+			<td>	35.4%	</td>
+			<td>	66.7%	</td>
+			<td>	11.1%	</td>
+			<td>	0.08	</td>
+			<td>	0.92	</td>
+			<td>	2.31	</td>
+			<td>	0.31	</td>
+			<td>	0.00	</td>
+			<td>	1.54	</td>
+			<td>	3.31	</td>
+			<td>	6.96	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Shane_Larkin-17023" rel="player-profile">Shane Larkin</a>	</td>
+			<td>	<span class="caps">DAL</span>	</td>
+			<td>	PG	</td>
+			<td>	17	</td>
+			<td>	13.0	</td>
+			<td>	33.3%	</td>
+			<td>	60.0%	</td>
+			<td>	25.0%	</td>
+			<td>	0.29	</td>
+			<td>	0.76	</td>
+			<td>	1.88	</td>
+			<td>	0.88	</td>
+			<td>	0.00	</td>
+			<td>	1.35	</td>
+			<td>	3.24	</td>
+			<td>	7.38	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Dwight_Buycks-16867" rel="player-profile">Dwight Buycks</a>	</td>
+			<td>	<span class="caps">TOR</span>	</td>
+			<td>	PG	</td>
+			<td>	12	</td>
+			<td>	10.1	</td>
+			<td>	34.1%	</td>
+			<td>	88.9%	</td>
+			<td>	33.3%	</td>
+			<td>	0.42	</td>
+			<td>	1.67	</td>
+			<td>	0.83	</td>
+			<td>	0.50	</td>
+			<td>	0.00	</td>
+			<td>	0.50	</td>
+			<td>	3.42	</td>
+			<td>	7.17	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Gal_Mekel-16811" rel="player-profile">Gal Mekel</a>	</td>
+			<td>	<span class="caps">DAL</span>	</td>
+			<td>	PG	</td>
+			<td>	24	</td>
+			<td>	10.3	</td>
+			<td>	37.3%	</td>
+			<td>	66.7%	</td>
+			<td>	29.4%	</td>
+			<td>	0.21	</td>
+			<td>	0.88	</td>
+			<td>	1.83	</td>
+			<td>	0.17	</td>
+			<td>	0.04	</td>
+			<td>	1.08	</td>
+			<td>	2.88	</td>
+			<td>	6.02	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Lorenzo_Brown-16940" rel="player-profile">Lorenzo Brown</a>	</td>
+			<td>	<span class="caps">PHI</span>	</td>
+			<td>	PG	</td>
+			<td>	13	</td>
+			<td>	10.9	</td>
+			<td>	33.3%	</td>
+			<td>	100.0%	</td>
+			<td>	6.2%	</td>
+			<td>	0.08	</td>
+			<td>	0.77	</td>
+			<td>	1.85	</td>
+			<td>	0.77	</td>
+			<td>	0.23	</td>
+			<td>	0.85	</td>
+			<td>	3.15	</td>
+			<td>	8.00	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Diante_Garrett-13948" rel="player-profile">Diante Garrett</a>	</td>
+			<td>	<span class="caps">UTA</span>	</td>
+			<td>	PG	</td>
+			<td>	22	</td>
+			<td>	14.0	</td>
+			<td>	37.8%	</td>
+			<td>	100.0%	</td>
+			<td>	35.0%	</td>
+			<td>	0.32	</td>
+			<td>	1.18	</td>
+			<td>	2.32	</td>
+			<td>	0.73	</td>
+			<td>	0.00	</td>
+			<td>	1.23	</td>
+			<td>	3.05	</td>
+			<td>	8.18	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Kendall_Marshall-13907" rel="player-profile">Kendall Marshall</a>	</td>
+			<td>	<span class="caps">LAL</span>	</td>
+			<td>	PG	</td>
+			<td>	2	</td>
+			<td>	4.9	</td>
+			<td>	50.0%	</td>
+			<td>	0.0%	</td>
+			<td>	50.0%	</td>
+			<td>	0.50	</td>
+			<td>	0.50	</td>
+			<td>	0.00	</td>
+			<td>	0.00	</td>
+			<td>	0.00	</td>
+			<td>	2.00	</td>
+			<td>	1.50	</td>
+			<td>	0.10	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Derek_Fisher-1029" rel="player-profile">Derek Fisher</a>	</td>
+			<td>	<span class="caps">OKC</span>	</td>
+			<td>	PG	</td>
+			<td>	28	</td>
+			<td>	14.0	</td>
+			<td>	35.0%	</td>
+			<td>	90.5%	</td>
+			<td>	26.2%	</td>
+			<td>	0.39	</td>
+			<td>	1.32	</td>
+			<td>	1.00	</td>
+			<td>	0.57	</td>
+			<td>	0.00	</td>
+			<td>	0.50	</td>
+			<td>	3.07	</td>
+			<td>	6.79	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Nick_Calathes-16858" rel="player-profile">Nick Calathes</a>	</td>
+			<td>	<span class="caps">MEM</span>	</td>
+			<td>	PG	</td>
+			<td>	20	</td>
+			<td>	12.9	</td>
+			<td>	38.5%	</td>
+			<td>	50.0%	</td>
+			<td>	16.7%	</td>
+			<td>	0.05	</td>
+			<td>	1.15	</td>
+			<td>	2.55	</td>
+			<td>	0.35	</td>
+			<td>	0.10	</td>
+			<td>	1.35	</td>
+			<td>	2.65	</td>
+			<td>	7.41	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Donald_Sloan-13367" rel="player-profile">Donald Sloan</a>	</td>
+			<td>	<span class="caps">IND</span>	</td>
+			<td>	PG	</td>
+			<td>	13	</td>
+			<td>	7.4	</td>
+			<td>	44.0%	</td>
+			<td>	71.4%	</td>
+			<td>	25.0%	</td>
+			<td>	0.23	</td>
+			<td>	1.38	</td>
+			<td>	1.00	</td>
+			<td>	0.38	</td>
+			<td>	0.00	</td>
+			<td>	0.38	</td>
+			<td>	2.31	</td>
+			<td>	5.85	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Eric_Maynor-1010" rel="player-profile">Eric Maynor</a>	</td>
+			<td>	<span class="caps">WAS</span>	</td>
+			<td>	PG	</td>
+			<td>	22	</td>
+			<td>	9.5	</td>
+			<td>	30.0%	</td>
+			<td>	66.7%	</td>
+			<td>	33.3%	</td>
+			<td>	0.36	</td>
+			<td>	1.09	</td>
+			<td>	1.77	</td>
+			<td>	0.23	</td>
+			<td>	0.05	</td>
+			<td>	0.77	</td>
+			<td>	2.36	</td>
+			<td>	6.11	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Marquis_Teague-13922" rel="player-profile">Marquis Teague</a>	</td>
+			<td>	<span class="caps">CHI</span>	</td>
+			<td>	PG	</td>
+			<td>	19	</td>
+			<td>	12.7	</td>
+			<td>	24.2%	</td>
+			<td>	68.8%	</td>
+			<td>	20.0%	</td>
+			<td>	0.11	</td>
+			<td>	1.00	</td>
+			<td>	1.47	</td>
+			<td>	0.11	</td>
+			<td>	0.21	</td>
+			<td>	0.89	</td>
+			<td>	2.37	</td>
+			<td>	5.53	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Jannero_Pargo-954" rel="player-profile">Jannero Pargo</a>	</td>
+			<td>	<span class="caps">CHA</span>	</td>
+			<td>	PG	</td>
+			<td>	4	</td>
+			<td>	4.4	</td>
+			<td>	40.0%	</td>
+			<td>	33.3%	</td>
+			<td>	25.0%	</td>
+			<td>	0.25	</td>
+			<td>	0.00	</td>
+			<td>	0.25	</td>
+			<td>	0.25	</td>
+			<td>	0.00	</td>
+			<td>	1.25	</td>
+			<td>	2.50	</td>
+			<td>	2.13	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Ish_Smith-13958" rel="player-profile">Ish Smith</a>	</td>
+			<td>	<span class="caps">PHX</span>	</td>
+			<td>	PG	</td>
+			<td>	17	</td>
+			<td>	10.8	</td>
+			<td>	35.6%	</td>
+			<td>	100.0%	</td>
+			<td>	11.1%	</td>
+			<td>	0.06	</td>
+			<td>	1.29	</td>
+			<td>	1.82	</td>
+			<td>	0.65	</td>
+			<td>	0.18	</td>
+			<td>	0.88	</td>
+			<td>	2.71	</td>
+			<td>	7.77	</td>
+		</tr>
+		<tr>
+			<td>	Nando De Colo	</td>
+			<td>	<span class="caps">SAS</span>	</td>
+			<td>	PG	</td>
+			<td>	11	</td>
+			<td>	7.2	</td>
+			<td>	40.0%	</td>
+			<td>	0.0%	</td>
+			<td>	36.4%	</td>
+			<td>	0.36	</td>
+			<td>	1.36	</td>
+			<td>	1.18	</td>
+			<td>	0.45	</td>
+			<td>	0.00	</td>
+			<td>	0.91	</td>
+			<td>	1.82	</td>
+			<td>	5.21	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Phil_Pressey-16846" rel="player-profile">Phil Pressey</a>	</td>
+			<td>	<span class="caps">BOS</span>	</td>
+			<td>	PG	</td>
+			<td>	27	</td>
+			<td>	11.9	</td>
+			<td>	25.4%	</td>
+			<td>	57.9%	</td>
+			<td>	13.0%	</td>
+			<td>	0.11	</td>
+			<td>	1.11	</td>
+			<td>	2.00	</td>
+			<td>	0.78	</td>
+			<td>	0.04	</td>
+			<td>	0.63	</td>
+			<td>	1.78	</td>
+			<td>	7.12	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Ronnie_Price-13980" rel="player-profile">Ronnie Price</a>	</td>
+			<td>	<span class="caps">ORL</span>	</td>
+			<td>	PG	</td>
+			<td>	17	</td>
+			<td>	10.4	</td>
+			<td>	35.0%	</td>
+			<td>	60.0%	</td>
+			<td>	31.6%	</td>
+			<td>	0.35	</td>
+			<td>	1.59	</td>
+			<td>	1.47	</td>
+			<td>	0.82	</td>
+			<td>	0.12	</td>
+			<td>	0.47	</td>
+			<td>	2.18	</td>
+			<td>	7.70	</td>
+		</tr>
+		<tr>
+			<td>	Toure&#8217; Murry	</td>
+			<td>	<span class="caps">NYK</span>	</td>
+			<td>	PG	</td>
+			<td>	14	</td>
+			<td>	7.4	</td>
+			<td>	40.5%	</td>
+			<td>	70.0%	</td>
+			<td>	0.0%	</td>
+			<td>	0.00	</td>
+			<td>	1.14	</td>
+			<td>	1.07	</td>
+			<td>	0.57	</td>
+			<td>	0.00	</td>
+			<td>	0.71	</td>
+			<td>	2.93	</td>
+			<td>	6.33	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Garrett_Temple-14077" rel="player-profile">Garrett Temple</a>	</td>
+			<td>	<span class="caps">WAS</span>	</td>
+			<td>	PG	</td>
+			<td>	25	</td>
+			<td>	10.7	</td>
+			<td>	30.4%	</td>
+			<td>	55.6%	</td>
+			<td>	9.1%	</td>
+			<td>	0.04	</td>
+			<td>	1.08	</td>
+			<td>	1.00	</td>
+			<td>	0.52	</td>
+			<td>	0.20	</td>
+			<td>	0.88	</td>
+			<td>	1.60	</td>
+			<td>	4.96	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Julyan_Stone-13372" rel="player-profile">Julyan Stone</a>	</td>
+			<td>	<span class="caps">TOR</span>	</td>
+			<td>	PG	</td>
+			<td>	12	</td>
+			<td>	7.4	</td>
+			<td>	46.7%	</td>
+			<td>	66.7%	</td>
+			<td>	28.6%	</td>
+			<td>	0.17	</td>
+			<td>	0.58	</td>
+			<td>	0.83	</td>
+			<td>	0.08	</td>
+			<td>	0.00	</td>
+			<td>	0.25	</td>
+			<td>	1.50	</td>
+			<td>	3.35	</td>
+		</tr>
+		<tr>
+			<td>	A.J. Price	</td>
+			<td>	<span class="caps">MIN</span>	</td>
+			<td>	PG	</td>
+			<td>	12	</td>
+			<td>	4.0	</td>
+			<td>	35.7%	</td>
+			<td>	0.0%	</td>
+			<td>	25.0%	</td>
+			<td>	0.17	</td>
+			<td>	0.42	</td>
+			<td>	0.75	</td>
+			<td>	0.00	</td>
+			<td>	0.00	</td>
+			<td>	0.33	</td>
+			<td>	1.00	</td>
+			<td>	2.30	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Jamaal_Tinsley-909" rel="player-profile">Jamaal Tinsley</a>	</td>
+			<td>	<span class="caps">UTA</span>	</td>
+			<td>	PG	</td>
+			<td>	8	</td>
+			<td>	13.8	</td>
+			<td>	20.0%	</td>
+			<td>	0.0%	</td>
+			<td>	6.7%	</td>
+			<td>	0.12	</td>
+			<td>	1.38	</td>
+			<td>	2.88	</td>
+			<td>	0.25	</td>
+			<td>	0.00	</td>
+			<td>	1.12	</td>
+			<td>	1.12	</td>
+			<td>	6.48	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Nemanja_Nedovic-16824" rel="player-profile">Nemanja Nedovic</a>	</td>
+			<td>	<span class="caps">GSW</span>	</td>
+			<td>	PG	</td>
+			<td>	21	</td>
+			<td>	6.4	</td>
+			<td>	22.9%	</td>
+			<td>	83.3%	</td>
+			<td>	18.8%	</td>
+			<td>	0.14	</td>
+			<td>	0.71	</td>
+			<td>	0.57	</td>
+			<td>	0.00	</td>
+			<td>	0.05	</td>
+			<td>	0.57	</td>
+			<td>	1.14	</td>
+			<td>	2.38	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Ray_McCallum-16823" rel="player-profile">Ray McCallum</a>	</td>
+			<td>	<span class="caps">SAC</span>	</td>
+			<td>	PG	</td>
+			<td>	6	</td>
+			<td>	2.5	</td>
+			<td>	14.3%	</td>
+			<td>	0.0%	</td>
+			<td>	0.0%	</td>
+			<td>	0.00	</td>
+			<td>	0.33	</td>
+			<td>	0.17	</td>
+			<td>	0.00	</td>
+			<td>	0.00	</td>
+			<td>	0.33	</td>
+			<td>	0.33	</td>
+			<td>	0.65	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Earl_Watson-1007" rel="player-profile">Earl Watson</a>	</td>
+			<td>	<span class="caps">POR</span>	</td>
+			<td>	PG	</td>
+			<td>	6	</td>
+			<td>	6.6	</td>
+			<td>	0.0%	</td>
+			<td>	100.0%	</td>
+			<td>	0.0%	</td>
+			<td>	0.00	</td>
+			<td>	0.50	</td>
+			<td>	1.33	</td>
+			<td>	0.17	</td>
+			<td>	0.00	</td>
+			<td>	1.17	</td>
+			<td>	0.33	</td>
+			<td>	2.10	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Peyton_Siva-16870" rel="player-profile">Peyton Siva</a>	</td>
+			<td>	<span class="caps">DET</span>	</td>
+			<td>	PG	</td>
+			<td>	13	</td>
+			<td>	5.8	</td>
+			<td>	25.0%	</td>
+			<td>	0.0%	</td>
+			<td>	0.0%	</td>
+			<td>	0.00	</td>
+			<td>	0.69	</td>
+			<td>	0.62	</td>
+			<td>	0.23	</td>
+			<td>	0.08	</td>
+			<td>	1.00	</td>
+			<td>	0.31	</td>
+			<td>	1.69	</td>
+		</tr>
+		<tr>
+			<td>	Mike James	</td>
+			<td>	<span class="caps">CHI</span>	</td>
+			<td>	PG	</td>
+			<td>	7	</td>
+			<td>	5.4	</td>
+			<td>	10.0%	</td>
+			<td>	0.0%	</td>
+			<td>	0.0%	</td>
+			<td>	0.00	</td>
+			<td>	0.43	</td>
+			<td>	0.86	</td>
+			<td>	0.14	</td>
+			<td>	0.00	</td>
+			<td>	0.14	</td>
+			<td>	0.29	</td>
+			<td>	2.24	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/James_Harden-1037" rel="player-profile">James Harden</a>	</td>
+			<td>	<span class="caps">HOU</span>	</td>
+			<td>	SG	</td>
+			<td>	26	</td>
+			<td>	38.9	</td>
+			<td>	44.5%	</td>
+			<td>	84.3%	</td>
+			<td>	30.9%	</td>
+			<td>	1.92	</td>
+			<td>	4.69	</td>
+			<td>	5.46	</td>
+			<td>	1.31	</td>
+			<td>	0.54	</td>
+			<td>	3.85	</td>
+			<td>	24.04	</td>
+			<td>	37.71	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Arron_Afflalo-1000" rel="player-profile">Arron Afflalo</a>	</td>
+			<td>	<span class="caps">ORL</span>	</td>
+			<td>	SG	</td>
+			<td>	28	</td>
+			<td>	37.7	</td>
+			<td>	48.1%	</td>
+			<td>	85.2%	</td>
+			<td>	44.4%	</td>
+			<td>	2.29	</td>
+			<td>	4.54	</td>
+			<td>	3.86	</td>
+			<td>	0.68	</td>
+			<td>	0.04	</td>
+			<td>	2.11	</td>
+			<td>	21.96	</td>
+			<td>	32.53	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/DeMar_DeRozan-1053" rel="player-profile">DeMar DeRozan</a>	</td>
+			<td>	<span class="caps">TOR</span>	</td>
+			<td>	SG	</td>
+			<td>	28	</td>
+			<td>	38.3	</td>
+			<td>	42.5%	</td>
+			<td>	78.9%	</td>
+			<td>	31.3%	</td>
+			<td>	1.11	</td>
+			<td>	4.07	</td>
+			<td>	3.36	</td>
+			<td>	1.11	</td>
+			<td>	0.50	</td>
+			<td>	2.43	</td>
+			<td>	21.11	</td>
+			<td>	31.82	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Monta_Ellis-1088" rel="player-profile">Monta Ellis</a>	</td>
+			<td>	<span class="caps">DAL</span>	</td>
+			<td>	SG	</td>
+			<td>	30	</td>
+			<td>	36.8	</td>
+			<td>	46.2%	</td>
+			<td>	83.1%	</td>
+			<td>	34.3%	</td>
+			<td>	0.80	</td>
+			<td>	3.37	</td>
+			<td>	5.80	</td>
+			<td>	1.77	</td>
+			<td>	0.13	</td>
+			<td>	3.47	</td>
+			<td>	20.70	</td>
+			<td>	33.77	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Kevin_Martin-1067" rel="player-profile">Kevin Martin</a>	</td>
+			<td>	<span class="caps">MIN</span>	</td>
+			<td>	SG	</td>
+			<td>	28	</td>
+			<td>	33.3	</td>
+			<td>	41.7%	</td>
+			<td>	91.4%	</td>
+			<td>	40.1%	</td>
+			<td>	2.04	</td>
+			<td>	3.39	</td>
+			<td>	2.11	</td>
+			<td>	1.25	</td>
+			<td>	0.04	</td>
+			<td>	1.71	</td>
+			<td>	19.89	</td>
+			<td>	27.99	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Dwyane_Wade-967" rel="player-profile">Dwyane Wade</a>	</td>
+			<td>	<span class="caps">MIA</span>	</td>
+			<td>	SG	</td>
+			<td>	22	</td>
+			<td>	33.8	</td>
+			<td>	54.0%	</td>
+			<td>	71.4%	</td>
+			<td>	35.7%	</td>
+			<td>	0.23	</td>
+			<td>	4.77	</td>
+			<td>	5.05	</td>
+			<td>	2.05	</td>
+			<td>	0.55	</td>
+			<td>	3.23	</td>
+			<td>	19.86	</td>
+			<td>	35.13	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Klay_Thompson-13315" rel="player-profile">Klay Thompson</a>	</td>
+			<td>	<span class="caps">GSW</span>	</td>
+			<td>	SG	</td>
+			<td>	31	</td>
+			<td>	37.8	</td>
+			<td>	45.8%	</td>
+			<td>	76.5%	</td>
+			<td>	42.3%	</td>
+			<td>	3.00	</td>
+			<td>	3.32	</td>
+			<td>	2.68	</td>
+			<td>	1.03	</td>
+			<td>	0.48	</td>
+			<td>	2.06	</td>
+			<td>	19.65	</td>
+			<td>	28.61	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Bradley_Beal-13898" rel="player-profile">Bradley Beal</a>	</td>
+			<td>	<span class="caps">WAS</span>	</td>
+			<td>	SG	</td>
+			<td>	18	</td>
+			<td>	36.4	</td>
+			<td>	41.3%	</td>
+			<td>	84.4%	</td>
+			<td>	47.1%	</td>
+			<td>	2.67	</td>
+			<td>	4.06	</td>
+			<td>	3.00	</td>
+			<td>	0.83	</td>
+			<td>	0.17	</td>
+			<td>	2.28	</td>
+			<td>	19.00	</td>
+			<td>	28.09	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Evan_Turner-1291" rel="player-profile">Evan Turner</a>	</td>
+			<td>	<span class="caps">PHI</span>	</td>
+			<td>	SG	</td>
+			<td>	28	</td>
+			<td>	36.6	</td>
+			<td>	43.9%	</td>
+			<td>	83.1%	</td>
+			<td>	29.1%	</td>
+			<td>	0.82	</td>
+			<td>	6.64	</td>
+			<td>	3.93	</td>
+			<td>	1.04	</td>
+			<td>	0.00	</td>
+			<td>	3.54	</td>
+			<td>	19.29	</td>
+			<td>	31.69	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Goran_Dragic-1040" rel="player-profile">Goran Dragic</a>	</td>
+			<td>	<span class="caps">PHX</span>	</td>
+			<td>	SG	</td>
+			<td>	26	</td>
+			<td>	35.0	</td>
+			<td>	47.7%	</td>
+			<td>	79.9%	</td>
+			<td>	34.1%	</td>
+			<td>	1.15	</td>
+			<td>	2.96	</td>
+			<td>	5.81	</td>
+			<td>	1.19	</td>
+			<td>	0.23	</td>
+			<td>	2.65	</td>
+			<td>	18.12	</td>
+			<td>	30.58	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Joe_Johnson-1082" rel="player-profile">Joe Johnson</a>	</td>
+			<td>	<span class="caps">BRK</span>	</td>
+			<td>	SG	</td>
+			<td>	29	</td>
+			<td>	34.4	</td>
+			<td>	43.7%	</td>
+			<td>	79.7%	</td>
+			<td>	40.0%	</td>
+			<td>	2.07	</td>
+			<td>	3.28	</td>
+			<td>	2.72	</td>
+			<td>	0.48	</td>
+			<td>	0.24	</td>
+			<td>	1.31	</td>
+			<td>	15.76	</td>
+			<td>	23.91	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Jamal_Crawford-1075" rel="player-profile">Jamal Crawford</a>	</td>
+			<td>	<span class="caps">LAC</span>	</td>
+			<td>	SG	</td>
+			<td>	32	</td>
+			<td>	29.7	</td>
+			<td>	41.9%	</td>
+			<td>	81.7%	</td>
+			<td>	35.9%	</td>
+			<td>	2.16	</td>
+			<td>	2.28	</td>
+			<td>	2.47	</td>
+			<td>	0.78	</td>
+			<td>	0.16	</td>
+			<td>	2.00	</td>
+			<td>	16.75	</td>
+			<td>	23.07	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Gordon_Hayward-1239" rel="player-profile">Gordon Hayward</a>	</td>
+			<td>	<span class="caps">UTA</span>	</td>
+			<td>	SG	</td>
+			<td>	33	</td>
+			<td>	36.0	</td>
+			<td>	39.9%	</td>
+			<td>	83.3%	</td>
+			<td>	28.0%	</td>
+			<td>	1.06	</td>
+			<td>	5.45	</td>
+			<td>	4.88	</td>
+			<td>	1.30	</td>
+			<td>	0.61	</td>
+			<td>	2.64	</td>
+			<td>	16.42	</td>
+			<td>	31.46	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Wesley_Matthews-1339" rel="player-profile">Wesley Matthews</a>	</td>
+			<td>	<span class="caps">POR</span>	</td>
+			<td>	SG	</td>
+			<td>	30	</td>
+			<td>	34.3	</td>
+			<td>	50.0%	</td>
+			<td>	81.6%	</td>
+			<td>	44.4%	</td>
+			<td>	2.67	</td>
+			<td>	4.27	</td>
+			<td>	2.00	</td>
+			<td>	0.97	</td>
+			<td>	0.17	</td>
+			<td>	1.23	</td>
+			<td>	16.57	</td>
+			<td>	25.74	</td>
+		</tr>
+		<tr>
+			<td>	J.<a href="/fantasyplayers/J_J_Redick-1030" rel="player-profile">J. Redick</a>	</td>
+			<td>	<span class="caps">LAC</span>	</td>
+			<td>	SG	</td>
+			<td>	17	</td>
+			<td>	28.2	</td>
+			<td>	46.0%	</td>
+			<td>	92.7%	</td>
+			<td>	35.9%	</td>
+			<td>	1.94	</td>
+			<td>	2.24	</td>
+			<td>	2.06	</td>
+			<td>	0.88	</td>
+			<td>	0.18	</td>
+			<td>	1.00	</td>
+			<td>	15.76	</td>
+			<td>	22.66	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Nick_Young-1063" rel="player-profile">Nick Young</a>	</td>
+			<td>	<span class="caps">LAL</span>	</td>
+			<td>	SG	</td>
+			<td>	30	</td>
+			<td>	27.4	</td>
+			<td>	43.7%	</td>
+			<td>	79.8%	</td>
+			<td>	38.8%	</td>
+			<td>	1.73	</td>
+			<td>	2.27	</td>
+			<td>	1.47	</td>
+			<td>	0.80	</td>
+			<td>	0.33	</td>
+			<td>	1.33	</td>
+			<td>	15.90	</td>
+			<td>	21.76	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Eric_Gordon-1077" rel="player-profile">Eric Gordon</a>	</td>
+			<td>	<span class="caps">NOP</span>	</td>
+			<td>	SG	</td>
+			<td>	26	</td>
+			<td>	31.6	</td>
+			<td>	43.0%	</td>
+			<td>	78.3%	</td>
+			<td>	39.4%	</td>
+			<td>	1.50	</td>
+			<td>	2.58	</td>
+			<td>	3.08	</td>
+			<td>	1.46	</td>
+			<td>	0.23	</td>
+			<td>	1.96	</td>
+			<td>	15.42	</td>
+			<td>	24.56	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Gerald_Henderson-1014" rel="player-profile">Gerald Henderson</a>	</td>
+			<td>	<span class="caps">CHA</span>	</td>
+			<td>	SG	</td>
+			<td>	31	</td>
+			<td>	32.8	</td>
+			<td>	42.0%	</td>
+			<td>	78.6%	</td>
+			<td>	26.5%	</td>
+			<td>	0.29	</td>
+			<td>	4.65	</td>
+			<td>	2.71	</td>
+			<td>	0.87	</td>
+			<td>	0.39	</td>
+			<td>	1.61	</td>
+			<td>	14.94	</td>
+			<td>	25.50	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Rodney_Stuckey-1052" rel="player-profile">Rodney Stuckey</a>	</td>
+			<td>	<span class="caps">DET</span>	</td>
+			<td>	SG	</td>
+			<td>	27	</td>
+			<td>	26.3	</td>
+			<td>	45.3%	</td>
+			<td>	82.9%	</td>
+			<td>	33.3%	</td>
+			<td>	0.41	</td>
+			<td>	2.19	</td>
+			<td>	2.19	</td>
+			<td>	0.96	</td>
+			<td>	0.19	</td>
+			<td>	1.78	</td>
+			<td>	14.00	</td>
+			<td>	20.43	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Dion_Waiters-13897" rel="player-profile">Dion Waiters</a>	</td>
+			<td>	<span class="caps">CLE</span>	</td>
+			<td>	SG	</td>
+			<td>	24	</td>
+			<td>	29.2	</td>
+			<td>	43.8%	</td>
+			<td>	68.1%	</td>
+			<td>	38.9%	</td>
+			<td>	1.17	</td>
+			<td>	3.25	</td>
+			<td>	2.46	</td>
+			<td>	1.00	</td>
+			<td>	0.25	</td>
+			<td>	2.58	</td>
+			<td>	15.17	</td>
+			<td>	22.68	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Avery_Bradley-941" rel="player-profile">Avery Bradley</a>	</td>
+			<td>	<span class="caps">BOS</span>	</td>
+			<td>	SG	</td>
+			<td>	30	</td>
+			<td>	31.0	</td>
+			<td>	46.1%	</td>
+			<td>	68.4%	</td>
+			<td>	40.2%	</td>
+			<td>	1.10	</td>
+			<td>	4.20	</td>
+			<td>	1.30	</td>
+			<td>	1.10	</td>
+			<td>	0.20	</td>
+			<td>	1.77	</td>
+			<td>	14.03	</td>
+			<td>	21.85	</td>
+		</tr>
+		<tr>
+			<td>	O.J. Mayo	</td>
+			<td>	<span class="caps">MIL</span>	</td>
+			<td>	SG	</td>
+			<td>	29	</td>
+			<td>	30.1	</td>
+			<td>	40.1%	</td>
+			<td>	91.0%	</td>
+			<td>	37.0%	</td>
+			<td>	1.72	</td>
+			<td>	3.03	</td>
+			<td>	2.66	</td>
+			<td>	0.72	</td>
+			<td>	0.24	</td>
+			<td>	2.41	</td>
+			<td>	14.03	</td>
+			<td>	21.17	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Caron_Butler-1108" rel="player-profile">Caron Butler</a>	</td>
+			<td>	<span class="caps">MIL</span>	</td>
+			<td>	SG	</td>
+			<td>	16	</td>
+			<td>	29.0	</td>
+			<td>	35.8%	</td>
+			<td>	82.1%	</td>
+			<td>	32.5%	</td>
+			<td>	1.69	</td>
+			<td>	5.56	</td>
+			<td>	1.88	</td>
+			<td>	0.88	</td>
+			<td>	0.19	</td>
+			<td>	1.88	</td>
+			<td>	12.31	</td>
+			<td>	22.06	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Lance_Stephenson-947" rel="player-profile">Lance Stephenson</a>	</td>
+			<td>	<span class="caps">IND</span>	</td>
+			<td>	SG	</td>
+			<td>	29	</td>
+			<td>	35.3	</td>
+			<td>	48.9%	</td>
+			<td>	71.2%	</td>
+			<td>	37.4%	</td>
+			<td>	1.17	</td>
+			<td>	6.76	</td>
+			<td>	5.17	</td>
+			<td>	0.76	</td>
+			<td>	0.10	</td>
+			<td>	2.62	</td>
+			<td>	13.76	</td>
+			<td>	28.73	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Alec_Burks-13353" rel="player-profile">Alec Burks</a>	</td>
+			<td>	<span class="caps">UTA</span>	</td>
+			<td>	SG	</td>
+			<td>	33	</td>
+			<td>	27.0	</td>
+			<td>	43.3%	</td>
+			<td>	74.8%	</td>
+			<td>	34.5%	</td>
+			<td>	0.58	</td>
+			<td>	2.97	</td>
+			<td>	2.73	</td>
+			<td>	0.79	</td>
+			<td>	0.24	</td>
+			<td>	1.76	</td>
+			<td>	12.39	</td>
+			<td>	20.35	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Martell_Webster-1288" rel="player-profile">Martell Webster</a>	</td>
+			<td>	<span class="caps">WAS</span>	</td>
+			<td>	SG	</td>
+			<td>	26	</td>
+			<td>	31.9	</td>
+			<td>	44.8%	</td>
+			<td>	81.7%	</td>
+			<td>	41.1%	</td>
+			<td>	2.31	</td>
+			<td>	4.35	</td>
+			<td>	1.85	</td>
+			<td>	0.81	</td>
+			<td>	0.27	</td>
+			<td>	0.77	</td>
+			<td>	12.50	</td>
+			<td>	21.89	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Kyle_Korver-1269" rel="player-profile">Kyle Korver</a>	</td>
+			<td>	<span class="caps">ATL</span>	</td>
+			<td>	SG	</td>
+			<td>	26	</td>
+			<td>	34.6	</td>
+			<td>	50.4%	</td>
+			<td>	85.7%	</td>
+			<td>	50.0%	</td>
+			<td>	3.04	</td>
+			<td>	4.12	</td>
+			<td>	2.62	</td>
+			<td>	1.04	</td>
+			<td>	0.31	</td>
+			<td>	1.50	</td>
+			<td>	12.88	</td>
+			<td>	22.95	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Reggie_Jackson-13352" rel="player-profile">Reggie Jackson</a>	</td>
+			<td>	<span class="caps">OKC</span>	</td>
+			<td>	SG	</td>
+			<td>	29	</td>
+			<td>	25.0	</td>
+			<td>	45.2%	</td>
+			<td>	92.9%	</td>
+			<td>	31.2%	</td>
+			<td>	0.86	</td>
+			<td>	3.83	</td>
+			<td>	3.41	</td>
+			<td>	0.90	</td>
+			<td>	0.07	</td>
+			<td>	2.00	</td>
+			<td>	12.45	</td>
+			<td>	22.10	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Jodie_Meeks-1022" rel="player-profile">Jodie Meeks</a>	</td>
+			<td>	<span class="caps">LAL</span>	</td>
+			<td>	SG	</td>
+			<td>	30	</td>
+			<td>	30.6	</td>
+			<td>	45.2%	</td>
+			<td>	79.4%	</td>
+			<td>	40.9%	</td>
+			<td>	2.10	</td>
+			<td>	2.83	</td>
+			<td>	1.30	</td>
+			<td>	1.13	</td>
+			<td>	0.03	</td>
+			<td>	1.30	</td>
+			<td>	12.90	</td>
+			<td>	19.27	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Manu_Ginobili-965" rel="player-profile">Manu Ginobili</a>	</td>
+			<td>	<span class="caps">SAS</span>	</td>
+			<td>	SG	</td>
+			<td>	29	</td>
+			<td>	23.6	</td>
+			<td>	47.4%	</td>
+			<td>	91.1%	</td>
+			<td>	37.2%	</td>
+			<td>	1.45	</td>
+			<td>	3.72	</td>
+			<td>	4.41	</td>
+			<td>	0.97	</td>
+			<td>	0.14	</td>
+			<td>	2.07	</td>
+			<td>	11.97	</td>
+			<td>	23.20	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Jimmy_Butler-13327" rel="player-profile">Jimmy Butler</a>	</td>
+			<td>	<span class="caps">CHI</span>	</td>
+			<td>	SG	</td>
+			<td>	16	</td>
+			<td>	30.8	</td>
+			<td>	39.3%	</td>
+			<td>	79.5%	</td>
+			<td>	33.3%	</td>
+			<td>	1.06	</td>
+			<td>	4.00	</td>
+			<td>	1.69	</td>
+			<td>	1.62	</td>
+			<td>	0.62	</td>
+			<td>	1.56	</td>
+			<td>	11.31	</td>
+			<td>	21.57	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Tony_Allen-1284" rel="player-profile">Tony Allen</a>	</td>
+			<td>	<span class="caps">MEM</span>	</td>
+			<td>	SG	</td>
+			<td>	24	</td>
+			<td>	26.4	</td>
+			<td>	48.6%	</td>
+			<td>	71.7%	</td>
+			<td>	18.5%	</td>
+			<td>	0.21	</td>
+			<td>	4.17	</td>
+			<td>	2.12	</td>
+			<td>	1.96	</td>
+			<td>	0.46	</td>
+			<td>	1.67	</td>
+			<td>	10.46	</td>
+			<td>	21.81	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Nate_Robinson-1035" rel="player-profile">Nate Robinson</a>	</td>
+			<td>	<span class="caps">DEN</span>	</td>
+			<td>	SG	</td>
+			<td>	29	</td>
+			<td>	20.3	</td>
+			<td>	41.1%	</td>
+			<td>	86.7%	</td>
+			<td>	36.6%	</td>
+			<td>	1.28	</td>
+			<td>	2.00	</td>
+			<td>	2.41	</td>
+			<td>	0.83	</td>
+			<td>	0.10	</td>
+			<td>	1.31	</td>
+			<td>	10.52	</td>
+			<td>	17.09	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Gary_Neal-950" rel="player-profile">Gary Neal</a>	</td>
+			<td>	<span class="caps">MIL</span>	</td>
+			<td>	SG	</td>
+			<td>	20	</td>
+			<td>	21.1	</td>
+			<td>	38.5%	</td>
+			<td>	84.6%	</td>
+			<td>	44.6%	</td>
+			<td>	1.65	</td>
+			<td>	1.95	</td>
+			<td>	1.75	</td>
+			<td>	0.15	</td>
+			<td>	0.00	</td>
+			<td>	1.35	</td>
+			<td>	10.50	</td>
+			<td>	14.42	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Marco_Belinelli-1033" rel="player-profile">Marco Belinelli</a>	</td>
+			<td>	<span class="caps">SAS</span>	</td>
+			<td>	SG	</td>
+			<td>	30	</td>
+			<td>	22.6	</td>
+			<td>	50.4%	</td>
+			<td>	81.8%	</td>
+			<td>	49.0%	</td>
+			<td>	1.60	</td>
+			<td>	2.70	</td>
+			<td>	1.80	</td>
+			<td>	0.70	</td>
+			<td>	0.07	</td>
+			<td>	1.17	</td>
+			<td>	10.00	</td>
+			<td>	16.31	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Ray_Allen-1065" rel="player-profile">Ray Allen</a>	</td>
+			<td>	<span class="caps">MIA</span>	</td>
+			<td>	SG	</td>
+			<td>	26	</td>
+			<td>	25.4	</td>
+			<td>	48.0%	</td>
+			<td>	90.7%	</td>
+			<td>	38.1%	</td>
+			<td>	1.54	</td>
+			<td>	2.73	</td>
+			<td>	2.31	</td>
+			<td>	1.00	</td>
+			<td>	0.19	</td>
+			<td>	1.46	</td>
+			<td>	10.50	</td>
+			<td>	18.16	</td>
+		</tr>
+		<tr>
+			<td>	Lou Williams	</td>
+			<td>	<span class="caps">ATL</span>	</td>
+			<td>	SG	</td>
+			<td>	17	</td>
+			<td>	23.2	</td>
+			<td>	41.2%	</td>
+			<td>	80.0%	</td>
+			<td>	39.0%	</td>
+			<td>	1.76	</td>
+			<td>	1.59	</td>
+			<td>	3.18	</td>
+			<td>	0.88	</td>
+			<td>	0.18	</td>
+			<td>	1.24	</td>
+			<td>	10.82	</td>
+			<td>	18.38	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Jeremy_Lamb-13955" rel="player-profile">Jeremy Lamb</a>	</td>
+			<td>	<span class="caps">OKC</span>	</td>
+			<td>	SG	</td>
+			<td>	29	</td>
+			<td>	20.9	</td>
+			<td>	46.5%	</td>
+			<td>	93.8%	</td>
+			<td>	39.2%	</td>
+			<td>	1.31	</td>
+			<td>	2.34	</td>
+			<td>	1.24	</td>
+			<td>	0.66	</td>
+			<td>	0.34	</td>
+			<td>	0.55	</td>
+			<td>	9.55	</td>
+			<td>	15.67	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Ben_McLemore-16822" rel="player-profile">Ben McLemore</a>	</td>
+			<td>	<span class="caps">SAC</span>	</td>
+			<td>	SG	</td>
+			<td>	28	</td>
+			<td>	25.5	</td>
+			<td>	37.8%	</td>
+			<td>	78.6%	</td>
+			<td>	35.5%	</td>
+			<td>	1.36	</td>
+			<td>	3.11	</td>
+			<td>	1.11	</td>
+			<td>	0.64	</td>
+			<td>	0.18	</td>
+			<td>	1.14	</td>
+			<td>	8.82	</td>
+			<td>	14.72	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Randy_Foye-1004" rel="player-profile">Randy Foye</a>	</td>
+			<td>	<span class="caps">DEN</span>	</td>
+			<td>	SG	</td>
+			<td>	29	</td>
+			<td>	23.3	</td>
+			<td>	36.0%	</td>
+			<td>	82.4%	</td>
+			<td>	33.6%	</td>
+			<td>	1.52	</td>
+			<td>	2.00	</td>
+			<td>	1.93	</td>
+			<td>	0.66	</td>
+			<td>	0.45	</td>
+			<td>	1.17	</td>
+			<td>	8.62	</td>
+			<td>	14.97	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Alan_Anderson-13382" rel="player-profile">Alan Anderson</a>	</td>
+			<td>	<span class="caps">BRK</span>	</td>
+			<td>	SG	</td>
+			<td>	30	</td>
+			<td>	25.3	</td>
+			<td>	42.0%	</td>
+			<td>	77.5%	</td>
+			<td>	37.7%	</td>
+			<td>	1.33	</td>
+			<td>	2.67	</td>
+			<td>	1.07	</td>
+			<td>	0.83	</td>
+			<td>	0.13	</td>
+			<td>	0.57	</td>
+			<td>	8.17	</td>
+			<td>	14.33	</td>
+		</tr>
+		<tr>
+			<td>	C.J. Miles	</td>
+			<td>	<span class="caps">CLE</span>	</td>
+			<td>	SG	</td>
+			<td>	25	</td>
+			<td>	18.3	</td>
+			<td>	39.7%	</td>
+			<td>	90.9%	</td>
+			<td>	34.4%	</td>
+			<td>	1.28	</td>
+			<td>	1.96	</td>
+			<td>	0.96	</td>
+			<td>	0.84	</td>
+			<td>	0.44	</td>
+			<td>	1.00	</td>
+			<td>	8.08	</td>
+			<td>	13.43	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Tim_Hardaway_Jr-16879" rel="player-profile">Tim Hardaway Jr.</a>	</td>
+			<td>	<span class="caps">NYK</span>	</td>
+			<td>	SG	</td>
+			<td>	29	</td>
+			<td>	19.6	</td>
+			<td>	46.2%	</td>
+			<td>	83.3%	</td>
+			<td>	42.2%	</td>
+			<td>	1.48	</td>
+			<td>	1.31	</td>
+			<td>	1.00	</td>
+			<td>	0.48	</td>
+			<td>	0.21	</td>
+			<td>	0.62	</td>
+			<td>	9.10	</td>
+			<td>	12.93	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Marcus_Thornton-1015" rel="player-profile">Marcus Thornton</a>	</td>
+			<td>	<span class="caps">SAC</span>	</td>
+			<td>	SG	</td>
+			<td>	22	</td>
+			<td>	24.1	</td>
+			<td>	36.8%	</td>
+			<td>	87.1%	</td>
+			<td>	29.8%	</td>
+			<td>	1.27	</td>
+			<td>	3.09	</td>
+			<td>	0.95	</td>
+			<td>	0.86	</td>
+			<td>	0.18	</td>
+			<td>	0.73	</td>
+			<td>	8.59	</td>
+			<td>	15.07	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Courtney_Lee-1025" rel="player-profile">Courtney Lee</a>	</td>
+			<td>	<span class="caps">BOS</span>	</td>
+			<td>	SG	</td>
+			<td>	27	</td>
+			<td>	16.6	</td>
+			<td>	49.7%	</td>
+			<td>	85.0%	</td>
+			<td>	46.7%	</td>
+			<td>	0.78	</td>
+			<td>	1.41	</td>
+			<td>	1.00	</td>
+			<td>	0.63	</td>
+			<td>	0.26	</td>
+			<td>	0.89	</td>
+			<td>	7.41	</td>
+			<td>	11.49	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Francisco_Garcia-1287" rel="player-profile">Francisco Garcia</a>	</td>
+			<td>	<span class="caps">HOU</span>	</td>
+			<td>	SG	</td>
+			<td>	31	</td>
+			<td>	20.9	</td>
+			<td>	38.9%	</td>
+			<td>	63.6%	</td>
+			<td>	34.3%	</td>
+			<td>	1.48	</td>
+			<td>	2.55	</td>
+			<td>	1.29	</td>
+			<td>	0.65	</td>
+			<td>	0.77	</td>
+			<td>	0.71	</td>
+			<td>	6.48	</td>
+			<td>	13.61	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Kentavious_Caldwell_Pope-16869" rel="player-profile">Kentavious Caldwell-Pope</a>	</td>
+			<td>	<span class="caps">DET</span>	</td>
+			<td>	SG	</td>
+			<td>	30	</td>
+			<td>	23.2	</td>
+			<td>	36.1%	</td>
+			<td>	75.0%	</td>
+			<td>	31.0%	</td>
+			<td>	0.87	</td>
+			<td>	2.10	</td>
+			<td>	0.80	</td>
+			<td>	0.97	</td>
+			<td>	0.10	</td>
+			<td>	0.37	</td>
+			<td>	6.57	</td>
+			<td>	12.06	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Anthony_Morrow-1305" rel="player-profile">Anthony Morrow</a>	</td>
+			<td>	<span class="caps">NOP</span>	</td>
+			<td>	SG	</td>
+			<td>	28	</td>
+			<td>	15.7	</td>
+			<td>	44.9%	</td>
+			<td>	78.9%	</td>
+			<td>	45.5%	</td>
+			<td>	1.07	</td>
+			<td>	1.29	</td>
+			<td>	0.57	</td>
+			<td>	0.50	</td>
+			<td>	0.18	</td>
+			<td>	0.46	</td>
+			<td>	6.32	</td>
+			<td>	9.62	</td>
+		</tr>
+		<tr>
+			<td>	E&#8217;Twaun Moore	</td>
+			<td>	<span class="caps">ORL</span>	</td>
+			<td>	SG	</td>
+			<td>	26	</td>
+			<td>	20.9	</td>
+			<td>	41.3%	</td>
+			<td>	90.0%	</td>
+			<td>	37.9%	</td>
+			<td>	0.85	</td>
+			<td>	1.92	</td>
+			<td>	1.65	</td>
+			<td>	0.81	</td>
+			<td>	0.12	</td>
+			<td>	0.73	</td>
+			<td>	6.31	</td>
+			<td>	12.22	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Thabo_Sefolosha-1271" rel="player-profile">Thabo Sefolosha</a>	</td>
+			<td>	<span class="caps">OKC</span>	</td>
+			<td>	SG	</td>
+			<td>	25	</td>
+			<td>	25.3	</td>
+			<td>	41.8%	</td>
+			<td>	84.6%	</td>
+			<td>	32.7%	</td>
+			<td>	0.72	</td>
+			<td>	4.04	</td>
+			<td>	1.48	</td>
+			<td>	1.20	</td>
+			<td>	0.32	</td>
+			<td>	0.92	</td>
+			<td>	6.32	</td>
+			<td>	15.51	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Quincy_Pondexter-1237" rel="player-profile">Quincy Pondexter</a>	</td>
+			<td>	<span class="caps">MEM</span>	</td>
+			<td>	SG	</td>
+			<td>	15	</td>
+			<td>	18.0	</td>
+			<td>	39.2%	</td>
+			<td>	80.8%	</td>
+			<td>	32.4%	</td>
+			<td>	0.73	</td>
+			<td>	1.73	</td>
+			<td>	1.40	</td>
+			<td>	0.33	</td>
+			<td>	0.07	</td>
+			<td>	1.00	</td>
+			<td>	6.27	</td>
+			<td>	10.25	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Iman_Shumpert-13350" rel="player-profile">Iman Shumpert</a>	</td>
+			<td>	<span class="caps">NYK</span>	</td>
+			<td>	SG	</td>
+			<td>	30	</td>
+			<td>	27.4	</td>
+			<td>	35.9%	</td>
+			<td>	80.0%	</td>
+			<td>	30.5%	</td>
+			<td>	0.83	</td>
+			<td>	4.73	</td>
+			<td>	1.93	</td>
+			<td>	1.23	</td>
+			<td>	0.20	</td>
+			<td>	1.10	</td>
+			<td>	6.17	</td>
+			<td>	16.50	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Ben_Gordon-1059" rel="player-profile">Ben Gordon</a>	</td>
+			<td>	<span class="caps">CHA</span>	</td>
+			<td>	SG	</td>
+			<td>	16	</td>
+			<td>	15.1	</td>
+			<td>	37.4%	</td>
+			<td>	78.9%	</td>
+			<td>	30.4%	</td>
+			<td>	0.44	</td>
+			<td>	1.50	</td>
+			<td>	1.06	</td>
+			<td>	0.56	</td>
+			<td>	0.12	</td>
+			<td>	1.12	</td>
+			<td>	5.62	</td>
+			<td>	9.25	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Tony_Snell-16872" rel="player-profile">Tony Snell</a>	</td>
+			<td>	<span class="caps">CHI</span>	</td>
+			<td>	SG	</td>
+			<td>	24	</td>
+			<td>	19.7	</td>
+			<td>	36.7%	</td>
+			<td>	76.5%	</td>
+			<td>	30.6%	</td>
+			<td>	0.92	</td>
+			<td>	1.96	</td>
+			<td>	1.08	</td>
+			<td>	0.38	</td>
+			<td>	0.25	</td>
+			<td>	0.79	</td>
+			<td>	5.38	</td>
+			<td>	9.82	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Willie_Green-1023" rel="player-profile">Willie Green</a>	</td>
+			<td>	<span class="caps">LAC</span>	</td>
+			<td>	SG	</td>
+			<td>	20	</td>
+			<td>	16.8	</td>
+			<td>	33.0%	</td>
+			<td>	77.8%	</td>
+			<td>	31.2%	</td>
+			<td>	0.75	</td>
+			<td>	1.40	</td>
+			<td>	0.75	</td>
+			<td>	0.30	</td>
+			<td>	0.25	</td>
+			<td>	0.45	</td>
+			<td>	4.85	</td>
+			<td>	8.31	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Jason_Terry-1069" rel="player-profile">Jason Terry</a>	</td>
+			<td>	<span class="caps">BRK</span>	</td>
+			<td>	SG	</td>
+			<td>	15	</td>
+			<td>	17.8	</td>
+			<td>	40.5%	</td>
+			<td>	66.7%	</td>
+			<td>	39.6%	</td>
+			<td>	1.27	</td>
+			<td>	1.13	</td>
+			<td>	1.33	</td>
+			<td>	0.20	</td>
+			<td>	0.00	</td>
+			<td>	0.67	</td>
+			<td>	5.67	</td>
+			<td>	8.75	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Chauncey_Billups-986" rel="player-profile">Chauncey Billups</a>	</td>
+			<td>	<span class="caps">DET</span>	</td>
+			<td>	SG	</td>
+			<td>	14	</td>
+			<td>	18.5	</td>
+			<td>	32.3%	</td>
+			<td>	83.3%	</td>
+			<td>	32.5%	</td>
+			<td>	0.93	</td>
+			<td>	1.79	</td>
+			<td>	2.71	</td>
+			<td>	0.57	</td>
+			<td>	0.07	</td>
+			<td>	1.36	</td>
+			<td>	4.64	</td>
+			<td>	10.77	</td>
+		</tr>
+		<tr>
+			<td>	Roger Mason	</td>
+			<td>	<span class="caps">MIA</span>	</td>
+			<td>	SG	</td>
+			<td>	13	</td>
+			<td>	12.7	</td>
+			<td>	42.9%	</td>
+			<td>	100.0%	</td>
+			<td>	41.2%	</td>
+			<td>	1.08	</td>
+			<td>	1.38	</td>
+			<td>	0.92	</td>
+			<td>	0.38	</td>
+			<td>	0.08	</td>
+			<td>	0.46	</td>
+			<td>	4.62	</td>
+			<td>	8.12	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Austin_Rivers-13903" rel="player-profile">Austin Rivers</a>	</td>
+			<td>	<span class="caps">NOP</span>	</td>
+			<td>	SG	</td>
+			<td>	19	</td>
+			<td>	12.0	</td>
+			<td>	36.5%	</td>
+			<td>	62.5%	</td>
+			<td>	38.9%	</td>
+			<td>	0.37	</td>
+			<td>	1.00	</td>
+			<td>	0.95	</td>
+			<td>	0.42	</td>
+			<td>	0.05	</td>
+			<td>	0.53	</td>
+			<td>	4.26	</td>
+			<td>	7.30	</td>
+		</tr>
+		<tr>
+			<td>	Matt Dellavedova	</td>
+			<td>	<span class="caps">CLE</span>	</td>
+			<td>	SG	</td>
+			<td>	22	</td>
+			<td>	15.1	</td>
+			<td>	48.6%	</td>
+			<td>	75.0%	</td>
+			<td>	44.1%	</td>
+			<td>	0.68	</td>
+			<td>	1.36	</td>
+			<td>	1.50	</td>
+			<td>	0.64	</td>
+			<td>	0.14	</td>
+			<td>	0.50	</td>
+			<td>	4.41	</td>
+			<td>	9.35	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Evan_Fournier-13913" rel="player-profile">Evan Fournier</a>	</td>
+			<td>	<span class="caps">DEN</span>	</td>
+			<td>	SG	</td>
+			<td>	24	</td>
+			<td>	11.5	</td>
+			<td>	35.8%	</td>
+			<td>	57.9%	</td>
+			<td>	33.3%	</td>
+			<td>	0.46	</td>
+			<td>	1.29	</td>
+			<td>	0.71	</td>
+			<td>	0.08	</td>
+			<td>	0.12	</td>
+			<td>	0.62	</td>
+			<td>	3.75	</td>
+			<td>	6.14	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Elliot_Williams-16843" rel="player-profile">Elliot Williams</a>	</td>
+			<td>	<span class="caps">PHI</span>	</td>
+			<td>	SG	</td>
+			<td>	14	</td>
+			<td>	11.9	</td>
+			<td>	31.9%	</td>
+			<td>	68.8%	</td>
+			<td>	25.0%	</td>
+			<td>	0.36	</td>
+			<td>	1.21	</td>
+			<td>	0.29	</td>
+			<td>	0.21	</td>
+			<td>	0.07	</td>
+			<td>	0.71	</td>
+			<td>	3.29	</td>
+			<td>	5.03	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Archie_Goodwin-16860" rel="player-profile">Archie Goodwin</a>	</td>
+			<td>	<span class="caps">PHX</span>	</td>
+			<td>	SG	</td>
+			<td>	28	</td>
+			<td>	10.8	</td>
+			<td>	40.6%	</td>
+			<td>	61.9%	</td>
+			<td>	12.0%	</td>
+			<td>	0.11	</td>
+			<td>	1.68	</td>
+			<td>	0.36	</td>
+			<td>	0.39	</td>
+			<td>	0.29	</td>
+			<td>	1.04	</td>
+			<td>	3.50	</td>
+			<td>	6.38	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Orlando_Johnson-14004" rel="player-profile">Orlando Johnson</a>	</td>
+			<td>	<span class="caps">IND</span>	</td>
+			<td>	SG	</td>
+			<td>	27	</td>
+			<td>	11.8	</td>
+			<td>	33.7%	</td>
+			<td>	88.9%	</td>
+			<td>	21.1%	</td>
+			<td>	0.30	</td>
+			<td>	1.70	</td>
+			<td>	0.56	</td>
+			<td>	0.22	</td>
+			<td>	0.04	</td>
+			<td>	0.44	</td>
+			<td>	3.11	</td>
+			<td>	6.07	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/John_Jenkins-13918" rel="player-profile">John Jenkins</a>	</td>
+			<td>	<span class="caps">ATL</span>	</td>
+			<td>	SG	</td>
+			<td>	13	</td>
+			<td>	12.1	</td>
+			<td>	38.1%	</td>
+			<td>	100.0%	</td>
+			<td>	22.2%	</td>
+			<td>	0.31	</td>
+			<td>	1.69	</td>
+			<td>	0.85	</td>
+			<td>	0.08	</td>
+			<td>	0.08	</td>
+			<td>	0.85	</td>
+			<td>	3.08	</td>
+			<td>	5.85	</td>
+		</tr>
+		<tr>
+			<td>	Glen Rice	</td>
+			<td>	<span class="caps">WAS</span>	</td>
+			<td>	SG	</td>
+			<td>	11	</td>
+			<td>	9.9	</td>
+			<td>	29.7%	</td>
+			<td>	71.4%	</td>
+			<td>	29.4%	</td>
+			<td>	0.45	</td>
+			<td>	1.82	</td>
+			<td>	0.64	</td>
+			<td>	0.55	</td>
+			<td>	0.09	</td>
+			<td>	0.82	</td>
+			<td>	2.91	</td>
+			<td>	6.51	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Alexey_Shved-13945" rel="player-profile">Alexey Shved</a>	</td>
+			<td>	<span class="caps">MIN</span>	</td>
+			<td>	SG	</td>
+			<td>	27	</td>
+			<td>	10.7	</td>
+			<td>	26.9%	</td>
+			<td>	75.8%	</td>
+			<td>	25.0%	</td>
+			<td>	0.41	</td>
+			<td>	1.37	</td>
+			<td>	0.96	</td>
+			<td>	0.33	</td>
+			<td>	0.30	</td>
+			<td>	0.56	</td>
+			<td>	3.19	</td>
+			<td>	6.97	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Ian_Clark-16922" rel="player-profile">Ian Clark</a>	</td>
+			<td>	<span class="caps">UTA</span>	</td>
+			<td>	SG	</td>
+			<td>	8	</td>
+			<td>	8.7	</td>
+			<td>	34.6%	</td>
+			<td>	33.3%	</td>
+			<td>	27.3%	</td>
+			<td>	0.38	</td>
+			<td>	0.88	</td>
+			<td>	0.62	</td>
+			<td>	0.12	</td>
+			<td>	0.12	</td>
+			<td>	0.50	</td>
+			<td>	2.75	</td>
+			<td>	4.72	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Allen_Crabbe-16978" rel="player-profile">Allen Crabbe</a>	</td>
+			<td>	<span class="caps">POR</span>	</td>
+			<td>	SG	</td>
+			<td>	7	</td>
+			<td>	4.8	</td>
+			<td>	50.0%	</td>
+			<td>	75.0%	</td>
+			<td>	80.0%	</td>
+			<td>	0.57	</td>
+			<td>	0.14	</td>
+			<td>	0.43	</td>
+			<td>	0.14	</td>
+			<td>	0.00	</td>
+			<td>	0.43	</td>
+			<td>	2.71	</td>
+			<td>	3.37	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Wayne_Ellington-1009" rel="player-profile">Wayne Ellington</a>	</td>
+			<td>	<span class="caps">DAL</span>	</td>
+			<td>	SG	</td>
+			<td>	18	</td>
+			<td>	8.0	</td>
+			<td>	35.3%	</td>
+			<td>	80.0%	</td>
+			<td>	28.6%	</td>
+			<td>	0.33	</td>
+			<td>	0.67	</td>
+			<td>	0.39	</td>
+			<td>	0.56	</td>
+			<td>	0.11	</td>
+			<td>	0.11	</td>
+			<td>	2.56	</td>
+			<td>	5.18	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Kent_Bazemore-13987" rel="player-profile">Kent Bazemore</a>	</td>
+			<td>	<span class="caps">GSW</span>	</td>
+			<td>	SG	</td>
+			<td>	26	</td>
+			<td>	6.7	</td>
+			<td>	40.4%	</td>
+			<td>	54.5%	</td>
+			<td>	31.8%	</td>
+			<td>	0.27	</td>
+			<td>	1.12	</td>
+			<td>	0.46	</td>
+			<td>	0.31	</td>
+			<td>	0.12	</td>
+			<td>	0.73	</td>
+			<td>	2.50	</td>
+			<td>	4.66	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Jamaal_Franklin-16856" rel="player-profile">Jamaal Franklin</a>	</td>
+			<td>	<span class="caps">MEM</span>	</td>
+			<td>	SG	</td>
+			<td>	14	</td>
+			<td>	9.2	</td>
+			<td>	34.4%	</td>
+			<td>	100.0%	</td>
+			<td>	37.5%	</td>
+			<td>	0.21	</td>
+			<td>	1.36	</td>
+			<td>	0.29	</td>
+			<td>	0.29	</td>
+			<td>	0.07	</td>
+			<td>	0.50	</td>
+			<td>	1.93	</td>
+			<td>	4.22	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Dionte_Christmas-16887" rel="player-profile">Dionte Christmas</a>	</td>
+			<td>	<span class="caps">PHX</span>	</td>
+			<td>	SG	</td>
+			<td>	16	</td>
+			<td>	7.4	</td>
+			<td>	36.4%	</td>
+			<td>	75.0%	</td>
+			<td>	23.5%	</td>
+			<td>	0.25	</td>
+			<td>	1.19	</td>
+			<td>	0.12	</td>
+			<td>	0.12	</td>
+			<td>	0.12	</td>
+			<td>	0.19	</td>
+			<td>	2.12	</td>
+			<td>	4.02	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Brandon_Rush-16996" rel="player-profile">Brandon Rush</a>	</td>
+			<td>	<span class="caps">UTA</span>	</td>
+			<td>	SG	</td>
+			<td>	13	</td>
+			<td>	11.9	</td>
+			<td>	28.0%	</td>
+			<td>	100.0%	</td>
+			<td>	44.4%	</td>
+			<td>	0.31	</td>
+			<td>	1.15	</td>
+			<td>	0.77	</td>
+			<td>	0.08	</td>
+			<td>	0.31	</td>
+			<td>	0.77	</td>
+			<td>	1.46	</td>
+			<td>	4.01	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Doron_Lamb-13971" rel="player-profile">Doron Lamb</a>	</td>
+			<td>	<span class="caps">ORL</span>	</td>
+			<td>	SG	</td>
+			<td>	12	</td>
+			<td>	7.7	</td>
+			<td>	29.4%	</td>
+			<td>	66.7%	</td>
+			<td>	23.1%	</td>
+			<td>	0.25	</td>
+			<td>	0.25	</td>
+			<td>	0.58	</td>
+			<td>	0.08	</td>
+			<td>	0.00	</td>
+			<td>	0.50	</td>
+			<td>	1.25	</td>
+			<td>	2.08	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Ricky_Ledo-16813" rel="player-profile">Ricky Ledo</a>	</td>
+			<td>	<span class="caps">DAL</span>	</td>
+			<td>	SG	</td>
+			<td>	6	</td>
+			<td>	2.6	</td>
+			<td>	20.0%	</td>
+			<td>	100.0%	</td>
+			<td>	25.0%	</td>
+			<td>	0.17	</td>
+			<td>	0.33	</td>
+			<td>	0.17	</td>
+			<td>	0.00	</td>
+			<td>	0.00	</td>
+			<td>	0.33	</td>
+			<td>	1.17	</td>
+			<td>	1.49	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Darius_Miller-13951" rel="player-profile">Darius Miller</a>	</td>
+			<td>	<span class="caps">NOP</span>	</td>
+			<td>	SG	</td>
+			<td>	7	</td>
+			<td>	10.5	</td>
+			<td>	35.7%	</td>
+			<td>	66.7%	</td>
+			<td>	33.3%	</td>
+			<td>	0.43	</td>
+			<td>	1.29	</td>
+			<td>	0.86	</td>
+			<td>	0.00	</td>
+			<td>	0.29	</td>
+			<td>	0.14	</td>
+			<td>	2.14	</td>
+			<td>	5.42	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Ronnie_Brewer-1292" rel="player-profile">Ronnie Brewer</a>	</td>
+			<td>	<span class="caps">HOU</span>	</td>
+			<td>	SG	</td>
+			<td>	15	</td>
+			<td>	4.8	</td>
+			<td>	25.0%	</td>
+			<td>	0.0%	</td>
+			<td>	20.0%	</td>
+			<td>	0.07	</td>
+			<td>	0.33	</td>
+			<td>	0.60	</td>
+			<td>	0.27	</td>
+			<td>	0.00	</td>
+			<td>	0.07	</td>
+			<td>	0.33	</td>
+			<td>	2.10	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Keith_Bogans-1247" rel="player-profile">Keith Bogans</a>	</td>
+			<td>	<span class="caps">BOS</span>	</td>
+			<td>	SG	</td>
+			<td>	4	</td>
+			<td>	7.0	</td>
+			<td>	0.0%	</td>
+			<td>	0.0%	</td>
+			<td>	0.0%	</td>
+			<td>	0.00	</td>
+			<td>	0.25	</td>
+			<td>	0.00	</td>
+			<td>	0.25	</td>
+			<td>	0.00	</td>
+			<td>	0.25	</td>
+			<td>	0.00	</td>
+			<td>	0.55	</td>
+		</tr>
+		<tr>
+			<td>	<a href="/fantasyplayers/Jared_Cunningham-13919" rel="player-profile">Jared Cunningham</a>	</td>
+			<td>	<span class="caps">ATL</span>	</td>
+			<td>	SG	</td>
+			<td>	3	</td>
+			<td>	2.8	</td>
+			<td>	0.0%	</td>
+			<td>	0.0%	</td>
+			<td>	0.0%	</td>
+			<td>	0.00	</td>
+			<td>	0.33	</td>
+			<td>	0.33	</td>
+			<td>	0.00	</td>
+			<td>	0.00	</td>
+			<td>	0.33	</td>
+			<td>	0.00	</td>
+			<td>	0.56	</td>
+		</tr>
+	</table>
+	</article>
+		
+
+					</section>
+								<div class="clearer"></div>
+			</div>
+			<div class="clearer"></div>
+		</div>
+		
+		<footer id="main-footer" class="grid-3-9">
+			<div class="column-1">
+				<a id="footer-logo" href="/">Roto Grinders</a>
+			</div>
+			<div class="column-2">
+				<ul class="nav-list">
+					<li><a href="/">Home</a>					</li><li><a href="/pages/view/1140">Contact Us</a>					</li><li><a href="/pages/terms">Terms of Service</a>					</li><li><a href="/pages/privacy_policy">Privacy Policy</a>					</li><li><a href="/threads">Forums</a>					</li><li><a href="/reviews/FanDuel_Promocode-115">FanDuel Review</a>					</li><li><a href="/reviews/DraftStreet-1151">DraftStreet Review</a>					</li> 
+				</ul>
+				<p>RotoGrinders.com is the home of the daily fantasy sports community.  Our content, rankings, member blogs, promotions and forum discussion all cater to the players that like to create a new fantasy team every day of the week.  Our goal is to help all of our members make more money playing daily fantasy sports!</p>
+			</div>
+			
+			<div id="copyright">RotoGrinders.com &copy; 2014 | 10.251.126.226</div>
+		</footer>
+
+		<div style="display:none;">
+			
+<div id="user-login">
+		<h2>Sign In</h2>
+	
+	<form id="UserAddForm" method="post" action="/users/signin"><fieldset style="display:none;"><input type="hidden" name="_method" value="POST" /></fieldset>		<div class="input text"><label for="UserUsername">Username or E-Mail Address</label><input name="data[User][username]" type="text" class="notEmpty" placeholder="Username" maxlength="32" value="" id="UserUsername" /></div>	<div class="input password"><label for="UserPassword">Password</label><input type="password" name="data[User][password]" placeholder="Password" class="notEmpty" value="" id="UserPassword" /></div>	<div class="input checkbox"><input type="hidden" name="data[User][remember]" id="UserRemember_" value="0" /><input type="checkbox" name="data[User][remember]" checked="checked" value="1" id="UserRemember" /><label for="UserRemember">Remember</label></div>	<input type="hidden" name="data[User][redirect]" value="" id="UserRedirect" />
+	<div class="submit">
+		<button type="submit">Sign In</button>
+	</div>
+	</form>	
+	<div id="signup">
+		<a href="/users/forgot_password" id="forgot-password">Forgot your username or password?</a>		Don&#39;t have an account? <a href="/users/signup" class="button call">Sign Up</a> 
+	</div>
+</div>
+		</div>
+	</div>
+		<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-17399775-1']);
+	_gaq.push(['_trackPageview']);
+
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
+</script>
+    </body>
+</html>

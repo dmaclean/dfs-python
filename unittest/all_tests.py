@@ -4,6 +4,7 @@ import test_import_salaries
 import test_projections
 import test_basketballreference_team_gamelog_parser
 import test_vegas_odds
+import test_rg_player_stats
 
 ##########################
 # FantasyPointCalculator
@@ -33,4 +34,10 @@ unittest.TextTestRunner(verbosity=2).run(suite)
 # Vegas Odds
 ##############
 suite = unittest.TestLoader().loadTestsFromTestCase(test_vegas_odds.TestVegasOdds)
+unittest.TextTestRunner(verbosity=2).run(suite)
+
+###################
+# RG Player Stats
+###################
+suite = unittest.TestLoader().loadTestsFromTestCase(test_rg_player_stats.TestRGPlayerStats)
 unittest.TextTestRunner(verbosity=2).run(suite)

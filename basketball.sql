@@ -2,11 +2,13 @@ create table players (
 	id varchar(50) primary key,
 	name varchar(100) not null,
 	position varchar(10) not null,
+	rg_position varchar(5),
 	height int,
 	weight int,
 	url varchar(100) not null
 );
 create index players_position_idx on players(position);
+create index players_rg_position_idx on players(rg_position);
 
 create table season_totals (
 	id integer auto_increment primary key,
@@ -334,3 +336,27 @@ create table player_name_mapping (
 	site varchar(50) not null
 );
 create index player_name_mapping_bbr_name_idx on player_name_mapping(bbr_name);
+
+create table rg_defense_vs_position (
+	id integer auto_increment primary key,
+	date date not null,
+	type varchar(10) not null,
+	team varchar(5) not null,
+	games_played int not null,
+	points_per_game float not null,
+	field_goals_made float not null,
+	field_goal_attempts float not null,
+	field_goal_pct float not null,
+	three_point_field_goals float not null,
+	rebounds float not null,
+	assists float not null,
+	steals float not null,
+	blocks float not null,
+	turnovers float not null,
+	fantasy_points_per_game float not null,
+	rank int not null
+);
+create index rg_defense_vs_position_team_idx on rg_defense_vs_position(team);
+create index rg_defense_vs_position_date_idx on rg_defense_vs_position(date);
+create index rg_defense_vs_position_type_idx on rg_defense_vs_position(type);
+create index rg_defense_vs_position_team_date_idx on rg_defense_vs_position(team, date);
