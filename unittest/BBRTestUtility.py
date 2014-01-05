@@ -57,15 +57,42 @@ class BBRTestUtility():
 	############################################################
 	def insert_into_players(self, values):
 		cursor = self.conn.cursor()
+		
+		if "rg_position" not in values:
+			values["rg_position"] = ""
+		
 		query = """
 			insert into players (
-				id, name, position, height, weight, url
+				id, name, position, rg_position, height, weight, url
 			)
-			values ('%s','%s','%s',%d,%d,'%s')
-		""" % (values["id"], values["name"], values["position"], values["height"],values["weight"],values["url"])
+			values ('%s','%s','%s','%s',%d,%d,'%s')
+		""" % (values["id"], values["name"], values["position"], values["rg_position"], values["height"],values["weight"],values["url"])
 
 		try:
 			cursor.execute(query)
+		except sqlite3.Error, e:
+			print "Something went wrong.  %s" % e.args[0]
+		finally:
+			cursor.close()
+	
+	def select_from_players(self, player_id):
+		cursor = self.conn.cursor()
+		
+		query = "select * from players where id = '%s'" % (player_id)
+		
+		try:
+			cursor.execute(query)
+			
+			for result in cursor:
+				return {
+					"id": result[0],
+					"name": result[1],
+					"position": result[2],
+					"rg_position": result[3],
+					"height": result[4],
+					"weight": result[5],
+					"url": result[6]
+				}
 		except sqlite3.Error, e:
 			print "Something went wrong.  %s" % e.args[0]
 		finally:
@@ -422,3 +449,5 @@ class BBRTestUtility():
 				return (result[0], result[1], result[2], result[3], result[4])
 		finally:
 			cursor.close()
+	
+	

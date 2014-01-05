@@ -52,9 +52,10 @@ class Projections:
 				info["id"] = result[0]
 				info["name"] = result[1]
 				info["position"] = result[2]
-				info["height"] = result[3]
-				info["weight"] = result[4]
-				info["url"] = result[5]
+				info["rg_position"] = result[3]
+				info["height"] = result[4]
+				info["weight"] = result[5]
+				info["url"] = result[6]
 			
 			self.player_info_cache[player_id] = info
 		finally:
