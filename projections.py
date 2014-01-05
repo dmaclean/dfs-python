@@ -557,7 +557,12 @@ class Projections:
 				return result[0]
 		finally:
 			cursor.close()
-			
+	
+	###############################################################################
+	# Retrieves the odds calculated by Vegas for this player's game.  The
+	# data includes the spread (relative to his team), over/under, and projection
+	# (again, for his team).
+	###############################################################################		
 	def get_vegas_odds(self, team, date=date.today()):
 		cursor = self.cnx.cursor()
 		
