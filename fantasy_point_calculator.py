@@ -107,7 +107,8 @@ class FantasyPointCalculator():
 			count = 1
 			total = len(valid_ids)
 			for id in valid_ids:
-				print "Retrieved %d of %d" % (count, total)
+				if count % 10 == 0:
+					print "Retrieved %d of %d" % (count, total)
 				cursor.execute("select * from game_totals_basic where id = %d" % id)
 
 				# Collect list of stat lines that don't have fantasy points computed.
@@ -149,7 +150,9 @@ class FantasyPointCalculator():
 				cursor.execute(insert_query)
 				
 				count = count + 1
-				print "Processed %d games" % count
+				
+				if count % 10 == 0:
+					print "Processed %d games" % count
 		finally:
 			cursor.close()
 
