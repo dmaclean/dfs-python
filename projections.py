@@ -139,7 +139,7 @@ class Projections:
 		try:
 			query = """select sum(b.%s)/(select max(game) from team_game_totals where team = '%s' and season = %d and date <= '%s') 
 					from players p inner join game_totals_basic b on p.id = b.player_id 
-					where b.season = %d and p.position = '%s' and b.opponent = '%s'
+					where b.season = %d and p.rg_position = '%s' and b.opponent = '%s'
 						and date <= '%s'""" % (metric, team, season, date, season, position, team, date)
 			cursor.execute(query)
 		
@@ -190,9 +190,10 @@ class Projections:
 	
 		cursor = self.cnx.cursor()
 		query = """
-			select sum(%s)/(select max(t.game) from team_game_totals t where t.team = b.opponent and season = %d and date <= '%s') as "avg", opponent 
+			select sum(%s)/(select max(t.game) from team_game_totals t 
+			where t.team = b.opponent and season = %d and date <= '%s') as "avg", opponent 
 			from game_totals_basic b inner join players p on p.id = b.player_id 
-			where season = %d and position = '%s' and date <= '%s'
+			where season = %d and rg_position = '%s' and date <= '%s'
 			group by opponent 
 			order by avg desc
 		""" % (stat, season, date, season, position, date)
@@ -447,9 +448,9 @@ class Projections:
 		# Effectiveness of opponent defense, compared to the league average
 		# for this player's position.
 		######################################################################
-		league_avg = self.calculate_league_avg(stat, info["position"], season)
+		league_avg = self.calculate_league_avg(stat, info["rg_position"], season)
 		
-		def_factor = self.calculate_defense_vs_position(stat, info["position"], opponent, season, date)
+		def_factor = self.calculate_defense_vs_position(stat, info["rg_position"], opponent, season, date)
 
 		adjusted_stat = adjusted_stat * float(def_factor/league_avg)
 	
@@ -543,6 +544,9 @@ class Projections:
 		
 		return self.scoring_stddev_cache[key]
 	
+	###########################################################################################
+	# Retrieves the average minutes that a player has been on the floor for the past n games.
+	###########################################################################################
 	def get_avg_minutes_past_n_games(self, player_id, season, n):
 		cursor = self.cnx.cursor()
 		
@@ -611,7 +615,7 @@ class Projections:
 		
 		print "Writing projections and actuals out to regression.csv"
 		f = open("regression.csv", "w")
-		f.write("""player_id,game number,date,team,opponent,projected FPs,actual FPs,RMSE,projected points,actual points,RMSE,projected assists,actual assists,RMSE,projected rebounds,actual rebounds,RMSE,projected steals,actual steals,RMSE,projected blocks,actual blocks,RMSE,projected turnovers,actual turnovers,RMSE\n""")
+		f.write("""player_id,game number,date,team,opponent,floor FPs,ceiling FPs,projected FPs,actual FPs,RMSE,projected points,actual points,RMSE,projected assists,actual assists,RMSE,projected rebounds,actual rebounds,RMSE,projected steals,actual steals,RMSE,projected blocks,actual blocks,RMSE,projected turnovers,actual turnovers,RMSE\n""")
 		
 		self.fpc.site = DFSConstants.STAR_STREET
 		
@@ -666,13 +670,17 @@ class Projections:
 					"blocks": proj_blocks,
 					"turnovers": proj_turnovers
 				})
+				
+				stddev = self.calculate_scoring_stddev(player_id, season, DFSConstants.STAR_STREET, date)
 			
-			line = "%s,%d,%s,%s,%s,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f" % (
+			line = "%s,%d,%s,%s,%s,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f" % (
 				player_id,
 				game_number,
 				date,
 				team,
 				opponent,
+				proj_fps - stddev,
+				proj_fps + stddev,
 				proj_fps,
 				actual_fps,
 				(proj_fps - actual_fps)**2,

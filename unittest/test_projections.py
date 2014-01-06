@@ -216,17 +216,33 @@ class TestProjections(unittest.TestCase):
 	#  at a position, starting from the beginning of the season to a particular date.
 	###################################################################################
 	def test_calculate_defense_vs_position(self):
-		positions = ["G","F","C"]
+		positions = ["PG", "SG", "SF", "PF", "C"]
 		
 		for p in positions:
 			# Set up two guards that played against a team on separate days
 			self.player_info["id"] = p + "1"
 			self.player_info["name"] = p + " 1"
-			self.player_info["position"] = p
+#			self.player_info["position"] = p
+			self.player_info["rg_position"] = p
 			self.testUtil.insert_into_players(self.player_info)
 		
 			self.player_info["id"] = p + "2"
 			self.player_info["name"] = p +" 2"
+			self.testUtil.insert_into_players(self.player_info)
+			
+			# Another player, PG if p=SG, SG if p=PG, SF if p=PF, PF if p=SF
+			self.player_info["id"] = p + "3"
+			self.player_info["name"] = p + " 3"
+			if p == "PG":
+				self.player_info["rg_position"] = "SG"
+			elif p == "SG":
+				self.player_info["rg_position"] = "PG"
+			elif p == "SF":
+				self.player_info["rg_position"] = "PF"
+			elif p == "PF":
+				self.player_info["rg_position"] = "SF"
+			elif p == "C":
+				self.player_info["rg_position"] = "PG"
 			self.testUtil.insert_into_players(self.player_info)
 		
 			self.game_totals_basic_info["player_id"] = p+"1"
@@ -250,6 +266,21 @@ class TestProjections(unittest.TestCase):
 			self.game_totals_basic_info["team"] = "PHI"
 			self.game_totals_basic_info["opponent"] = "BOS"
 			self.game_totals_basic_info["date"] = date(2013,11,2)
+			self.game_totals_basic_info["points"] = 10
+			self.game_totals_basic_info["offensive_rebounds"] = 7
+			self.game_totals_basic_info["defensive_rebounds"] = 12
+			self.game_totals_basic_info["assists"] = 8
+			self.game_totals_basic_info["steals"] = 1
+			self.game_totals_basic_info["blocks"] = 0
+			self.game_totals_basic_info["turnovers"] = 3
+			self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+			
+			self.game_totals_basic_info["player_id"] = p+"3"
+			self.game_totals_basic_info["season"] = 2013
+			self.game_totals_basic_info["game_number"] = 3
+			self.game_totals_basic_info["team"] = "PHI"
+			self.game_totals_basic_info["opponent"] = "BOS"
+			self.game_totals_basic_info["date"] = date(2013,11,3)
 			self.game_totals_basic_info["points"] = 10
 			self.game_totals_basic_info["offensive_rebounds"] = 7
 			self.game_totals_basic_info["defensive_rebounds"] = 12
@@ -288,17 +319,32 @@ class TestProjections(unittest.TestCase):
 	# This date should eliminate the second player's stats from the computation.
 	####################################################################################
 	def test_calculate_defense_vs_position_date_subset(self):
-		positions = ["G","F","C"]
+		positions = ["PG", "SG", "SF", "PF", "C"]
 		
 		for p in positions:
 			# Set up two guards that played against a team on separate days
 			self.player_info["id"] = p + "1"
 			self.player_info["name"] = p + " 1"
-			self.player_info["position"] = p
+			self.player_info["rg_position"] = p
 			self.testUtil.insert_into_players(self.player_info)
 		
 			self.player_info["id"] = p + "2"
 			self.player_info["name"] = p +" 2"
+			self.testUtil.insert_into_players(self.player_info)
+			
+			# Another player, PG if p=SG, SG if p=PG, SF if p=PF, PF if p=SF
+			self.player_info["id"] = p + "3"
+			self.player_info["name"] = p + " 3"
+			if p == "PG":
+				self.player_info["rg_position"] = "SG"
+			elif p == "SG":
+				self.player_info["rg_position"] = "PG"
+			elif p == "SF":
+				self.player_info["rg_position"] = "PF"
+			elif p == "PF":
+				self.player_info["rg_position"] = "SF"
+			elif p == "C":
+				self.player_info["rg_position"] = "PG"
 			self.testUtil.insert_into_players(self.player_info)
 		
 			self.game_totals_basic_info["player_id"] = p+"1"
@@ -330,6 +376,21 @@ class TestProjections(unittest.TestCase):
 			self.game_totals_basic_info["blocks"] = 0
 			self.game_totals_basic_info["turnovers"] = 3
 			self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+		
+			self.game_totals_basic_info["player_id"] = p+"3"
+			self.game_totals_basic_info["season"] = 2013
+			self.game_totals_basic_info["game_number"] = 3
+			self.game_totals_basic_info["team"] = "PHI"
+			self.game_totals_basic_info["opponent"] = "BOS"
+			self.game_totals_basic_info["date"] = date(2013,11,3)
+			self.game_totals_basic_info["points"] = 10
+			self.game_totals_basic_info["offensive_rebounds"] = 7
+			self.game_totals_basic_info["defensive_rebounds"] = 12
+			self.game_totals_basic_info["assists"] = 8
+			self.game_totals_basic_info["steals"] = 1
+			self.game_totals_basic_info["blocks"] = 0
+			self.game_totals_basic_info["turnovers"] = 3
+			self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info) 
 		
 			# Set up team game total for 2nd game.
 			self.team_game_totals_info["team"] = "BOS"
@@ -363,13 +424,13 @@ class TestProjections(unittest.TestCase):
 			self.assertTrue(turnovers_vs_position == 5)
 
 	def test_calculate_league_avg(self):
-		positions = ["G","F","C"]
+		positions = ["SG","SF","PF","C"]
 		
 		for p in positions:
 			# Set up three players that played against a team on separate days
 			self.player_info["id"] = p + "1"
 			self.player_info["name"] = p + " 1"
-			self.player_info["position"] = p
+			self.player_info["rg_position"] = p
 			self.testUtil.insert_into_players(self.player_info)
 		
 			self.player_info["id"] = p + "2"
@@ -378,6 +439,18 @@ class TestProjections(unittest.TestCase):
 			
 			self.player_info["id"] = p + "3"
 			self.player_info["name"] = p +" 3"
+			self.testUtil.insert_into_players(self.player_info)
+			
+			self.player_info["id"] = p + "4"
+			self.player_info["name"] = p + " 4"
+			if p == "SG":
+				self.player_info["rg_position"] = "PG"
+			elif p == "SF":
+				self.player_info["rg_position"] = "SG"
+			elif p == "PF":
+				self.player_info["rg_position"] = "SF"
+			elif p == "C":
+				self.player_info["rg_position"] = "PF"
 			self.testUtil.insert_into_players(self.player_info)
 		
 			self.game_totals_basic_info["player_id"] = p+"1"
@@ -424,6 +497,21 @@ class TestProjections(unittest.TestCase):
 			self.game_totals_basic_info["blocks"] = 0
 			self.game_totals_basic_info["turnovers"] = 3
 			self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+			
+			self.game_totals_basic_info["player_id"] = p+"4"
+			self.game_totals_basic_info["season"] = 2013
+			self.game_totals_basic_info["game_number"] = 3
+			self.game_totals_basic_info["team"] = "DET"
+			self.game_totals_basic_info["opponent"] = "BOS"
+			self.game_totals_basic_info["date"] = date(2013,11,6)
+			self.game_totals_basic_info["points"] = 30
+			self.game_totals_basic_info["offensive_rebounds"] = 7
+			self.game_totals_basic_info["defensive_rebounds"] = 12
+			self.game_totals_basic_info["assists"] = 8
+			self.game_totals_basic_info["steals"] = 1
+			self.game_totals_basic_info["blocks"] = 0
+			self.game_totals_basic_info["turnovers"] = 3
+			self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
 		
 			# Team game totals for ATL and BOS
 			self.team_game_totals_info["team"] = "BOS"
@@ -455,13 +543,13 @@ class TestProjections(unittest.TestCase):
 			self.assertTrue(points == 14)
 	
 	def test_calculate_league_avg_with_date(self):
-		positions = ["G","F","C"]
+		positions = ["SG","SF","PF","C"]
 		
 		for p in positions:
 			# Set up three players that played against a team on separate days
 			self.player_info["id"] = p + "1"
 			self.player_info["name"] = p + " 1"
-			self.player_info["position"] = p
+			self.player_info["rg_position"] = p
 			self.testUtil.insert_into_players(self.player_info)
 		
 			self.player_info["id"] = p + "2"
@@ -470,6 +558,18 @@ class TestProjections(unittest.TestCase):
 			
 			self.player_info["id"] = p + "3"
 			self.player_info["name"] = p +" 3"
+			self.testUtil.insert_into_players(self.player_info)
+			
+			self.player_info["id"] = p + "4"
+			self.player_info["name"] = p + " 4"
+			if p == "SG":
+				self.player_info["rg_position"] = "PG"
+			elif p == "SF":
+				self.player_info["rg_position"] = "SG"
+			elif p == "PF":
+				self.player_info["rg_position"] = "SF"
+			elif p == "C":
+				self.player_info["rg_position"] = "PF"
 			self.testUtil.insert_into_players(self.player_info)
 		
 			self.game_totals_basic_info["player_id"] = p+"1"
@@ -508,6 +608,21 @@ class TestProjections(unittest.TestCase):
 			self.game_totals_basic_info["team"] = "DET"
 			self.game_totals_basic_info["opponent"] = "BOS"
 			self.game_totals_basic_info["date"] = date(2013,11,5)
+			self.game_totals_basic_info["points"] = 30
+			self.game_totals_basic_info["offensive_rebounds"] = 7
+			self.game_totals_basic_info["defensive_rebounds"] = 12
+			self.game_totals_basic_info["assists"] = 8
+			self.game_totals_basic_info["steals"] = 1
+			self.game_totals_basic_info["blocks"] = 0
+			self.game_totals_basic_info["turnovers"] = 3
+			self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+			
+			self.game_totals_basic_info["player_id"] = p+"4"
+			self.game_totals_basic_info["season"] = 2013
+			self.game_totals_basic_info["game_number"] = 3
+			self.game_totals_basic_info["team"] = "DET"
+			self.game_totals_basic_info["opponent"] = "BOS"
+			self.game_totals_basic_info["date"] = date(2013,11,3)
 			self.game_totals_basic_info["points"] = 30
 			self.game_totals_basic_info["offensive_rebounds"] = 7
 			self.game_totals_basic_info["defensive_rebounds"] = 12
