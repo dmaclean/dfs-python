@@ -619,7 +619,16 @@ class Projections:
 		
 		self.fpc.site = DFSConstants.STAR_STREET
 		
+		# Squared errors
+		ssq_points = 0
+		ssq_rebounds = 0
+		ssq_assists = 0
+		ssq_steals = 0
+		ssq_blocks = 0
+		ssq_turnovers = 0
+		
 		count = 0
+		processed = 0
 		for game in games:
 			count = count + 1
 		
@@ -652,6 +661,8 @@ class Projections:
 			proj_assists = 0
 			
 			if minutes_played > 0:
+				processed = processed + 1
+			
 				start = time.time()
 				proj_points = self.calculate_projection(player_id, "points", season, opponent, date)
 				proj_assists = self.calculate_projection(player_id, "assists", season, opponent, date)
@@ -671,40 +682,70 @@ class Projections:
 					"turnovers": proj_turnovers
 				})
 				
+				# Calculate squared error
+				error_points = (proj_points - actual_points)**2
+				error_assists = (proj_assists - actual_assists)**2
+				error_rebounds = (proj_rebounds - actual_rebounds)**2
+				error_steals = (proj_steals - actual_steals)**2
+				error_blocks = (proj_blocks - actual_blocks)**2
+				error_turnovers = (proj_turnovers - actual_turnovers)**2
+				
+				ssq_points = ssq_points + error_points
+				ssq_rebounds = ssq_rebounds + error_rebounds
+				ssq_assists = ssq_assists + error_assists
+				ssq_steals = ssq_steals + error_steals
+				ssq_blocks = ssq_blocks + error_blocks
+				ssq_turnovers = ssq_turnovers + error_turnovers
+				
 				stddev = self.calculate_scoring_stddev(player_id, season, DFSConstants.STAR_STREET, date)
 			
-			line = "%s,%d,%s,%s,%s,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f" % (
-				player_id,
-				game_number,
-				date,
-				team,
-				opponent,
-				proj_fps - stddev,
-				proj_fps + stddev,
-				proj_fps,
-				actual_fps,
-				(proj_fps - actual_fps)**2,
-				proj_points,
-				actual_points,
-				(proj_points - actual_points)**2,
-				proj_assists,
-				actual_assists,
-				(proj_assists - actual_assists)**2,
-				proj_rebounds,
-				actual_rebounds,
-				(proj_rebounds - actual_rebounds)**2,
-				proj_steals,
-				actual_steals,
-				(proj_steals - actual_steals)**2,
-				proj_blocks,
-				actual_blocks,
-				(proj_blocks - actual_blocks)**2,
-				proj_turnovers,
-				actual_turnovers,
-				(proj_turnovers - actual_turnovers)**2
-			)
-			f.write(line + "\n")
+				line = "%s,%d,%s,%s,%s,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f" % (
+					player_id,
+					game_number,
+					date,
+					team,
+					opponent,
+					proj_fps - stddev,
+					proj_fps + stddev,
+					proj_fps,
+					actual_fps,
+					(proj_fps - actual_fps)**2,
+					proj_points,
+					actual_points,
+					error_points,
+					proj_assists,
+					actual_assists,
+					error_assists,
+					proj_rebounds,
+					actual_rebounds,
+					error_rebounds,
+					proj_steals,
+					actual_steals,
+					error_steals,
+					proj_blocks,
+					actual_blocks,
+					error_blocks,
+					proj_turnovers,
+					actual_turnovers,
+					error_turnovers
+				)
+				f.write(line + "\n")
 		
+		mse_points = ssq_points/processed
+		mse_assists = ssq_assists/processed
+		mse_rebounds = ssq_rebounds/processed
+		mse_steals = ssq_steals/processed
+		mse_blocks = ssq_blocks/processed
+		mse_turnovers = ssq_turnovers/processed
+		
+		f.write("\n\n\n")
+		
+		f.write("MSE Points,%f\n" % mse_points)
+		f.write("MSE Assists,%f\n" % mse_assists)
+		f.write("MSE Rebounds,%f\n" % mse_rebounds)
+		f.write("MSE Steals,%f\n" % mse_steals)
+		f.write("MSE Blocks,%f\n" % mse_blocks)
+		f.write("MSE Turnovers,%f\n" % mse_turnovers)
 		f.close()
 	
 	def run(self):
