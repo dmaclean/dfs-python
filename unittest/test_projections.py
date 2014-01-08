@@ -157,6 +157,15 @@ class TestProjections(unittest.TestCase):
 			"projection_road": 0,
 			"projection_home": 0
 		}
+		
+		self.fantasy_points_info = {
+			"game_totals_basic_id": 0,
+			"player_id": "",
+			"site": "",
+			"season": date.today().year,
+			"game_number": 0,
+			"points": 0
+		}
 	
 	def tearDown(self):
 		self.testUtil.conn.close()
@@ -1310,6 +1319,111 @@ class TestProjections(unittest.TestCase):
 		self.assertTrue(v["over_under"] == 200)
 		#self.assertTrue(v[6] == 101)
 		self.assertTrue(v["projection"] ==101)
+	
+	def test_calculate_defense_vs_position_ranking_PG_fantasy_points(self):
+		# Set up player 1
+		self.player_info["id"] = "test"
+		self.player_info["rg_position"] = "PG"
+		self.testUtil.insert_into_players(self.player_info)
+		
+		# Set up player 2
+		self.player_info["id"] = "test2"
+		self.player_info["rg_position"] = "PG"
+		self.testUtil.insert_into_players(self.player_info)
+		
+		# Set up game for player 1 against Boston
+		self.game_totals_basic_info["player_id"] = "test"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["date"] = date(2013,11,1)
+		self.game_totals_basic_info["game_number"] = 1
+		self.game_totals_basic_info["opponent"] = "BOS"
+		gtb_p1_bos_id = self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+		
+		# Set up game for player 2 against Boston
+		self.game_totals_basic_info["player_id"] = "test2"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["date"] = date(2013,11,1)
+		self.game_totals_basic_info["game_number"] = 2
+		self.game_totals_basic_info["opponent"] = "BOS"
+		gtb_p2_bos_id = self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+		
+		# Set up game for player 1 against Atlanta
+		self.game_totals_basic_info["player_id"] = "test"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["date"] = date(2013,11,1)
+		self.game_totals_basic_info["game_number"] = 3
+		self.game_totals_basic_info["opponent"] = "ATL"
+		gtb_p1_atl_id = self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+		
+		# Set up game for player 2 against Atlanta
+		self.game_totals_basic_info["player_id"] = "test2"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["date"] = date(2013,11,1)
+		self.game_totals_basic_info["game_number"] = 4
+		self.game_totals_basic_info["opponent"] = "ATL"
+		gtb_p2_atl_id = self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+		
+		# Establish a 2nd game for Boston so we divide by 2.
+		self.team_game_totals_info["team"] = "BOS"
+		self.team_game_totals_info["season"] = 2013
+		self.team_game_totals_info["game"] = 2
+		self.team_game_totals_info["date"] = date(2013,11,1)
+		self.team_game_totals_info["opponent"] = "PHI"
+		self.testUtil.insert_into_team_game_totals(self.team_game_totals_info)
+		
+		# Establish a 2nd game for Atlanta so we divide by 2.
+		self.team_game_totals_info["team"] = "ATL"
+		self.team_game_totals_info["season"] = 2013
+		self.team_game_totals_info["game"] = 2
+		self.team_game_totals_info["date"] = date(2013,11,1)
+		self.team_game_totals_info["opponent"] = "PHI"
+		self.testUtil.insert_into_team_game_totals(self.team_game_totals_info)
+		
+		# Set up fantasy points for player 1 against Boston
+		self.fantasy_points_info["game_totals_basic_id"] = gtb_p1_bos_id
+		self.fantasy_points_info["player_id"] = "test"
+		self.fantasy_points_info["site"] = DFSConstants.FAN_DUEL
+		self.fantasy_points_info["season"] = 2013
+		self.fantasy_points_info["game_number"] = 1
+		self.fantasy_points_info["points"] = 10
+		self.testUtil.insert_into_fantasy_points(self.fantasy_points_info)
+		
+		# Set up fantasy points for player 2 against Boston
+		self.fantasy_points_info["game_totals_basic_id"] = gtb_p2_bos_id
+		self.fantasy_points_info["player_id"] = "test2"
+		self.fantasy_points_info["site"] = DFSConstants.FAN_DUEL
+		self.fantasy_points_info["season"] = 2013
+		self.fantasy_points_info["game_number"] = 2
+		self.fantasy_points_info["points"] = 20
+		self.testUtil.insert_into_fantasy_points(self.fantasy_points_info)
+		
+		# Set up fantasy points for player 1 against Atlanta
+		self.fantasy_points_info["game_totals_basic_id"] = gtb_p1_atl_id
+		self.fantasy_points_info["player_id"] = "test"
+		self.fantasy_points_info["site"] = DFSConstants.FAN_DUEL
+		self.fantasy_points_info["season"] = 2013
+		self.fantasy_points_info["game_number"] = 3
+		self.fantasy_points_info["points"] = 20
+		self.testUtil.insert_into_fantasy_points(self.fantasy_points_info)
+		
+		# Set up fantasy points for player 2 against Atlanta
+		self.fantasy_points_info["game_totals_basic_id"] = gtb_p2_atl_id
+		self.fantasy_points_info["player_id"] = "test2"
+		self.fantasy_points_info["site"] = DFSConstants.FAN_DUEL
+		self.fantasy_points_info["season"] = 2013
+		self.fantasy_points_info["game_number"] = 4
+		self.fantasy_points_info["points"] = 30
+		self.testUtil.insert_into_fantasy_points(self.fantasy_points_info)
+		
+		self.projections.site = DFSConstants.FAN_DUEL
+		bos_rank = self.projections.calculate_defense_vs_position_ranking(DFSConstants.FANTASY_POINTS, "PG", "BOS", 2013, date(2013,11,1))
+		atl_rank = self.projections.calculate_defense_vs_position_ranking(DFSConstants.FANTASY_POINTS, "PG", "ATL", 2013, date(2013,11,1))
+		
+		self.assertTrue(bos_rank == 1)
+		self.assertTrue(atl_rank == 2)
+	
+	#def test_get_avg_contribution_to_team_stat(self):
+		
 
 if __name__ == '__main__':
 	unittest.main()

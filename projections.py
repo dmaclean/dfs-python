@@ -11,11 +11,15 @@ class Projections:
 	def __init__(self, cnx = None):
 		self.league_averages = {}
 		self.dvp_cache = {}
+		self.dvp_ranking_cache = {}
 		self.pace_cache = {}
 		self.player_info_cache = {}
 		self.team_cache = {}
 		self.baseline_cache = {}
 		self.scoring_stddev_cache = {}
+		
+		# The current DFS site we're projecting for.
+		self.site = ""
 		
 		self.stats = ["points", "field_goals", "field_goal_attempts", "three_point_field_goals", "three_point_field_goal_attempts",
 							"free_throws", "free_throw_attempts", "total_rebounds", "assists", "steals", "blocks", "turnovers"]
@@ -149,6 +153,65 @@ class Projections:
 			
 		finally:
 			cursor.close()
+	
+	######################################################################################
+	# To calculate defensive vs a position we want to get all of the players who
+	# played against a team, sum their fantasy points, and divide by the number of games
+	# the team has played.
+	######################################################################################
+	def calculate_defense_vs_position_ranking(self, metric, position, team, season, date=date.today()):
+		key = "_".join([metric, position, team, str(season), str(date)])
+		if key in self.dvp_ranking_cache:
+			return self.dvp_ranking_cache[key]
+		
+		cursor = self.cnx.cursor()
+	
+		query = ""
+		try:
+			# Get all teams for season
+			teams = []
+			query = "select distinct team from team_game_totals where season = %d" % (season)
+			
+			cursor.execute(query)
+			for result in cursor:
+				teams.append(result[0])
+		
+			ranks = []
+			for t in teams:
+				if metric == DFSConstants.FANTASY_POINTS:
+					query = """
+						select sum(fp.points)/(select max(game) from team_game_totals where team = '%s' and 
+													season = %d and date <= '%s') 
+						from players p inner join game_totals_basic b on p.id = b.player_id 
+							inner join fantasy_points fp on fp.player_id = p.id AND fp.season = b.season and fp.game_number = b.game_number
+						where b.season = %d and p.rg_position = '%s' and b.opponent = '%s' 
+							and date <= '%s' and fp.site = '%s'
+					"""	% (t, season, date, season, position, t, date, self.site)
+				else:
+					query = """select sum(b.%s)/(select max(game) from team_game_totals where team = '%s' and season = %d and date <= '%s') 
+							from players p inner join game_totals_basic b on p.id = b.player_id 
+							where b.season = %d and p.rg_position = '%s' and b.opponent = '%s'
+								and date <= '%s'""" % (metric, t, season, date, season, position, t, date)
+				cursor.execute(query)
+		
+				for result in cursor:
+					ranks.append((result[0], t))
+			
+			# Sort the results in ascending order (lowest value at element 0).
+			ranks.sort()
+			
+			# Put the results in the cache.  We only want the ranking, so we're going to 
+			# put the index i in the cache instead of the actual value.
+			i = 1
+			for r in ranks:
+				temp_key = "_".join([metric, position, r[1], str(season), str(date)])
+				self.dvp_ranking_cache[temp_key] = i
+				i = i + 1
+			
+		finally:
+			cursor.close()
+		
+		return self.dvp_ranking_cache[key]
 
 	def calculate_pace(self, team, season):
 		key = "_".join([team, str(season)])
@@ -780,6 +843,7 @@ class Projections:
 				
 				for s in sites:
 					self.fpc.site = s
+					self.site = s
 					fps = self.fpc.calculate(projections)
 					consistency = self.calculate_floor_consistency_ceiling_pct(player["player_id"], game["season"], s)
 					salary = self.get_salary(player["player_id"], s)

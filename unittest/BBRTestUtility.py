@@ -177,6 +177,7 @@ class BBRTestUtility():
 		
 		try:
 			cursor.execute(query)
+			return cursor.lastrowid
 		except sqlite3.Error, e:
 			print "Something went wrong.  %s" % e.args[0]
 		finally:
@@ -383,6 +384,19 @@ class BBRTestUtility():
 			cursor.execute(query)
 			for result in cursor:
 				return result[0]
+		finally:
+			cursor.close()
+	
+	def insert_into_fantasy_points(self, values):
+		cursor = self.conn.cursor()
+		query = """
+			insert into fantasy_points (game_totals_basic_id, player_id, site, season, game_number, points) 
+			values (%d,'%s','%s',%d,%d,%f)
+		""" % (values["game_totals_basic_id"], values["player_id"], values["site"], values["season"], values["game_number"], values["points"])
+		
+		try:
+			cursor.execute(query)
+			return cursor.lastrowid
 		finally:
 			cursor.close()
 	
