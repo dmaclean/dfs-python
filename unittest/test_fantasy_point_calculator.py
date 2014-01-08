@@ -527,7 +527,6 @@ class TestFantasyPointCalculator(unittest.TestCase):
 		self.fpc.site = fantasy_point_calculator.FantasyPointCalculator.FAN_DUEL
 		points = self.fpc.calculate(stats)
 		
-		print points
 		self.assertTrue(points == 38)
 	
 	###########################################################################
