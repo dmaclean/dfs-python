@@ -204,6 +204,8 @@ class Projections:
 			# put the index i in the cache instead of the actual value.
 			i = 1
 			for r in ranks:
+				#print "(%d) %s - %f" % (i, r[1], r[0])
+
 				temp_key = "_".join([metric, position, r[1], str(season), str(date)])
 				self.dvp_ranking_cache[temp_key] = i
 				i = i + 1
@@ -461,12 +463,21 @@ class Projections:
 			cursor.execute(query)
 			
 			for result in cursor:
-				players.append({"player_id": result[0], "opponent": result[1]})
+				players.append({"player_id": result[0]})
 		finally:
 			cursor.close()
-		
+
+		delete_list = []
 		for player in players:
 			player["player_info"] = self.get_player_info(player["player_id"])
+
+			# Players with no rg_position will cause errors.  Usually they're so obscure
+			# that we won't miss them, so get rid of them.
+			if not player["player_info"]["rg_position"]:
+				delete_list.append(player)
+
+		for player in delete_list:
+			players.remove(player)
 		
 		return players
 		
@@ -813,7 +824,7 @@ class Projections:
 	
 	def run(self):
 		# Find all games being played today
-		games = self.get_game_list()
+		games = self.get_game_list(date(2014,1,8))
 		
 		# List of sites to make projections for
 		sites = [ self.fpc.DRAFT_DAY, self.fpc.DRAFT_KINGS, DFSConstants.FAN_DUEL, self.fpc.STAR_STREET ]
@@ -822,7 +833,7 @@ class Projections:
 		files = {}
 		for s in sites:
 			files[s] = open("projections/%s_%s.csv" % (s, date.today()), "w")
-			files[s].write("name,position,projection,salary,floor,consistency,ceiling,avg minutes,spread,O/U,vegas projection\n")
+			files[s].write("name,position,projection,salary,floor,consistency,ceiling,avg minutes,spread,O/U,vegas projection,DvP\n")
 		
 		print "%d games tonight..." % len(games)
 		for game in games:
@@ -834,12 +845,15 @@ class Projections:
 				print "\tEvaluating %s" % player["player_info"]["name"]
 			
 				projections = {}
-				
+
 				team = self.get_team(player["player_id"], game["season"])
-				vegas_odds = self.get_vegas_odds(team)
+				opponent = game["home"] if team != game["home"] else game["visitor"]
+
+				# Determine the vegas odds for this game based on the player's team.
+				vegas_odds = self.get_vegas_odds(team,date(2014,1,8))
 					
 				for s in self.stats:
-					projections[s] = self.calculate_projection(player["player_id"], s, game["season"], player["opponent"])
+					projections[s] = self.calculate_projection(player["player_id"], s, game["season"], opponent)
 				
 				for s in sites:
 					self.fpc.site = s
@@ -856,13 +870,15 @@ class Projections:
 					
 					site_position = self.get_position_on_site(player["player_id"], s)
 					
+					fp_rank = self.calculate_defense_vs_position_ranking(DFSConstants.FANTASY_POINTS, player["player_info"]["rg_position"], opponent, game["season"])
+					
 					# Floor and ceiling projections
 					floor = fps - stddev
 					ceiling = fps + stddev
 					
 					print "\t\t%s (%s) is projected for %f points on %s" % (player["player_info"]["name"], site_position, fps, s)
 					#files[s].write("%s,%s,%f,%d,%f,%f,%f,%f\n" % (player["player_info"]["name"], site_position, fps, salary, consistency[0], consistency[1], consistency[2], avg_minutes) )
-					files[s].write("%s,%s,%f,%d,%f,%f,%f,%f,%f,%f,%f\n" % (player["player_info"]["name"], site_position, fps, salary, floor, consistency[1], ceiling, avg_minutes, vegas_odds["spread"], vegas_odds["over_under"], vegas_odds["projection"]) )
+					files[s].write("%s,%s,%f,%d,%f,%f,%f,%f,%f,%f,%f,%d\n" % (player["player_info"]["name"], site_position, fps, salary, floor, consistency[1], ceiling, avg_minutes, vegas_odds["spread"], vegas_odds["over_under"], vegas_odds["projection"], fp_rank) )
 					
 		
 		# We're done!  Close up the files
