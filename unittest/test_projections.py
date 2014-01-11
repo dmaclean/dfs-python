@@ -679,11 +679,13 @@ class TestProjections(unittest.TestCase):
 		self.game_totals_basic_info["opponent"] = "ATL"
 		self.game_totals_basic_info["date"] = date(2013,11,4)
 		self.game_totals_basic_info["points"] = 10
+		self.game_totals_basic_info["minutes_played"] = 30
 		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
 		
 		self.game_totals_basic_info["game_number"] = 2
 		self.game_totals_basic_info["date"] = date(2013,11,5)
 		self.game_totals_basic_info["points"] = 20
+		self.game_totals_basic_info["minutes_played"] = 32
 		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
 		
 		# Write advanced game totals for player
@@ -704,9 +706,10 @@ class TestProjections(unittest.TestCase):
 		
 		baseline = self.projections.get_baseline("macleda01", 2013)
 		self.assertTrue(baseline[0] == 15)	# avg points
-		self.assertTrue(baseline[12] == 11.6)	# usage
-		self.assertTrue(baseline[13] == 102)	# off rating
-		self.assertTrue(baseline[14] == 102)	# def rating
+		self.assertTrue(baseline[12] == 31)     # minutes played
+		self.assertTrue(baseline[13] == 11.6)	# usage
+		self.assertTrue(baseline[14] == 102)	# off rating
+		self.assertTrue(baseline[15] == 102)	# def rating
 	
 	def test_get_baseline_with_date(self):
 		# Write basic game totals for player
@@ -741,9 +744,9 @@ class TestProjections(unittest.TestCase):
 		
 		baseline = self.projections.get_baseline("macleda01", 2013, date(2013,11,4))
 		self.assertTrue(baseline[0] == 10)	# avg points
-		self.assertTrue(baseline[12] == 10.6)	# usage
-		self.assertTrue(baseline[13] == 100)	# off rating
-		self.assertTrue(baseline[14] == 101)	# def rating
+		self.assertTrue(baseline[13] == 10.6)	# usage
+		self.assertTrue(baseline[14] == 100)	# off rating
+		self.assertTrue(baseline[15] == 101)	# def rating
 	
 	def test_get_baseline_total_rebounds(self):
 		# Write basic game totals for player
@@ -778,9 +781,9 @@ class TestProjections(unittest.TestCase):
 		
 		baseline = self.projections.get_baseline("macleda01", 2013)
 		self.assertTrue(baseline[7] == 15)	# avg total rebounds
-		self.assertTrue(baseline[12] == 11.6)	# usage
-		self.assertTrue(baseline[13] == 102)	# off rating
-		self.assertTrue(baseline[14] == 102)	# def rating
+		self.assertTrue(baseline[13] == 11.6)	# usage
+		self.assertTrue(baseline[14] == 102)	# off rating
+		self.assertTrue(baseline[15] == 102)	# def rating
 	
 	def test_get_baseline_total_rebounds_with_date(self):
 		# Write basic game totals for player
@@ -815,9 +818,9 @@ class TestProjections(unittest.TestCase):
 		
 		baseline = self.projections.get_baseline("macleda01", 2013, date(2013,11,4))
 		self.assertTrue(baseline[7] == 10)	# avg total_rebounds
-		self.assertTrue(baseline[12] == 10.6)	# usage
-		self.assertTrue(baseline[13] == 100)	# off rating
-		self.assertTrue(baseline[14] == 101)	# def rating
+		self.assertTrue(baseline[13] == 10.6)	# usage
+		self.assertTrue(baseline[14] == 100)	# off rating
+		self.assertTrue(baseline[15] == 101)	# def rating
 	
 	def test_normalize_player_avg_stat(self):
 		p = "G"

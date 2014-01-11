@@ -24,7 +24,8 @@ class Projections:
 		self.site = ""
 		
 		self.stats = ["points", "field_goals", "field_goal_attempts", "three_point_field_goals", "three_point_field_goal_attempts",
-							"free_throws", "free_throw_attempts", "total_rebounds", "assists", "steals", "blocks", "turnovers"]
+							"free_throws", "free_throw_attempts", "total_rebounds", "assists", "steals", "blocks", "turnovers",
+							"minutes_played"]
 		
 		# In regression mode?
 		self.regression_mode = False
@@ -515,7 +516,8 @@ class Projections:
 			"assists": 8,
 			"steals": 9,
 			"blocks": 10,
-			"turnovers": 11
+			"turnovers": 11,
+		    "minutes_played": 12
 		}
 
 		info = self.get_player_info(player_id)
@@ -711,6 +713,7 @@ class Projections:
 		self.fpc.site = DFSConstants.STAR_STREET
 		
 		# Squared errors
+		ssq_fps = 0
 		ssq_points = 0
 		ssq_rebounds = 0
 		ssq_assists = 0
@@ -774,13 +777,15 @@ class Projections:
 				})
 				
 				# Calculate squared error
+				error_fps = (proj_fps - actual_fps)**2
 				error_points = (proj_points - actual_points)**2
 				error_assists = (proj_assists - actual_assists)**2
 				error_rebounds = (proj_rebounds - actual_rebounds)**2
 				error_steals = (proj_steals - actual_steals)**2
 				error_blocks = (proj_blocks - actual_blocks)**2
 				error_turnovers = (proj_turnovers - actual_turnovers)**2
-				
+
+				ssq_fps = ssq_fps + error_fps
 				ssq_points = ssq_points + error_points
 				ssq_rebounds = ssq_rebounds + error_rebounds
 				ssq_assists = ssq_assists + error_assists
@@ -800,7 +805,7 @@ class Projections:
 					proj_fps + stddev,
 					proj_fps,
 					actual_fps,
-					(proj_fps - actual_fps)**2,
+					error_fps,
 					proj_points,
 					actual_points,
 					error_points,
@@ -822,6 +827,7 @@ class Projections:
 				)
 				f.write(line + "\n")
 
+		mse_fps = ssq_fps/processed
 		mse_points = ssq_points/processed
 		mse_assists = ssq_assists/processed
 		mse_rebounds = ssq_rebounds/processed
@@ -830,13 +836,16 @@ class Projections:
 		mse_turnovers = ssq_turnovers/processed
 		
 		f.write("\n\n\n")
-		
-		f.write("MSE Points,%f\n" % mse_points)
-		f.write("MSE Assists,%f\n" % mse_assists)
-		f.write("MSE Rebounds,%f\n" % mse_rebounds)
-		f.write("MSE Steals,%f\n" % mse_steals)
-		f.write("MSE Blocks,%f\n" % mse_blocks)
-		f.write("MSE Turnovers,%f\n" % mse_turnovers)
+
+		f.write("MSE FPS,MSE Points,MSE Assists,MSE Rebounds,MSE Steals,MSE Blocks,MSE Turnovers\n")
+		f.write("%f,%f,%f,%f,%f,%f,%f" % (mse_fps,mse_points,mse_assists,mse_rebounds,mse_steals,mse_blocks,mse_turnovers))
+		#f.write("MSE FPs,%f\n" % mse_fps)
+		#f.write("MSE Points,%f\n" % mse_points)
+		#f.write("MSE Assists,%f\n" % mse_assists)
+		#f.write("MSE Rebounds,%f\n" % mse_rebounds)
+		#f.write("MSE Steals,%f\n" % mse_steals)
+		#f.write("MSE Blocks,%f\n" % mse_blocks)
+		#f.write("MSE Turnovers,%f\n" % mse_turnovers)
 		f.close()
 	
 	def run(self):
