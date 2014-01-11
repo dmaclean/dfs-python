@@ -13,6 +13,7 @@ class SalaryImporter:
 			self.cnx = mysql.connector.connect(user='fantasy', password='fantasy', host='localhost', database='basketball_reference')
 		
 		self.site = "DRAFT_DAY"
+		self.file = ""
 		self.salaries = {}
 		self.positions = {}
 	
@@ -99,8 +100,6 @@ class SalaryImporter:
 			self.positions[name_for_site] = position
 
 	def run(self):
-		file = ""
-
 		for arg in sys.argv:
 			if arg == "import_salaries.py":
 				pass
@@ -109,9 +108,9 @@ class SalaryImporter:
 				if pieces[0] == "site":
 					self.site = pieces[1]
 				elif pieces[0] == "file":
-					file = pieces[1]
+					self.file = pieces[1]
 
-		f = open(file, "r")
+		f = open(self.file, "r")
 		read_header = False
 		
 
@@ -125,16 +124,28 @@ class SalaryImporter:
 
 		for k in self.salaries:
 			cursor = self.cnx.cursor()
-			query = ("select id from players where name = '%s'") % (k.replace("'","").replace("\"",""))
-			cursor.execute(query)
+			name = k.replace("'","").replace("\"","")
+			query = ("select id from players where name = '%s' and rg_position is not null") % (name)
 	
-			player_id = ""
-			for (id) in cursor:
-				player_id = id[0]
-				query = ("insert into salaries (player_id, site, salary, date) values ('%s','%s',%d, '%s')") % (player_id,self.site,self.salaries[k],date.today())
+			player_id = ""		
+			try:
 				cursor.execute(query)
 	
-			cursor.close()
+				for (id) in cursor:
+					player_id = id[0]
+				
+				if player_id != "":
+					query = ("insert into salaries (player_id, site, salary, date) values ('%s','%s',%d, '%s')") % (player_id,self.site,self.salaries[k],date.today())
+					cursor.execute(query)
+				else:
+					print "No result for %s" % name
+			except Exception, err:
+				if str(err) == "Unread result found.":
+					print str(error) + "  It's possible that more than one result was pulled from the database for id %s." % (player_id)
+				else:
+					print "ERROR: %s\n" % str(err)
+			finally:	
+				cursor.close()
 	
 			self.insert_or_update_positions(player_id, self.site, self.positions[k])
 
