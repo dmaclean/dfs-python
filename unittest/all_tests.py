@@ -5,6 +5,7 @@ import test_projections
 import test_basketballreference_team_gamelog_parser
 import test_vegas_odds
 import test_rg_player_stats
+import test_defense_vs_position
 
 ##########################
 # FantasyPointCalculator
@@ -40,4 +41,10 @@ unittest.TextTestRunner(verbosity=2).run(suite)
 # RG Player Stats
 ###################
 suite = unittest.TestLoader().loadTestsFromTestCase(test_rg_player_stats.TestRGPlayerStats)
+unittest.TextTestRunner(verbosity=2).run(suite)
+
+########################
+# Defense vs. Position
+########################
+suite = unittest.TestLoader().loadTestsFromTestCase(test_defense_vs_position.TestDefenseVsPosition)
 unittest.TextTestRunner(verbosity=2).run(suite)

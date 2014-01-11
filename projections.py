@@ -4,6 +4,8 @@ import mysql.connector
 
 from fantasy_point_calculator import FantasyPointCalculator
 from dfs_constants import DFSConstants
+from models.defense_vs_position_manager import DefenseVsPositionManager
+from models.defense_vs_position import DefenseVsPosition
 
 from datetime import date
 
@@ -35,6 +37,8 @@ class Projections:
 			self.cnx = mysql.connector.connect(user='fantasy', password='fantasy', host='localhost', database='basketball_reference')
 		else:
 			self.cnx = cnx
+
+		self.dvpManager = DefenseVsPositionManager(cnx=self.cnx)
 
 	##########################################################
 	# Retrieves the player information in the players table.
@@ -133,26 +137,39 @@ class Projections:
 	# the team has played.
 	##############################################################################
 	def calculate_defense_vs_position(self, metric, position, team, season, date=date.today()):
-		key = "_".join([metric, position, team, str(season), str(date)])
+		# Initialize the cache, if necessary
+		if len(self.dvp_cache) == 0:
+			print "Populating the DvP cache..."
+			dvps = self.dvpManager.get(DefenseVsPosition(season=season))
+			for dvp in dvps:
+				key = "_".join([dvp.stat, dvp.position, dvp.team, str(dvp.season), str(dvp.date)])
+				self.dvp_cache[key] = dvp.value
+
+		key = "_".join([metric, position, team, str(season), str(date).replace(" 00:00:00","")])
 		if key in self.dvp_cache:
 			return self.dvp_cache[key]
-		
-		cursor = self.cnx.cursor()
+
+		self.dvp_cache[key] = self.dvpManager.calculateDefenseVsPosition(metric, position, team, season, date)
+
+		return self.dvp_cache[key]
+
+
+		#cursor = self.cnx.cursor()
 	
-		query = ""
-		try:
-			query = """select sum(b.%s)/(select max(game) from team_game_totals where team = '%s' and season = %d and date <= '%s') 
-					from players p inner join game_totals_basic b on p.id = b.player_id 
-					where b.season = %d and p.rg_position = '%s' and b.opponent = '%s'
-						and date <= '%s'""" % (metric, team, season, date, season, position, team, date)
-			cursor.execute(query)
+		#query = ""
+		#try:
+		#	query = """select sum(b.%s)/(select max(game) from team_game_totals where team = '%s' and season = %d and date <= '%s')
+		#			from players p inner join game_totals_basic b on p.id = b.player_id
+		#			where b.season = %d and p.rg_position = '%s' and b.opponent = '%s'
+		#				and date <= '%s'""" % (metric, team, season, date, season, position, team, date)
+		#	cursor.execute(query)
 		
-			for result in cursor:
-				self.dvp_cache[key] = result[0]
-				return result[0]
+		#	for result in cursor:
+		#		self.dvp_cache[key] = result[0]
+		#		return result[0]
 			
-		finally:
-			cursor.close()
+		#finally:
+		#	cursor.close()
 	
 	######################################################################################
 	# To calculate defensive vs a position we want to get all of the players who
@@ -500,7 +517,7 @@ class Projections:
 			"blocks": 10,
 			"turnovers": 11
 		}
-		
+
 		info = self.get_player_info(player_id)
 		team = self.get_team(player_id, season, date)
 		baselines = self.get_baseline(player_id,2013, date)
@@ -523,10 +540,10 @@ class Projections:
 		# for this player's position.
 		######################################################################
 		league_avg = self.calculate_league_avg(stat, info["rg_position"], season)
-		
+
 		def_factor = self.calculate_defense_vs_position(stat, info["rg_position"], opponent, season, date)
 
-		adjusted_stat = adjusted_stat * float(def_factor/league_avg)
+		adjusted_stat = adjusted_stat * float(def_factor)/float(league_avg)
 	
 		return adjusted_stat
 
@@ -678,8 +695,8 @@ class Projections:
 			cursor.execute("""
 				select player_id, season, game_number, date, team, home, opponent, minutes_played, 
 					points, assists, total_rebounds, steals, blocks, turnovers 
-				from game_totals_basic 
-				where season = 2013 
+				from game_totals_basic b inner join players p on p.id = b.player_id
+				where b.season = 2013 and p.rg_position is not null
 				order by player_id, date desc""")
 			
 			for game in cursor:
@@ -736,7 +753,7 @@ class Projections:
 			
 			if minutes_played > 0:
 				processed = processed + 1
-			
+
 				start = time.time()
 				proj_points = self.calculate_projection(player_id, "points", season, opponent, date)
 				proj_assists = self.calculate_projection(player_id, "assists", season, opponent, date)
@@ -745,7 +762,7 @@ class Projections:
 				proj_blocks = self.calculate_projection(player_id, "blocks", season, opponent, date)
 				proj_turnovers = self.calculate_projection(player_id, "turnovers", season, opponent, date)
 				end = time.time()
-				#print "calculate_projections - %f" % ((end-start)/1000.0)
+				#print "calculate_projections - %f" % (end-start)
 				
 				proj_fps = self.fpc.calculate({
 					"points": proj_points,
@@ -804,7 +821,7 @@ class Projections:
 					error_turnovers
 				)
 				f.write(line + "\n")
-		
+
 		mse_points = ssq_points/processed
 		mse_assists = ssq_assists/processed
 		mse_rebounds = ssq_rebounds/processed
@@ -824,7 +841,7 @@ class Projections:
 	
 	def run(self):
 		# Find all games being played today
-		games = self.get_game_list(date(2014,1,8))
+		games = self.get_game_list()
 		
 		# List of sites to make projections for
 		sites = [ self.fpc.DRAFT_DAY, self.fpc.DRAFT_KINGS, DFSConstants.FAN_DUEL, self.fpc.STAR_STREET ]
@@ -850,7 +867,7 @@ class Projections:
 				opponent = game["home"] if team != game["home"] else game["visitor"]
 
 				# Determine the vegas odds for this game based on the player's team.
-				vegas_odds = self.get_vegas_odds(team,date(2014,1,8))
+				vegas_odds = self.get_vegas_odds(team)
 					
 				for s in self.stats:
 					projections[s] = self.calculate_projection(player["player_id"], s, game["season"], opponent)
