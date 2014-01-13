@@ -2,7 +2,7 @@ import sys
 sys.path.append('..')
 
 from datetime import date
-import sqlite3
+
 import unittest
 import BBRTestUtility
 import projections
@@ -991,10 +991,27 @@ class TestProjections(unittest.TestCase):
 		self.game_totals_basic_info["opponent"] = "NYK"
 		self.game_totals_basic_info["date"] = date(2013,11,30)
 		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		# Player 3 has a game with PHI but was traded to WAS
+		self.game_totals_basic_info["player_id"] = "player3"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["game_number"] = 1
+		self.game_totals_basic_info["team"] = "PHI"
+		self.game_totals_basic_info["opponent"] = "NYK"
+		self.game_totals_basic_info["date"] = date(2013,12,1)
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		self.game_totals_basic_info["player_id"] = "player3"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["game_number"] = 1
+		self.game_totals_basic_info["team"] = "WAS"
+		self.game_totals_basic_info["opponent"] = "NYK"
+		self.game_totals_basic_info["date"] = date(2013,12,2)
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
 		
 		# Set up game on schedule
-		self.schedule_info["date"] = date(2012,12,2)
-		self.schedule_info["season"] = 2012
+		self.schedule_info["date"] = date(2013,12,3)
+		self.schedule_info["season"] = 2013
 		self.schedule_info["home"] = "PHI"
 		self.schedule_info["visitor"] = "BKN"
 		self.testUtil.insert_into_schedules(self.schedule_info)
@@ -1003,20 +1020,20 @@ class TestProjections(unittest.TestCase):
 		players = self.projections.get_players_in_game(game)
 
 		self.assertTrue(len(players) == 2)
-		self.assertTrue(players[0]["player_id"] == "player1")
-		self.assertTrue(players[0]["player_info"]["id"] == "player1")
-		self.assertTrue(players[0]["player_info"]["name"] == "Player 1")
-		self.assertTrue(players[0]["player_info"]["position"] == "G")
-		self.assertTrue(players[0]["player_info"]["height"] == 80)
-		self.assertTrue(players[0]["player_info"]["weight"] == 200)
+		self.assertTrue(players[0]["player_id"] == "player2")
+		self.assertTrue(players[0]["player_info"]["id"] == "player2")
+		self.assertTrue(players[0]["player_info"]["name"] == "Player 2")
+		self.assertTrue(players[0]["player_info"]["position"] == "C")
+		self.assertTrue(players[0]["player_info"]["height"] == 88)
+		self.assertTrue(players[0]["player_info"]["weight"] == 250)
 		self.assertTrue(players[0]["player_info"]["url"] == "something")
 
-		self.assertTrue(players[1]["player_id"] == "player2")
-		self.assertTrue(players[1]["player_info"]["id"] == "player2")
-		self.assertTrue(players[1]["player_info"]["name"] == "Player 2")
-		self.assertTrue(players[1]["player_info"]["position"] == "C")
-		self.assertTrue(players[1]["player_info"]["height"] == 88)
-		self.assertTrue(players[1]["player_info"]["weight"] == 250)
+		self.assertTrue(players[1]["player_id"] == "player1")
+		self.assertTrue(players[1]["player_info"]["id"] == "player1")
+		self.assertTrue(players[1]["player_info"]["name"] == "Player 1")
+		self.assertTrue(players[1]["player_info"]["position"] == "G")
+		self.assertTrue(players[1]["player_info"]["height"] == 80)
+		self.assertTrue(players[1]["player_info"]["weight"] == 200)
 		self.assertTrue(players[1]["player_info"]["url"] == "something")
 	
 	def test_get_salary(self):

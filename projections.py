@@ -470,18 +470,26 @@ class Projections:
 		cursor = self.cnx.cursor()
 		
 		query = """
-			select player_id, opponent from game_totals_basic 
-			where team in ('%s', '%s') and 
-				(date = (select max(date) from game_totals_basic where team = '%s') or 
-				date = (select max(date) from game_totals_basic where team = '%s'))
-			order by date desc
-		""" % (game["home"], game["visitor"], game["home"], game["visitor"])
+			select player_id, team, date
+			from game_totals_basic b
+			where season = %d
+			order by player_id, date desc
+		""" % (game["season"])
 		
 		try:
 			cursor.execute(query)
-			
+
+			ids = {}
 			for result in cursor:
-				players.append({"player_id": result[0]})
+				if result[0] not in ids:
+					if result[1] == game["home"] or result[1] == game["visitor"]:
+						ids[result[0]] = True
+					else:
+						ids[result[0]] = False
+
+			for id in ids:
+				if ids[id]:
+					players.append({"player_id": id})
 		finally:
 			cursor.close()
 
