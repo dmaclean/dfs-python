@@ -522,7 +522,7 @@ class Projections:
 
 		info = self.get_player_info(player_id)
 		team = self.get_team(player_id, season, date)
-		baselines = self.get_baseline(player_id,2013, date)
+		baselines = self.get_baseline(player_id,season, date)
 
 		avg_stat = baselines[baseline_stat_index[stat]]		
 		adjusted_stat = avg_stat
