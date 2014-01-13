@@ -523,7 +523,7 @@ class Projections:
 		info = self.get_player_info(player_id)
 		team = self.get_team(player_id, season, date)
 		baselines = self.get_baseline(player_id,2013, date)
-		
+
 		avg_stat = baselines[baseline_stat_index[stat]]		
 		adjusted_stat = avg_stat
 	
@@ -535,7 +535,7 @@ class Projections:
 		avg_pace = (team_pace + opp_pace)/2
 		pace_factor = avg_pace/team_pace
 	
-		adjusted_stat = float(avg_stat) * float(pace_factor)
+		adjusted_stat = float(adjusted_stat) * float(pace_factor)
 	
 		######################################################################
 		# Effectiveness of opponent defense, compared to the league average
@@ -640,18 +640,21 @@ class Projections:
 	###########################################################################################
 	# Retrieves the average minutes that a player has been on the floor for the past n games.
 	###########################################################################################
-	def get_avg_minutes_past_n_games(self, player_id, season, n):
+	def get_avg_stat_past_n_games(self, player_id, stat, season, n):
 		cursor = self.cnx.cursor()
 		
 		query = """
-			select avg(minutes_played) from game_totals_basic where player_id = '%s' and season = %d order by date desc limit %d
-		""" % (player_id, season, n)
+			select %s from game_totals_basic where player_id = '%s' and season = %d order by date desc limit %d
+		""" % (stat, player_id, season, n)
 		
 		try:
 			cursor.execute(query)
-			
+
+			total = 0
 			for result in cursor:
-				return result[0]
+				total = total + result[0]
+
+			return total/n
 		finally:
 			cursor.close()
 	
@@ -892,7 +895,7 @@ class Projections:
 					# FPs standard deviation
 					stddev = self.calculate_scoring_stddev(player["player_id"], game["season"], s)
 					
-					avg_minutes = self.get_avg_minutes_past_n_games(player["player_id"], game["season"], 5)
+					avg_minutes = self.get_avg_stat_past_n_games(player["player_id"], "minutes_played", game["season"], 5)
 					
 					site_position = self.get_position_on_site(player["player_id"], s)
 					

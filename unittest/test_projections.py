@@ -1433,7 +1433,37 @@ class TestProjections(unittest.TestCase):
 		
 		self.assertTrue(bos_rank == 1)
 		self.assertTrue(atl_rank == 2)
-	
+
+	def test_get_avg_stat_past_n_games_points(self):
+		# Set up games for player "test"
+		self.game_totals_basic_info["player_id"] = "test"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["date"] = date(2013,11,1)
+		self.game_totals_basic_info["game_number"] = 1
+		self.game_totals_basic_info["opponent"] = "ATL"
+		self.game_totals_basic_info["points"] = 10
+		id1 = self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		self.game_totals_basic_info["player_id"] = "test"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["date"] = date(2013,11,2)
+		self.game_totals_basic_info["game_number"] = 2
+		self.game_totals_basic_info["opponent"] = "ATL"
+		self.game_totals_basic_info["points"] = 12
+		id2 = self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		self.game_totals_basic_info["player_id"] = "test"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["date"] = date(2013,11,3)
+		self.game_totals_basic_info["game_number"] = 3
+		self.game_totals_basic_info["opponent"] = "ATL"
+		self.game_totals_basic_info["points"] = 14
+		id3 = self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		self.assertTrue(self.projections.get_avg_stat_past_n_games("test", "points", 2013, 3) == 12)
+		self.assertTrue(self.projections.get_avg_stat_past_n_games("test", "points", 2013, 2) == 13)
+		self.assertTrue(self.projections.get_avg_stat_past_n_games("test", "points", 2013, 1) == 14)
+
 	#def test_get_avg_contribution_to_team_stat(self):
 		
 
