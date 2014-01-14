@@ -6,6 +6,7 @@ import test_basketballreference_team_gamelog_parser
 import test_vegas_odds
 import test_rg_player_stats
 import test_defense_vs_position
+import test_injury
 
 ##########################
 # FantasyPointCalculator
@@ -23,6 +24,12 @@ unittest.TextTestRunner(verbosity=2).run(suite)
 # Projections
 ###############
 suite = unittest.TestLoader().loadTestsFromTestCase(test_projections.TestProjections)
+unittest.TextTestRunner(verbosity=2).run(suite)
+
+##########
+# Injury
+##########
+suite = unittest.TestLoader().loadTestsFromTestCase(test_injury.TestInjury)
 unittest.TextTestRunner(verbosity=2).run(suite)
 
 #######################
