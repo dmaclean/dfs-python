@@ -347,3 +347,14 @@ create table defense_vs_position (
 	date date not null
 );
 create index defense_vs_position_season_idx on defense_vs_position(season);
+
+create table injuries (
+    id integer auto_increment primary key,
+    player_id varchar(100) not null,
+    injury_date date not null,
+    return_date date not null,
+    details varchar(500),
+    foreign key (player_id) references players(id)
+);
+create index injuries_injury_date_idx on injuries(injury_date);
+create index injuries_return_date_idx on injuries(return_date);
