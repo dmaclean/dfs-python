@@ -3,8 +3,10 @@ import random
 import sys
 import time
 import mysql.connector
-from datetime import date
+from datetime import date, timedelta
 from HTMLParser import HTMLParser
+
+from projections import Projections
 
 
 class Processor:
@@ -13,6 +15,7 @@ class Processor:
 	season = -1
 	type = "players"
 	all_players = False
+	yesterday_only = False
 	
 	listParser = None
 	playerMainParser = None
@@ -48,6 +51,8 @@ class Processor:
 					self.type = pieces[1]
 				elif pieces[0] == "all_players":
 					self.all_players = pieces[1] == "true"
+				elif pieces[0] == "yesterday_only":
+					self.yesterday_only = pieces[1] == "true"
 					
 	
 	##############################################################################
@@ -125,7 +130,20 @@ class Processor:
 		if self.source == "site":
 			cnx = mysql.connector.connect(user='fantasy', password='fantasy', host='localhost', database='basketball_reference')
 			alphabet = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
-			
+			#alphabet = ["l","m"]
+
+			# Figure out who played yesterday and collect their URLs.
+			projections = Projections()
+			one_day = timedelta(days=1)
+			yesterday = date.today() - one_day
+			games = projections.get_game_list(yesterday)
+
+			eligible_urls = []
+			for game in games:
+				players = projections.get_players_in_game(game)
+				for player in players:
+					eligible_urls.append(player["player_info"]["url"])
+
 			for letter in alphabet:
 				data = self.fetchData("/players/"+letter+"/", True)
 				
@@ -142,7 +160,11 @@ class Processor:
 						player.writePlayerInfoToDatabase(cnx)
 					
 					s = "%s,%s,%d,%d,%s\n" % (player.name, player.positions, player.height, player.weight, player.url) 
-					
+
+					if self.yesterday_only and player.url not in eligible_urls:
+						print "\t%s didn't play last night.  Moving on..." % player.name
+						continue
+
 					time.sleep( 5 + (5*random.random()) )
 					data = self.fetchData(player.url, True)
 					
