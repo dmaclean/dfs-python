@@ -89,12 +89,12 @@ class InjuryManager():
 		cursor = self.cnx.cursor()
 
 		query = "select * from injuries where injury_date <= '%s' and return_date > '%s'" % (date, date)
-		injuries = []
+		injuries = {}
 		try:
 			cursor.execute(query)
 			for result in cursor:
 				injury = Injury(id=result[0], player_id=result[1], injury_date=result[2], return_date=result[3], details=result[4])
-				injuries.append(injury)
+				injuries[injury.player_id] = injury
 		finally:
 			cursor.close()
 

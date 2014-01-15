@@ -51,5 +51,7 @@ class TestInjury(TestCase):
 		injuries = self.injury_manager.get_currently_injured_players(date=date(2014,1,12))
 
 		self.assertTrue(len(injuries) == 1)
-		self.assertTrue(injuries[0].player_id == "later injury" and injuries[0].injury_date == "2014-01-10" and
-		                injuries[0].return_date == "2014-01-14" and injuries[0].details == "sick")
+		self.assertTrue(injuries[new_injury.player_id].player_id == "later injury" and
+		                injuries[new_injury.player_id].injury_date == "2014-01-10" and
+		                injuries[new_injury.player_id].return_date == "2014-01-14" and
+		                injuries[new_injury.player_id].details == "sick")
