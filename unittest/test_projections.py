@@ -1,18 +1,20 @@
 import sys
 sys.path.append('..')
 
-from datetime import date
+from datetime import date,timedelta
 
 import unittest
 import BBRTestUtility
-import projections
+from projections import Projections
+from models.injury_manager import InjuryManager, Injury
 from fantasy_point_calculator import FantasyPointCalculator
 from dfs_constants import DFSConstants
 
 class TestProjections(unittest.TestCase):
 	def setUp(self):
 		self.testUtil = BBRTestUtility.BBRTestUtility()
-		self.projections = projections.Projections(self.testUtil.conn)
+		self.projections = Projections(self.testUtil.conn)
+		self.injury_manager = InjuryManager(self.testUtil.conn)
 		self.testUtil.runSQL()
 		
 		# Initialize the player info map.
@@ -1480,6 +1482,182 @@ class TestProjections(unittest.TestCase):
 		self.assertTrue(self.projections.get_avg_stat_past_n_games("test", "points", 2013, 3) == 12)
 		self.assertTrue(self.projections.get_avg_stat_past_n_games("test", "points", 2013, 2) == 13)
 		self.assertTrue(self.projections.get_avg_stat_past_n_games("test", "points", 2013, 1) == 14)
+
+	def test_determine_depth_chart(self):
+		self.player_info["id"] = "PG"
+		self.player_info["name"] = "Point Guard"
+		self.player_info["rg_position"] = "PG"
+		self.testUtil.insert_into_players(self.player_info)
+
+		self.player_info["id"] = "PG2"
+		self.player_info["name"] = "Point Guard 2"
+		self.player_info["rg_position"] = "PG"
+		self.testUtil.insert_into_players(self.player_info)
+
+		self.player_info["id"] = "C"
+		self.player_info["name"] = "Center"
+		self.player_info["rg_position"] = "C"
+		self.testUtil.insert_into_players(self.player_info)
+
+		self.player_info["id"] = "C2"
+		self.player_info["name"] = "Center 2"
+		self.player_info["rg_position"] = "C"
+		self.testUtil.insert_into_players(self.player_info)
+
+		self.game_totals_basic_info["player_id"] = "PG"
+		self.game_totals_basic_info["team"] = "BOS"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["minutes_played"] = 30
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		self.game_totals_basic_info["player_id"] = "PG"
+		self.game_totals_basic_info["team"] = "BOS"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["minutes_played"] = 28
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		self.game_totals_basic_info["player_id"] = "C"
+		self.game_totals_basic_info["team"] = "ATL"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["minutes_played"] = 15
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		self.game_totals_basic_info["player_id"] = "C"
+		self.game_totals_basic_info["team"] = "ATL"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["minutes_played"] = 13
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		self.game_totals_basic_info["player_id"] = "PG2"
+		self.game_totals_basic_info["team"] = "BOS"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["minutes_played"] = 15
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		self.game_totals_basic_info["player_id"] = "PG2"
+		self.game_totals_basic_info["team"] = "BOS"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["minutes_played"] = 17
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		self.game_totals_basic_info["player_id"] = "C2"
+		self.game_totals_basic_info["team"] = "ATL"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["minutes_played"] = 30
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		self.game_totals_basic_info["player_id"] = "C2"
+		self.game_totals_basic_info["team"] = "ATL"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["minutes_played"] = 32
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		depth_chart, depth_chart_by_player_id = self.projections.determine_depth_chart(2013)
+
+		# Tests for first chart
+		self.assertTrue(len(depth_chart) == 2)  # 2 teams - BOS and ATL
+		self.assertTrue(len(depth_chart["ATL"]) == 1) # C position
+		self.assertTrue("C" in depth_chart["ATL"] and "PF" not in depth_chart["ATL"])
+		self.assertTrue(len(depth_chart["BOS"]) == 1) # PG position
+		self.assertTrue("PG" in depth_chart["BOS"] and "C" not in depth_chart["BOS"])
+		self.assertTrue(depth_chart["ATL"]["C"][0][0] == 31 and
+		                depth_chart["ATL"]["C"][0][1] == "C2" and
+						depth_chart["ATL"]["C"][0][2] == "Center 2")
+		self.assertTrue(depth_chart["ATL"]["C"][1][0] == 14 and
+		                depth_chart["ATL"]["C"][1][1] == "C" and
+						depth_chart["ATL"]["C"][1][2] == "Center")
+		self.assertTrue(depth_chart["BOS"]["PG"][0][0] == 29 and
+		                depth_chart["BOS"]["PG"][0][1] == "PG" and
+						depth_chart["BOS"]["PG"][0][2] == "Point Guard")
+		self.assertTrue(depth_chart["BOS"]["PG"][1][0] == 16 and
+		                depth_chart["BOS"]["PG"][1][1] == "PG2" and
+						depth_chart["BOS"]["PG"][1][2] == "Point Guard 2")
+
+		# Tests for second chart
+		self.assertTrue(depth_chart_by_player_id["C"][0] == "Center" and
+						depth_chart_by_player_id["C"][1] == 14 and
+						depth_chart_by_player_id["C"][2] == 2 and
+						depth_chart_by_player_id["C"][3] >= 0.31 and depth_chart_by_player_id["C"][3] <= 0.312)
+		self.assertTrue(depth_chart_by_player_id["C2"][0] == "Center 2" and
+						depth_chart_by_player_id["C2"][1] == 31 and
+						depth_chart_by_player_id["C2"][2] == 1 and
+						depth_chart_by_player_id["C2"][3] >= 0.68 and depth_chart_by_player_id["C2"][3] <= 0.69)
+		self.assertTrue(depth_chart_by_player_id["PG"][0] == "Point Guard" and
+						depth_chart_by_player_id["PG"][1] == 29 and
+						depth_chart_by_player_id["PG"][2] == 1 and
+						depth_chart_by_player_id["PG"][3] >= 0.64 and depth_chart_by_player_id["PG"][3] <= 0.65)
+		self.assertTrue(depth_chart_by_player_id["PG2"][0] == "Point Guard 2" and
+						depth_chart_by_player_id["PG2"][1] == 16 and
+						depth_chart_by_player_id["PG2"][2] == 2 and
+						depth_chart_by_player_id["PG2"][3] >= 0.35 and depth_chart_by_player_id["PG2"][3] <= 0.36)
+
+	def test_determine_depth_chart_with_injury(self):
+		self.player_info["id"] = "PG"
+		self.player_info["name"] = "Point Guard"
+		self.player_info["rg_position"] = "PG"
+		self.testUtil.insert_into_players(self.player_info)
+
+		self.player_info["id"] = "PG2"
+		self.player_info["name"] = "Point Guard 2"
+		self.player_info["rg_position"] = "PG"
+		self.testUtil.insert_into_players(self.player_info)
+
+		self.player_info["id"] = "PG3"
+		self.player_info["name"] = "Point Guard 3"
+		self.player_info["rg_position"] = "PG"
+		self.testUtil.insert_into_players(self.player_info)
+
+		self.game_totals_basic_info["player_id"] = "PG"
+		self.game_totals_basic_info["team"] = "BOS"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["minutes_played"] = 30
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		self.game_totals_basic_info["player_id"] = "PG2"
+		self.game_totals_basic_info["team"] = "BOS"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["minutes_played"] = 10
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		self.game_totals_basic_info["player_id"] = "PG3"
+		self.game_totals_basic_info["team"] = "BOS"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["minutes_played"] = 40
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		one_day = timedelta(days=1)
+		tomorrow = date.today() + one_day
+		injury = Injury(player_id="PG3", injury_date=date(2014,1,1), return_date=tomorrow, details="test")
+		self.injury_manager.insert(injury)
+
+		depth_chart, depth_chart_by_player_id = self.projections.determine_depth_chart(2013)
+
+		# Tests for first chart
+		self.assertTrue(len(depth_chart) == 1)
+		self.assertTrue(len(depth_chart["BOS"]) == 1)
+		self.assertTrue(depth_chart["BOS"]["PG"][0][0] == 40 and
+						depth_chart["BOS"]["PG"][0][1] == "PG3" and
+						depth_chart["BOS"]["PG"][0][2] == "Point Guard 3")
+		self.assertTrue(depth_chart["BOS"]["PG"][1][0] == 30 and
+						depth_chart["BOS"]["PG"][1][1] == "PG" and
+						depth_chart["BOS"]["PG"][1][2] == "Point Guard")
+		self.assertTrue(depth_chart["BOS"]["PG"][2][0] == 10 and
+						depth_chart["BOS"]["PG"][2][1] == "PG2" and
+						depth_chart["BOS"]["PG"][2][2] == "Point Guard 2")
+
+		# Tests for second chart
+		self.assertTrue(depth_chart_by_player_id["PG"][0] == "Point Guard" and
+						depth_chart_by_player_id["PG"][1] == 60 and
+						depth_chart_by_player_id["PG"][2] == 1 and
+						depth_chart_by_player_id["PG"][3] == 0.75)
+		self.assertTrue(depth_chart_by_player_id["PG2"][0] == "Point Guard 2" and
+						depth_chart_by_player_id["PG2"][1] == 20 and
+						depth_chart_by_player_id["PG2"][2] == 2 and
+						depth_chart_by_player_id["PG2"][3] == 0.25)
+		self.assertTrue(depth_chart_by_player_id["PG3"][0] == "Point Guard 3" and
+						depth_chart_by_player_id["PG3"][1] == 0 and
+						depth_chart_by_player_id["PG3"][2] == -1 and
+						depth_chart_by_player_id["PG3"][3] == 0.0)
 
 	#def test_get_avg_contribution_to_team_stat(self):
 		

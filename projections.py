@@ -6,6 +6,7 @@ from fantasy_point_calculator import FantasyPointCalculator
 from dfs_constants import DFSConstants
 from models.defense_vs_position_manager import DefenseVsPositionManager
 from models.defense_vs_position import DefenseVsPosition
+from models.injury_manager import InjuryManager,Injury
 
 from datetime import date
 
@@ -697,6 +698,123 @@ class Projections:
 				
 		finally:
 			cursor.close()
+
+	def determine_depth_chart(self, season, date=date.today()):
+		"""
+		Creates two depth charts for teams.
+
+		One is from the perspective of a team/position breakdown.  It gives a global perspective of all players.
+		Team
+		--> Position
+		------> Player1 = (<avg minutes>, <player_id>, <player name>)
+		------> Player2 = (<avg minutes>, <player_id>, <player name>)
+		------> PlayerN = (<avg minutes>, <player_id>, <player name>)
+
+
+		Another is a quick lookup of the player
+		Player_id = (<player name>, <avg_minutes>, <rank>, <pct of minutes for position>)
+		"""
+		cursor = self.cnx.cursor()
+
+		injury_manager = InjuryManager(self.cnx)
+		injuries = injury_manager.get_currently_injured_players(date)
+
+		depth_chart = {}
+		depth_chart_by_player_id = {}
+
+		query = """
+				select name, p.id, team, rg_position, avg(minutes_played) as "avg mp"
+				from players p inner join game_totals_basic b on p.id = b.player_id
+				where b.season = %d and b.date <= '%s'
+				group by player_id
+				order by team, rg_position, avg(minutes_played) desc
+			""" % (season, date)
+
+		try:
+			cursor.execute(query)
+			for result in cursor:
+				name = result[0]
+				player_id = result[1]
+				team = result[2]
+				position = result[3]
+				minutes = result[4]
+
+				# Create the map for a team if it doesn't exist yet.
+				if team not in depth_chart:
+					depth_chart[team] = {}
+
+				# Create the map for a position if it doesn't exist yet.
+				if position not in depth_chart[team]:
+					depth_chart[team][position] = []
+
+				depth_chart[team][position].append((minutes, player_id, name))
+				depth_chart[team][position].sort(reverse=True)
+
+			# Factor in injured players
+			#for t in depth_chart:
+			#	for p in depth_chart[t]:
+			#		for player in depth_chart[t][p]:
+			#			for injury in injuries:     # 4x nested loop.  Yikes!
+			#				if player[1] == injury.player_id:
+			#					pass
+
+			for t in depth_chart:
+				for p in depth_chart[t]:
+
+					# Determine the total avg minutes at the position
+					total = 0
+					for player in depth_chart[t][p]:
+						total = total + player[0]
+
+					# Generate the entry for each player, now that we know the total avg minutes at the position.
+					i = 1
+					for player in depth_chart[t][p]:
+						depth_chart_by_player_id[player[1]] = [player[2], player[0], i, player[0]/total]
+						i += 1
+
+					# Now we need to factor in injuries.  In this loop, go through all the players
+					# for this team at this position and if they're injured, add their expected minutes
+					# to a pool of available minutes.  In a subsequent loop we'll redistribute them to
+					# players that will be playing.
+					avail_minutes = 0
+					percentage_injured = 0
+					for player in depth_chart[t][p]:
+						pid = player[1]
+
+						# is player injured (and have we yet to factor it in [0 minutes])?
+						if pid in injuries:
+							# Player is injured.  Add their expected minutes to avail_minutes and
+							# set avg minutes and pct of total to 0.
+							avail_minutes += depth_chart_by_player_id[pid][1]
+							percentage_injured += depth_chart_by_player_id[pid][3]
+							depth_chart_by_player_id[pid][1] = 0
+							depth_chart_by_player_id[pid][2] = -1
+							depth_chart_by_player_id[pid][3] = 0
+
+					# In this loop we're going to redistribute the available minutes.  This will be done
+					# proportionally, so assume the following scenario:
+					# P1 = 50% of minutes (20 minutes)
+					# P2 = 25% of minutes (10 minutes)
+					# P3 = 25% of minutes (10 minutes)
+					# P1 gets injured, so 50% of total minutes are up for grabs (percentage_injured = 0.5).
+					# P2 and P3 each get a new_pct_of_total = .25/(1-0.5) = 0.5
+					# So, their new expected minutes each become 10 + (20 * 0.5) = 20 minutes.
+					rank = 1
+					for player in depth_chart[t][p]:
+						pid = player[1]
+
+						if pid not in injuries:
+							new_pct_of_total = depth_chart_by_player_id[pid][3]/(1-percentage_injured)
+							depth_chart_by_player_id[pid][2] = rank
+							depth_chart_by_player_id[pid][3] = new_pct_of_total
+							depth_chart_by_player_id[pid][1] += avail_minutes * new_pct_of_total
+
+							rank += 1
+
+		finally:
+			cursor.close()
+
+		return depth_chart, depth_chart_by_player_id
 
 	def regression(self):
 		games = []
