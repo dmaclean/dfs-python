@@ -251,11 +251,11 @@ class Projections:
 		try:
 			cursor.execute(query)
 			for result in cursor:
-				count = count + 1
+				count += 1
 				if result[0] == 240:
-					total = total + result[1] 
+					total += result[1]
 				else:
-					total = total + (result[1]/result[0])*240
+					total += (result[1]/result[0])*240
 		
 			self.pace_cache[key] = total/count
 			return total/count
