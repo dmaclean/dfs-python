@@ -10,6 +10,7 @@ from models.injury_manager import InjuryManager,Injury
 
 from datetime import date
 
+
 class Projections:
 	def __init__(self, cnx = None):
 		self.league_averages = {}
@@ -20,6 +21,7 @@ class Projections:
 		self.team_cache = {}
 		self.baseline_cache = {}
 		self.scoring_stddev_cache = {}
+		self.expected_points_cache = {}
 		
 		# The current DFS site we're projecting for.
 		self.site = ""
@@ -234,7 +236,7 @@ class Projections:
 		
 		return self.dvp_ranking_cache[key]
 
-	def calculate_pace(self, team, season):
+	def calculate_pace(self, team, season, d=date.today()):
 		key = "_".join([team, str(season)])
 		if key in self.pace_cache:
 			return self.pace_cache[key]
@@ -243,8 +245,8 @@ class Projections:
 		query = """
 			select minutes_played, 0.5 * ((field_goal_attempts + 0.4 * free_throw_attempts - 1.07 * (offensive_rebounds / (offensive_rebounds + (opp_total_rebounds - opp_offensive_rebounds))) * (field_goal_attempts - field_goals) + turnovers) + (opp_field_goal_attempts + 0.4 * opp_free_throw_attempts - 1.07 * ((opp_offensive_rebounds) / (opp_offensive_rebounds + (total_rebounds - offensive_rebounds))) * (opp_field_goal_attempts - opp_field_goals) + opp_turnovers)) as "pace"
 			from team_game_totals t 
-			where season = %d and team = '%s'
-		""" % (season, team)
+			where season = %d and team = '%s' and date <= '%s'
+		""" % (season, team, d)
 	
 		total = 0.0
 		count = 0
@@ -261,6 +263,56 @@ class Projections:
 			return total/count
 		finally:
 			cursor.close()
+
+	def calculate_expected_team_points(self, team, opponent, season, d=date.today()):
+		"""
+		Calculate the number of points we expect a team to score based on the opponent they are playing.
+
+		expected = ((team_off_efficiency + opp_def_efficiency)/2 * (team_pace + opp_pace)/2) * 100
+		"""
+
+		# Check the cache first
+		if team in self.expected_points_cache:
+			return self.expected_points_cache[team]
+
+		team_pace = self.calculate_pace(team, season, d)
+		opp_pace = self.calculate_pace(opponent, season, d)
+
+		# Get the average points per game
+		cursor = self.cnx.cursor()
+
+		query = """
+			select avg(points), avg(opp_points), team from team_game_totals
+			where season = %d and date <= '%s' and team in ('%s','%s') group by team
+		""" % (season, d, team, opponent)
+
+		try:
+			cursor.execute(query)
+			for result in cursor:
+				if result[2] == team:
+					team_avg_points = result[0]
+					team_avg_opp_points = result[1]
+				else:
+					opp_avg_points = result[0]
+					opp_avg_opp_points = result[1]
+		finally:
+			cursor.close()
+
+		# Calculate the offensive and defensive efficiency for our team and their opponent.
+		team_off_efficiency = (team_avg_points/team_pace) * 100
+		team_def_efficiency = (team_avg_opp_points/team_pace) * 100
+		opp_off_efficiency = (opp_avg_points/opp_pace) * 100
+		opp_def_efficiency = (opp_avg_opp_points/opp_pace) * 100
+
+		# Calculate expected points for this game.
+		team_expected_points = ((team_off_efficiency + opp_def_efficiency)/2 * (team_pace + opp_pace)/2) / 100
+		opp_expected_points = ((opp_off_efficiency + team_def_efficiency)/2 * (team_pace + opp_pace)/2) / 100
+
+		# Store our results in the cache before returning.
+		self.expected_points_cache[team] = team_expected_points
+		self.expected_points_cache[opponent] = opp_expected_points
+
+		return team_expected_points
 
 	########################################################
 	# Calculates the league average for the provided stat.

@@ -1659,6 +1659,111 @@ class TestProjections(unittest.TestCase):
 						depth_chart_by_player_id["PG3"][2] == -1 and
 						depth_chart_by_player_id["PG3"][3] == 0.0)
 
+	def test_calculate_expected_team_points(self):
+		# expected pace is 96.693431372549 (From BOS game on 1/13/2014)
+		self.team_game_totals_info["team"] = "BOS"
+		self.team_game_totals_info["opponent"] = "PHI"
+		self.team_game_totals_info["season"] = 2013
+		self.team_game_totals_info["date"] = date(2014,1,1)
+		self.team_game_totals_info["points"] = 100
+		self.team_game_totals_info["opp_points"] = 90
+		self.team_game_totals_info["field_goal_attempts"] = 101
+		self.team_game_totals_info["free_throw_attempts"] = 14
+		self.team_game_totals_info["offensive_rebounds"] = 15
+		self.team_game_totals_info["opp_total_rebounds"] = 46
+		self.team_game_totals_info["opp_offensive_rebounds"] = 10
+		self.team_game_totals_info["field_goals"] = 38
+		self.team_game_totals_info["turnovers"] = 13
+		self.team_game_totals_info["opp_field_goal_attempts"] = 79
+		self.team_game_totals_info["opp_free_throw_attempts"] = 34
+		self.team_game_totals_info["total_rebounds"] = 50
+		self.team_game_totals_info["opp_field_goals"] = 37
+		self.team_game_totals_info["opp_turnovers"] = 11
+		self.testUtil.insert_into_team_game_totals(self.team_game_totals_info)
+
+		# Expected pace is 89.135004 (from BOS game on 1/11/2014)
+		self.team_game_totals_info["team"] = "BOS"
+		self.team_game_totals_info["opponent"] = "TOR"
+		self.team_game_totals_info["season"] = 2013
+		self.team_game_totals_info["date"] = date(2014,1,2)
+		self.team_game_totals_info["points"] = 98
+		self.team_game_totals_info["opp_points"] = 92
+		self.team_game_totals_info["field_goal_attempts"] = 95
+		self.team_game_totals_info["free_throw_attempts"] = 17
+		self.team_game_totals_info["offensive_rebounds"] = 20
+		self.team_game_totals_info["opp_total_rebounds"] = 49
+		self.team_game_totals_info["opp_offensive_rebounds"] = 20
+		self.team_game_totals_info["field_goals"] = 44
+		self.team_game_totals_info["turnovers"] = 9
+		self.team_game_totals_info["opp_field_goal_attempts"] = 93
+		self.team_game_totals_info["opp_free_throw_attempts"] = 26
+		self.team_game_totals_info["total_rebounds"] = 46
+		self.team_game_totals_info["opp_field_goals"] = 40
+		self.team_game_totals_info["opp_turnovers"] = 11
+		self.testUtil.insert_into_team_game_totals(self.team_game_totals_info)
+
+		# Expected pace is 95.87561 (from NYK game on 1/13/2014)
+		self.team_game_totals_info["team"] = "NYK"
+		self.team_game_totals_info["opponent"] = "MIA"
+		self.team_game_totals_info["season"] = 2013
+		self.team_game_totals_info["date"] = date(2014,1,1)
+		self.team_game_totals_info["points"] = 100
+		self.team_game_totals_info["opp_points"] = 90
+		self.team_game_totals_info["field_goal_attempts"] = 81
+		self.team_game_totals_info["free_throw_attempts"] = 27
+		self.team_game_totals_info["offensive_rebounds"] = 12
+		self.team_game_totals_info["opp_total_rebounds"] = 49
+		self.team_game_totals_info["opp_offensive_rebounds"] = 17
+		self.team_game_totals_info["field_goals"] = 35
+		self.team_game_totals_info["turnovers"] = 18
+		self.team_game_totals_info["opp_field_goal_attempts"] = 93
+		self.team_game_totals_info["opp_free_throw_attempts"] = 28
+		self.team_game_totals_info["total_rebounds"] = 53
+		self.team_game_totals_info["opp_field_goals"] = 33
+		self.team_game_totals_info["opp_turnovers"] = 10
+		self.testUtil.insert_into_team_game_totals(self.team_game_totals_info)
+
+		# Expected pace is 89.704090 (from NYK game on 1/14/2014)
+		self.team_game_totals_info["team"] = "NYK"
+		self.team_game_totals_info["opponent"] = "MIA"
+		self.team_game_totals_info["season"] = 2013
+		self.team_game_totals_info["date"] = date(2014,1,2)
+		self.team_game_totals_info["points"] = 102
+		self.team_game_totals_info["opp_points"] = 100
+		self.team_game_totals_info["field_goal_attempts"] = 81
+		self.team_game_totals_info["free_throw_attempts"] = 18
+		self.team_game_totals_info["offensive_rebounds"] = 4
+		self.team_game_totals_info["opp_total_rebounds"] = 37
+		self.team_game_totals_info["opp_offensive_rebounds"] = 5
+		self.team_game_totals_info["field_goals"] = 39
+		self.team_game_totals_info["turnovers"] = 9
+		self.team_game_totals_info["opp_field_goal_attempts"] = 75
+		self.team_game_totals_info["opp_free_throw_attempts"] = 33
+		self.team_game_totals_info["total_rebounds"] = 32
+		self.team_game_totals_info["opp_field_goals"] = 38
+		self.team_game_totals_info["opp_turnovers"] = 5
+		self.testUtil.insert_into_team_game_totals(self.team_game_totals_info)
+
+		# BOS offensive efficiency = (avg_points/avg_pace) * 100 = 99/92.9142117 * 100 = 106.549893
+		# BOS defensive efficiency = (avg_opp_points/avg_pace) * 100 = 91/92.9142117 * 100 = 97.939807
+		# NYK offensive efficiency = 101/92.78985 * 100 = 108.848112
+		# NYK defensive efficiency = 95/92.78985 * 100 = 102.381888
+
+		bos_points = self.projections.calculate_expected_team_points("BOS", "NYK", 2013)
+		nyk_points = self.projections.calculate_expected_team_points("NYK", "BOS", 2013)
+
+		# ((BOS_off_eff + NYK_def_eff)/2 * (NYK_pace + BOS_pace)/2) / 100 =
+		#       ((106.549893 + 102.381888)/2 * (92.78985 + 92.9142117)/2) / 100 =
+		#       ((208.931781)/2) * (185.7040617)/2) / 100 =
+		#       (104.4658905 * 92.85203085) / 100 = 96.99870087478722
+		self.assertTrue(bos_points <= 97 and bos_points >= 96.9987)
+
+		# ((NYK_off_eff + BOS_def_eff)/2 * (NYK_pace + BOS_pace)/2) / 100 =
+		#       ((108.848112 + 97.939807)/2 * (92.78985 + 92.9142117)/2) * 100 =
+		#       ((206.787919)/2) * (185.7040617)/2) / 100 =
+		#       (103.3939595 * 92.85203085) / 100 = 96.00339117197651
+		self.assertTrue(nyk_points >= 96 and nyk_points <= 96.00339)
+
 	#def test_get_avg_contribution_to_team_stat(self):
 		
 
