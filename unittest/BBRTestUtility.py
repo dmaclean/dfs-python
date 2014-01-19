@@ -2,6 +2,7 @@ import sqlite3
 import os
 import inspect
 import sys
+from datetime import date
 
 ###########################################
 # Utility class for helping with testing.
@@ -51,6 +52,100 @@ class BBRTestUtility():
 			print "Something went wrong with SQL. %s" % e.args[0]
 		finally:
 			cursor.close()
+
+	def generate_default_player_info(self):
+		"""
+		Generates a dictionary of default values for the players table.
+		"""
+		return {
+			"id": "",
+			"name": "Test",
+			"position": "G",
+			"height": 0,
+			"weight": 0,
+			"url": "something"
+		}
+
+	def generate_default_team_game_totals_info(self):
+		"""
+		Generates a dictionary of default values for the team_game_totals table.
+		"""
+		return {
+			"team": "",
+			"season": date.today().year,
+			"game": 0,
+			"date": date.today(),
+			"home": True,
+			"opponent": "",
+			"result": "",
+			"minutes_played": 240,
+			"field_goals": 0,
+			"field_goal_attempts": 0,
+			"three_point_field_goals": 0,
+			"three_point_field_goal_attempts": 0,
+			"free_throws": 0,
+			"free_throw_attempts": 0,
+			"offensive_rebounds": 0,
+			"total_rebounds": 0,
+			"assists": 0,
+			"steals": 0,
+			"blocks": 0,
+			"turnovers": 0,
+			"personal_fouls": 0,
+			"points": 0,
+			"opp_field_goals": 0,
+			"opp_field_goal_attempts": 0,
+			"opp_three_point_field_goals": 0,
+			"opp_three_point_field_goal_attempts": 0,
+			"opp_free_throws": 0,
+			"opp_free_throw_attempts": 0,
+			"opp_offensive_rebounds": 0,
+			"opp_total_rebounds": 0,
+			"opp_assists": 0,
+			"opp_steals": 0,
+			"opp_blocks": 0,
+			"opp_turnovers": 0,
+			"opp_personal_fouls": 0,
+			"opp_points": 0
+		}
+
+	def generate_default_game_totals_basic_info(self):
+		"""
+		Generates a dictionary of default values for the game_totals_basic table.
+		"""
+		return {
+			"player_id": "test",
+			"season": date.today().year,
+			"game_number": 0,
+			"date": date.today(),
+			"age": 0,
+			"team": "BOS",
+			"home": True,
+			"opponent": "BOS",
+			"result": "",
+			"games_started": 0,
+			"minutes_played": 0,
+			"field_goals": 0,
+			"field_goal_attempts": 0,
+			"field_goal_pct": 0,
+			"three_point_field_goals": 0,
+			"three_point_field_goal_attempts": 0,
+			"three_point_field_goal_pct": 0,
+			"free_throws": 0,
+			"free_throw_attempts": 0,
+			"free_throw_pct": 0,
+			"offensive_rebounds": 0,
+			"defensive_rebounds": 0,
+			"total_rebounds": 0,
+			"assists": 0,
+			"steals": 0,
+			"blocks": 0,
+			"turnovers": 0,
+			"personal_fouls": 0,
+			"points": 0,
+			"game_score": 0,
+			"plus_minus": 0
+		}
 	
 	############################################################
 	# Convenience method for inserting into the players table.
