@@ -141,7 +141,7 @@ class SalaryImporter:
 					print "No result for %s" % name
 			except Exception, err:
 				if str(err) == "Unread result found.":
-					print str(error) + "  It's possible that more than one result was pulled from the database for id %s." % (player_id)
+					print str(err) + "  It's possible that more than one result was pulled from the database for id %s." % (player_id)
 				else:
 					print "ERROR: %s\n" % str(err)
 			finally:	
