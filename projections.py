@@ -22,20 +22,20 @@ class Projections:
 		self.baseline_cache = {}
 		self.scoring_stddev_cache = {}
 		self.expected_points_cache = {}
-		
+
 		# The current DFS site we're projecting for.
 		self.site = ""
-		
+
 		self.stats = ["points", "field_goals", "field_goal_attempts", "three_point_field_goals", "three_point_field_goal_attempts",
 							"free_throws", "free_throw_attempts", "total_rebounds", "assists", "steals", "blocks", "turnovers",
 							"minutes_played"]
-		
+
 		# In regression mode?
 		self.regression_mode = False
-		
+
 		# The calculator of Fantasy Points for each site.
 		self.fpc = FantasyPointCalculator()
-		
+
 		# Use dependency injection to determine where the database connection comes from.
 		if(not cnx):
 			self.cnx = mysql.connector.connect(user='fantasy', password='fantasy', host='localhost', database='basketball_reference')
@@ -51,12 +51,12 @@ class Projections:
 	def get_player_info(self,player_id):
 		if player_id in self.player_info_cache:
 			return self.player_info_cache[player_id]
-	
+
 		cursor = self.cnx.cursor()
 		query = """
 			select * from players p where id = '%s'
 		""" % (player_id)
-	
+
 		try:
 			cursor.execute(query)
 			info = {}
@@ -68,13 +68,13 @@ class Projections:
 				info["height"] = result[4]
 				info["weight"] = result[5]
 				info["url"] = result[6]
-			
+
 			self.player_info_cache[player_id] = info
 		finally:
 			cursor.close()
-		
+
 		return info
-	
+
 	####################################################################
 	# Retrieves the position that a player is registered as on a site.
 	####################################################################
@@ -83,16 +83,16 @@ class Projections:
 		query = """
 			select position from dfs_site_positions where player_id = '%s' and site = '%s'
 		""" % (player_id, site)
-		
+
 		try:
 			cursor.execute(query)
 			for result in cursor:
 				return result[0]
 		finally:
 			cursor.close()
-		
+
 		return None
-	
+
 	####################################################################
 	# Retrieves the salary for a player on a particular site and date.
 	####################################################################
@@ -101,10 +101,10 @@ class Projections:
 		query = """
 			select salary from salaries where player_id = '%s' and site = '%s' and date = '%s'
 		""" % (player_id, site, date)
-		
+
 		try:
 			cursor.execute(query)
-			
+
 			for result in cursor:
 				return result[0]
 		finally:
@@ -118,15 +118,15 @@ class Projections:
 		key = "_".join([player_id, str(season), str(date)])
 		if key in self.team_cache:
 			return self.team_cache[key]
-		
+
 		cursor = self.cnx.cursor()
-	
+
 		query = """
 			select team from game_totals_basic where player_id = '%s' and season = %d and
 				game_number = (select max(game_number) from game_totals_basic 
 					where player_id = '%s' and season = %d and date <= '%s')
 		""" % (player_id, season, player_id, season, date)
-	
+
 		try:
 			cursor.execute(query)
 			for result in cursor:
@@ -159,7 +159,7 @@ class Projections:
 
 
 		#cursor = self.cnx.cursor()
-	
+
 		#query = ""
 		#try:
 		#	query = """select sum(b.%s)/(select max(game) from team_game_totals where team = '%s' and season = %d and date <= '%s')
@@ -167,14 +167,14 @@ class Projections:
 		#			where b.season = %d and p.rg_position = '%s' and b.opponent = '%s'
 		#				and date <= '%s'""" % (metric, team, season, date, season, position, team, date)
 		#	cursor.execute(query)
-		
+
 		#	for result in cursor:
 		#		self.dvp_cache[key] = result[0]
 		#		return result[0]
-			
+
 		#finally:
 		#	cursor.close()
-	
+
 	######################################################################################
 	# To calculate defensive vs a position we want to get all of the players who
 	# played against a team, sum their fantasy points, and divide by the number of games
@@ -184,19 +184,19 @@ class Projections:
 		key = "_".join([metric, position, team, str(season), str(date)])
 		if key in self.dvp_ranking_cache:
 			return self.dvp_ranking_cache[key]
-		
+
 		cursor = self.cnx.cursor()
-	
+
 		query = ""
 		try:
 			# Get all teams for season
 			teams = []
 			query = "select distinct team from team_game_totals where season = %d" % (season)
-			
+
 			cursor.execute(query)
 			for result in cursor:
 				teams.append(result[0])
-		
+
 			ranks = []
 			for t in teams:
 				if metric == DFSConstants.FANTASY_POINTS:
@@ -214,13 +214,13 @@ class Projections:
 							where b.season = %d and p.rg_position = '%s' and b.opponent = '%s'
 								and date <= '%s'""" % (metric, t, season, date, season, position, t, date)
 				cursor.execute(query)
-		
+
 				for result in cursor:
 					ranks.append((result[0], t))
-			
+
 			# Sort the results in ascending order (lowest value at element 0).
 			ranks.sort()
-			
+
 			# Put the results in the cache.  We only want the ranking, so we're going to 
 			# put the index i in the cache instead of the actual value.
 			i = 1
@@ -230,24 +230,24 @@ class Projections:
 				temp_key = "_".join([metric, position, r[1], str(season), str(date)])
 				self.dvp_ranking_cache[temp_key] = i
 				i = i + 1
-			
+
 		finally:
 			cursor.close()
-		
+
 		return self.dvp_ranking_cache[key]
 
 	def calculate_pace(self, team, season, d=date.today()):
 		key = "_".join([team, str(season)])
 		if key in self.pace_cache:
 			return self.pace_cache[key]
-	
+
 		cursor = self.cnx.cursor()
 		query = """
 			select minutes_played, 0.5 * ((field_goal_attempts + 0.4 * free_throw_attempts - 1.07 * (offensive_rebounds / (offensive_rebounds + (opp_total_rebounds - opp_offensive_rebounds))) * (field_goal_attempts - field_goals) + turnovers) + (opp_field_goal_attempts + 0.4 * opp_free_throw_attempts - 1.07 * ((opp_offensive_rebounds) / (opp_offensive_rebounds + (total_rebounds - offensive_rebounds))) * (opp_field_goal_attempts - opp_field_goals) + opp_turnovers)) as "pace"
 			from team_game_totals t 
 			where season = %d and team = '%s' and date <= '%s'
 		""" % (season, team, d)
-	
+
 		total = 0.0
 		count = 0
 		try:
@@ -258,7 +258,7 @@ class Projections:
 					total += result[1]
 				else:
 					total += (result[1]/result[0])*240
-		
+
 			self.pace_cache[key] = total/count
 			return total/count
 		finally:
@@ -323,7 +323,7 @@ class Projections:
 		key = stat + "-" + position
 		if key in self.league_averages:
 			return self.league_averages[key]
-	
+
 		cursor = self.cnx.cursor()
 		query = """
 			select sum(%s)/(select max(t.game) from team_game_totals t 
@@ -333,7 +333,7 @@ class Projections:
 			group by opponent 
 			order by avg desc
 		""" % (stat, season, date, season, position, date)
-	
+
 		total = 0
 		count = 0
 		try:
@@ -343,10 +343,10 @@ class Projections:
 				total = total + result[0]
 		finally:
 			cursor.close()
-	
+
 		avg = total/count
 		self.league_averages[key] = avg
-	
+
 		return avg
 
 	def calculate_defense_factor_vs_position(self, position, team, season, league_avg = False):
@@ -364,8 +364,8 @@ class Projections:
 				from players p inner join game_totals_basic b on p.id = b.player_id 
 				where b.season = %d and p.position = '%s' and b.opponent = '%s'
 			""" % (team, season, season, position, team)
-	
-	
+
+
 		factor = -1
 		try:
 			cursor.execute(query)
@@ -373,7 +373,7 @@ class Projections:
 				factor = result[0]
 		finally:
 			cursor.close()
-	
+
 		return factor
 
 	###################################################################################
@@ -384,9 +384,9 @@ class Projections:
 		key = "_".join([player_id, str(season)])
 		if key in self.baseline_cache:
 			return self.baseline_cache[key]
-	
+
 		cursor = self.cnx.cursor()
-		
+
 		# Construct game_totals_basic query
 		query = "select "
 		count = 1
@@ -395,26 +395,26 @@ class Projections:
 			if count < len(self.stats):
 				query = query + ","
 			count = count + 1
-		
+
 		query = query + """
 			from game_totals_basic b where player_id = '%s' and season = %d and date <= '%s'
 			""" % (player_id, season, date)
-	
+
 		adv_query = """
 			select avg(usage_pct), avg(offensive_rating), avg(defensive_rating)
 			from game_totals_advanced
 			where player_id = '%s' and season = %d and date <= '%s'
 		""" % (player_id, season, date)
-	
+
 		avg_stat = 0
 		avg_usage_pct = 0
 		avg_off_rating = 0
 		avg_def_rating = 0
-	
+
 		try:
 			cursor.execute(query)
 			baselines = []
-			
+
 			for result in cursor:
 				for r in result:
 					baselines.append(r)
@@ -424,7 +424,7 @@ class Projections:
 				#avg_steals = result[3]
 				#avg_blocks = result[4]
 				#avg_turnovers = result[5]
-		
+
 			cursor.execute(adv_query)
 			for result in cursor:
 				for r in result:
@@ -434,11 +434,11 @@ class Projections:
 				#avg_def_rating = result[2]
 		finally:
 			cursor.close()
-	
+
 		#baselines = (avg_points, avg_rebounds, avg_assists, avg_steals, avg_blocks, avg_turnovers, avg_usage_pct, avg_off_rating, avg_def_rating)
 		self.baseline_cache[key] = baselines
 		return baselines
-	
+
 	######################################################################################
 	# Adjusts the specified stat for each game based on the league average at that point
 	# to come up with a real, adjusted value.
@@ -451,43 +451,43 @@ class Projections:
 	def normalize_player_avg_stat(self, player_id, stat, season, date=date.today()):
 		cursor = self.cnx.cursor()
 		player_info = self.get_player_info(player_id)
-		
+
 		league_avg = 0
-		
+
 		query = """
 			select avg(b.%s) from players p inner join game_totals_basic b on p.id = b.player_id
 			where p.position = '%s' and b.season = %d and b.date <= '%s'
 		""" % (stat, player_info["position"], season, date)
-		
+
 		try:
 			cursor.execute(query)
-			
+
 			for result in cursor:
 				league_avg = result[0]
-			
+
 			# Get all game instances of desired stat for this player.
 			query = """
 				select %s from game_totals_basic b
 				where player_id = '%s' and season = %d and date <= '%s'
 			""" % (stat, player_id, season, date)
-			
+
 			cursor.execute(query)
-			
+
 			adjusted = []
 			for result in cursor:
 				adjusted.append( (result[0]/league_avg)*result[0] )
-			
+
 			return sum(adjusted)/len(adjusted)
 		finally:
 			cursor.close()
-	
+
 	#################################################################################
 	# Retrieve the list of games being played for a particular date.  Date defaults
 	# to today if none is specified.
 	#################################################################################
 	def get_game_list(self, d=date.today()):
 		games = []
-		
+
 		cursor = self.cnx.cursor()
 		query = """
 			select id, date, season, visitor, home from schedules where date = '%s'
@@ -503,13 +503,13 @@ class Projections:
 					"visitor": result[3],
 					"home": result[4]
 				}
-				
+
 				games.append(curr)
 		finally:
 			cursor.close()
-			
+
 		return games
-	
+
 	##################################################################
 	# Retrieve a list of players participating in the provided game.
 	# The game parameter should take the form of a map containing:
@@ -521,14 +521,14 @@ class Projections:
 	def get_players_in_game(self, game):
 		players = []
 		cursor = self.cnx.cursor()
-		
+
 		query = """
 			select player_id, team, date
 			from game_totals_basic b
 			where season = %d
 			order by player_id, date desc
 		""" % (game["season"])
-		
+
 		try:
 			cursor.execute(query)
 
@@ -557,9 +557,9 @@ class Projections:
 
 		for player in delete_list:
 			players.remove(player)
-		
+
 		return players
-		
+
 	##############################################################################
 	# Makes a projection for a player's stat line based on a variety of factors,
 	# starting with their average for the season in each relevant stat.
@@ -1040,7 +1040,8 @@ class Projections:
 		files = {}
 		for s in sites:
 			files[s] = open("projections/%s_%s.csv" % (s, date.today()), "w")
-			files[s].write("name,position,projection,salary,floor,consistency,ceiling,avg minutes,spread,O/U,vegas projection,DvP\n")
+			files[s].write("name,position,projection,salary,floor,consistency,ceiling,"
+							"avg minutes,spread,O/U,vegas projection,DvP,DPP,4x+5\n")
 		
 		print "%d games tonight..." % len(games)
 		for game in games:
@@ -1085,7 +1086,20 @@ class Projections:
 					
 					print "\t\t%s (%s) is projected for %f points on %s" % (player["player_info"]["name"], site_position, fps, s)
 					#files[s].write("%s,%s,%f,%d,%f,%f,%f,%f\n" % (player["player_info"]["name"], site_position, fps, salary, consistency[0], consistency[1], consistency[2], avg_minutes) )
-					files[s].write("%s,%s,%f,%d,%f,%f,%f,%f,%f,%f,%f,%d\n" % (player["player_info"]["name"], site_position, fps, salary, floor, consistency[1], ceiling, avg_minutes, vegas_odds["spread"], vegas_odds["over_under"], vegas_odds["projection"], fp_rank) )
+					files[s].write("%s,%s,%f,%d,%f,%f,%f,%f,%f,%f,%f,%d,%f,%f\n" % (player["player_info"]["name"],
+																				site_position,
+																				fps,
+																				salary,
+																				floor,
+																				consistency[1],
+																				ceiling,
+																				avg_minutes,
+																				vegas_odds["spread"],
+																				vegas_odds["over_under"],
+																				vegas_odds["projection"],
+																				fp_rank,
+																				salary/fps if fps > 0 else -1,
+																				4*(salary/1000)+5) )
 					
 		
 		# We're done!  Close up the files
