@@ -2,4 +2,5 @@
 projections/*
 .idea/*
 salaries/*.csv
+regression.csv
 output.txt
