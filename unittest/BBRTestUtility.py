@@ -146,6 +146,14 @@ class BBRTestUtility():
 			"game_score": 0,
 			"plus_minus": 0
 		}
+
+	def generate_default_injury_info(self):
+		return {
+			"player_id": "",
+		    "injury_date": date.today(),
+		    "return_date": date.today(),
+		    "details": ""
+		}
 	
 	############################################################
 	# Convenience method for inserting into the players table.
