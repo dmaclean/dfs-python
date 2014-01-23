@@ -130,7 +130,6 @@ class Processor:
 		if self.source == "site":
 			cnx = mysql.connector.connect(user='fantasy', password='fantasy', host='localhost', database='basketball_reference')
 			alphabet = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
-			#alphabet = ["l","m"]
 
 			# Figure out who played yesterday and collect their URLs.
 			projections = Projections()
@@ -276,13 +275,24 @@ class Processor:
 			
 			for season in seasons:			
 				cursor = cnx.cursor()
-				query = ("select distinct team from game_totals_basic where season = %d order by team") % (season)
-				cursor.execute(query)
-				
+
 				teams = []
-				for (result) in cursor:
-					teams.append(result[0])
-				cursor.close()
+				if self.yesterday_only:
+					projections = Projections()
+					one_day = timedelta(days=1)
+					yesterday = date.today() - one_day
+					games = projections.get_game_list(yesterday)
+
+					for game in games:
+						teams.append(game["home"])
+						teams.append(game["visitor"])
+				else:
+					query = "select distinct team from game_totals_basic where season = %d order by team" % season
+					cursor.execute(query)
+
+					for (result) in cursor:
+						teams.append(result[0])
+					cursor.close()
 
 				for team_name in teams:
 					#####################################
