@@ -43,6 +43,7 @@ class Projections:
 			self.cnx = cnx
 
 		self.dvpManager = DefenseVsPositionManager(cnx=self.cnx)
+		self.injury_manager = InjuryManager(cnx=self.cnx)
 
 	##########################################################
 	# Retrieves the player information in the players table.
@@ -578,7 +579,7 @@ class Projections:
 			"steals": 9,
 			"blocks": 10,
 			"turnovers": 11,
-		    "minutes_played": 12
+			"minutes_played": 12
 		}
 
 		info = self.get_player_info(player_id)
@@ -606,7 +607,7 @@ class Projections:
 
 		def_factor = self.calculate_defense_vs_position(stat, info["rg_position"], opponent, season, date)
 
-		adjusted_stat = adjusted_stat * float(def_factor)/float(league_avg)
+		adjusted_stat = float(adjusted_stat) * (float(def_factor)/float(league_avg))
 	
 		return adjusted_stat
 
@@ -1032,6 +1033,8 @@ class Projections:
 	def run(self):
 		# Find all games being played today
 		games = self.get_game_list()
+
+		injuries = self.injury_manager.get_currently_injured_players()
 		
 		# List of sites to make projections for
 		sites = [ self.fpc.DRAFT_DAY, self.fpc.DRAFT_KINGS, DFSConstants.FAN_DUEL, self.fpc.STAR_STREET ]
@@ -1051,6 +1054,13 @@ class Projections:
 			
 			for player in players:
 				print "\tEvaluating %s" % player["player_info"]["name"]
+
+				# Skip this player if they're injured.
+				if player["player_id"] in injuries:
+					print "\t%s is injured (%s - %s), moving on..." % (player["player_id"],
+																		injuries[player["player_id"]].injury_date,
+																		injuries[player["player_id"]].return_date)
+					continue
 			
 				projections = {}
 
