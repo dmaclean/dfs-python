@@ -1647,7 +1647,7 @@ class TestProjections(unittest.TestCase):
 
 		# Tests for second chart
 		self.assertTrue(depth_chart_by_player_id["PG"][0] == "Point Guard" and
-						depth_chart_by_player_id["PG"][1] == 60 and
+						depth_chart_by_player_id["PG"][1] == 35 and
 						depth_chart_by_player_id["PG"][2] == 1 and
 						depth_chart_by_player_id["PG"][3] == 0.75)
 		self.assertTrue(depth_chart_by_player_id["PG2"][0] == "Point Guard 2" and
