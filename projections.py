@@ -1079,7 +1079,7 @@ class Projections:
 					fps = self.fpc.calculate(projections)
 					consistency = self.calculate_floor_consistency_ceiling_pct(player["player_id"], game["season"], s)
 					salary = self.get_salary(player["player_id"], s)
-					salary = -1 if salary == None else salary
+					salary = -1 if not salary else salary
 					
 					# FPs standard deviation
 					stddev = self.calculate_scoring_stddev(player["player_id"], game["season"], s)
