@@ -592,30 +592,17 @@ class Projections:
 		team = self.get_team(player_id, season, d)
 		baselines = self.get_baseline(player_id,season, d)
 
-		avg_minutes_past_five_games = self.get_avg_stat_past_n_games(player_id, "minutes_played", season, 5, d)
-		avg_minutes_season = baselines[baseline_stat_index["minutes_played"]]
-		avg_minutes = (avg_minutes_past_five_games + avg_minutes_season)/2
-
 		avg_stat = baselines[baseline_stat_index[stat]]
-		stats_per_minute = float(avg_stat)/float(avg_minutes)
 
-		expected_minutes = self.depth_chart_by_player_id[player_id][1]
-
-		minutes_factor = float(expected_minutes)/float(avg_minutes)
-
-		# adjusted_stat = stats_per_minute * expected_minutes
-		adjusted_stat = float(avg_stat) * minutes_factor * 0.9
+		adjusted_stat = avg_stat
 	
 		#######################################
 		# Take pace of the game into account.
 		#######################################
 		team_pace = self.calculate_pace(team, season)
-		team_pace_last_five = self.calculate_pace(team, season, 5)
 		opp_pace = self.calculate_pace(opponent, season)
-		opp_pace_last_five = self.calculate_pace(opponent, season, 5)
 		avg_pace = (team_pace + opp_pace)/2
-		avg_pace_last_five = (team_pace_last_five + opp_pace_last_five)/2
-		pace_factor = ((avg_pace/team_pace) * 0.4) + ((avg_pace_last_five/team_pace_last_five) * 0.6)
+		pace_factor = avg_pace/team_pace
 	
 		adjusted_stat = float(adjusted_stat) * float(pace_factor)
 	
@@ -929,7 +916,7 @@ class Projections:
 					projected rebounds,actual rebounds,MSE,\
 					projected steals,actual steals,MSE,\
 					projected blocks,actual blocks,MSE,\
-					projected turnovers,actual turnovers,MSE\
+					projected turnovers,actual turnovers,MSE,\
 					projected minutes,actual minutes,MSE\n")
 		
 		self.fpc.site = DFSConstants.STAR_STREET
