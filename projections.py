@@ -22,6 +22,9 @@ class Projections:
 		self.baseline_cache = {}
 		self.scoring_stddev_cache = {}
 		self.expected_points_cache = {}
+		self.depth_chart_cache = {}
+		self.depth_chart = {}
+		self.depth_chart_by_player_id = {}
 
 		# The current DFS site we're projecting for.
 		self.site = ""
@@ -141,7 +144,7 @@ class Projections:
 	# played against a team, sum their points, and divide by the number of games
 	# the team has played.
 	##############################################################################
-	def calculate_defense_vs_position(self, metric, position, team, season, date=date.today()):
+	def calculate_defense_vs_position(self, metric, position, team, season, date=date.today(), n=None):
 		# Initialize the cache, if necessary
 		if len(self.dvp_cache) == 0:
 			print "Populating the DvP cache..."
@@ -237,7 +240,7 @@ class Projections:
 
 		return self.dvp_ranking_cache[key]
 
-	def calculate_pace(self, team, season, d=date.today()):
+	def calculate_pace(self, team, season, d=date.today(), n=None):
 		key = "_".join([team, str(season)])
 		if key in self.pace_cache:
 			return self.pace_cache[key]
@@ -248,6 +251,9 @@ class Projections:
 			from team_game_totals t 
 			where season = %d and team = '%s' and date <= '%s'
 		""" % (season, team, d)
+
+		if n:
+			query += " order by date desc limit %d" % n
 
 		total = 0.0
 		count = 0
@@ -565,7 +571,7 @@ class Projections:
 	# Makes a projection for a player's stat line based on a variety of factors,
 	# starting with their average for the season in each relevant stat.
 	##############################################################################
-	def calculate_projection(self, player_id, stat, season, opponent, date=date.today()):
+	def calculate_projection(self, player_id, stat, season, opponent, d=date.today()):
 		baseline_stat_index = {
 			"points": 0,
 			"field_goals": 1,
@@ -583,10 +589,11 @@ class Projections:
 		}
 
 		info = self.get_player_info(player_id)
-		team = self.get_team(player_id, season, date)
-		baselines = self.get_baseline(player_id,season, date)
+		team = self.get_team(player_id, season, d)
+		baselines = self.get_baseline(player_id,season, d)
 
-		avg_stat = baselines[baseline_stat_index[stat]]		
+		avg_stat = baselines[baseline_stat_index[stat]]
+
 		adjusted_stat = avg_stat
 	
 		#######################################
@@ -605,7 +612,7 @@ class Projections:
 		######################################################################
 		league_avg = self.calculate_league_avg(stat, info["rg_position"], season)
 
-		def_factor = self.calculate_defense_vs_position(stat, info["rg_position"], opponent, season, date)
+		def_factor = self.calculate_defense_vs_position(stat, info["rg_position"], opponent, season, d)
 
 		adjusted_stat = float(adjusted_stat) * (float(def_factor)/float(league_avg))
 	
@@ -702,12 +709,12 @@ class Projections:
 	###########################################################################################
 	# Retrieves the average minutes that a player has been on the floor for the past n games.
 	###########################################################################################
-	def get_avg_stat_past_n_games(self, player_id, stat, season, n):
+	def get_avg_stat_past_n_games(self, player_id, stat, season, n, d=date.today()):
 		cursor = self.cnx.cursor()
 		
 		query = """
-			select %s from game_totals_basic where player_id = '%s' and season = %d order by date desc limit %d
-		""" % (stat, player_id, season, n)
+			select %s from game_totals_basic where player_id = '%s' and season = %d and date <= '%s' order by date desc limit %d
+		""" % (stat, player_id, season, d, n)
 		
 		try:
 			cursor.execute(query)
@@ -767,13 +774,16 @@ class Projections:
 		Another is a quick lookup of the player
 		Player_id = (<player name>, <avg_minutes>, <rank>, <pct of minutes for position>)
 		"""
+
+		# Return an existing one if we've already created this.
+		key = "_".join([str(season),str(date)])
+		if key in self.depth_chart_cache:
+			return self.depth_chart_cache[key]
+
 		cursor = self.cnx.cursor()
 
 		injury_manager = InjuryManager(self.cnx)
 		injuries = injury_manager.get_currently_injured_players(date)
-
-		depth_chart = {}
-		depth_chart_by_player_id = {}
 
 		query = """
 				select name, p.id, team, rg_position, avg(minutes_played) as "avg mp"
@@ -793,15 +803,15 @@ class Projections:
 				minutes = result[4]
 
 				# Create the map for a team if it doesn't exist yet.
-				if team not in depth_chart:
-					depth_chart[team] = {}
+				if team not in self.depth_chart:
+					self.depth_chart[team] = {}
 
 				# Create the map for a position if it doesn't exist yet.
-				if position not in depth_chart[team]:
-					depth_chart[team][position] = []
+				if position not in self.depth_chart[team]:
+					self.depth_chart[team][position] = []
 
-				depth_chart[team][position].append((minutes, player_id, name))
-				depth_chart[team][position].sort(reverse=True)
+				self.depth_chart[team][position].append((minutes, player_id, name))
+				self.depth_chart[team][position].sort(reverse=True)
 
 			# Factor in injured players
 			#for t in depth_chart:
@@ -811,18 +821,18 @@ class Projections:
 			#				if player[1] == injury.player_id:
 			#					pass
 
-			for t in depth_chart:
-				for p in depth_chart[t]:
+			for t in self.depth_chart:
+				for p in self.depth_chart[t]:
 
 					# Determine the total avg minutes at the position
 					total = 0
-					for player in depth_chart[t][p]:
+					for player in self.depth_chart[t][p]:
 						total = total + player[0]
 
 					# Generate the entry for each player, now that we know the total avg minutes at the position.
 					i = 1
-					for player in depth_chart[t][p]:
-						depth_chart_by_player_id[player[1]] = [player[2], player[0], i, player[0]/total]
+					for player in self.depth_chart[t][p]:
+						self.depth_chart_by_player_id[player[1]] = [player[2], player[0], i, player[0]/total]
 						i += 1
 
 					# Now we need to factor in injuries.  In this loop, go through all the players
@@ -831,18 +841,18 @@ class Projections:
 					# players that will be playing.
 					avail_minutes = 0
 					percentage_injured = 0
-					for player in depth_chart[t][p]:
+					for player in self.depth_chart[t][p]:
 						pid = player[1]
 
 						# is player injured (and have we yet to factor it in [0 minutes])?
 						if pid in injuries:
 							# Player is injured.  Add their expected minutes to avail_minutes and
 							# set avg minutes and pct of total to 0.
-							avail_minutes += depth_chart_by_player_id[pid][1]
-							percentage_injured += depth_chart_by_player_id[pid][3]
-							depth_chart_by_player_id[pid][1] = 0
-							depth_chart_by_player_id[pid][2] = -1
-							depth_chart_by_player_id[pid][3] = 0
+							avail_minutes += self.depth_chart_by_player_id[pid][1]
+							percentage_injured += self.depth_chart_by_player_id[pid][3]
+							self.depth_chart_by_player_id[pid][1] = 0
+							self.depth_chart_by_player_id[pid][2] = -1
+							self.depth_chart_by_player_id[pid][3] = 0
 
 					# In this loop we're going to redistribute the available minutes.  This will be done
 					# proportionally, so assume the following scenario:
@@ -853,26 +863,32 @@ class Projections:
 					# P2 and P3 each get a new_pct_of_total = .25/(1-0.5) = 0.5
 					# So, their new expected minutes each become 10 + (20 * 0.5) = 20 minutes.
 					rank = 1
-					for player in depth_chart[t][p]:
+					for player in self.depth_chart[t][p]:
 						pid = player[1]
 
 						if pid not in injuries:
-							new_pct_of_total = depth_chart_by_player_id[pid][3]/(1-percentage_injured)
-							depth_chart_by_player_id[pid][2] = rank
-							depth_chart_by_player_id[pid][3] = new_pct_of_total
-							depth_chart_by_player_id[pid][1] += avail_minutes * new_pct_of_total
+							new_pct_of_total = self.depth_chart_by_player_id[pid][3]/(1-percentage_injured)
+							self.depth_chart_by_player_id[pid][2] = rank
+							self.depth_chart_by_player_id[pid][3] = new_pct_of_total
+							self.depth_chart_by_player_id[pid][1] += avail_minutes * new_pct_of_total
+
+							if self.depth_chart_by_player_id[pid][1] > 35:
+								self.depth_chart_by_player_id[pid][1] = 35
 
 							rank += 1
 
 		finally:
 			cursor.close()
 
-		return depth_chart, depth_chart_by_player_id
+		self.depth_chart_cache[key] = (self.depth_chart, self.depth_chart_by_player_id)
+		return self.depth_chart_cache[key]
 
 	def regression(self):
 		games = []
 		cursor = self.cnx.cursor()
-		
+
+		season = 2013
+
 		print "Grabbing all game logs"
 		try:
 			# Grab all game logs
@@ -880,8 +896,8 @@ class Projections:
 				select player_id, season, game_number, date, team, home, opponent, minutes_played, 
 					points, assists, total_rebounds, steals, blocks, turnovers 
 				from game_totals_basic b inner join players p on p.id = b.player_id
-				where b.season = 2013 and p.rg_position is not null
-				order by player_id, date desc""")
+				where b.season = %d and p.rg_position is not null
+				order by player_id, date desc""" % season)
 			
 			for game in cursor:
 				games.append(game)	
@@ -890,7 +906,18 @@ class Projections:
 		
 		print "Writing projections and actuals out to regression.csv"
 		f = open("regression.csv", "w")
-		f.write("""player_id,game number,date,team,opponent,floor FPs,ceiling FPs,projected FPs,actual FPs,RMSE,projected points,actual points,RMSE,projected assists,actual assists,RMSE,projected rebounds,actual rebounds,RMSE,projected steals,actual steals,RMSE,projected blocks,actual blocks,RMSE,projected turnovers,actual turnovers,RMSE\n""")
+		f.write("player_id,\
+					game number,\
+					date,team,\
+					opponent,\
+					floor FPs,ceiling FPs,projected FPs,actual FPs,MSE,\
+					projected points,actual points,MSE,\
+					projected assists,actual assists,MSE,\
+					projected rebounds,actual rebounds,MSE,\
+					projected steals,actual steals,MSE,\
+					projected blocks,actual blocks,MSE,\
+					projected turnovers,actual turnovers,MSE,\
+					projected minutes,actual minutes,MSE\n")
 		
 		self.fpc.site = DFSConstants.STAR_STREET
 		
@@ -902,11 +929,12 @@ class Projections:
 		ssq_steals = 0
 		ssq_blocks = 0
 		ssq_turnovers = 0
+		ssq_minutes = 0
 		
 		count = 0
 		processed = 0
 		for game in games:
-			count = count + 1
+			count += 1
 		
 			player_id = game[0]
 			season = game[1]
@@ -921,6 +949,8 @@ class Projections:
 			actual_steals = game[11]
 			actual_blocks = game[12]
 			actual_turnovers = game[13]
+
+			depth_chart, depth_chart_by_player_id = self.determine_depth_chart(season, date)
 			
 			print "Processing %s/%d/%d/%s/%s/%s (%d/%d)" % (player_id, season, game_number, date, team, opponent, count, len(games))
 			
@@ -946,6 +976,8 @@ class Projections:
 				proj_steals = self.calculate_projection(player_id, "steals", season, opponent, date)
 				proj_blocks = self.calculate_projection(player_id, "blocks", season, opponent, date)
 				proj_turnovers = self.calculate_projection(player_id, "turnovers", season, opponent, date)
+				proj_minutes = depth_chart_by_player_id[player_id][1]
+
 				end = time.time()
 				#print "calculate_projections - %f" % (end-start)
 				
@@ -966,18 +998,20 @@ class Projections:
 				error_steals = (proj_steals - actual_steals)**2
 				error_blocks = (proj_blocks - actual_blocks)**2
 				error_turnovers = (proj_turnovers - actual_turnovers)**2
+				error_minutes = (proj_minutes - minutes_played)**2
 
-				ssq_fps = ssq_fps + error_fps
-				ssq_points = ssq_points + error_points
-				ssq_rebounds = ssq_rebounds + error_rebounds
-				ssq_assists = ssq_assists + error_assists
-				ssq_steals = ssq_steals + error_steals
-				ssq_blocks = ssq_blocks + error_blocks
-				ssq_turnovers = ssq_turnovers + error_turnovers
+				ssq_fps += error_fps
+				ssq_points += error_points
+				ssq_rebounds += error_rebounds
+				ssq_assists += error_assists
+				ssq_steals += error_steals
+				ssq_blocks += error_blocks
+				ssq_turnovers += error_turnovers
+				ssq_minutes += error_minutes
 				
 				stddev = self.calculate_scoring_stddev(player_id, season, DFSConstants.STAR_STREET, date)
 			
-				line = "%s,%d,%s,%s,%s,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f" % (
+				line = "%s,%d,%s,%s,%s,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f" % (
 					player_id,
 					game_number,
 					date,
@@ -1005,7 +1039,10 @@ class Projections:
 					error_blocks,
 					proj_turnovers,
 					actual_turnovers,
-					error_turnovers
+					error_turnovers,
+				    proj_minutes,
+				    minutes_played,
+				    error_minutes
 				)
 				f.write(line + "\n")
 
@@ -1016,18 +1053,12 @@ class Projections:
 		mse_steals = ssq_steals/processed
 		mse_blocks = ssq_blocks/processed
 		mse_turnovers = ssq_turnovers/processed
+		mse_minutes = ssq_minutes/processed
 		
 		f.write("\n\n\n")
 
-		f.write("MSE FPS,MSE Points,MSE Assists,MSE Rebounds,MSE Steals,MSE Blocks,MSE Turnovers\n")
-		f.write("%f,%f,%f,%f,%f,%f,%f" % (mse_fps,mse_points,mse_assists,mse_rebounds,mse_steals,mse_blocks,mse_turnovers))
-		#f.write("MSE FPs,%f\n" % mse_fps)
-		#f.write("MSE Points,%f\n" % mse_points)
-		#f.write("MSE Assists,%f\n" % mse_assists)
-		#f.write("MSE Rebounds,%f\n" % mse_rebounds)
-		#f.write("MSE Steals,%f\n" % mse_steals)
-		#f.write("MSE Blocks,%f\n" % mse_blocks)
-		#f.write("MSE Turnovers,%f\n" % mse_turnovers)
+		f.write("MSE FPS,MSE Points,MSE Assists,MSE Rebounds,MSE Steals,MSE Blocks,MSE Turnovers,MSE Minutes\n")
+		f.write("%f,%f,%f,%f,%f,%f,%f,%f" % (mse_fps,mse_points,mse_assists,mse_rebounds,mse_steals,mse_blocks,mse_turnovers,mse_minutes))
 		f.close()
 	
 	def run(self):
@@ -1035,7 +1066,7 @@ class Projections:
 		games = self.get_game_list()
 
 		injuries = self.injury_manager.get_currently_injured_players()
-		
+
 		# List of sites to make projections for
 		sites = [ self.fpc.DRAFT_DAY, self.fpc.DRAFT_KINGS, DFSConstants.FAN_DUEL, self.fpc.STAR_STREET ]
 		
@@ -1049,6 +1080,8 @@ class Projections:
 		print "%d games tonight..." % len(games)
 		for game in games:
 			print "Evaluating players in %s vs %s" % (game["home"], game["visitor"])
+
+			self.determine_depth_chart(game["season"])
 		
 			players = self.get_players_in_game(game)
 			
