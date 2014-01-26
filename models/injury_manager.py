@@ -164,7 +164,7 @@ class InjuryManager():
 				######################################################################
 				# Looks like this player was traded at least once during the season.
 				######################################################################
-				print "Looks like this player got traded at some point..."
+				print "Looks like %s got traded at some point..." % player
 				cursor = self.cnx.cursor()
 
 				try:
@@ -260,5 +260,3 @@ class InjuryManager():
 									details="from calculate_injuries_from_gamelogs")
 				if not self.exists(injury):
 					self.insert(injury)
-				else:
-					print "\tWe've already accounted for this injury."
