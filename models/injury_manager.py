@@ -169,7 +169,7 @@ class InjuryManager():
 				######################################################################
 				# Looks like this player was traded at least once during the season.
 				######################################################################
-				print "Looks like %s got traded at some point..." % player
+				logging.info("Looks like %s got traded at some point..." % player)
 				cursor = self.cnx.cursor()
 
 				try:
@@ -200,7 +200,7 @@ class InjuryManager():
 										played = True
 										break
 								if not played:
-									print "Didn't play, adding {0:s} to injury list".format(d)
+									logging.info("%s didn't play, adding %s to injury list" % (player, d))
 									injury_dates.append(d)
 
 							# We're not sure exactly when the player was traded, so we need to count all games between the LAST
@@ -257,7 +257,7 @@ class InjuryManager():
 			###########################################################
 			for d in injury_dates:
 				# Looks like he didn't play.  Log it in the database.
-				print "%s did not play on %s" % (player, d)
+				#print "%s did not play on %s" % (player, d)
 				date_pieces = str(d).split('-')
 				injury_date = date(int(date_pieces[0]), int(date_pieces[1]), int(date_pieces[2]))
 				return_date = injury_date + self.one_day
