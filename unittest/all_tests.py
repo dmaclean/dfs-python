@@ -1,3 +1,4 @@
+import logging
 import unittest
 import test_fantasy_point_calculator
 import test_import_salaries
@@ -7,6 +8,8 @@ import test_vegas_odds
 import test_rg_player_stats
 import test_defense_vs_position
 import test_injury
+
+logging.basicConfig(level=logging.WARNING)
 
 ##########################
 # FantasyPointCalculator

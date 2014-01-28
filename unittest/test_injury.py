@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, timedelta
 from unittest import TestCase
 import unittest
 from BBRTestUtility import BBRTestUtility
@@ -21,6 +21,10 @@ class TestInjury(TestCase):
 
 		# Initialize the team game totals map.
 		self.team_game_totals_info = self.test_util.generate_default_team_game_totals_info()
+
+		self.one_day = timedelta(days=1)
+		self.today = date.today()
+		self.tomorrow = self.today + self.one_day
 
 	def test_db_operations(self):
 		injury = Injury(player_id="dan", injury_date=date(2014,1,1), return_date=date(2014,1,10), details="broken leg")
@@ -603,6 +607,78 @@ class TestInjury(TestCase):
 		self.assertTrue(injuries[0].injury_date == "2014-01-03" and
 						injuries[1].injury_date == "2014-01-05" and
 						injuries[2].injury_date == "2014-01-07")
+
+	def test_scrape_injury_report_update_injured_player(self):
+		"""
+		Test that a day-to-day player whose previous return date was today has it updated to tomorrow.
+		"""
+		# Set up a player
+		self.player_info["id"] = "teaguje01"
+		self.player_info["name"] = "Jeff Teague"
+		self.player_info["position"] = "PG"
+		self.player_info["rg_position"] = "PG"
+		self.test_util.insert_into_players(self.player_info)
+
+		one_day = timedelta(days=1)
+		today = date.today()
+		tomorrow = today + one_day
+
+		injury = Injury(player_id="teaguje01", injury_date=date(2014, 1, 24), return_date=today, details="ankle")
+		self.injury_manager.insert(injury)
+
+		self.injury_manager.scrape_injury_report(season=2013, source="file")
+
+		injuries = self.injury_manager.get(Injury(player_id="teaguje01"))
+		self.assertTrue(len(injuries) == 1)
+		self.assertTrue(injuries[0].injury_date == "2014-01-24" and injuries[0].return_date == str(tomorrow))
+
+	def test_scrape_injury_report_update_injured_player_out_for_season(self):
+		"""
+		Make sure that the return date (beginning of next season) for an existing injury is not
+		updated to tomorrow by the script.  It should be left alone.
+		"""
+		# Set up a player
+		self.player_info["id"] = "teaguje01"
+		self.player_info["name"] = "Jeff Teague"
+		self.player_info["position"] = "PG"
+		self.player_info["rg_position"] = "PG"
+		self.test_util.insert_into_players(self.player_info)
+
+		injury = Injury(player_id="teaguje01", injury_date=date(2014, 1, 24), return_date=date(2014, 11, 01), details="ankle")
+		self.injury_manager.insert(injury)
+
+		self.injury_manager.scrape_injury_report(season=2013, source="file")
+
+		injuries = self.injury_manager.get(Injury(player_id="teaguje01"))
+		self.assertTrue(len(injuries) == 1)
+		self.assertTrue(injuries[0].injury_date == "2014-01-24" and injuries[0].return_date == "2014-11-01")
+
+	def test_scrape_injury_report_add_new_injury(self):
+		"""
+		Make sure that a newly injured player is inserted into the database.
+		"""
+		# Set up a player
+		self.player_info["id"] = "teaguje01"
+		self.player_info["name"] = "Jeff Teague"
+		self.player_info["position"] = "PG"
+		self.player_info["rg_position"] = "PG"
+		self.test_util.insert_into_players(self.player_info)
+
+		self.injury_manager.scrape_injury_report(season=2013, source="file")
+
+		injuries = self.injury_manager.get(Injury(player_id="teaguje01"))
+		self.assertTrue(len(injuries) == 1)
+		self.assertTrue(injuries[0].injury_date == "2014-01-24" and injuries[0].return_date == str(self.tomorrow))
+
+	def test_scrape_injury_report_unknown_player(self):
+		"""
+		Make sure we don't modify the database when we encounter an unknown player.  Instead, just
+		alert the user running the script to resolve this manually.
+		"""
+		self.injury_manager.scrape_injury_report(season=2013, source="file")
+
+		injuries = self.injury_manager.get(Injury(player_id="teaguje01"))
+		self.assertTrue(len(injuries) == 0)
 
 if __name__ == '__main__':
 	unittest.main()

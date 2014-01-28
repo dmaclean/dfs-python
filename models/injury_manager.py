@@ -1,9 +1,14 @@
 __author__ = 'ap'
 
+import httplib
+import logging
+import time
 import mysql.connector
 from datetime import date, timedelta
 
+from bs4 import BeautifulSoup
 from models.injury import Injury
+
 
 class InjuryManager():
 	def __init__(self, cnx=None):
@@ -12,6 +17,8 @@ class InjuryManager():
 			self.cnx = mysql.connector.connect(user='fantasy', password='fantasy', host='localhost', database='basketball_reference')
 		else:
 			self.cnx = cnx
+
+		self.one_day = timedelta(days=1)
 
 	def exists(self, injury):
 		"""
@@ -114,8 +121,6 @@ class InjuryManager():
 		"""
 		Determine which players were injured on which past games based on their presence in the game log.
 		"""
-		one_day = timedelta(days=1)
-
 		cursor = self.cnx.cursor()
 
 		#######################################################
@@ -255,8 +260,104 @@ class InjuryManager():
 				print "%s did not play on %s" % (player, d)
 				date_pieces = str(d).split('-')
 				injury_date = date(int(date_pieces[0]), int(date_pieces[1]), int(date_pieces[2]))
-				return_date = injury_date + one_day
+				return_date = injury_date + self.one_day
 				injury = Injury(player_id=player, injury_date=injury_date, return_date=return_date,
 									details="from calculate_injuries_from_gamelogs")
 				if not self.exists(injury):
 					self.insert(injury)
+
+	def scrape_injury_report(self, season, source="site"):
+		"""
+		Scrape the injury report from Rotoworld.com and update our injuries for the day (or add new ones) accordingly.
+		"""
+		data = ""
+		if source == "site":
+			conn = httplib.HTTPConnection("www.rotoworld.com", timeout=5)
+			conn.request("GET", "/teams/injuries/nba/all/")
+			resp = conn.getresponse()
+			data = resp.read()
+			conn.close()
+		else:
+			f = open('../tests/rotoworld_injuries.html', 'r')
+			for line in f:
+				data += line
+
+		soup = BeautifulSoup(data)
+
+		today = date.today()
+		tomorrow = today + self.one_day
+
+		team_divs = soup.find_all("div", class_="pb")
+		for team_div in team_divs:
+			trs = team_div.table.find_all("tr")
+
+			for tr in trs:
+				tds = tr.find_all('td')
+
+				# Skip the first one, it's a header.
+				if tds[0].b:
+					continue
+
+				# On to the real data
+				# Name, position, and status are obvious.
+				# Date is the date of the injury.  For this, we're assuming that if the
+				#       month of the injury is greater than the current month then the
+				#       injury happened in the previous year.  This makes sense since
+				#       it's pretty hard to get injured in the future.
+				name = tds[0].a.text.replace("'", "")
+				position = tds[2].text
+				status = tds[3].text
+				injury_date = tds[4].text.replace(u'\xa0', u' ')
+				date_struct = time.strptime(injury_date + " %d" % (season+1), "%b %d %Y")
+
+				# Looks like the date in the new year ends up being in the future.  Set it to the previous year.
+				if date(date_struct.tm_year, date_struct.tm_mon, date_struct.tm_mday) > today:
+					date_struct = time.strptime(injury_date + " %d" % season, "%b %d %Y")
+
+				# OK, we have the injury date now.  Does this injury already exist?
+				query = "select id from players where name = '%s'" % name
+				cursor = self.cnx.cursor()
+				player_id = None
+				try:
+					cursor.execute(query)
+					for result in cursor:
+						player_id = result[0]
+				finally:
+					cursor.close()
+
+				if not player_id:
+					logging.info("\tUnable to locate player_id for %s, please resolve this manually." % name)
+					continue
+
+				injury = Injury(player_id=player_id, injury_date=date(date_struct.tm_year, date_struct.tm_mon, date_struct.tm_mday))
+				injuries = self.get(injury)
+
+				if len(injuries) == 0:
+					# This is a new injury
+					injury_date = date(date_struct.tm_year, date_struct.tm_mon, date_struct.tm_mday)
+					injury = Injury(player_id=player_id,
+									injury_date=injury_date,
+									return_date=tomorrow,
+									details="Inserted by scrape_injury_report()")
+					logging.info("Adding new injury for %s: %s = %s" % (player_id, injury_date, tomorrow))
+					self.insert(injury)
+				else:
+					# This injury already exists.  Update the return date to tomorrow.
+					#
+					# This code is very sad.  For some reason I can't get actual datetime objects
+					# out of the database with sqlite3 with this mysql driver (they come out as strings).
+					# So, I need to convert the date to string (which it already will be with sqlite),
+					# parse it out into pieces, and reconstruct it explicitly as a date.  When actually run
+					# with MySQL this code is completely redundant.
+					return_date_pieces = str(injuries[0].return_date).split("-")
+					return_date = date(int(return_date_pieces[0]), int(return_date_pieces[1]), int(return_date_pieces[2]))
+					if return_date < tomorrow:
+						injuries[0].return_date = tomorrow
+						logging.info("Updating injury for %s: %s = %s" % (injuries[0].player_id,
+																			injuries[0].injury_date,
+																			tomorrow))
+						self.update(injuries[0])
+
+if __name__ == '__main__':
+	manager = InjuryManager()
+	manager.scrape_injury_report(2013)
