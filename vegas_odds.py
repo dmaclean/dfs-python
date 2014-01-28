@@ -1,4 +1,5 @@
 import httplib
+import logging
 import mysql.connector
 from bs4 import BeautifulSoup
 from datetime import date
@@ -124,7 +125,7 @@ class VegasOdds:
 				road_score = float(tr.find_all('td')[5].text)
 				home_score = float(tr.find_all('td')[6].text)
 			except ValueError:
-				print "Error parsing one of the values.  The odds are probably not fully updated."
+				logging.error("Error parsing one of the values.  The odds are probably not fully updated.")
 				quit()
 	
 			odds.append( { "date": date.today(), 
@@ -137,11 +138,11 @@ class VegasOdds:
 				"projection_home": home_score
 				} )
 	
-			print "%s\t%s\t%f\t%f\t%f\t%f\t%f" % (road_team, home_team, road_spread, home_spread, over_under, road_score, home_score)
+			logging.info("%s\t%s\t%f\t%f\t%f\t%f\t%f" % (road_team, home_team, road_spread, home_spread, over_under, road_score, home_score))
 
 		# Store in database.
 		for o in odds:
-			print "Storing %s/%s to database." % (o["road_team"], o["home_team"])
+			logging.info("Storing %s/%s to database." % (o["road_team"], o["home_team"]))
 			self.insert_or_update(self.cnx, o)
 
 if __name__ == '__main__':
