@@ -9,7 +9,7 @@ from models.defense_vs_position_manager import DefenseVsPositionManager
 from models.defense_vs_position import DefenseVsPosition
 from models.injury_manager import InjuryManager,Injury
 
-from datetime import date
+from datetime import date, timedelta
 
 
 class Projections:
@@ -760,7 +760,7 @@ class Projections:
 		finally:
 			cursor.close()
 
-	def determine_depth_chart(self, season, date=date.today()):
+	def determine_depth_chart(self, season, d=date.today()):
 		"""
 		Creates two depth charts for teams.
 
@@ -777,22 +777,24 @@ class Projections:
 		"""
 
 		# Return an existing one if we've already created this.
-		key = "_".join([str(season),str(date)])
+		key = "_".join([str(season), str(d)])
 		if key in self.depth_chart_cache:
 			return self.depth_chart_cache[key]
 
 		cursor = self.cnx.cursor()
 
 		injury_manager = InjuryManager(self.cnx)
-		injuries = injury_manager.get_currently_injured_players(date)
+		injuries = injury_manager.get_currently_injured_players(d)
+
+		two_weeks = timedelta(days=14)
 
 		query = """
 				select name, p.id, team, rg_position, avg(minutes_played) as "avg mp"
 				from players p inner join game_totals_basic b on p.id = b.player_id
-				where b.season = %d and b.date <= '%s'
+				where b.season = %d and b.date between '%s' and '%s'
 				group by player_id
 				order by team, rg_position, avg(minutes_played) desc
-			""" % (season, date)
+			""" % (season, d-two_weeks, d)
 
 		depth_chart = {}
 		depth_chart_by_player_id = {}
@@ -816,14 +818,6 @@ class Projections:
 
 				depth_chart[team][position].append((minutes, player_id, name))
 				depth_chart[team][position].sort(reverse=True)
-
-			# Factor in injured players
-			#for t in depth_chart:
-			#	for p in depth_chart[t]:
-			#		for player in depth_chart[t][p]:
-			#			for injury in injuries:     # 4x nested loop.  Yikes!
-			#				if player[1] == injury.player_id:
-			#					pass
 
 			for t in depth_chart:
 				for p in depth_chart[t]:
@@ -908,24 +902,31 @@ class Projections:
 				for team in dcs:
 					f.write("%s\n" % team)
 
+					opponent = game["home"] if team != game["home"] else game["visitor"]
+
 					dc = dcs[team]
 					for position in dc:
 						#f.write("\t%s\n" % position)
 						f.write("{:>10}\n".format(position))
 
-						f.write("{:>40}{:>20}{:>20}{:>20}{:>20}\n".format('Name', 'Average minutes', 'Expected minutes', 'Average FPs', 'FP stddev'))
+						f.write("{:>40}{:>20}{:>20}{:>20}{:>20}{:>20}{:>20}\n".format('Name', 'Average minutes', 'Expected minutes', 'Average FPs',
+																		'FP stddev', 'Opponent DvP', 'Salary'))
 						for player in dc[position]:
 							player_id = player[1]
 							name = player[2]
 							avg_minutes = player[0]
 							expected_minutes = depth_chart_by_player_id[player_id][1]
 							fp_data = self.calculate_scoring_stddev(player_id, season, site, d)
+							salary = self.get_salary(player_id, site, d)
+							fp_rank = self.calculate_defense_vs_position_ranking(DFSConstants.FANTASY_POINTS, position, opponent, game["season"])
 
-							f.write("{:>40}{:>20}{:>20}{:>20}{:>20}\n".format(name,
+							f.write("{:>40}{:>20}{:>20}{:>20}{:>20}{:>20}{:>20}\n".format(name,
 							                                      avg_minutes,
 							                                      expected_minutes,
 							                                      fp_data[0],
-							                                      float(fp_data[1])))
+							                                      float(fp_data[1]),
+							                                      fp_rank,
+							                                      salary))
 						f.write("\n")
 					f.write("\n\n")
 		finally:
