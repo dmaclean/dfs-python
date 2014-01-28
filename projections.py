@@ -1,3 +1,4 @@
+import logging
 import sys
 import time
 import mysql.connector
@@ -23,8 +24,6 @@ class Projections:
 		self.scoring_stddev_cache = {}
 		self.expected_points_cache = {}
 		self.depth_chart_cache = {}
-		self.depth_chart = {}
-		self.depth_chart_by_player_id = {}
 
 		# The current DFS site we're projecting for.
 		self.site = ""
@@ -683,24 +682,26 @@ class Projections:
 	############################################################
 	# Gets the standard deviation of a player's fantasy points
 	############################################################
-	def calculate_scoring_stddev(self, player_id, season, site, date=date.today()):
+	def calculate_scoring_stddev(self, player_id, season, site, d=date.today()):
 		key = "_".join([player_id, site])
 		
 		# Lazy initialization.  Populate the cache on the first request for it.
 		if len(self.scoring_stddev_cache) == 0:	
-			print "Populating stddev cache..."	
+			logging.info("Populating stddev cache...")
 			cursor = self.cnx.cursor()
 
 			query = """
-				select player_id, site, stddev(points) from fantasy_points where season = %d group by player_id, site
-			""" % (season)
+				select f.player_id, f.site, avg(f.points), stddev(f.points)
+				from fantasy_points f inner join game_totals_basic b on f.game_totals_basic_id = b.id
+				where f.season = %d and b.date <= '%s' group by f.player_id, f.site
+			""" % (season, d)
 				
 			try:
 				cursor.execute(query)
 			
 				for result in cursor:
 					curr_key = "_".join([result[0], result[1]])
-					self.scoring_stddev_cache[curr_key] = result[2]
+					self.scoring_stddev_cache[curr_key] = (result[2], result[3])
 			finally:
 				cursor.close()
 		
@@ -793,6 +794,9 @@ class Projections:
 				order by team, rg_position, avg(minutes_played) desc
 			""" % (season, date)
 
+		depth_chart = {}
+		depth_chart_by_player_id = {}
+
 		try:
 			cursor.execute(query)
 			for result in cursor:
@@ -803,15 +807,15 @@ class Projections:
 				minutes = result[4]
 
 				# Create the map for a team if it doesn't exist yet.
-				if team not in self.depth_chart:
-					self.depth_chart[team] = {}
+				if team not in depth_chart:
+					depth_chart[team] = {}
 
 				# Create the map for a position if it doesn't exist yet.
-				if position not in self.depth_chart[team]:
-					self.depth_chart[team][position] = []
+				if position not in depth_chart[team]:
+					depth_chart[team][position] = []
 
-				self.depth_chart[team][position].append((minutes, player_id, name))
-				self.depth_chart[team][position].sort(reverse=True)
+				depth_chart[team][position].append((minutes, player_id, name))
+				depth_chart[team][position].sort(reverse=True)
 
 			# Factor in injured players
 			#for t in depth_chart:
@@ -821,18 +825,18 @@ class Projections:
 			#				if player[1] == injury.player_id:
 			#					pass
 
-			for t in self.depth_chart:
-				for p in self.depth_chart[t]:
+			for t in depth_chart:
+				for p in depth_chart[t]:
 
 					# Determine the total avg minutes at the position
 					total = 0
-					for player in self.depth_chart[t][p]:
+					for player in depth_chart[t][p]:
 						total = total + player[0]
 
 					# Generate the entry for each player, now that we know the total avg minutes at the position.
 					i = 1
-					for player in self.depth_chart[t][p]:
-						self.depth_chart_by_player_id[player[1]] = [player[2], player[0], i, player[0]/total]
+					for player in depth_chart[t][p]:
+						depth_chart_by_player_id[player[1]] = [player[2], player[0], i, player[0]/total]
 						i += 1
 
 					# Now we need to factor in injuries.  In this loop, go through all the players
@@ -841,18 +845,18 @@ class Projections:
 					# players that will be playing.
 					avail_minutes = 0
 					percentage_injured = 0
-					for player in self.depth_chart[t][p]:
+					for player in depth_chart[t][p]:
 						pid = player[1]
 
 						# is player injured (and have we yet to factor it in [0 minutes])?
 						if pid in injuries:
 							# Player is injured.  Add their expected minutes to avail_minutes and
 							# set avg minutes and pct of total to 0.
-							avail_minutes += self.depth_chart_by_player_id[pid][1]
-							percentage_injured += self.depth_chart_by_player_id[pid][3]
-							self.depth_chart_by_player_id[pid][1] = 0
-							self.depth_chart_by_player_id[pid][2] = -1
-							self.depth_chart_by_player_id[pid][3] = 0
+							avail_minutes += depth_chart_by_player_id[pid][1]
+							percentage_injured += depth_chart_by_player_id[pid][3]
+							depth_chart_by_player_id[pid][1] = 0
+							depth_chart_by_player_id[pid][2] = -1
+							depth_chart_by_player_id[pid][3] = 0
 
 					# In this loop we're going to redistribute the available minutes.  This will be done
 					# proportionally, so assume the following scenario:
@@ -863,25 +867,70 @@ class Projections:
 					# P2 and P3 each get a new_pct_of_total = .25/(1-0.5) = 0.5
 					# So, their new expected minutes each become 10 + (20 * 0.5) = 20 minutes.
 					rank = 1
-					for player in self.depth_chart[t][p]:
+					for player in depth_chart[t][p]:
 						pid = player[1]
 
 						if pid not in injuries:
-							new_pct_of_total = self.depth_chart_by_player_id[pid][3]/(1-percentage_injured)
-							self.depth_chart_by_player_id[pid][2] = rank
-							self.depth_chart_by_player_id[pid][3] = new_pct_of_total
-							self.depth_chart_by_player_id[pid][1] += avail_minutes * new_pct_of_total
+							new_pct_of_total = depth_chart_by_player_id[pid][3]/(1-percentage_injured)
+							depth_chart_by_player_id[pid][2] = rank
+							depth_chart_by_player_id[pid][3] = new_pct_of_total
+							depth_chart_by_player_id[pid][1] += avail_minutes * new_pct_of_total
 
-							if self.depth_chart_by_player_id[pid][1] > 35:
-								self.depth_chart_by_player_id[pid][1] = 35
+							if depth_chart_by_player_id[pid][1] > 35:
+								depth_chart_by_player_id[pid][1] = 35
 
 							rank += 1
 
 		finally:
 			cursor.close()
 
-		self.depth_chart_cache[key] = (self.depth_chart, self.depth_chart_by_player_id)
+		self.depth_chart_cache[key] = (depth_chart, depth_chart_by_player_id)
 		return self.depth_chart_cache[key]
+
+	def print_depth_chart(self, season, site, d=date.today()):
+		"""
+		Prints out the depth chart to file (depth_chart_<timestamp>.txt).  This is meant to
+		help with finding good value plays each day.  We'll be able to quickly see each player
+		based on their average minutes and their expected minutes (0 if they are injured).
+		There is also additional data to help decide if a player is worth taking, like average
+		FPs, standard deviation, DvP, etc.
+		"""
+
+		f = open("projections/depth_chart_%s_%s.txt" % (site, str(d)), "w")
+
+		try:
+			depth_chart, depth_chart_by_player_id = self.determine_depth_chart(season, d)
+			games = self.get_game_list(d)
+
+			for game in games:
+				dcs = {game["home"]: depth_chart[game["home"]], game["visitor"]: depth_chart[game["visitor"]]}
+
+				for team in dcs:
+					f.write("%s\n" % team)
+
+					dc = dcs[team]
+					for position in dc:
+						#f.write("\t%s\n" % position)
+						f.write("{:>10}\n".format(position))
+
+						f.write("{:>40}{:>20}{:>20}{:>20}{:>20}\n".format('Name', 'Average minutes', 'Expected minutes', 'Average FPs', 'FP stddev'))
+						for player in dc[position]:
+							player_id = player[1]
+							name = player[2]
+							avg_minutes = player[0]
+							expected_minutes = depth_chart_by_player_id[player_id][1]
+							fp_data = self.calculate_scoring_stddev(player_id, season, site, d)
+
+							f.write("{:>40}{:>20}{:>20}{:>20}{:>20}\n".format(name,
+							                                      avg_minutes,
+							                                      expected_minutes,
+							                                      fp_data[0],
+							                                      float(fp_data[1])))
+						f.write("\n")
+					f.write("\n\n")
+		finally:
+			f.close()
+
 
 	def regression(self):
 		games = []
@@ -1009,7 +1058,7 @@ class Projections:
 				ssq_turnovers += error_turnovers
 				ssq_minutes += error_minutes
 				
-				stddev = self.calculate_scoring_stddev(player_id, season, DFSConstants.STAR_STREET, date)
+				stddev = self.calculate_scoring_stddev(player_id, season, DFSConstants.STAR_STREET, date)[1]
 			
 				line = "%s,%d,%s,%s,%s,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f" % (
 					player_id,
@@ -1081,7 +1130,10 @@ class Projections:
 		for game in games:
 			print "Evaluating players in %s vs %s" % (game["home"], game["visitor"])
 
+			# Generate the depth chart for teams playing today and print it to file.
 			self.determine_depth_chart(game["season"])
+			for s in sites:
+				self.print_depth_chart(game["season"], s)
 		
 			players = self.get_players_in_game(game)
 			
@@ -1115,7 +1167,7 @@ class Projections:
 					salary = -1 if not salary else salary
 					
 					# FPs standard deviation
-					stddev = self.calculate_scoring_stddev(player["player_id"], game["season"], s)
+					stddev = self.calculate_scoring_stddev(player["player_id"], game["season"], s)[1]
 					
 					avg_minutes = self.get_avg_stat_past_n_games(player["player_id"], "minutes_played", game["season"], 5)
 					
