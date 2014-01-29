@@ -359,5 +359,7 @@ class InjuryManager():
 						self.update(injuries[0])
 
 if __name__ == '__main__':
+	logging.basicConfig(level=logging.INFO)
+
 	manager = InjuryManager()
 	manager.scrape_injury_report(2013)

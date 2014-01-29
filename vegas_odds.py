@@ -119,6 +119,10 @@ class VegasOdds:
 			home_team = self.team_names[home_team] if home_team in self.team_names else home_team
 	
 			try:
+				# Game has been postponed, skip it
+				if tr.find_all('td')[2].strong and tr.find_all('td')[2].strong.span.text == "PPD":
+					continue
+
 				road_spread = float(tr.find_all('td')[2].text)
 				home_spread = float(tr.find_all('td')[3].text)
 				over_under = float(tr.find_all('td')[4].text)
@@ -146,5 +150,7 @@ class VegasOdds:
 			self.insert_or_update(self.cnx, o)
 
 if __name__ == '__main__':
+	logging.basicConfig(level=logging.INFO)
+
 	odds = VegasOdds()
 	odds.process()

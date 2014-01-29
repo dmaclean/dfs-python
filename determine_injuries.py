@@ -1,5 +1,6 @@
 __author__ = 'ap'
 
+import logging
 import mysql.connector
 import sys
 
@@ -28,6 +29,8 @@ class DetermineInjuries():
 if __name__ == '__main__':
 	season = None
 	type = None
+
+	logging.basicConfig(level=logging.INFO)
 
 	for arg in sys.argv:
 		if arg == "determine_injuries.py":
