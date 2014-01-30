@@ -200,7 +200,6 @@ class InjuryManager():
 										played = True
 										break
 								if not played:
-									logging.info("%s didn't play, adding %s to injury list" % (player, d))
 									injury_dates.append(d)
 
 							# We're not sure exactly when the player was traded, so we need to count all games between the LAST
@@ -257,13 +256,13 @@ class InjuryManager():
 			###########################################################
 			for d in injury_dates:
 				# Looks like he didn't play.  Log it in the database.
-				#print "%s did not play on %s" % (player, d)
 				date_pieces = str(d).split('-')
 				injury_date = date(int(date_pieces[0]), int(date_pieces[1]), int(date_pieces[2]))
 				return_date = injury_date + self.one_day
 				injury = Injury(player_id=player, injury_date=injury_date, return_date=return_date,
 									details="from calculate_injuries_from_gamelogs")
 				if not self.exists(injury):
+					logging.info("{} didn't play, adding ({} to {}) to injuries table".format(player, injury.injury_date, injury.return_date))
 					self.insert(injury)
 
 	def scrape_injury_report(self, season, source="site"):
