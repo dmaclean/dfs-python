@@ -580,6 +580,51 @@ class TestFantasyPointCalculator(unittest.TestCase):
 		
 		points = self.testUtil.select_from_fantasy_points("test2", self.fpc.site, 2012, 2)
 		self.assertTrue(points == 38.25)
+
+	def test_run_with_season(self):
+		# Player 1
+		self.game_totals_basic_info["player_id"] = "test"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["game_number"] = 1
+		self.game_totals_basic_info["field_goals"] = 8
+		self.game_totals_basic_info["field_goal_attempts"] = 10
+		self.game_totals_basic_info["three_point_field_goals"] = 1
+		self.game_totals_basic_info["three_point_field_goal_attempts"] = 2
+		self.game_totals_basic_info["free_throws"] = 5
+		self.game_totals_basic_info["free_throw_attempts"] = 6
+		self.game_totals_basic_info["total_rebounds"] = 5
+		self.game_totals_basic_info["assists"] = 2
+		self.game_totals_basic_info["steals"] = 1
+		self.game_totals_basic_info["blocks"] = 2
+		self.game_totals_basic_info["turnovers"] = 1
+		self.game_totals_basic_info["points"] = 24
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		# Player 2
+		self.game_totals_basic_info["player_id"] = "test2"
+		self.game_totals_basic_info["season"] = 2012
+		self.game_totals_basic_info["game_number"] = 2
+		self.game_totals_basic_info["points"] = 23
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		self.fpc.site = self.fpc.STAR_STREET
+		self.fpc.run()
+
+		points = self.testUtil.select_from_fantasy_points("test", self.fpc.site, 2013, 1)
+		self.assertTrue(points == 38.25)
+
+		points = self.testUtil.select_from_fantasy_points("test2", self.fpc.site, 2012, 2)
+		self.assertTrue(points == 37.25)
+
+		self.fpc.site = self.fpc.DRAFT_KINGS
+		self.fpc.season = 2013
+		self.fpc.run()
+
+		points = self.testUtil.select_from_fantasy_points("test", self.fpc.site, 2013, 1)
+		self.assertTrue(points == 39.25)
+
+		points = self.testUtil.select_from_fantasy_points("test2", self.fpc.site, 2012, 2)
+		self.assertTrue(points == None)
 	
 if __name__ == '__main__':
 	unittest.main()

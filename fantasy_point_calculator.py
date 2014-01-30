@@ -1,3 +1,6 @@
+from datetime import date
+
+import logging
 import sys
 import mysql.connector
 
@@ -9,8 +12,9 @@ class FantasyPointCalculator():
 	
 	ALL_SITES = [DRAFT_DAY, DRAFT_KINGS, STAR_STREET]
 
-	def __init__(self, cnx = None, site=None):
+	def __init__(self, cnx = None, site=None, season=None):
 		self.site = site
+		self.season = season
 		
 		# Use dependency injection to determine where the database connection comes from.
 		if(not cnx):
@@ -76,25 +80,30 @@ class FantasyPointCalculator():
 		stat_list = []
 		all_ids = {}
 		from_fantasy_points = {}
+
+		if self.season:
+			query = "select id from game_totals_basic where season = {}".format(self.season)
+		else:
+			query = "select id from game_totals_basic"
+
 		try:
-			#query = ("Select * from game_totals_basic t left join fantasy_points p on t.id = p.id where p.id is NULL;")
-			#query = """
-			#	select * from game_totals_basic 
-			#	where id not in 
-			#		(select game_totals_basic_id from fantasy_points where site = '%s')
-			#""" % (self.site)
-			#cursor.execute(query)
-			print "Querying for all ids in game_totals_basic"
-			cursor.execute("select id from game_totals_basic")
+			logging.info("Querying for all ids in game_totals_basic")
+			cursor.execute(query)
 			for result in cursor:
 				all_ids[result[0]] = 1
 			
-			print "Querying for game_totals_basic_ids in fantasy_points for %s" % self.site
-			cursor.execute("select game_totals_basic_id from fantasy_points where site = '%s'" % self.site)
+			logging.info("Querying for game_totals_basic_ids in fantasy_points for {}".format(self.site))
+			if self.season:
+				query = "select game_totals_basic_id from fantasy_points where site = '{}' and season = {}".format(
+					self.site, self.season)
+			else:
+				query = "select game_totals_basic_id from fantasy_points where site = '{}'".format(self.site)
+
+			cursor.execute(query)
 			for result in cursor:
 				from_fantasy_points[result[0]] = 1
 			
-			print "Filtering out existing ids"
+			logging.info("Filtering out existing ids")
 			valid_ids = []
 			for k in from_fantasy_points:
 				del all_ids[k]
@@ -102,14 +111,14 @@ class FantasyPointCalculator():
 			for k in all_ids:
 				valid_ids.append(k)
 			
-			print "Retrieving game_totals_basic rows that have not yet been computed for fantasy points."
+			logging.info("Retrieving game_totals_basic rows that have not yet been computed for fantasy points.")
 			
 			count = 1
 			total = len(valid_ids)
 			for id in valid_ids:
 				if count % 10 == 0:
-					print "Retrieved %d of %d" % (count, total)
-				cursor.execute("select * from game_totals_basic where id = %d" % id)
+					logging.info("Retrieved %d of %d" % (count, total))
+				cursor.execute("select * from game_totals_basic where id = {}".format(id))
 
 				# Collect list of stat lines that don't have fantasy points computed.
 				for (result) in cursor:
@@ -134,7 +143,7 @@ class FantasyPointCalculator():
 			
 					stat_list.append(stats)
 				
-				count = count + 1
+				count += 1
 		finally:
 			cursor.close()
 		
@@ -146,18 +155,20 @@ class FantasyPointCalculator():
 				fantasy_points = self.calculate(s)
 	
 				insert_query = ("""insert into fantasy_points (game_totals_basic_id, player_id, site, season, game_number, points) 
-				values (%d,'%s','%s',%d,%d,%f)""") % (s["id"], s["player_id"], self.site, s["season"], s["game_number"], fantasy_points)
+				values ({},'{}','{}',{},{},{})""").format(s["id"], s["player_id"], self.site, s["season"], s["game_number"], fantasy_points)
 				cursor.execute(insert_query)
 				
-				count = count + 1
+				count += 1
 				
 				if count % 10 == 0:
-					print "Processed %d games" % count
+					logging.info("Processed {} games".format(count))
 		finally:
 			cursor.close()
 
 if __name__ == '__main__':
 	curr_site = ""
+	season = date.today().year
+
 	for arg in sys.argv:
 		if arg == "fantasy_point_calculator.py":
 			pass
@@ -165,7 +176,8 @@ if __name__ == '__main__':
 			pieces = arg.split("=")
 			if pieces[0] == "site":
 				curr_site = pieces[1]
-	fpc = FantasyPointCalculator()
-	fpc.site = curr_site
+			elif pieces[0] == "season":
+				season = int(pieces[1])
+	fpc = FantasyPointCalculator(site=curr_site, season=season)
 	fpc.run()
 	
