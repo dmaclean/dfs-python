@@ -166,6 +166,8 @@ class FantasyPointCalculator():
 			cursor.close()
 
 if __name__ == '__main__':
+	logging.basicConfig(level=logging.INFO)
+
 	curr_site = ""
 	season = date.today().year
 
