@@ -1446,9 +1446,11 @@ class TestProjections(unittest.TestCase):
 		self.fantasy_points_info["points"] = 30
 		self.testUtil.insert_into_fantasy_points(self.fantasy_points_info)
 		
-		self.projections.site = DFSConstants.FAN_DUEL
-		bos_rank = self.projections.calculate_defense_vs_position_ranking(DFSConstants.FANTASY_POINTS, "PG", "BOS", 2013, date(2013,11,1))
-		atl_rank = self.projections.calculate_defense_vs_position_ranking(DFSConstants.FANTASY_POINTS, "PG", "ATL", 2013, date(2013,11,1))
+		# self.projections.site =
+		bos_rank = self.projections.calculate_defense_vs_position_ranking(
+			DFSConstants.FANTASY_POINTS, "PG", "BOS", 2013, DFSConstants.FAN_DUEL, date(2013, 11, 1))
+		atl_rank = self.projections.calculate_defense_vs_position_ranking(
+			DFSConstants.FANTASY_POINTS, "PG", "ATL", 2013, DFSConstants.FAN_DUEL, date(2013, 11, 1))
 		
 		self.assertTrue(bos_rank == 1)
 		self.assertTrue(atl_rank == 2)

@@ -183,7 +183,7 @@ class Projections:
 	# played against a team, sum their fantasy points, and divide by the number of games
 	# the team has played.
 	######################################################################################
-	def calculate_defense_vs_position_ranking(self, metric, position, team, season, date=date.today()):
+	def calculate_defense_vs_position_ranking(self, metric, position, team, season, site, date=date.today()):
 		key = "_".join([metric, position, team, str(season), str(date)])
 		if key in self.dvp_ranking_cache:
 			return self.dvp_ranking_cache[key]
@@ -210,7 +210,7 @@ class Projections:
 							inner join fantasy_points fp on fp.player_id = p.id AND fp.season = b.season and fp.game_number = b.game_number
 						where b.season = %d and p.rg_position = '%s' and b.opponent = '%s' 
 							and date <= '%s' and fp.site = '%s'
-					"""	% (t, season, date, season, position, t, date, self.site)
+					"""	% (t, season, date, season, position, t, date, site)
 				else:
 					query = """select sum(b.%s)/(select max(game) from team_game_totals where team = '%s' and season = %d and date <= '%s') 
 							from players p inner join game_totals_basic b on p.id = b.player_id 
@@ -232,7 +232,7 @@ class Projections:
 
 				temp_key = "_".join([metric, position, r[1], str(season), str(date)])
 				self.dvp_ranking_cache[temp_key] = i
-				i = i + 1
+				i += 1
 
 		finally:
 			cursor.close()
@@ -912,13 +912,15 @@ class Projections:
 						f.write("{:>40}{:>20}{:>20}{:>20}{:>20}{:>20}{:>20}\n".format('Name', 'Average minutes', 'Expected minutes', 'Average FPs',
 																		'FP stddev', 'Opponent DvP', 'Salary'))
 						for player in dc[position]:
+							if not position:
+								print player
 							player_id = player[1]
 							name = player[2]
 							avg_minutes = player[0]
 							expected_minutes = depth_chart_by_player_id[player_id][1]
 							fp_data = self.calculate_scoring_stddev(player_id, season, site, d)
 							salary = self.get_salary(player_id, site, d)
-							fp_rank = self.calculate_defense_vs_position_ranking(DFSConstants.FANTASY_POINTS, position, opponent, game["season"])
+							fp_rank = self.calculate_defense_vs_position_ranking(DFSConstants.FANTASY_POINTS, position, opponent, game["season"], site)
 
 							f.write("{:>40}{:>20}{:>20}{:>20}{:>20}{:>20}{:>20}\n".format(name,
 							                                      avg_minutes,
@@ -1114,6 +1116,12 @@ class Projections:
 	def run(self):
 		# Find all games being played today
 		games = self.get_game_list()
+		if len(games) == 0:
+			logging.error("No games today. Exiting...")
+			quit()
+
+		# Determine the season we're working with
+		season = games[0]["season"]
 
 		injuries = self.injury_manager.get_currently_injured_players()
 
@@ -1126,15 +1134,15 @@ class Projections:
 			files[s] = open("projections/%s_%s.csv" % (s, date.today()), "w")
 			files[s].write("name,position,projection,salary,floor,consistency,ceiling,"
 							"avg minutes,spread,O/U,vegas projection,DvP,DPP,4x+5\n")
+
+			# Generate the depth chart for teams playing today and print it to file.
+			self.determine_depth_chart(season)
+			for s in sites:
+				self.print_depth_chart(season, s)
 		
 		print "%d games tonight..." % len(games)
 		for game in games:
 			print "Evaluating players in %s vs %s" % (game["home"], game["visitor"])
-
-			# Generate the depth chart for teams playing today and print it to file.
-			self.determine_depth_chart(game["season"])
-			for s in sites:
-				self.print_depth_chart(game["season"], s)
 		
 			players = self.get_players_in_game(game)
 			
@@ -1174,7 +1182,7 @@ class Projections:
 					
 					site_position = self.get_position_on_site(player["player_id"], s)
 					
-					fp_rank = self.calculate_defense_vs_position_ranking(DFSConstants.FANTASY_POINTS, player["player_info"]["rg_position"], opponent, game["season"])
+					fp_rank = self.calculate_defense_vs_position_ranking(DFSConstants.FANTASY_POINTS, player["player_info"]["rg_position"], opponent, game["season"], s)
 					
 					# Floor and ceiling projections
 					floor = fps - stddev
