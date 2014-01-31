@@ -29,6 +29,12 @@ unittest.TextTestRunner(verbosity=2).run(suite)
 suite = unittest.TestLoader().loadTestsFromTestCase(test_projections.TestProjections)
 unittest.TextTestRunner(verbosity=2).run(suite)
 
+########################
+# Defense vs. Position
+########################
+suite = unittest.TestLoader().loadTestsFromTestCase(test_defense_vs_position.TestDefenseVsPosition)
+unittest.TextTestRunner(verbosity=2).run(suite)
+
 ##########
 # Injury
 ##########
@@ -51,10 +57,4 @@ unittest.TextTestRunner(verbosity=2).run(suite)
 # RG Player Stats
 ###################
 suite = unittest.TestLoader().loadTestsFromTestCase(test_rg_player_stats.TestRGPlayerStats)
-unittest.TextTestRunner(verbosity=2).run(suite)
-
-########################
-# Defense vs. Position
-########################
-suite = unittest.TestLoader().loadTestsFromTestCase(test_defense_vs_position.TestDefenseVsPosition)
 unittest.TextTestRunner(verbosity=2).run(suite)
