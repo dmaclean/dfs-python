@@ -146,7 +146,7 @@ class Projections:
 	def calculate_defense_vs_position(self, metric, position, team, season, date=date.today(), n=None):
 		# Initialize the cache, if necessary
 		if len(self.dvp_cache) == 0:
-			print "Populating the DvP cache..."
+			logging.info("Populating the DvP cache...")
 			dvps = self.dvpManager.get(DefenseVsPosition(season=season))
 			for dvp in dvps:
 				key = "_".join([dvp.stat, dvp.position, dvp.team, str(dvp.season), str(dvp.date)])
@@ -156,45 +156,26 @@ class Projections:
 		if key in self.dvp_cache:
 			return self.dvp_cache[key]
 
-		self.dvp_cache[key] = self.dvpManager.calculateDefenseVsPosition(metric, position, team, season, date)
+		self.dvp_cache[key] = self.dvpManager.calculate_defense_vs_position(metric, position, team, season, self.site, date)
 
 		return self.dvp_cache[key]
 
-
-		#cursor = self.cnx.cursor()
-
-		#query = ""
-		#try:
-		#	query = """select sum(b.%s)/(select max(game) from team_game_totals where team = '%s' and season = %d and date <= '%s')
-		#			from players p inner join game_totals_basic b on p.id = b.player_id
-		#			where b.season = %d and p.rg_position = '%s' and b.opponent = '%s'
-		#				and date <= '%s'""" % (metric, team, season, date, season, position, team, date)
-		#	cursor.execute(query)
-
-		#	for result in cursor:
-		#		self.dvp_cache[key] = result[0]
-		#		return result[0]
-
-		#finally:
-		#	cursor.close()
-
-	######################################################################################
-	# To calculate defensive vs a position we want to get all of the players who
-	# played against a team, sum their fantasy points, and divide by the number of games
-	# the team has played.
-	######################################################################################
-	def calculate_defense_vs_position_ranking(self, metric, position, team, season, site, date=date.today()):
-		key = "_".join([metric, position, team, str(season), str(date)])
+	def calculate_defense_vs_position_ranking(self, metric, position, team, season, site, d=date.today()):
+		"""
+		To calculate defensive vs a position we want to get all of the players who
+		played against a team, sum their fantasy points, and divide by the number of games
+		the team has played.
+		"""
+		key = "_".join([metric, position, team, str(season), str(d)])
 		if key in self.dvp_ranking_cache:
 			return self.dvp_ranking_cache[key]
 
 		cursor = self.cnx.cursor()
 
-		query = ""
 		try:
 			# Get all teams for season
 			teams = []
-			query = "select distinct team from team_game_totals where season = %d" % (season)
+			query = "select distinct team from team_game_totals where season = %d" % season
 
 			cursor.execute(query)
 			for result in cursor:
@@ -202,24 +183,8 @@ class Projections:
 
 			ranks = []
 			for t in teams:
-				if metric == DFSConstants.FANTASY_POINTS:
-					query = """
-						select sum(fp.points)/(select max(game) from team_game_totals where team = '%s' and 
-													season = %d and date <= '%s') 
-						from players p inner join game_totals_basic b on p.id = b.player_id 
-							inner join fantasy_points fp on fp.player_id = p.id AND fp.season = b.season and fp.game_number = b.game_number
-						where b.season = %d and p.rg_position = '%s' and b.opponent = '%s' 
-							and date <= '%s' and fp.site = '%s'
-					"""	% (t, season, date, season, position, t, date, site)
-				else:
-					query = """select sum(b.%s)/(select max(game) from team_game_totals where team = '%s' and season = %d and date <= '%s') 
-							from players p inner join game_totals_basic b on p.id = b.player_id 
-							where b.season = %d and p.rg_position = '%s' and b.opponent = '%s'
-								and date <= '%s'""" % (metric, t, season, date, season, position, t, date)
-				cursor.execute(query)
-
-				for result in cursor:
-					ranks.append((result[0], t))
+				dvp = self.dvpManager.calculate_defense_vs_position(metric, position, t, season, site, d)
+				ranks.append((dvp, t))
 
 			# Sort the results in ascending order (lowest value at element 0).
 			ranks.sort()
@@ -228,9 +193,7 @@ class Projections:
 			# put the index i in the cache instead of the actual value.
 			i = 1
 			for r in ranks:
-				#print "(%d) %s - %f" % (i, r[1], r[0])
-
-				temp_key = "_".join([metric, position, r[1], str(season), str(date)])
+				temp_key = "_".join([metric, position, r[1], str(season), str(d)])
 				self.dvp_ranking_cache[temp_key] = i
 				i += 1
 
@@ -1211,6 +1174,8 @@ class Projections:
 			files[f].close()
 
 if __name__ == '__main__':
+	logging.basicConfig(level=logging.INFO)
+
 	regression = False
 	for arg in sys.argv:
 		if arg == "projections.py":

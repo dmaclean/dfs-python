@@ -109,6 +109,16 @@ class BBRTestUtility():
 			"opp_points": 0
 		}
 
+	def generate_default_fantasy_points_info(self):
+		return {
+			"game_totals_basic_id": 0,
+			"player_id": "",
+			"site": "",
+			"season": date.today().year,
+			"game_number": 0,
+			"points": 0
+		}
+
 	def generate_default_game_totals_basic_info(self):
 		"""
 		Generates a dictionary of default values for the game_totals_basic table.

@@ -344,9 +344,11 @@ create table defense_vs_position (
 	team varchar(5) not null,
 	season int not null,
 	value float not null,
-	date date not null
+	date date not null,
+	site varchar(50)
 );
 create index defense_vs_position_season_idx on defense_vs_position(season);
+create index defense_vs_position_site_idx on defense_vs_position(site);
 
 create table injuries (
     id integer auto_increment primary key,
