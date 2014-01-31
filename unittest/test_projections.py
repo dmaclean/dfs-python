@@ -160,14 +160,7 @@ class TestProjections(unittest.TestCase):
 			"projection_home": 0
 		}
 		
-		self.fantasy_points_info = {
-			"game_totals_basic_id": 0,
-			"player_id": "",
-			"site": "",
-			"season": date.today().year,
-			"game_number": 0,
-			"points": 0
-		}
+		self.fantasy_points_info = self.testUtil.generate_default_fantasy_points_info()
 	
 	def tearDown(self):
 		self.testUtil.conn.close()
@@ -712,6 +705,60 @@ class TestProjections(unittest.TestCase):
 		self.assertTrue(baseline[13] == 11.6)	# usage
 		self.assertTrue(baseline[14] == 102)	# off rating
 		self.assertTrue(baseline[15] == 102)	# def rating
+
+	def test_get_baseline_fantasy_points(self):
+		# Write basic game totals for player
+		self.game_totals_basic_info["player_id"] = "macleda01"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["game_number"] = 1
+		self.game_totals_basic_info["team"] = "LAL"
+		self.game_totals_basic_info["opponent"] = "ATL"
+		self.game_totals_basic_info["date"] = date(2013,11,4)
+		self.game_totals_basic_info["points"] = 10
+		self.game_totals_basic_info["minutes_played"] = 30
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		self.game_totals_basic_info["game_number"] = 2
+		self.game_totals_basic_info["date"] = date(2013,11,5)
+		self.game_totals_basic_info["points"] = 20
+		self.game_totals_basic_info["minutes_played"] = 32
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		# Write advanced game totals for player
+		self.game_totals_advanced_info["player_id"] = "macleda01"
+		self.game_totals_advanced_info["date"] = date(2013,11,4)
+		self.game_totals_advanced_info["season"] = 2013
+		self.game_totals_advanced_info["usage_pct"] = 10.6
+		self.game_totals_advanced_info["offensive_rating"] = 100
+		self.game_totals_advanced_info["defensive_rating"] = 101
+		self.testUtil.insert_into_game_totals_advanced(self.game_totals_advanced_info)
+
+		self.game_totals_advanced_info["date"] = date(2013,11,5)
+		self.game_totals_advanced_info["season"] = 2013
+		self.game_totals_advanced_info["usage_pct"] = 12.6
+		self.game_totals_advanced_info["offensive_rating"] = 104
+		self.game_totals_advanced_info["defensive_rating"] = 103
+		self.testUtil.insert_into_game_totals_advanced(self.game_totals_advanced_info)
+
+		self.fantasy_points_info["points"] = 10
+		self.fantasy_points_info["game_number"] = 1
+		self.fantasy_points_info["player_id"] = "macleda01"
+		self.fantasy_points_info["season"] = 2013
+		self.fantasy_points_info["site"] = DFSConstants.FAN_DUEL
+		self.testUtil.insert_into_fantasy_points(self.fantasy_points_info)
+
+		self.fantasy_points_info["points"] = 20
+		self.fantasy_points_info["game_number"] = 2
+		self.testUtil.insert_into_fantasy_points(self.fantasy_points_info)
+
+		self.projections.site = DFSConstants.FAN_DUEL
+		baseline = self.projections.get_baseline("macleda01", 2013)
+		self.assertTrue(baseline[0] == 15)	# avg points
+		self.assertTrue(baseline[12] == 31)     # minutes played
+		self.assertTrue(baseline[13] == 11.6)	# usage
+		self.assertTrue(baseline[14] == 102)	# off rating
+		self.assertTrue(baseline[15] == 102)	# def rating
+		self.assertTrue(baseline[16] == 15)     # Fantasy points
 	
 	def test_get_baseline_with_date(self):
 		# Write basic game totals for player

@@ -345,11 +345,11 @@ class Projections:
 
 		return factor
 
-	###################################################################################
-	# Retrieves season averages for a player up to a certain date so we can
-	# establish a baseline for the player, prior to adjusting based on matchups, etc.
-	###################################################################################
-	def get_baseline(self, player_id, season, date=date.today()):
+	def get_baseline(self, player_id, season, d=date.today()):
+		"""
+		Retrieves season averages for a player up to a certain date so we can
+		establish a baseline for the player, prior to adjusting based on matchups, etc.
+		"""
 		key = "_".join([player_id, str(season)])
 		if key in self.baseline_cache:
 			return self.baseline_cache[key]
@@ -360,25 +360,24 @@ class Projections:
 		query = "select "
 		count = 1
 		for s in self.stats:
-			query = query + "avg(%s)" % (s)
+			query += "avg(%s)" % (s)
 			if count < len(self.stats):
-				query = query + ","
-			count = count + 1
+				query += ","
+			count += 1
 
-		query = query + """
+		query += """
 			from game_totals_basic b where player_id = '%s' and season = %d and date <= '%s'
-			""" % (player_id, season, date)
+			""" % (player_id, season, d)
 
 		adv_query = """
 			select avg(usage_pct), avg(offensive_rating), avg(defensive_rating)
 			from game_totals_advanced
 			where player_id = '%s' and season = %d and date <= '%s'
-		""" % (player_id, season, date)
+		""" % (player_id, season, d)
 
-		avg_stat = 0
-		avg_usage_pct = 0
-		avg_off_rating = 0
-		avg_def_rating = 0
+		fp_query = """select avg(points) from fantasy_points where player_id ='{}' and season = {} and site = '{}'""".format(
+			player_id, season, self.site
+		)
 
 		try:
 			cursor.execute(query)
@@ -387,24 +386,18 @@ class Projections:
 			for result in cursor:
 				for r in result:
 					baselines.append(r)
-				#avg_points = result[0]
-				#avg_rebounds = result[1]
-				#avg_assists = result[2]
-				#avg_steals = result[3]
-				#avg_blocks = result[4]
-				#avg_turnovers = result[5]
 
 			cursor.execute(adv_query)
 			for result in cursor:
 				for r in result:
 					baselines.append(r)
-				#avg_usage_pct = result[0]
-				#avg_off_rating = result[1]
-				#avg_def_rating = result[2]
+
+			cursor.execute(fp_query)
+			for result in cursor:
+				baselines.append(result[0])
 		finally:
 			cursor.close()
 
-		#baselines = (avg_points, avg_rebounds, avg_assists, avg_steals, avg_blocks, avg_turnovers, avg_usage_pct, avg_off_rating, avg_def_rating)
 		self.baseline_cache[key] = baselines
 		return baselines
 
