@@ -1987,9 +1987,13 @@ class TestProjections(unittest.TestCase):
 		# self.assertTrue(fp_data[1] == 5.2915)
 
 	def test_get_avg_contribution_to_team_stat(self):
+		self.projections.site = DFSConstants.FAN_DUEL
+		self.projections.fpc.site = DFSConstants.FAN_DUEL
+
 		self.team_game_totals_info["team"] = "NYK"
 		self.team_game_totals_info["opponent"] = "MIA"
 		self.team_game_totals_info["season"] = 2013
+		self.team_game_totals_info["game"] = 1
 		self.team_game_totals_info["date"] = date(2014, 1, 2)
 		self.team_game_totals_info["points"] = 100
 		self.team_game_totals_info["opp_points"] = 100
@@ -2010,6 +2014,7 @@ class TestProjections(unittest.TestCase):
 		self.game_totals_basic_info["player_id"] = "PG"
 		self.game_totals_basic_info["team"] = "NYK"
 		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["game_number"] = 1
 		self.game_totals_basic_info["date"] = date(2014, 1, 2)
 		self.game_totals_basic_info["minutes_played"] = 40
 		self.game_totals_basic_info["points"] = 10
@@ -2046,7 +2051,120 @@ class TestProjections(unittest.TestCase):
 		result = self.projections.get_avg_contribution_to_team_stat("points", "C", season=2013, d=date(2014, 1, 2))
 		self.assertTrue(result == .15)
 
+	def test_get_avg_contribution_to_team_stat_fantasy_points(self):
+		self.projections.site = DFSConstants.FAN_DUEL
+		self.projections.fpc.site = DFSConstants.FAN_DUEL
+
+		self.team_game_totals_info["team"] = "NYK"
+		self.team_game_totals_info["opponent"] = "MIA"
+		self.team_game_totals_info["season"] = 2013
+		self.team_game_totals_info["game"] = 1
+		self.team_game_totals_info["date"] = date(2014, 1, 2)
+		self.team_game_totals_info["points"] = 100
+		self.team_game_totals_info["opp_points"] = 100
+
+
+
+
+
+
+
+
+
+
+
+
+		self.testUtil.insert_into_team_game_totals(self.team_game_totals_info)
+
+		self.game_totals_basic_info["player_id"] = "PG"
+		self.game_totals_basic_info["team"] = "NYK"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["game_number"] = 1
+		self.game_totals_basic_info["date"] = date(2014, 1, 2)
+		self.game_totals_basic_info["minutes_played"] = 40
+		self.game_totals_basic_info["points"] = 10
+		gtb_id = self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		self.fantasy_points_info["game_totals_basic_id"] = gtb_id
+		self.fantasy_points_info["player_id"] = "PG"
+		self.fantasy_points_info["site"] = DFSConstants.FAN_DUEL
+		self.fantasy_points_info["season"] = 2013
+		self.fantasy_points_info["game_number"] = 1
+		self.fantasy_points_info["points"] = 10
+		self.testUtil.insert_into_fantasy_points(self.fantasy_points_info)
+
+		self.game_totals_basic_info["player_id"] = "SG"
+		self.game_totals_basic_info["points"] = 15
+		gtb_id = self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		self.fantasy_points_info["game_totals_basic_id"] = gtb_id
+		self.fantasy_points_info["player_id"] = "SG"
+		self.fantasy_points_info["site"] = DFSConstants.FAN_DUEL
+		self.fantasy_points_info["season"] = 2013
+		self.fantasy_points_info["game_number"] = 1
+		self.fantasy_points_info["points"] = 15
+		self.testUtil.insert_into_fantasy_points(self.fantasy_points_info)
+
+		self.game_totals_basic_info["player_id"] = "SF"
+		self.game_totals_basic_info["points"] = 30
+		gtb_id = self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		self.fantasy_points_info["game_totals_basic_id"] = gtb_id
+		self.fantasy_points_info["player_id"] = "SF"
+		self.fantasy_points_info["site"] = DFSConstants.FAN_DUEL
+		self.fantasy_points_info["season"] = 2013
+		self.fantasy_points_info["game_number"] = 1
+		self.fantasy_points_info["points"] = 30
+		self.testUtil.insert_into_fantasy_points(self.fantasy_points_info)
+
+		self.game_totals_basic_info["player_id"] = "PF"
+		self.game_totals_basic_info["points"] = 30
+		gtb_id = self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		self.fantasy_points_info["game_totals_basic_id"] = gtb_id
+		self.fantasy_points_info["player_id"] = "PF"
+		self.fantasy_points_info["site"] = DFSConstants.FAN_DUEL
+		self.fantasy_points_info["season"] = 2013
+		self.fantasy_points_info["game_number"] = 1
+		self.fantasy_points_info["points"] = 30
+		self.testUtil.insert_into_fantasy_points(self.fantasy_points_info)
+
+		self.game_totals_basic_info["player_id"] = "C"
+		self.game_totals_basic_info["points"] = 15
+		gtb_id = self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		self.fantasy_points_info["game_totals_basic_id"] = gtb_id
+		self.fantasy_points_info["player_id"] = "C"
+		self.fantasy_points_info["site"] = DFSConstants.FAN_DUEL
+		self.fantasy_points_info["season"] = 2013
+		self.fantasy_points_info["game_number"] = 1
+		self.fantasy_points_info["points"] = 15
+		self.testUtil.insert_into_fantasy_points(self.fantasy_points_info)
+
+		result = self.projections.get_avg_contribution_to_team_stat(DFSConstants.FANTASY_POINTS, "PG", season=2013,
+																	d=date(2014, 1, 2))
+		self.assertTrue(result == .1)
+
+		result = self.projections.get_avg_contribution_to_team_stat(DFSConstants.FANTASY_POINTS, "SG", season=2013,
+																	d=date(2014, 1, 2))
+		self.assertTrue(result == .15)
+
+		result = self.projections.get_avg_contribution_to_team_stat(DFSConstants.FANTASY_POINTS, "SF", season=2013,
+																	d=date(2014, 1, 2))
+		self.assertTrue(result == .3)
+
+		result = self.projections.get_avg_contribution_to_team_stat(DFSConstants.FANTASY_POINTS, "PF", season=2013,
+																	d=date(2014, 1, 2))
+		self.assertTrue(result == .3)
+
+		result = self.projections.get_avg_contribution_to_team_stat(DFSConstants.FANTASY_POINTS, "C", season=2013,
+																	d=date(2014, 1, 2))
+		self.assertTrue(result == .15)
+
 	def test_get_avg_contribution_to_team_stat_only_last_game(self):
+		self.projections.site = DFSConstants.FAN_DUEL
+		self.projections.fpc.site = DFSConstants.FAN_DUEL
+
 		self.team_game_totals_info["team"] = "NYK"
 		self.team_game_totals_info["opponent"] = "MIA"
 		self.team_game_totals_info["game"] = 1

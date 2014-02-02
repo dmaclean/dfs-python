@@ -455,28 +455,64 @@ class Projections:
 		"""
 		cursor = self.cnx.cursor()
 
-		query = """
-			select b.{}/t.{} as "pct"
-			from game_totals_basic b inner join team_game_totals t on b.game_number = t.game
-				and b.season = t.season and b.team = t.team
-			where player_id = '{}' and b.season = {} and b.date <= '{}' order by b.date desc
-		""".format(stat, stat, player_id, season, d)
+		if stat == DFSConstants.FANTASY_POINTS:
+			query = """
+				select fp.points, t.field_goal_attempts, t.field_goals, t.three_point_field_goal_attempts,
+					t.three_point_field_goals, t.free_throw_attempts, t.free_throws, t.points, t.total_rebounds,
+					t.assists, t.steals, t.blocks, t.turnovers
+				from game_totals_basic b inner join team_game_totals t on b.game_number = t.game
+					and b.season = t.season and b.team = t.team
+					inner join fantasy_points fp on b.id = fp.game_totals_basic_id
+				where b.player_id = '{}' and b.season = {} and b.date <= '{}' and fp.site = '{}' order by b.date desc
+			""".format(player_id, season, d, self.site)
 
-		if past_n_games:
-			query += " limit {}".format(past_n_games)
+			if past_n_games:
+				query += " limit {}".format(past_n_games)
 
-		try:
-			cursor.execute(query)
+			try:
+				cursor.execute(query)
 
-			count = 0
-			total = 0
-			for result in cursor:
-				total += result[0]
-				count += 1
+				count = 0
+				total = 0
+				for result in cursor:
+					fps = result[0]
+					team_stats = dict(field_goal_attempts=result[1], field_goals=result[2], three_point_field_goal_attempts=result[3],
+					                  three_point_field_goals=result[4], free_throw_attempts=result[5], free_throws=result[6],
+					                  points=result[7], total_rebounds=result[8], assists=result[9], steals=result[10],
+					                  blocks=result[11], turnovers=result[12])
+					team_fps = self.fpc.calculate(team_stats)
 
-			return total/count
-		finally:
-			cursor.close()
+					pct = fps/team_fps
+					total += pct
+					count += 1
+
+				return total/count
+			finally:
+				cursor.close()
+
+		else:
+			query = """
+				select b.{}/t.{} as "pct"
+				from game_totals_basic b inner join team_game_totals t on b.game_number = t.game
+					and b.season = t.season and b.team = t.team
+				where player_id = '{}' and b.season = {} and b.date <= '{}' order by b.date desc
+			""".format(stat, stat, player_id, season, d)
+
+			if past_n_games:
+				query += " limit {}".format(past_n_games)
+
+			try:
+				cursor.execute(query)
+
+				count = 0
+				total = 0
+				for result in cursor:
+					total += result[0]
+					count += 1
+
+				return total/count
+			finally:
+				cursor.close()
 
 	#################################################################################
 	# Retrieve the list of games being played for a particular date.  Date defaults
