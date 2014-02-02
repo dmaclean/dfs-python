@@ -1986,9 +1986,180 @@ class TestProjections(unittest.TestCase):
 		# self.assertTrue(fp_data[0] == 14)
 		# self.assertTrue(fp_data[1] == 5.2915)
 
+	def test_get_avg_contribution_to_team_stat(self):
+		self.team_game_totals_info["team"] = "NYK"
+		self.team_game_totals_info["opponent"] = "MIA"
+		self.team_game_totals_info["season"] = 2013
+		self.team_game_totals_info["date"] = date(2014, 1, 2)
+		self.team_game_totals_info["points"] = 100
+		self.team_game_totals_info["opp_points"] = 100
+		self.team_game_totals_info["field_goal_attempts"] = 81
+		self.team_game_totals_info["free_throw_attempts"] = 18
+		self.team_game_totals_info["offensive_rebounds"] = 4
+		self.team_game_totals_info["opp_total_rebounds"] = 37
+		self.team_game_totals_info["opp_offensive_rebounds"] = 5
+		self.team_game_totals_info["field_goals"] = 39
+		self.team_game_totals_info["turnovers"] = 9
+		self.team_game_totals_info["opp_field_goal_attempts"] = 75
+		self.team_game_totals_info["opp_free_throw_attempts"] = 33
+		self.team_game_totals_info["total_rebounds"] = 32
+		self.team_game_totals_info["opp_field_goals"] = 38
+		self.team_game_totals_info["opp_turnovers"] = 5
+		self.testUtil.insert_into_team_game_totals(self.team_game_totals_info)
 
-	#def test_get_avg_contribution_to_team_stat(self):
-		
+		self.game_totals_basic_info["player_id"] = "PG"
+		self.game_totals_basic_info["team"] = "NYK"
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["date"] = date(2014, 1, 2)
+		self.game_totals_basic_info["minutes_played"] = 40
+		self.game_totals_basic_info["points"] = 10
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		self.game_totals_basic_info["player_id"] = "SG"
+		self.game_totals_basic_info["points"] = 15
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		self.game_totals_basic_info["player_id"] = "SF"
+		self.game_totals_basic_info["points"] = 30
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		self.game_totals_basic_info["player_id"] = "PF"
+		self.game_totals_basic_info["points"] = 30
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		self.game_totals_basic_info["player_id"] = "C"
+		self.game_totals_basic_info["points"] = 15
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		result = self.projections.get_avg_contribution_to_team_stat("points", "PG", season=2013, d=date(2014, 1, 2))
+		self.assertTrue(result == .1)
+
+		result = self.projections.get_avg_contribution_to_team_stat("points", "SG", season=2013, d=date(2014, 1, 2))
+		self.assertTrue(result == .15)
+
+		result = self.projections.get_avg_contribution_to_team_stat("points", "SF", season=2013, d=date(2014, 1, 2))
+		self.assertTrue(result == .3)
+
+		result = self.projections.get_avg_contribution_to_team_stat("points", "PF", season=2013, d=date(2014, 1, 2))
+		self.assertTrue(result == .3)
+
+		result = self.projections.get_avg_contribution_to_team_stat("points", "C", season=2013, d=date(2014, 1, 2))
+		self.assertTrue(result == .15)
+
+	def test_get_avg_contribution_to_team_stat_only_last_game(self):
+		self.team_game_totals_info["team"] = "NYK"
+		self.team_game_totals_info["opponent"] = "MIA"
+		self.team_game_totals_info["game"] = 1
+		self.team_game_totals_info["season"] = 2013
+		self.team_game_totals_info["date"] = date(2014, 1, 2)
+		self.team_game_totals_info["points"] = 100
+		self.team_game_totals_info["opp_points"] = 100
+		self.team_game_totals_info["field_goal_attempts"] = 81
+		self.team_game_totals_info["free_throw_attempts"] = 18
+		self.team_game_totals_info["offensive_rebounds"] = 4
+		self.team_game_totals_info["opp_total_rebounds"] = 37
+		self.team_game_totals_info["opp_offensive_rebounds"] = 5
+		self.team_game_totals_info["field_goals"] = 39
+		self.team_game_totals_info["turnovers"] = 9
+		self.team_game_totals_info["opp_field_goal_attempts"] = 75
+		self.team_game_totals_info["opp_free_throw_attempts"] = 33
+		self.team_game_totals_info["total_rebounds"] = 32
+		self.team_game_totals_info["opp_field_goals"] = 38
+		self.team_game_totals_info["opp_turnovers"] = 5
+		self.testUtil.insert_into_team_game_totals(self.team_game_totals_info)
+
+		self.team_game_totals_info["team"] = "NYK"
+		self.team_game_totals_info["opponent"] = "BOS"
+		self.team_game_totals_info["game"] = 2
+		self.team_game_totals_info["season"] = 2013
+		self.team_game_totals_info["date"] = date(2014, 1, 3)
+		self.team_game_totals_info["points"] = 50
+		self.team_game_totals_info["opp_points"] = 100
+		self.team_game_totals_info["field_goal_attempts"] = 81
+		self.team_game_totals_info["free_throw_attempts"] = 18
+		self.team_game_totals_info["offensive_rebounds"] = 4
+		self.team_game_totals_info["opp_total_rebounds"] = 37
+		self.team_game_totals_info["opp_offensive_rebounds"] = 5
+		self.team_game_totals_info["field_goals"] = 39
+		self.team_game_totals_info["turnovers"] = 9
+		self.team_game_totals_info["opp_field_goal_attempts"] = 75
+		self.team_game_totals_info["opp_free_throw_attempts"] = 33
+		self.team_game_totals_info["total_rebounds"] = 32
+		self.team_game_totals_info["opp_field_goals"] = 38
+		self.team_game_totals_info["opp_turnovers"] = 5
+		self.testUtil.insert_into_team_game_totals(self.team_game_totals_info)
+
+		# Game 1 stats for players
+		self.game_totals_basic_info["player_id"] = "PG"
+		self.game_totals_basic_info["team"] = "NYK"
+		self.game_totals_basic_info["game_number"] = 1
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["date"] = date(2014, 1, 2)
+		self.game_totals_basic_info["minutes_played"] = 40
+		self.game_totals_basic_info["points"] = 10
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		self.game_totals_basic_info["player_id"] = "SG"
+		self.game_totals_basic_info["points"] = 15
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		self.game_totals_basic_info["player_id"] = "SF"
+		self.game_totals_basic_info["points"] = 30
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		self.game_totals_basic_info["player_id"] = "PF"
+		self.game_totals_basic_info["points"] = 30
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		self.game_totals_basic_info["player_id"] = "C"
+		self.game_totals_basic_info["points"] = 15
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		# Game 2 stats for players
+		self.game_totals_basic_info["player_id"] = "PG"
+		self.game_totals_basic_info["team"] = "NYK"
+		self.game_totals_basic_info["game_number"] = 2
+		self.game_totals_basic_info["season"] = 2013
+		self.game_totals_basic_info["date"] = date(2014, 1, 3)
+		self.game_totals_basic_info["minutes_played"] = 40
+		self.game_totals_basic_info["points"] = 10
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		self.game_totals_basic_info["player_id"] = "SG"
+		self.game_totals_basic_info["points"] = 15
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		self.game_totals_basic_info["player_id"] = "SF"
+		self.game_totals_basic_info["points"] = 30
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		self.game_totals_basic_info["player_id"] = "PF"
+		self.game_totals_basic_info["points"] = 30
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		self.game_totals_basic_info["player_id"] = "C"
+		self.game_totals_basic_info["points"] = 15
+		self.testUtil.insert_into_game_totals_basic(self.game_totals_basic_info)
+
+		result = self.projections.get_avg_contribution_to_team_stat("points", "PG", season=2013, d=date(2014, 1, 3),
+																	past_n_games=1)
+		self.assertTrue(result == .2)
+
+		result = self.projections.get_avg_contribution_to_team_stat("points", "SG", season=2013, d=date(2014, 1, 3),
+																	past_n_games=1)
+		self.assertTrue(result == .3)
+
+		result = self.projections.get_avg_contribution_to_team_stat("points", "SF", season=2013, d=date(2014, 1, 3),
+																	past_n_games=1)
+		self.assertTrue(result == .6)
+
+		result = self.projections.get_avg_contribution_to_team_stat("points", "PF", season=2013, d=date(2014, 1, 3),
+																	past_n_games=1)
+		self.assertTrue(result == .6)
+
+		result = self.projections.get_avg_contribution_to_team_stat("points", "C", season=2013, d=date(2014, 1, 3),
+																	past_n_games=1)
+		self.assertTrue(result == .3)
 
 if __name__ == '__main__':
 	unittest.main()

@@ -345,7 +345,7 @@ class Projections:
 
 		return factor
 
-	def get_baseline(self, player_id, season, d=date.today()):
+	def get_baseline(self, player_id, season, d=date.today(), n=None):
 		"""
 		Retrieves season averages for a player up to a certain date so we can
 		establish a baseline for the player, prior to adjusting based on matchups, etc.
@@ -368,16 +368,22 @@ class Projections:
 		query += """
 			from game_totals_basic b where player_id = '%s' and season = %d and date <= '%s'
 			""" % (player_id, season, d)
+		if n:
+			query += " order by date desc limit {}".format(n)
 
 		adv_query = """
 			select avg(usage_pct), avg(offensive_rating), avg(defensive_rating)
 			from game_totals_advanced
 			where player_id = '%s' and season = %d and date <= '%s'
 		""" % (player_id, season, d)
+		if n:
+			adv_query += " order by date desc limit {}".format(n)
 
 		fp_query = """select avg(points) from fantasy_points where player_id ='{}' and season = {} and site = '{}'""".format(
 			player_id, season, self.site
 		)
+		if n:
+			fp_query += " order by game_number desc limit {}".format(n)
 
 		try:
 			cursor.execute(query)
@@ -440,6 +446,35 @@ class Projections:
 				adjusted.append( (result[0]/league_avg)*result[0] )
 
 			return sum(adjusted)/len(adjusted)
+		finally:
+			cursor.close()
+
+	def get_avg_contribution_to_team_stat(self, stat, player_id, season, past_n_games=None, d=date.today()):
+		"""
+		Calculates what percentage of a team's particular stat a player is responsible for.
+		"""
+		cursor = self.cnx.cursor()
+
+		query = """
+			select b.{}/t.{} as "pct"
+			from game_totals_basic b inner join team_game_totals t on b.game_number = t.game
+				and b.season = t.season and b.team = t.team
+			where player_id = '{}' and b.season = {} and b.date <= '{}' order by b.date desc
+		""".format(stat, stat, player_id, season, d)
+
+		if past_n_games:
+			query += " limit {}".format(past_n_games)
+
+		try:
+			cursor.execute(query)
+
+			count = 0
+			total = 0
+			for result in cursor:
+				total += result[0]
+				count += 1
+
+			return total/count
 		finally:
 			cursor.close()
 
@@ -545,7 +580,7 @@ class Projections:
 
 		info = self.get_player_info(player_id)
 		team = self.get_team(player_id, season, d)
-		baselines = self.get_baseline(player_id,season, d)
+		baselines = self.get_baseline(player_id, season, d)
 
 		avg_stat = baselines[baseline_stat_index[stat]]
 
