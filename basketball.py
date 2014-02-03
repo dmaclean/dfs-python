@@ -6,6 +6,7 @@ import mysql.connector
 from datetime import date, timedelta
 from HTMLParser import HTMLParser
 
+from models.injury_manager import InjuryManager, Injury
 from projections import Projections
 
 
@@ -33,7 +34,8 @@ class Processor:
 		self.playerSplitsParser = BasketballReferenceSplitsParser()
 		self.teamSplitsParser = BasketballReferenceTeamSplitsParser()
 		self.teamGameLogParser = BasketballReferenceTeamGameLogParser()
-		
+
+		self.injury_manager = InjuryManager()
 	
 	def readCLI(self):
 		for arg in sys.argv:
@@ -204,6 +206,12 @@ class Processor:
 						player.game_advanced = self.playerGameLogParser.advanced_game_stats
 						
 						for game_number in player.game_basic:
+							# Determine if the player is listed as injured for the game on this date.
+							injury = self.injury_manager.is_player_injured(player.code, player.game_basic[game_number]["date"])
+							if injury:
+								self.injury_manager.fix_injury_entry(injury, player.game_basic[game_number]["date"])
+
+							# Write the game entry into game_totals_basic if it's not already there.
 							if not player.basicGameLogStatsExist(cnx, player.code, k, game_number):
 								player.writeBasicGameLogStatsToDatabase(cnx, player.code, k, game_number)
 						

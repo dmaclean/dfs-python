@@ -145,28 +145,54 @@ class InjuryManager():
 		"""
 		one_day = timedelta(days=1)
 
+		# Unfortunately, this is necessary because MySQL and Sqlite3 handle dates differently.
+		if not isinstance(game_played_date, date):
+			pieces = game_played_date.split("-")
+			gpd = date(int(pieces[0]), int(pieces[1]), int(pieces[2]))
+		else:
+			gpd = game_played_date
+
 		if injury.injury_date + one_day == injury.return_date:
 			# Erroneous one-day injury.  Delete it.
+			logging.info("Injury ({} - {}) is a one-day injury where the player played.  Deleting it...".format(
+				injury.injury_date, injury.return_date
+			))
 			self.delete(injury)
 			return
 
-		if injury.injury_date == game_played_date:
+		if injury.injury_date == gpd:
 			# First day of injury - move it up one day
+			logging.info("Injury ({} - {}) is a multi-day injury where the player actually played on the first day."
+						"Changing first day to {}".format(
+				injury.injury_date, injury.return_date, injury.injury_date + one_day
+			))
 			injury.injury_date += one_day
 			self.update(injury)
 
-		elif injury.return_date-one_day == game_played_date:
+		elif injury.return_date-one_day == gpd:
 			# Last day of injury
+			logging.info("Injury ({} - {}) is a multi-day injury where the player actually played on the last day."
+						"Changing last day to {}".format(
+				injury.injury_date, injury.return_date, injury.injury_date - one_day
+			))
 			injury.return_date -= one_day
 			self.update(injury)
 
 		else:
 			# Somewhere in between
+			old_injury_date = injury.injury_date
+			old_return_date = injury.return_date
+
 			new_injury = Injury(player_id=injury.player_id,
-								injury_date=game_played_date + one_day,
+								injury_date=gpd + one_day,
 								return_date=injury.return_date,
 								details=injury.details)
-			injury.return_date = game_played_date
+			injury.return_date = gpd
+			logging.info("Injury ({} - {}) is a multi-day injury where the player actually played in the middle."
+						"Splitting up the injuries to ({} - {}) and ({} - {})".format(
+				old_injury_date, old_return_date, injury.injury_date, injury.return_date, new_injury.injury_date,
+				new_injury.return_date
+			))
 
 			self.update(injury)
 			self.insert(new_injury)
