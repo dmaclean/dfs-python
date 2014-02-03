@@ -2298,12 +2298,14 @@ class BasketballReferenceTeamGameLogParser(HTMLParser):
 	current = ""
 	tableType = ""
 	tdCount = 0
+	found_basic_table = False
 	game_number = 0
 	game_stats = {}
 
 	def handle_starttag(self, tag, attrs):
-		if tag == "table" and len(attrs) > 1 and attrs[1][1] == "stats":
+		if tag == "table" and len(attrs) > 1 and attrs[1][1] == "stats" and not self.found_basic_table:
 			self.tableType = "stats"
+			self.found_basic_table = True
 		if tag == "tr" and self.tableType == "stats":
 			self.tdCount = 0
 			self.game_number = 0
@@ -2327,7 +2329,9 @@ class BasketballReferenceTeamGameLogParser(HTMLParser):
 			try:
 				self.game_stats[self.game_number]["home"]
 			except:
-				self.game_stats[self.game_number]["home"] = True					
+				self.game_stats[self.game_number]["home"] = True
+		elif tag == "body":
+			self.found_basic_table = False
 	
 	def handle_data(self, data):
 		if data.strip() == "":
