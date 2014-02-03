@@ -680,5 +680,81 @@ class TestInjury(TestCase):
 		injuries = self.injury_manager.get(Injury(player_id="teaguje01"))
 		self.assertTrue(len(injuries) == 0)
 
+	def test_fix_injury_entry_first_day_not_injury(self):
+		"""
+		Create a three-day injury, where the first day is actually not the first day
+		the player missed time.
+
+		In this case, the injury should be shortened to two days, with the previously-middle
+		day becoming the first.
+		"""
+		injury = Injury(id=1, player_id="test", injury_date=date(2014, 1, 1), return_date=date(2014, 1, 4), details="testing")
+		self.injury_manager.insert(injury)
+		self.injury_manager.fix_injury_entry(injury, date(2014, 1, 1))
+
+		result = self.injury_manager.get(Injury(player_id="test"))
+		self.assertTrue(result[0].injury_date == "2014-01-02" and result[0].return_date == "2014-01-04")
+
+	def test_fix_injury_entry_last_day_not_injury(self):
+		"""
+		Create a three-day injury, where the last day is actually not the first day
+		the player missed time.
+
+		In this case, the injury should be shortened to two days, with the previously-middle
+		day becoming the last.
+		"""
+		injury = Injury(id=1, player_id="test", injury_date=date(2014, 1, 1), return_date=date(2014, 1, 4), details="testing")
+		self.injury_manager.insert(injury)
+		self.injury_manager.fix_injury_entry(injury, date(2014, 1, 3))
+
+		result = self.injury_manager.get(Injury(player_id="test"))
+		self.assertTrue(result[0].injury_date == "2014-01-01" and result[0].return_date == "2014-01-03")
+
+	def test_fix_injury_entry_middle_day_not_injury(self):
+		"""
+		Create a three-day injury, where the middle day is actually not the first day
+		the player missed time.
+
+		In this case, the injury will be split in two.  The existing injury will be shortened
+		so the return date is the original middle injury day.  Then, a second injury will be
+		created with the injury_date set as the last injury day and the return date of the day after.
+		"""
+		injury = Injury(id=1, player_id="test", injury_date=date(2014, 1, 1), return_date=date(2014, 1, 4), details="testing")
+		self.injury_manager.insert(injury)
+		self.injury_manager.fix_injury_entry(injury, date(2014, 1, 2))
+
+		result = self.injury_manager.get(Injury(player_id="test"))
+		self.assertTrue(len(result) == 2)
+		self.assertTrue(result[0].injury_date == "2014-01-01" and result[0].return_date == "2014-01-02")
+		self.assertTrue(result[1].injury_date == "2014-01-03" and result[1].return_date == "2014-01-04")
+
+	def test_fix_injury_entry_single_day_not_injury(self):
+		"""
+		Create a single-day injury, where that day is actually not a day that the player missed time.
+
+		In this case, the injury will just be deleted.
+		"""
+		injury = Injury(id=1, player_id="test", injury_date=date(2014, 1, 1), return_date=date(2014, 1, 2), details="testing")
+		self.injury_manager.insert(injury)
+		self.injury_manager.fix_injury_entry(injury, date(2014, 1, 1))
+
+		result = self.injury_manager.get(Injury(player_id="test"))
+		self.assertTrue(len(result) == 0)
+
+	def test_is_player_injured(self):
+		"""
+		Create an injury that spans one day and call is_player_injured with one date that is within the
+		injury range and one that is not.
+		Also do this with a string since both are accepted.
+		"""
+		injury = Injury(id=1, player_id="test", injury_date=date(2014, 1, 1), return_date=date(2014, 1, 2), details="testing")
+		self.injury_manager.insert(injury)
+
+		self.assertTrue(self.injury_manager.is_player_injured("test", date(2014, 1, 1)))
+		self.assertFalse(self.injury_manager.is_player_injured("test", date(2014, 1, 2)))
+
+		self.assertTrue(self.injury_manager.is_player_injured("test", "2014-01-01"))
+		self.assertFalse(self.injury_manager.is_player_injured("test", "2014-01-02"))
+
 if __name__ == '__main__':
 	unittest.main()

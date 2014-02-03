@@ -18,6 +18,9 @@ class InjuryManager():
 		else:
 			self.cnx = cnx
 
+		# Set up caching
+		self.injury_cache = {}
+
 		self.one_day = timedelta(days=1)
 
 	def exists(self, injury):
@@ -69,6 +72,16 @@ class InjuryManager():
 		finally:
 			cursor.close()
 
+	def delete(self, injury):
+		cursor = self.cnx.cursor()
+
+		query = "delete from injuries where id = {}".format(injury.id)
+
+		try:
+			cursor.execute(query)
+		finally:
+			cursor.close()
+
 	def get(self, injury):
 		cursor = self.cnx.cursor()
 
@@ -103,6 +116,10 @@ class InjuryManager():
 		injured if they have an entry in the injuries table where the provided date is between the
 		injury_date (inclusive) and the return_date (exclusive).
 		"""
+		key = str(date)
+		if key in self.injury_cache:
+			return self.injury_cache[key]
+
 		cursor = self.cnx.cursor()
 
 		query = "select * from injuries where injury_date <= '%s' and return_date > '%s'" % (date, date)
@@ -115,7 +132,84 @@ class InjuryManager():
 		finally:
 			cursor.close()
 
-		return injuries
+		self.injury_cache[key] = injuries
+		return self.injury_cache[key]
+
+	def fix_injury_entry(self, injury, game_played_date):
+		"""
+		Fix an injury entry where during its span the player actually played.
+
+		1- Incorrect one-day injuries can be deleted.
+		2- Incorrect multi-day injuries can be shortened if the first or last day is incorrect.
+		3- They can also be split if one or more days in the middle are incorrect.
+		"""
+		one_day = timedelta(days=1)
+
+		# Unfortunately, this is necessary because MySQL and Sqlite3 handle dates differently.
+		if not isinstance(game_played_date, date):
+			pieces = game_played_date.split("-")
+			gpd = date(int(pieces[0]), int(pieces[1]), int(pieces[2]))
+		else:
+			gpd = game_played_date
+
+		if injury.injury_date + one_day == injury.return_date:
+			# Erroneous one-day injury.  Delete it.
+			logging.info("Injury ({} - {}) is a one-day injury where the player played.  Deleting it...".format(
+				injury.injury_date, injury.return_date
+			))
+			self.delete(injury)
+			return
+
+		if injury.injury_date == gpd:
+			# First day of injury - move it up one day
+			logging.info("Injury ({} - {}) is a multi-day injury where the player actually played on the first day."
+						"Changing first day to {}".format(
+				injury.injury_date, injury.return_date, injury.injury_date + one_day
+			))
+			injury.injury_date += one_day
+			self.update(injury)
+
+		elif injury.return_date-one_day == gpd:
+			# Last day of injury
+			logging.info("Injury ({} - {}) is a multi-day injury where the player actually played on the last day."
+						"Changing last day to {}".format(
+				injury.injury_date, injury.return_date, injury.injury_date - one_day
+			))
+			injury.return_date -= one_day
+			self.update(injury)
+
+		else:
+			# Somewhere in between
+			old_injury_date = injury.injury_date
+			old_return_date = injury.return_date
+
+			new_injury = Injury(player_id=injury.player_id,
+								injury_date=gpd + one_day,
+								return_date=injury.return_date,
+								details=injury.details)
+			injury.return_date = gpd
+			logging.info("Injury ({} - {}) is a multi-day injury where the player actually played in the middle."
+						"Splitting up the injuries to ({} - {}) and ({} - {})".format(
+				old_injury_date, old_return_date, injury.injury_date, injury.return_date, new_injury.injury_date,
+				new_injury.return_date
+			))
+
+			self.update(injury)
+			self.insert(new_injury)
+
+	def is_player_injured(self, player_id, d=date.today()):
+		"""
+		Quick lookup on a player injury based on player_id and date.
+
+		This pulls from the injury cache, so after the first call it's quick.
+		"""
+		if not isinstance(d, date):
+			pieces = d.split("-")
+			injuries = self.get_currently_injured_players(date(int(pieces[0]), int(pieces[1]), int(pieces[2])))
+		else:
+			injuries = self.get_currently_injured_players(d)
+
+		return injuries[player_id] if player_id in injuries else None
 
 	def calculate_injuries_from_gamelogs(self, season):
 		"""
