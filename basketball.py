@@ -2878,5 +2878,7 @@ class BasketballReferenceScheduleParser(HTMLParser):
 			
 
 if __name__ == '__main__':
+	logging.basicConfig(level=logging.INFO)
+
 	processor = Processor()
 	processor.process()
