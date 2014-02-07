@@ -70,11 +70,13 @@ class Processor:
 			try:
 				conn = httplib.HTTPConnection("www.basketball-reference.com", timeout=5)
 				conn.request("GET", url)
-				resp = conn.getresponse()			
-		
+				resp = conn.getresponse()
+				content_type = resp.getheader("content-type")
+				encoding = content_type.split("charset=")[1]
+
 				if logToConsole:
 					print resp.status,"for",url
-				data = resp.read()
+				data = resp.read().decode(encoding)
 				conn.close()
 				successful = True
 			except:
