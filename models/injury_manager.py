@@ -173,7 +173,7 @@ class InjuryManager():
 			# Last day of injury
 			logging.info("Injury ({} - {}) is a multi-day injury where the player actually played on the last day."
 						"Changing last day to {}".format(
-				injury.injury_date, injury.return_date, injury.injury_date - one_day
+				injury.injury_date, injury.return_date, injury.return_date - one_day
 			))
 			injury.return_date -= one_day
 			self.update(injury)
