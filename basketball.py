@@ -72,11 +72,19 @@ class Processor:
 				conn.request("GET", url)
 				resp = conn.getresponse()
 				content_type = resp.getheader("content-type")
-				encoding = content_type.split("charset=")[1]
+
+				encoding = None
+				if content_type.find("charset=") > -1:
+					encoding = content_type.split("charset=")[1]
 
 				if logToConsole:
 					print resp.status,"for",url
-				data = resp.read().decode(encoding)
+
+				if encoding:
+					data = resp.read().decode(encoding, 'ignore')
+				else:
+					data = resp.read()
+				
 				conn.close()
 				successful = True
 			except:
