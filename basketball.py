@@ -87,8 +87,8 @@ class Processor:
 				
 				conn.close()
 				successful = True
-			except:
-				print "Issue connecting to basketball-reference.  Retrying in 10 seconds...", sys.exc_info()[0]
+			except Exception, err:
+				logging.error("Issue connecting to basketball-reference.  Retrying in 10 seconds...", str(err))
 				time.sleep( 10 )
 		
 		return data
