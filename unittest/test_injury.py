@@ -680,6 +680,31 @@ class TestInjury(TestCase):
 		injuries = self.injury_manager.get(Injury(player_id="teaguje01"))
 		self.assertTrue(len(injuries) == 0)
 
+	def test_scrape_injury_report_old_and_new_player_with_same_name(self):
+		"""
+		Make sure that a newly injured player is inserted into the database.
+		"""
+		# Set up a player
+		self.player_info["id"] = "teaguje01"
+		self.player_info["name"] = "Jeff Teague"
+		self.player_info["position"] = "PG"
+		self.test_util.insert_into_players(self.player_info)
+
+		self.player_info["id"] = "teaguje02"
+		self.player_info["name"] = "Jeff Teague"
+		self.player_info["position"] = "PG"
+		self.player_info["rg_position"] = "PG"
+		self.test_util.insert_into_players(self.player_info)
+
+		self.injury_manager.scrape_injury_report(season=2013, source="file")
+
+		injuries = self.injury_manager.get(Injury(player_id="teaguje01"))
+		self.assertTrue(len(injuries) == 0)
+
+		injuries = self.injury_manager.get(Injury(player_id="teaguje02"))
+		self.assertTrue(len(injuries) == 1)
+		self.assertTrue(injuries[0].injury_date == "2014-01-24" and injuries[0].return_date == str(self.tomorrow))
+
 	def test_fix_injury_entry_first_day_not_injury(self):
 		"""
 		Create a three-day injury, where the first day is actually not the first day

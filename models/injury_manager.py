@@ -408,7 +408,7 @@ class InjuryManager():
 					date_struct = time.strptime(injury_date + " %d" % season, "%b %d %Y")
 
 				# OK, we have the injury date now.  Does this injury already exist?
-				query = "select id from players where name = '%s'" % name
+				query = "select id from players where name = '%s' and rg_position is not null" % name
 				cursor = self.cnx.cursor()
 				player_id = None
 				try:
