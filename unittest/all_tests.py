@@ -8,9 +8,15 @@ import test_vegas_odds
 import test_rg_player_stats
 import test_defense_vs_position
 import test_injury
+import test_play_by_play
 
 logging.basicConfig(level=logging.WARNING)
 
+##############
+# PlayByPlay
+##############
+suite = unittest.TestLoader().loadTestsFromTestCase(test_play_by_play.TestPlayByPlay)
+unittest.TextTestRunner(verbosity=2).run(suite)
 ##########################
 # FantasyPointCalculator
 ##########################
