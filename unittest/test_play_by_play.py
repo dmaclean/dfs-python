@@ -116,6 +116,186 @@ class TestPlayByPlay(unittest.TestCase):
 		self.assertTrue(len(pbp.players) == 1)
 		self.assertTrue(pbp.players[0] == 'parketo01')
 
+	def test_create_pbp_instance_home_made_free_throw_1_2(self):
+		pbp = self.pbp_manager.create_pbp_instance(['10:01.0', '', '', '4-4', '+1', '<a href="/players/s/smithjo03.html">J. Smith</a> makes free throw 1 of 2'])
+
+		self.assertTrue(pbp.minutes == 10)
+		self.assertTrue(pbp.seconds == 01.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.FREE_THROW)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 1)
+		self.assertTrue(pbp.shot_made)
+		self.assertTrue(pbp.home_score == 4)
+		self.assertTrue(pbp.visitor_score == 4)
+		self.assertTrue(pbp.shot_distance == 15)
+		self.assertTrue(len(pbp.players) == 1)
+		self.assertTrue(pbp.players[0] == 'smithjo03')
+
+	def test_create_pbp_instance_home_made_free_throw_2_2(self):
+		pbp = self.pbp_manager.create_pbp_instance(['10:01.0', '', '', '4-5', '+1', '<a href="/players/s/smithjo03.html">J. Smith</a> makes free throw 2 of 2'])
+
+		self.assertTrue(pbp.minutes == 10)
+		self.assertTrue(pbp.seconds == 01.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.FREE_THROW)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 1)
+		self.assertTrue(pbp.shot_made)
+		self.assertTrue(pbp.home_score == 5)
+		self.assertTrue(pbp.visitor_score == 4)
+		self.assertTrue(pbp.shot_distance == 15)
+		self.assertTrue(len(pbp.players) == 1)
+		self.assertTrue(pbp.players[0] == 'smithjo03')
+
+	def test_create_pbp_instance_home_missed_free_throw_1_2(self):
+		pbp = self.pbp_manager.create_pbp_instance(['11:07.0', '', '', '24-26', '', '<a href="/players/s/stuckro01.html">R. Stuckey</a> misses free throw 1 of 2'])
+
+		self.assertTrue(pbp.minutes == 11)
+		self.assertTrue(pbp.seconds == 07.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.FREE_THROW)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 1)
+		self.assertTrue(not pbp.shot_made)
+		self.assertTrue(pbp.home_score == 26)
+		self.assertTrue(pbp.visitor_score == 24)
+		self.assertTrue(pbp.shot_distance == 15)
+		self.assertTrue(len(pbp.players) == 1)
+		self.assertTrue(pbp.players[0] == 'stuckro01')
+
+	def test_create_pbp_instance_home_missed_free_throw_2_2(self):
+		pbp = self.pbp_manager.create_pbp_instance(['5:40.0', '', '', '8-12', '', '<a href="/players/m/monrogr01.html">G. Monroe</a> misses free throw 2 of 2'])
+
+		self.assertTrue(pbp.minutes == 5)
+		self.assertTrue(pbp.seconds == 40.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.FREE_THROW)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 1)
+		self.assertTrue(not pbp.shot_made)
+		self.assertTrue(pbp.home_score == 12)
+		self.assertTrue(pbp.visitor_score == 8)
+		self.assertTrue(pbp.shot_distance == 15)
+		self.assertTrue(len(pbp.players) == 1)
+		self.assertTrue(pbp.players[0] == 'monrogr01')
+
+	def test_create_pbp_instance_home_made_free_throw_1_1(self):
+		pbp = self.pbp_manager.create_pbp_instance(['10:01.0', '', '', '4-5', '+1', '<a href="/players/s/smithjo03.html">J. Smith</a> makes free throw 1 of 1'])
+
+		self.assertTrue(pbp.minutes == 10)
+		self.assertTrue(pbp.seconds == 01.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.FREE_THROW)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 1)
+		self.assertTrue(pbp.shot_made)
+		self.assertTrue(pbp.home_score == 5)
+		self.assertTrue(pbp.visitor_score == 4)
+		self.assertTrue(pbp.shot_distance == 15)
+		self.assertTrue(len(pbp.players) == 1)
+		self.assertTrue(pbp.players[0] == 'smithjo03')
+
+	def test_create_pbp_instance_home_missed_free_throw_1_1(self):
+		pbp = self.pbp_manager.create_pbp_instance(['11:07.0', '', '', '24-26', '', '<a href="/players/s/stuckro01.html">R. Stuckey</a> misses free throw 1 of 1'])
+
+		self.assertTrue(pbp.minutes == 11)
+		self.assertTrue(pbp.seconds == 07.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.FREE_THROW)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 1)
+		self.assertTrue(not pbp.shot_made)
+		self.assertTrue(pbp.home_score == 26)
+		self.assertTrue(pbp.visitor_score == 24)
+		self.assertTrue(pbp.shot_distance == 15)
+		self.assertTrue(len(pbp.players) == 1)
+		self.assertTrue(pbp.players[0] == 'stuckro01')
+
+	def test_create_pbp_instance_visitor_made_free_throw_1_2(self):
+		pbp = self.pbp_manager.create_pbp_instance(['2:33.0', '<a href="/players/j/josepco01.html">C. Joseph</a> makes free throw 1 of 2', '+1', '63-84', '', ''])
+
+		self.assertTrue(pbp.minutes == 2)
+		self.assertTrue(pbp.seconds == 33.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.FREE_THROW)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 1)
+		self.assertTrue(pbp.shot_made)
+		self.assertTrue(pbp.home_score == 84)
+		self.assertTrue(pbp.visitor_score == 63)
+		self.assertTrue(pbp.shot_distance == 15)
+		self.assertTrue(len(pbp.players) == 1)
+		self.assertTrue(pbp.players[0] == 'josepco01')
+
+	def test_create_pbp_instance_visitor_made_free_throw_2_2(self):
+		pbp = self.pbp_manager.create_pbp_instance(['5:25.0', '<a href="/players/d/duncati01.html">T. Duncan</a> makes free throw 2 of 2', '+1', '36-39', '', ''])
+
+		self.assertTrue(pbp.minutes == 5)
+		self.assertTrue(pbp.seconds == 25.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.FREE_THROW)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 1)
+		self.assertTrue(pbp.shot_made)
+		self.assertTrue(pbp.home_score == 39)
+		self.assertTrue(pbp.visitor_score == 36)
+		self.assertTrue(pbp.shot_distance == 15)
+		self.assertTrue(len(pbp.players) == 1)
+		self.assertTrue(pbp.players[0] == 'duncati01')
+
+	def test_create_pbp_instance_visitor_missed_free_throw_1_2(self):
+		pbp = self.pbp_manager.create_pbp_instance(['5:25.0', '<a href="/players/d/duncati01.html">T. Duncan</a> misses free throw 1 of 2<', '', '35-39', '', ''])
+
+		self.assertTrue(pbp.minutes == 5)
+		self.assertTrue(pbp.seconds == 25.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.FREE_THROW)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 1)
+		self.assertTrue(not pbp.shot_made)
+		self.assertTrue(pbp.home_score == 39)
+		self.assertTrue(pbp.visitor_score == 35)
+		self.assertTrue(pbp.shot_distance == 15)
+		self.assertTrue(len(pbp.players) == 1)
+		self.assertTrue(pbp.players[0] == 'duncati01')
+
+	def test_create_pbp_instance_visitor_missed_free_throw_2_2(self):
+		pbp = self.pbp_manager.create_pbp_instance(['2:33.0', '<a href="/players/j/josepco01.html">C. Joseph</a> misses free throw 2 of 2', '', '63-84', '', ''])
+
+		self.assertTrue(pbp.minutes == 2)
+		self.assertTrue(pbp.seconds == 33.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.FREE_THROW)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 1)
+		self.assertTrue(not pbp.shot_made)
+		self.assertTrue(pbp.home_score == 84)
+		self.assertTrue(pbp.visitor_score == 63)
+		self.assertTrue(pbp.shot_distance == 15)
+		self.assertTrue(len(pbp.players) == 1)
+		self.assertTrue(pbp.players[0] == 'josepco01')
+
+	def test_create_pbp_instance_visitor_made_free_throw_1_1(self):
+		pbp = self.pbp_manager.create_pbp_instance(['5:25.0', '<a href="/players/s/smithjo03.html">J. Smith</a> makes free throw 1 of 1', '+1', '41-42', '', ''])
+
+		self.assertTrue(pbp.minutes == 5)
+		self.assertTrue(pbp.seconds == 25.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.FREE_THROW)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 1)
+		self.assertTrue(pbp.shot_made)
+		self.assertTrue(pbp.home_score == 42)
+		self.assertTrue(pbp.visitor_score == 41)
+		self.assertTrue(pbp.shot_distance == 15)
+		self.assertTrue(len(pbp.players) == 1)
+		self.assertTrue(pbp.players[0] == 'smithjo03')
+
+	def test_create_pbp_instance_visitor_missed_free_throw_1_1(self):
+		pbp = self.pbp_manager.create_pbp_instance(['4:00.0', '<a href="/players/s/smithjo03.html">J. Smith</a> misses free throw 1 of 1', '', '41-42', '', ''])
+
+		self.assertTrue(pbp.minutes == 4)
+		self.assertTrue(pbp.seconds == 00.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.FREE_THROW)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 1)
+		self.assertTrue(not pbp.shot_made)
+		self.assertTrue(pbp.home_score == 42)
+		self.assertTrue(pbp.visitor_score == 41)
+		self.assertTrue(pbp.shot_distance == 15)
+		self.assertTrue(len(pbp.players) == 1)
+		self.assertTrue(pbp.players[0] == 'smithjo03')
+
 
 if __name__ == '__main__':
 	unittest.main()

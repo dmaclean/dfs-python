@@ -33,6 +33,7 @@ class PlayByPlay:
 	# Play types
 	JUMP_BALL = "JUMP_BALL"
 	SHOT = "SHOT"
+	FREE_THROW = "FREE_THROW"
 
 	def __init__(self, minutes=None, seconds=None, play_type=None, secondary_play_type=None, players=None):
 		# The minute that the play occurred.

@@ -77,9 +77,11 @@ class PlayByPlayManager:
 		player_link_regex = "<a href=\"/players/[a-z]/([a-z]+[0-9]{2})\.html\">[A-Z]\. [A-Za-z \-\']+</a>"
 		jump_ball_regex = "Jump ball: {} vs\. {} \({} gains possession\)".format(player_link_regex, player_link_regex, player_link_regex)
 		shot_regex = "{} (makes|misses) (2|3)-pt shot from (\d+) ft( \((block|assist) by {}\))?".format(player_link_regex, player_link_regex)
+		free_throw_regex = "{} (makes|misses) free throw [1|2] of [1|2]".format(player_link_regex)
 
 		jump_ball = re.compile(jump_ball_regex)
 		shot = re.compile(shot_regex)
+		free_throw = re.compile(free_throw_regex)
 
 		pbp = PlayByPlay()
 
@@ -104,13 +106,15 @@ class PlayByPlayManager:
 		pbp.visitor_score = int(score_pieces[0])
 		pbp.home_score = int(score_pieces[1])
 
+		if play_data[1] != '':
+			data = play_data[1]
+		else:
+			data = play_data[5]
+
 		#######################
 		# Shot made or missed
 		#######################
-		if play_data[1] != '':
-			m = shot.search(play_data[1])
-		else:
-			m = shot.search(play_data[5])
+		m = shot.search(data)
 		if m:
 			pbp.play_type = PlayByPlay.SHOT
 			pbp.players.append(m.group(1))
@@ -122,6 +126,20 @@ class PlayByPlayManager:
 				pbp.players.append(m.group(7))
 
 			return pbp
+
+		#############################
+		# Free throw made or missed
+		#############################
+		m = free_throw.search(data)
+		if m:
+			pbp.play_type = PlayByPlay.FREE_THROW
+			pbp.players.append(m.group(1))
+			pbp.shot_made = m.group(2) == "makes"
+			pbp.point_value = 1
+			pbp.shot_distance = 15
+
+			return pbp
+
 
 if __name__ == '__main__':
 	pbp_manager = PlayByPlayManager()
