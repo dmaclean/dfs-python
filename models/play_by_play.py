@@ -31,10 +31,16 @@ class PlayByPlay:
 	Official timeout
 	"""
 	# Play types
+	FOUL = "FOUL"
 	FREE_THROW = "FREE_THROW"
 	JUMP_BALL = "JUMP_BALL"
 	REBOUND = "REBOUND"
 	SHOT = "SHOT"
+
+	FOUL_SHOOTING = "shooting"
+	FOUL_LOOSE_BALL = "loose ball"
+	FOUL_PERSONAL = "personal"
+	FOUL_OFFENSIVE_CHARGE = "offensive charge"
 
 	REBOUND_DEFENSIVE = "defensive"
 	REBOUND_OFFENSIVE = "offensive"

@@ -420,6 +420,136 @@ class TestPlayByPlay(unittest.TestCase):
 		self.assertTrue(pbp.shot_distance is None)
 		self.assertTrue(len(pbp.players) == 0)
 
+	def test_create_pbp_instance_home_shooting_foul(self):
+		pbp = self.pbp_manager.create_pbp_instance(['11:15.0', '', '', '48-59', '', 'Shooting foul by <a href="/players/p/pendeje02.html">J. Ayres</a> (drawn by <a href="/players/d/drumman01.html">A. Drummond</a>)'])
+
+		self.assertTrue(pbp.minutes == 11)
+		self.assertTrue(pbp.seconds == 15.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.FOUL)
+		self.assertTrue(pbp.detail == PlayByPlay.FOUL_SHOOTING)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 0)
+		self.assertTrue(pbp.shot_made is None)
+		self.assertTrue(pbp.home_score == 59)
+		self.assertTrue(pbp.visitor_score == 48)
+		self.assertTrue(pbp.shot_distance is None)
+		self.assertTrue(len(pbp.players) == 2)
+		self.assertTrue(pbp.players[0] == "pendeje02")
+		self.assertTrue(pbp.players[1] == "drumman01")
+
+	def test_create_pbp_instance_home_loose_ball_foul(self):
+		pbp = self.pbp_manager.create_pbp_instance(['5:41.0', '', '', '85-91', '', 'Loose ball foul by <a href="/players/s/stuckro01.html">R. Stuckey</a>'])
+
+		self.assertTrue(pbp.minutes == 5)
+		self.assertTrue(pbp.seconds == 41.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.FOUL)
+		self.assertTrue(pbp.detail == PlayByPlay.FOUL_LOOSE_BALL)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 0)
+		self.assertTrue(pbp.shot_made is None)
+		self.assertTrue(pbp.home_score == 91)
+		self.assertTrue(pbp.visitor_score == 85)
+		self.assertTrue(pbp.shot_distance is None)
+		self.assertTrue(len(pbp.players) == 1)
+		self.assertTrue(pbp.players[0] == "stuckro01")
+
+	def test_create_pbp_instance_home_personal_foul(self):
+		pbp = self.pbp_manager.create_pbp_instance(['9:21.0', '', '', '29-29', '', 'Personal foul by <a href="/players/d/drumman01.html">A. Drummond</a>'])
+
+		self.assertTrue(pbp.minutes == 9)
+		self.assertTrue(pbp.seconds == 21.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.FOUL)
+		self.assertTrue(pbp.detail == PlayByPlay.FOUL_PERSONAL)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 0)
+		self.assertTrue(pbp.shot_made is None)
+		self.assertTrue(pbp.home_score == 29)
+		self.assertTrue(pbp.visitor_score == 29)
+		self.assertTrue(pbp.shot_distance is None)
+		self.assertTrue(len(pbp.players) == 1)
+		self.assertTrue(pbp.players[0] == "drumman01")
+
+	def test_create_pbp_instance_home_offensive_charge_foul(self):
+		pbp = self.pbp_manager.create_pbp_instance(['0:34.0', '', '', '22-25', '', 'Offensive charge foul by <a href="/players/s/stuckro01.html">R. Stuckey</a>'])
+
+		self.assertTrue(pbp.minutes == 0)
+		self.assertTrue(pbp.seconds == 34.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.FOUL)
+		self.assertTrue(pbp.detail == PlayByPlay.FOUL_OFFENSIVE_CHARGE)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 0)
+		self.assertTrue(pbp.shot_made is None)
+		self.assertTrue(pbp.home_score == 25)
+		self.assertTrue(pbp.visitor_score == 22)
+		self.assertTrue(pbp.shot_distance is None)
+		self.assertTrue(len(pbp.players) == 1)
+		self.assertTrue(pbp.players[0] == "stuckro01")
+
+	def test_create_pbp_instance_visitor_shooting_foul(self):
+		pbp = self.pbp_manager.create_pbp_instance(['5:25.0', 'Shooting foul by <a href="/players/j/jerebjo01.html">J. Jerebko</a> (drawn by <a href="/players/d/duncati01.html">T. Duncan</a>)', '', '35-39', '', ''])
+
+		self.assertTrue(pbp.minutes == 5)
+		self.assertTrue(pbp.seconds == 25.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.FOUL)
+		self.assertTrue(pbp.detail == PlayByPlay.FOUL_SHOOTING)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 0)
+		self.assertTrue(pbp.shot_made is None)
+		self.assertTrue(pbp.home_score == 39)
+		self.assertTrue(pbp.visitor_score == 35)
+		self.assertTrue(pbp.shot_distance is None)
+		self.assertTrue(len(pbp.players) == 2)
+		self.assertTrue(pbp.players[0] == "jerebjo01")
+		self.assertTrue(pbp.players[1] == "duncati01")
+
+	def test_create_pbp_instance_visitor_loose_ball_foul(self):
+		pbp = self.pbp_manager.create_pbp_instance(['11:24.0', 'Loose ball foul by <a href="/players/b/baynear01.html">A. Baynes</a>', '', '24-36', '', ''])
+
+		self.assertTrue(pbp.minutes == 11)
+		self.assertTrue(pbp.seconds == 24.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.FOUL)
+		self.assertTrue(pbp.detail == PlayByPlay.FOUL_LOOSE_BALL)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 0)
+		self.assertTrue(pbp.shot_made is None)
+		self.assertTrue(pbp.home_score == 36)
+		self.assertTrue(pbp.visitor_score == 24)
+		self.assertTrue(pbp.shot_distance is None)
+		self.assertTrue(len(pbp.players) == 1)
+		self.assertTrue(pbp.players[0] == "baynear01")
+
+	def test_create_pbp_instance_visitor_personal_foul(self):
+		pbp = self.pbp_manager.create_pbp_instance(['8:33.0', 'Personal foul by <a href="/players/b/belinma01.html">M. Belinelli</a>', '', '81-98', '', ''])
+
+		self.assertTrue(pbp.minutes == 8)
+		self.assertTrue(pbp.seconds == 33.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.FOUL)
+		self.assertTrue(pbp.detail == PlayByPlay.FOUL_PERSONAL)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 0)
+		self.assertTrue(pbp.shot_made is None)
+		self.assertTrue(pbp.home_score == 98)
+		self.assertTrue(pbp.visitor_score == 81)
+		self.assertTrue(pbp.shot_distance is None)
+		self.assertTrue(len(pbp.players) == 1)
+		self.assertTrue(pbp.players[0] == "belinma01")
+
+	def test_create_pbp_instance_visitor_offensive_charge_foul(self):
+		pbp = self.pbp_manager.create_pbp_instance(['0:34.0', 'Offensive charge foul by <a href="/players/s/stuckro01.html">R. Stuckey</a>', '', '22-25', '', ''])
+
+		self.assertTrue(pbp.minutes == 0)
+		self.assertTrue(pbp.seconds == 34.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.FOUL)
+		self.assertTrue(pbp.detail == PlayByPlay.FOUL_OFFENSIVE_CHARGE)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 0)
+		self.assertTrue(pbp.shot_made is None)
+		self.assertTrue(pbp.home_score == 25)
+		self.assertTrue(pbp.visitor_score == 22)
+		self.assertTrue(pbp.shot_distance is None)
+		self.assertTrue(len(pbp.players) == 1)
+		self.assertTrue(pbp.players[0] == "stuckro01")
+
 
 if __name__ == '__main__':
 	unittest.main()
