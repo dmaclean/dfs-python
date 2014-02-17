@@ -31,11 +31,15 @@ class PlayByPlay:
 	Official timeout
 	"""
 	# Play types
-	JUMP_BALL = "JUMP_BALL"
-	SHOT = "SHOT"
 	FREE_THROW = "FREE_THROW"
+	JUMP_BALL = "JUMP_BALL"
+	REBOUND = "REBOUND"
+	SHOT = "SHOT"
 
-	def __init__(self, minutes=None, seconds=None, play_type=None, secondary_play_type=None, players=None):
+	REBOUND_DEFENSIVE = "defensive"
+	REBOUND_OFFENSIVE = "offensive"
+
+	def __init__(self, minutes=None, seconds=None, play_type=None, detail=None, secondary_play_type=None, players=None):
 		# The minute that the play occurred.
 		self.minutes = minutes
 
@@ -51,6 +55,8 @@ class PlayByPlay:
 		# - substitution
 		# - timeout
 		self.play_type = play_type
+
+		self.detail = detail
 
 		# The secondary play type.
 		#

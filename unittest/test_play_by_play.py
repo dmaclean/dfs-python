@@ -296,6 +296,130 @@ class TestPlayByPlay(unittest.TestCase):
 		self.assertTrue(len(pbp.players) == 1)
 		self.assertTrue(pbp.players[0] == 'smithjo03')
 
+	def test_create_pbp_instance_home_offensive_rebound_player(self):
+		pbp = self.pbp_manager.create_pbp_instance(['7:06.0', '', '', '6-7', '', 'Offensive rebound by <a href="/players/d/drumman01.html">A. Drummond</a>'])
+
+		self.assertTrue(pbp.minutes == 7)
+		self.assertTrue(pbp.seconds == 06.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.REBOUND)
+		self.assertTrue(pbp.detail == PlayByPlay.REBOUND_OFFENSIVE)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 0)
+		self.assertTrue(pbp.shot_made is None)
+		self.assertTrue(pbp.home_score == 7)
+		self.assertTrue(pbp.visitor_score == 6)
+		self.assertTrue(pbp.shot_distance is None)
+		self.assertTrue(len(pbp.players) == 1)
+		self.assertTrue(pbp.players[0] == 'drumman01')
+
+	def test_create_pbp_instance_home_offensive_rebound_team(self):
+		pbp = self.pbp_manager.create_pbp_instance(['4:05.0', '', '', '12-14', '', 'Offensive rebound by Team'])
+
+		self.assertTrue(pbp.minutes == 4)
+		self.assertTrue(pbp.seconds == 05.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.REBOUND)
+		self.assertTrue(pbp.detail == PlayByPlay.REBOUND_OFFENSIVE)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 0)
+		self.assertTrue(pbp.shot_made is None)
+		self.assertTrue(pbp.home_score == 14)
+		self.assertTrue(pbp.visitor_score == 12)
+		self.assertTrue(pbp.shot_distance is None)
+		self.assertTrue(len(pbp.players) == 0)
+
+	def test_create_pbp_instance_home_defensive_rebound_player(self):
+		pbp = self.pbp_manager.create_pbp_instance(['10:39.0', '', '', '2-0', '', 'Defensive rebound by <a href="/players/d/drumman01.html">A. Drummond</a>'])
+
+		self.assertTrue(pbp.minutes == 10)
+		self.assertTrue(pbp.seconds == 39.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.REBOUND)
+		self.assertTrue(pbp.detail == PlayByPlay.REBOUND_DEFENSIVE)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 0)
+		self.assertTrue(pbp.shot_made is None)
+		self.assertTrue(pbp.home_score == 0)
+		self.assertTrue(pbp.visitor_score == 2)
+		self.assertTrue(pbp.shot_distance is None)
+		self.assertTrue(len(pbp.players) == 1)
+		self.assertTrue(pbp.players[0] == 'drumman01')
+
+	def test_create_pbp_instance_home_defensive_rebound_team(self):
+		pbp = self.pbp_manager.create_pbp_instance(['11:44.0', '', '', '0-0', '', 'Defensive rebound by Team'])
+
+		self.assertTrue(pbp.minutes == 11)
+		self.assertTrue(pbp.seconds == 44.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.REBOUND)
+		self.assertTrue(pbp.detail == PlayByPlay.REBOUND_DEFENSIVE)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 0)
+		self.assertTrue(pbp.shot_made is None)
+		self.assertTrue(pbp.home_score == 0)
+		self.assertTrue(pbp.visitor_score == 0)
+		self.assertTrue(pbp.shot_distance is None)
+		self.assertTrue(len(pbp.players) == 0)
+
+	def test_create_pbp_instance_visitor_offensive_rebound_player(self):
+		pbp = self.pbp_manager.create_pbp_instance(['8:28.0', 'Offensive rebound by <a href="/players/g/greenda02.html">D. Green</a>', '', '4-7', '', ''])
+
+		self.assertTrue(pbp.minutes == 8)
+		self.assertTrue(pbp.seconds == 28.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.REBOUND)
+		self.assertTrue(pbp.detail == PlayByPlay.REBOUND_OFFENSIVE)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 0)
+		self.assertTrue(pbp.shot_made is None)
+		self.assertTrue(pbp.home_score == 7)
+		self.assertTrue(pbp.visitor_score == 4)
+		self.assertTrue(pbp.shot_distance is None)
+		self.assertTrue(len(pbp.players) == 1)
+		self.assertTrue(pbp.players[0] == 'greenda02')
+
+	def test_create_pbp_instance_visitor_offensive_rebound_team(self):
+		pbp = self.pbp_manager.create_pbp_instance(['0:00.0', 'Offensive rebound by Team', '', '24-25', '', ''])
+
+		self.assertTrue(pbp.minutes == 0)
+		self.assertTrue(pbp.seconds == 00.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.REBOUND)
+		self.assertTrue(pbp.detail == PlayByPlay.REBOUND_OFFENSIVE)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 0)
+		self.assertTrue(pbp.shot_made is None)
+		self.assertTrue(pbp.home_score == 25)
+		self.assertTrue(pbp.visitor_score == 24)
+		self.assertTrue(pbp.shot_distance is None)
+		self.assertTrue(len(pbp.players) == 0)
+
+	def test_create_pbp_instance_visitor_defensive_rebound_player(self):
+		pbp = self.pbp_manager.create_pbp_instance(['11:29.0', 'Defensive rebound by <a href="/players/d/duncati01.html">T. Duncan</a>', '', '0-0', '', ''])
+
+		self.assertTrue(pbp.minutes == 11)
+		self.assertTrue(pbp.seconds == 29.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.REBOUND)
+		self.assertTrue(pbp.detail == PlayByPlay.REBOUND_DEFENSIVE)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 0)
+		self.assertTrue(pbp.shot_made is None)
+		self.assertTrue(pbp.home_score == 0)
+		self.assertTrue(pbp.visitor_score == 0)
+		self.assertTrue(pbp.shot_distance is None)
+		self.assertTrue(len(pbp.players) == 1)
+		self.assertTrue(pbp.players[0] == 'duncati01')
+
+	def test_create_pbp_instance_visitor_defensive_rebound_team(self):
+		pbp = self.pbp_manager.create_pbp_instance(['4:12.0', 'Defensive rebound by Team', '', '38-42', '', ''])
+
+		self.assertTrue(pbp.minutes == 4)
+		self.assertTrue(pbp.seconds == 12.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.REBOUND)
+		self.assertTrue(pbp.detail == PlayByPlay.REBOUND_DEFENSIVE)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 0)
+		self.assertTrue(pbp.shot_made is None)
+		self.assertTrue(pbp.home_score == 42)
+		self.assertTrue(pbp.visitor_score == 38)
+		self.assertTrue(pbp.shot_distance is None)
+		self.assertTrue(len(pbp.players) == 0)
+
 
 if __name__ == '__main__':
 	unittest.main()

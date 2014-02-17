@@ -78,10 +78,12 @@ class PlayByPlayManager:
 		jump_ball_regex = "Jump ball: {} vs\. {} \({} gains possession\)".format(player_link_regex, player_link_regex, player_link_regex)
 		shot_regex = "{} (makes|misses) (2|3)-pt shot from (\d+) ft( \((block|assist) by {}\))?".format(player_link_regex, player_link_regex)
 		free_throw_regex = "{} (makes|misses) free throw [1|2] of [1|2]".format(player_link_regex)
+		rebound_regex = "(Defensive|Offensive) rebound by ({}|Team)".format(player_link_regex)
 
 		jump_ball = re.compile(jump_ball_regex)
 		shot = re.compile(shot_regex)
 		free_throw = re.compile(free_throw_regex)
+		rebound = re.compile(rebound_regex)
 
 		pbp = PlayByPlay()
 
@@ -137,6 +139,26 @@ class PlayByPlayManager:
 			pbp.shot_made = m.group(2) == "makes"
 			pbp.point_value = 1
 			pbp.shot_distance = 15
+
+			return pbp
+
+		###########
+		# Rebound
+		###########
+		m = rebound.search(data)
+		if m:
+			pbp.play_type = PlayByPlay.REBOUND
+			pbp.shot_made = None
+			pbp.point_value = 0
+			pbp.secondary_play_type = None
+			pbp.shot_distance = None
+			if m.group(1) == "Defensive":
+				pbp.detail = PlayByPlay.REBOUND_DEFENSIVE
+			else:
+				pbp.detail = PlayByPlay.REBOUND_OFFENSIVE
+
+			if m.group(2) != "Team":
+				pbp.players.append(m.group(3))
 
 			return pbp
 
