@@ -714,6 +714,40 @@ class TestPlayByPlay(unittest.TestCase):
 		self.assertTrue(len(pbp.players) == 1)
 		self.assertTrue(pbp.players[0] == "pendeje02")
 
+	def test_create_pbp_instance_home_substitution(self):
+		pbp = self.pbp_manager.create_pbp_instance(['4:38.0', '', '', '10-14', '', '<a href="/players/s/stuckro01.html">R. Stuckey</a> enters the game for <a href="/players/d/drumman01.html">A. Drummond</a>'])
+
+		self.assertTrue(pbp.minutes == 4)
+		self.assertTrue(pbp.seconds == 38.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.SUBSTITUTION)
+		self.assertTrue(pbp.detail is None)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 0)
+		self.assertTrue(pbp.shot_made is None)
+		self.assertTrue(pbp.home_score == 14)
+		self.assertTrue(pbp.visitor_score == 10)
+		self.assertTrue(pbp.shot_distance is None)
+		self.assertTrue(len(pbp.players) == 2)
+		self.assertTrue(pbp.players[0] == "stuckro01")
+		self.assertTrue(pbp.players[1] == "drumman01")
+
+	def test_create_pbp_instance_visitor_substitution(self):
+		pbp = self.pbp_manager.create_pbp_instance(['4:05.0', '<a href="/players/b/belinma01.html">M. Belinelli</a> enters the game for <a href="/players/g/greenda02.html">D. Green</a>', '', '12-14', '', ''])
+
+		self.assertTrue(pbp.minutes == 4)
+		self.assertTrue(pbp.seconds == 05.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.SUBSTITUTION)
+		self.assertTrue(pbp.detail is None)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 0)
+		self.assertTrue(pbp.shot_made is None)
+		self.assertTrue(pbp.home_score == 14)
+		self.assertTrue(pbp.visitor_score == 12)
+		self.assertTrue(pbp.shot_distance is None)
+		self.assertTrue(len(pbp.players) == 2)
+		self.assertTrue(pbp.players[0] == "belinma01")
+		self.assertTrue(pbp.players[1] == "greenda02")
+
 
 if __name__ == '__main__':
 	unittest.main()
