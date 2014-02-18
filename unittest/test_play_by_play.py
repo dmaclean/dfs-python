@@ -550,6 +550,170 @@ class TestPlayByPlay(unittest.TestCase):
 		self.assertTrue(len(pbp.players) == 1)
 		self.assertTrue(pbp.players[0] == "stuckro01")
 
+	def test_create_pbp_instance_home_turnover_lost_ball(self):
+		pbp = self.pbp_manager.create_pbp_instance(['11:38.0', '', '', '48-59', '', 'Turnover by <a href="/players/s/singlky01.html">K. Singler</a> (lost ball)'])
+
+		self.assertTrue(pbp.minutes == 11)
+		self.assertTrue(pbp.seconds == 38.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.TURNOVER)
+		self.assertTrue(pbp.detail == PlayByPlay.TURNOVER_LOST_BALL)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 0)
+		self.assertTrue(pbp.shot_made is None)
+		self.assertTrue(pbp.home_score == 59)
+		self.assertTrue(pbp.visitor_score == 48)
+		self.assertTrue(pbp.shot_distance is None)
+		self.assertTrue(len(pbp.players) == 1)
+		self.assertTrue(pbp.players[0] == "singlky01")
+
+	def test_create_pbp_instance_home_turnover_lost_ball_steal(self):
+		pbp = self.pbp_manager.create_pbp_instance(['11:38.0', '', '', '48-59', '', 'Turnover by <a href="/players/s/singlky01.html">K. Singler</a> (lost ball; steal by <a href="/players/p/pendeje02.html">J. Ayres</a>)'])
+
+		self.assertTrue(pbp.minutes == 11)
+		self.assertTrue(pbp.seconds == 38.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.TURNOVER)
+		self.assertTrue(pbp.detail == PlayByPlay.TURNOVER_LOST_BALL)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 0)
+		self.assertTrue(pbp.shot_made is None)
+		self.assertTrue(pbp.home_score == 59)
+		self.assertTrue(pbp.visitor_score == 48)
+		self.assertTrue(pbp.shot_distance is None)
+		self.assertTrue(len(pbp.players) == 2)
+		self.assertTrue(pbp.players[0] == "singlky01")
+		self.assertTrue(pbp.players[1] == "pendeje02")
+
+	def test_create_pbp_instance_home_turnover_bad_pass_steal(self):
+		pbp = self.pbp_manager.create_pbp_instance(['7:57.0', '', '', '4-7', '', 'Turnover by <a href="/players/s/smithjo03.html">J. Smith</a> (bad pass; steal by <a href="/players/d/decolna01.html">N. De Colo</a>)'])
+
+		self.assertTrue(pbp.minutes == 7)
+		self.assertTrue(pbp.seconds == 57.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.TURNOVER)
+		self.assertTrue(pbp.detail == PlayByPlay.TURNOVER_BAD_PASS)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 0)
+		self.assertTrue(pbp.shot_made is None)
+		self.assertTrue(pbp.home_score == 7)
+		self.assertTrue(pbp.visitor_score == 4)
+		self.assertTrue(pbp.shot_distance is None)
+		self.assertTrue(len(pbp.players) == 2)
+		self.assertTrue(pbp.players[0] == "smithjo03")
+		self.assertTrue(pbp.players[1] == "decolna01")
+
+	def test_create_pbp_instance_home_turnover_bad_pass(self):
+		pbp = self.pbp_manager.create_pbp_instance(['2:07.0', '', '', '63-84', '', 'Turnover by <a href="/players/s/singlky01.html">K. Singler</a> (bad pass)'])
+
+		self.assertTrue(pbp.minutes == 2)
+		self.assertTrue(pbp.seconds == 07.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.TURNOVER)
+		self.assertTrue(pbp.detail == PlayByPlay.TURNOVER_BAD_PASS)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 0)
+		self.assertTrue(pbp.shot_made is None)
+		self.assertTrue(pbp.home_score == 84)
+		self.assertTrue(pbp.visitor_score == 63)
+		self.assertTrue(pbp.shot_distance is None)
+		self.assertTrue(len(pbp.players) == 1)
+		self.assertTrue(pbp.players[0] == "singlky01")
+
+	def test_create_pbp_instance_home_turnover_offensive_foul(self):
+		pbp = self.pbp_manager.create_pbp_instance(['4:33.0', '', '', '38-42', '', 'Turnover by <a href="/players/c/caldwke01.html">K. Caldwell-Pope</a> (offensive foul)'])
+
+		self.assertTrue(pbp.minutes == 4)
+		self.assertTrue(pbp.seconds == 33.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.TURNOVER)
+		self.assertTrue(pbp.detail == PlayByPlay.TURNOVER_OFFENSIVE_FOUL)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 0)
+		self.assertTrue(pbp.shot_made is None)
+		self.assertTrue(pbp.home_score == 42)
+		self.assertTrue(pbp.visitor_score == 38)
+		self.assertTrue(pbp.shot_distance is None)
+		self.assertTrue(len(pbp.players) == 1)
+		self.assertTrue(pbp.players[0] == "caldwke01")
+
+	def test_create_pbp_instance_visitor_turnover_lost_ball(self):
+		pbp = self.pbp_manager.create_pbp_instance(['2:04.0', 'Turnover by <a href="/players/b/belinma01.html">M. Belinelli</a> (lost ball)', '', '16-21', '', ''])
+
+		self.assertTrue(pbp.minutes == 2)
+		self.assertTrue(pbp.seconds == 04.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.TURNOVER)
+		self.assertTrue(pbp.detail == PlayByPlay.TURNOVER_LOST_BALL)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 0)
+		self.assertTrue(pbp.shot_made is None)
+		self.assertTrue(pbp.home_score == 21)
+		self.assertTrue(pbp.visitor_score == 16)
+		self.assertTrue(pbp.shot_distance is None)
+		self.assertTrue(len(pbp.players) == 1)
+		self.assertTrue(pbp.players[0] == "belinma01")
+
+	def test_create_pbp_instance_visitor_turnover_lost_ball_steal(self):
+		pbp = self.pbp_manager.create_pbp_instance(['6:04.0', 'Turnover by <a href="/players/d/duncati01.html">T. Duncan</a> (lost ball; steal by <a href="/players/m/monrogr01.html">G. Monroe</a>)', '', '35-39', '', ''])
+
+		self.assertTrue(pbp.minutes == 6)
+		self.assertTrue(pbp.seconds == 04.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.TURNOVER)
+		self.assertTrue(pbp.detail == PlayByPlay.TURNOVER_LOST_BALL)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 0)
+		self.assertTrue(pbp.shot_made is None)
+		self.assertTrue(pbp.home_score == 39)
+		self.assertTrue(pbp.visitor_score == 35)
+		self.assertTrue(pbp.shot_distance is None)
+		self.assertTrue(len(pbp.players) == 2)
+		self.assertTrue(pbp.players[0] == "duncati01")
+		self.assertTrue(pbp.players[1] == "monrogr01")
+
+	def test_create_pbp_instance_visitor_turnover_bad_pass_steal(self):
+		pbp = self.pbp_manager.create_pbp_instance(['8:06.0', 'Turnover by <a href="/players/b/baynear01.html">A. Baynes</a> (bad pass; steal by <a href="/players/s/singlky01.html">K. Singler</a>)', '', '4-7', '', ''])
+
+		self.assertTrue(pbp.minutes == 8)
+		self.assertTrue(pbp.seconds == 06.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.TURNOVER)
+		self.assertTrue(pbp.detail == PlayByPlay.TURNOVER_BAD_PASS)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 0)
+		self.assertTrue(pbp.shot_made is None)
+		self.assertTrue(pbp.home_score == 7)
+		self.assertTrue(pbp.visitor_score == 4)
+		self.assertTrue(pbp.shot_distance is None)
+		self.assertTrue(len(pbp.players) == 2)
+		self.assertTrue(pbp.players[0] == "baynear01")
+		self.assertTrue(pbp.players[1] == "singlky01")
+
+	def test_create_pbp_instance_visitor_turnover_bad_pass(self):
+		pbp = self.pbp_manager.create_pbp_instance(['9:34.0', 'Turnover by <a href="/players/g/greenda02.html">D. Green</a> (bad pass)', '', '50-65', '', ''])
+
+		self.assertTrue(pbp.minutes == 9)
+		self.assertTrue(pbp.seconds == 34.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.TURNOVER)
+		self.assertTrue(pbp.detail == PlayByPlay.TURNOVER_BAD_PASS)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 0)
+		self.assertTrue(pbp.shot_made is None)
+		self.assertTrue(pbp.home_score == 65)
+		self.assertTrue(pbp.visitor_score == 50)
+		self.assertTrue(pbp.shot_distance is None)
+		self.assertTrue(len(pbp.players) == 1)
+		self.assertTrue(pbp.players[0] == "greenda02")
+
+	def test_create_pbp_instance_visitor_turnover_offensive_foul(self):
+		pbp = self.pbp_manager.create_pbp_instance(['3:39.0', 'Turnover by <a href="/players/p/pendeje02.html">J. Ayres</a> (offensive foul)', '', '88-103', '', ''])
+
+		self.assertTrue(pbp.minutes == 3)
+		self.assertTrue(pbp.seconds == 39.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.TURNOVER)
+		self.assertTrue(pbp.detail == PlayByPlay.TURNOVER_OFFENSIVE_FOUL)
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 0)
+		self.assertTrue(pbp.shot_made is None)
+		self.assertTrue(pbp.home_score == 103)
+		self.assertTrue(pbp.visitor_score == 88)
+		self.assertTrue(pbp.shot_distance is None)
+		self.assertTrue(len(pbp.players) == 1)
+		self.assertTrue(pbp.players[0] == "pendeje02")
+
 
 if __name__ == '__main__':
 	unittest.main()

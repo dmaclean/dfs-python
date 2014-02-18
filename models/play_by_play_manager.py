@@ -80,12 +80,14 @@ class PlayByPlayManager:
 		free_throw_regex = "{} (makes|misses) free throw [1|2] of [1|2]".format(player_link_regex)
 		rebound_regex = "(Defensive|Offensive) rebound by ({}|Team)".format(player_link_regex)
 		foul_regex = "(Shooting|Loose ball|Personal|Offensive charge) foul by {}( \(drawn by {}\))?".format(player_link_regex, player_link_regex)
+		turnover_regex = "Turnover by {} \((lost ball|bad pass|offensive foul)(; steal by {})?\)".format(player_link_regex, player_link_regex)
 
 		jump_ball = re.compile(jump_ball_regex)
 		shot = re.compile(shot_regex)
 		free_throw = re.compile(free_throw_regex)
 		rebound = re.compile(rebound_regex)
 		foul = re.compile(foul_regex)
+		turnover = re.compile(turnover_regex)
 
 		pbp = PlayByPlay()
 
@@ -170,14 +172,7 @@ class PlayByPlayManager:
 		m = foul.search(data)
 		if m:
 			pbp.play_type = PlayByPlay.FOUL
-			if m.group(1) == "Shooting":
-				pbp.detail = PlayByPlay.FOUL_SHOOTING
-			elif m.group(1) == "Personal":
-				pbp.detail = PlayByPlay.FOUL_PERSONAL
-			elif m.group(1) == "Loose ball":
-				pbp.detail = PlayByPlay.FOUL_LOOSE_BALL
-			elif m.group(1) == "Offensive charge":
-				pbp.detail = PlayByPlay.FOUL_OFFENSIVE_CHARGE
+			pbp.detail = m.group(1)
 
 			pbp.point_value = 0
 			pbp.shot_made = None
@@ -186,6 +181,24 @@ class PlayByPlayManager:
 			pbp.players.append(m.group(2))
 
 			if pbp.detail == PlayByPlay.FOUL_SHOOTING:
+				pbp.players.append(m.group(4))
+
+			return pbp
+
+		############
+		# Turnover
+		############
+		m = turnover.search(data)
+		if m:
+			pbp.play_type = PlayByPlay.TURNOVER
+			pbp.players.append(m.group(1))
+			pbp.point_value = 0
+			pbp.shot_made = None
+			pbp.shot_distance = None
+			pbp.secondary_play_type = None
+			pbp.detail = m.group(2)
+
+			if m.group(3):
 				pbp.players.append(m.group(4))
 
 			return pbp

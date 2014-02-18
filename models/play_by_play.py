@@ -36,14 +36,19 @@ class PlayByPlay:
 	JUMP_BALL = "JUMP_BALL"
 	REBOUND = "REBOUND"
 	SHOT = "SHOT"
+	TURNOVER = "TURNOVER"
 
-	FOUL_SHOOTING = "shooting"
-	FOUL_LOOSE_BALL = "loose ball"
-	FOUL_PERSONAL = "personal"
-	FOUL_OFFENSIVE_CHARGE = "offensive charge"
+	FOUL_SHOOTING = "Shooting"
+	FOUL_LOOSE_BALL = "Loose ball"
+	FOUL_PERSONAL = "Personal"
+	FOUL_OFFENSIVE_CHARGE = "Offensive charge"
 
 	REBOUND_DEFENSIVE = "defensive"
 	REBOUND_OFFENSIVE = "offensive"
+
+	TURNOVER_BAD_PASS = "bad pass"
+	TURNOVER_LOST_BALL = "lost ball"
+	TURNOVER_OFFENSIVE_FOUL = "offensive foul"
 
 	def __init__(self, minutes=None, seconds=None, play_type=None, detail=None, secondary_play_type=None, players=None):
 		# The minute that the play occurred.
