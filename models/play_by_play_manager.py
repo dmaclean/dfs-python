@@ -82,6 +82,7 @@ class PlayByPlayManager:
 		foul_regex = "(Shooting|Loose ball|Personal|Offensive charge) foul by {}( \(drawn by {}\))?".format(player_link_regex, player_link_regex)
 		turnover_regex = "Turnover by {} \((lost ball|bad pass|offensive foul)(; steal by {})?\)".format(player_link_regex, player_link_regex)
 		substitution_regex = "{} enters the game for {}".format(player_link_regex, player_link_regex)
+		timeout_regex = "([\w ]+) timeout"
 
 		jump_ball = re.compile(jump_ball_regex)
 		shot = re.compile(shot_regex)
@@ -90,6 +91,7 @@ class PlayByPlayManager:
 		foul = re.compile(foul_regex)
 		turnover = re.compile(turnover_regex)
 		substitution = re.compile(substitution_regex)
+		timeout = re.compile(timeout_regex)
 
 		pbp = PlayByPlay()
 
@@ -218,6 +220,20 @@ class PlayByPlayManager:
 			pbp.secondary_play_type = None
 			pbp.players.append(m.group(1))
 			pbp.players.append(m.group(2))
+
+			return pbp
+
+		###########
+		# Timeout
+		###########
+		m = timeout.search(data)
+		if m:
+			pbp.play_type = PlayByPlay.TIMEOUT
+			pbp.detail = m.group(1).replace(' full', '')
+			pbp.point_value = 0
+			pbp.shot_made = None
+			pbp.shot_distance = None
+			pbp.secondary_play_type = None
 
 			return pbp
 

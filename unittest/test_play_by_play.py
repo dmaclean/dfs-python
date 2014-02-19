@@ -748,6 +748,50 @@ class TestPlayByPlay(unittest.TestCase):
 		self.assertTrue(pbp.players[0] == "belinma01")
 		self.assertTrue(pbp.players[1] == "greenda02")
 
+	def test_create_pbp_instance_home_full_timeout(self):
+		pbp = self.pbp_manager.create_pbp_instance(['5:00.0', 'Dallas full timeout', '', '80-105', '', ''])
+
+		self.assertTrue(pbp.minutes == 5)
+		self.assertTrue(pbp.seconds == 00.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.TIMEOUT)
+		self.assertTrue(pbp.detail == 'Dallas')
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 0)
+		self.assertTrue(pbp.shot_made is None)
+		self.assertTrue(pbp.home_score == 105)
+		self.assertTrue(pbp.visitor_score == 80)
+		self.assertTrue(pbp.shot_distance is None)
+		self.assertTrue(len(pbp.players) == 0)
+
+	def test_create_pbp_instance_visitor_full_timeout(self):
+		pbp = self.pbp_manager.create_pbp_instance(['5:00.0', '', '', '80-105', '', 'Charlotte full timeout'])
+
+		self.assertTrue(pbp.minutes == 5)
+		self.assertTrue(pbp.seconds == 00.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.TIMEOUT)
+		self.assertTrue(pbp.detail == 'Charlotte')
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 0)
+		self.assertTrue(pbp.shot_made is None)
+		self.assertTrue(pbp.home_score == 105)
+		self.assertTrue(pbp.visitor_score == 80)
+		self.assertTrue(pbp.shot_distance is None)
+		self.assertTrue(len(pbp.players) == 0)
+
+	def test_create_pbp_instance_official_timeout(self):
+		pbp = self.pbp_manager.create_pbp_instance(['5:00.0', 'Official timeout', '', '80-105', '', ''])
+
+		self.assertTrue(pbp.minutes == 5)
+		self.assertTrue(pbp.seconds == 00.0)
+		self.assertTrue(pbp.play_type == PlayByPlay.TIMEOUT)
+		self.assertTrue(pbp.detail == 'Official')
+		self.assertTrue(pbp.secondary_play_type is None)
+		self.assertTrue(pbp.point_value == 0)
+		self.assertTrue(pbp.shot_made is None)
+		self.assertTrue(pbp.home_score == 105)
+		self.assertTrue(pbp.visitor_score == 80)
+		self.assertTrue(pbp.shot_distance is None)
+		self.assertTrue(len(pbp.players) == 0)
 
 if __name__ == '__main__':
 	unittest.main()
