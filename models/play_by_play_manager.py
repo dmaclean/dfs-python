@@ -100,6 +100,10 @@ class PlayByPlayManager:
 		pbp.minutes = int(time_pieces[0])
 		pbp.seconds = float(time_pieces[1])
 
+		# Record the quarter
+		if len(play_data) == 7:
+			pbp.quarter = play_data[6]
+
 		#############
 		# Jump ball
 		#############

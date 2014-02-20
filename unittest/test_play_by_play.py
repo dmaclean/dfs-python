@@ -779,8 +779,9 @@ class TestPlayByPlay(unittest.TestCase):
 		self.assertTrue(len(pbp.players) == 0)
 
 	def test_create_pbp_instance_official_timeout(self):
-		pbp = self.pbp_manager.create_pbp_instance(['5:00.0', 'Official timeout', '', '80-105', '', ''])
+		pbp = self.pbp_manager.create_pbp_instance(['5:00.0', 'Official timeout', '', '80-105', '', '', 1])
 
+		self.assertTrue(pbp.quarter == 1)
 		self.assertTrue(pbp.minutes == 5)
 		self.assertTrue(pbp.seconds == 00.0)
 		self.assertTrue(pbp.play_type == PlayByPlay.TIMEOUT)

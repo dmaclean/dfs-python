@@ -52,7 +52,10 @@ class PlayByPlay:
 	TURNOVER_LOST_BALL = "lost ball"
 	TURNOVER_OFFENSIVE_FOUL = "offensive foul"
 
-	def __init__(self, minutes=None, seconds=None, play_type=None, detail=None, secondary_play_type=None, players=None):
+	def __init__(self, quarter=None, minutes=None, seconds=None, play_type=None, detail=None, secondary_play_type=None, players=None):
+		# The quarter that is currently being played.
+		self.quarter = quarter
+
 		# The minute that the play occurred.
 		self.minutes = minutes
 
@@ -94,3 +97,8 @@ class PlayByPlay:
 
 		# The number of points the visitor team has
 		self.visitor_score = 0
+
+	def to_json(self):
+		"""
+		Convert the PBP object to its JSON representation.
+		"""
