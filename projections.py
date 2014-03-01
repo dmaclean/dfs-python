@@ -156,7 +156,8 @@ class Projections:
 		if key in self.dvp_cache:
 			return self.dvp_cache[key]
 
-		self.dvp_cache[key] = self.dvpManager.calculate_defense_vs_position(metric, position, team, season, self.site, date)
+		dvp_instance = self.dvpManager.calculate_defense_vs_position(metric, position, team, season, self.site, date)
+		self.dvp_cache[key] = dvp_instance.value
 
 		return self.dvp_cache[key]
 
@@ -184,7 +185,7 @@ class Projections:
 			ranks = []
 			for t in teams:
 				dvp = self.dvpManager.calculate_defense_vs_position(metric, position, t, season, site, d)
-				ranks.append((dvp, t))
+				ranks.append((dvp.value, t))
 
 			# Sort the results in ascending order (lowest value at element 0).
 			ranks.sort()
@@ -640,6 +641,9 @@ class Projections:
 
 		def_factor = self.calculate_defense_vs_position(stat, info["rg_position"], opponent, season, d)
 
+		# Calculate DvP for fantasy points, just so we have it.
+		self.calculate_defense_vs_position(DFSConstants.FANTASY_POINTS, info["rg_position"], opponent, season, d)
+
 		adjusted_stat = float(adjusted_stat) * (float(def_factor)/float(league_avg))
 	
 		return adjusted_stat
@@ -961,7 +965,6 @@ class Projections:
 		finally:
 			f.close()
 
-
 	def regression(self):
 		games = []
 		cursor = self.cnx.cursor()
@@ -973,7 +976,7 @@ class Projections:
 			# Grab all game logs
 			cursor.execute("""
 				select player_id, season, game_number, date, team, home, opponent, minutes_played, 
-					points, assists, total_rebounds, steals, blocks, turnovers 
+					points, assists, total_rebounds, steals, blocks, turnovers, p.rg_position
 				from game_totals_basic b inner join players p on p.id = b.player_id
 				where b.season = %d and p.rg_position is not null
 				order by player_id, date desc""" % season)
@@ -998,7 +1001,7 @@ class Projections:
 					projected turnovers,actual turnovers,MSE,\
 					projected minutes,actual minutes,MSE\n")
 		
-		self.fpc.site = DFSConstants.STAR_STREET
+		self.fpc.site = self.site = DFSConstants.FAN_DUEL
 		
 		# Squared errors
 		ssq_fps = 0
@@ -1028,10 +1031,13 @@ class Projections:
 			actual_steals = game[11]
 			actual_blocks = game[12]
 			actual_turnovers = game[13]
+			position = game[14]
 
 			depth_chart, depth_chart_by_player_id = self.determine_depth_chart(season, date)
 			
 			print "Processing %s/%d/%d/%s/%s/%s (%d/%d)" % (player_id, season, game_number, date, team, opponent, count, len(games))
+
+			fp_rank = self.calculate_defense_vs_position_ranking(DFSConstants.FANTASY_POINTS, position, opponent, season, site=self.fpc.site)
 			
 			actual_fps = self.fpc.calculate({
 				"points": actual_points,
@@ -1125,6 +1131,13 @@ class Projections:
 				)
 				f.write(line + "\n")
 
+			# Update the DvP to include rank
+			for s in [DFSConstants.FANTASY_POINTS, "points", "total_rebounds", "assists", "steals", "blocks", "turnovers"]:
+				dvp = self.dvpManager.get(DefenseVsPosition(stat=s, position=position, team=opponent, season=season, site=self.fpc.site))
+				if not dvp[0].rank:
+					dvp[0].rank = fp_rank
+					self.dvpManager.update(dvp[0])
+
 		mse_fps = ssq_fps/processed
 		mse_points = ssq_points/processed
 		mse_assists = ssq_assists/processed
@@ -1208,7 +1221,7 @@ class Projections:
 					avg_minutes = self.get_avg_stat_past_n_games(player["player_id"], "minutes_played", game["season"], 5)
 					
 					site_position = self.get_position_on_site(player["player_id"], s)
-					
+
 					fp_rank = self.calculate_defense_vs_position_ranking(DFSConstants.FANTASY_POINTS, player["player_info"]["rg_position"], opponent, game["season"], s)
 					
 					# Floor and ceiling projections
@@ -1231,6 +1244,12 @@ class Projections:
 																				fp_rank,
 																				salary/fps if fps > 0 else -1,
 																				4*(salary/1000)+5) )
+
+					# Update the DvP to include rank
+					# for s in [DFSConstants.FANTASY_POINTS, "points", "total_rebounds", "assists", "steals", "blocks", "turnovers"]:
+					# 	dvp = self.dvpManager.get(DefenseVsPosition(stat=s, position=player["player_info"]["rg_position"], team=opponent, season=game["season"], site=self.fpc.site))
+					# 	dvp[0].rank = fp_rank
+					# 	self.dvpManager.update(dvp[0])
 					
 		
 		# We're done!  Close up the files

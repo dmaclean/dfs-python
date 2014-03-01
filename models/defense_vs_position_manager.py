@@ -39,7 +39,7 @@ class DefenseVsPositionManager():
 										date=date, site=site)
 				if not self.exists(dvp):
 					self.insert(dvp)
-				return result[0]
+				return dvp
 
 		finally:
 			cursor.close()
@@ -80,6 +80,7 @@ class DefenseVsPositionManager():
 				query = query.replace('<SITE>', 'null') % (dvp.stat, dvp.position, dvp.team, dvp.season, dvp.value, dvp.date)
 
 			cursor.execute(query)
+			dvp.id = cursor.lastrowid
 		finally:
 			cursor.close()
 
@@ -88,10 +89,16 @@ class DefenseVsPositionManager():
 
 		try:
 			query = """
-				update defense_vs_position set stat = '%s', position = '%s', team = '%s', season = %d, value = %f, date = '%s',
-						site = '%s'
-				where id = %d
-			""" % (dvp.stat, dvp.position, dvp.team, dvp.season, dvp.value, dvp.date, dvp.site, dvp.id)
+				update defense_vs_position set stat = '{}', position = '{}', team = '{}', season = {}, value = {}, date = '{}'
+				""".format(dvp.stat, dvp.position, dvp.team, dvp.season, dvp.value, dvp.date)
+
+			if dvp.site:
+				query += ", site = '{}'".format(dvp.site)
+
+			if dvp.rank:
+				query += ", rank = {}".format(dvp.rank)
+
+			query += " where id = {}".format(dvp.id)
 
 			cursor.execute(query)
 
@@ -120,11 +127,13 @@ class DefenseVsPositionManager():
 					query += "and value = %f " % dvp.value
 				if dvp.date:
 					query += "and date = '%s' " % dvp.date
+				if dvp.site:
+					query += "and site = '{}' ".format(dvp.site)
 
 			cursor.execute(query)
 			for result in cursor:
 				d = DefenseVsPosition(id=result[0], stat=result[1], position=result[2], team=result[3], season=result[4],
-										value=result[5], date=result[6], site=result[7])
+										value=result[5], rank=result[6], date=result[7], site=result[8])
 				dvps.append(d)
 		finally:
 			cursor.close()

@@ -344,6 +344,7 @@ create table defense_vs_position (
 	team varchar(5) not null,
 	season int not null,
 	value float not null,
+	rank int,
 	date date not null,
 	site varchar(50)
 );

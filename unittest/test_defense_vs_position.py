@@ -275,13 +275,21 @@ class TestDefenseVsPosition(TestCase):
 			blocks_vs_position = self.dvpManager.calculate_defense_vs_position("blocks", p, "BOS", 2013, date=date(2013, 11, 2))
 			turnovers_vs_position = self.dvpManager.calculate_defense_vs_position("turnovers", p, "BOS", 2013, date=date(2013, 11, 2))
 
-			self.assertTrue(points_vs_position == 15)
-			self.assertTrue(offensive_rebs_vs_position == 6)
-			self.assertTrue(defensive_rebs_vs_position == 11)
-			self.assertTrue(assists_vs_position == 6)
-			self.assertTrue(steals_vs_position == 2)
-			self.assertTrue(blocks_vs_position == 1)
-			self.assertTrue(turnovers_vs_position == 4)
+			self.assertTrue(points_vs_position.value == 15)
+			self.assertTrue(offensive_rebs_vs_position.value == 6)
+			self.assertTrue(defensive_rebs_vs_position.value == 11)
+			self.assertTrue(assists_vs_position.value == 6)
+			self.assertTrue(steals_vs_position.value == 2)
+			self.assertTrue(blocks_vs_position.value == 1)
+			self.assertTrue(turnovers_vs_position.value == 4)
+
+			# Make sure the rank is saved.
+			result = self.dvpManager.get(DefenseVsPosition(stat="points"))
+			result[0].rank = 1
+			self.dvpManager.update(result[0])
+
+			new_result = self.dvpManager.get(result[0])
+			self.assertTrue(new_result[0].rank == result[0].rank)
 
 	def test_calculate_defense_vs_position_fantasy_points(self):
 		positions = ["PG", "SG", "SF", "PF", "C"]
@@ -395,19 +403,19 @@ class TestDefenseVsPosition(TestCase):
 			blocks_vs_position = self.dvpManager.calculate_defense_vs_position("blocks", p, "BOS", 2013, date=date(2013, 11, 2))
 			turnovers_vs_position = self.dvpManager.calculate_defense_vs_position("turnovers", p, "BOS", 2013, date=date(2013, 11, 2))
 
-			self.assertTrue(points_vs_position == 15)
-			self.assertTrue(offensive_rebs_vs_position == 6)
-			self.assertTrue(defensive_rebs_vs_position == 11)
-			self.assertTrue(assists_vs_position == 6)
-			self.assertTrue(steals_vs_position == 2)
-			self.assertTrue(blocks_vs_position == 1)
-			self.assertTrue(turnovers_vs_position == 4)
+			self.assertTrue(points_vs_position.value == 15)
+			self.assertTrue(offensive_rebs_vs_position.value == 6)
+			self.assertTrue(defensive_rebs_vs_position.value == 11)
+			self.assertTrue(assists_vs_position.value == 6)
+			self.assertTrue(steals_vs_position.value == 2)
+			self.assertTrue(blocks_vs_position.value == 1)
+			self.assertTrue(turnovers_vs_position.value == 4)
 
 			fps = self.dvpManager.calculate_defense_vs_position(DFSConstants.FANTASY_POINTS, p, "BOS", 2013,
 																site=DFSConstants.FAN_DUEL,
 																date=date(2013, 11, 2))
 
-			self.assertTrue(fps == 15)
+			self.assertTrue(fps.value == 15)
 
 	####################################################################################
 	# Same test as above, except we specify a date that would exclude the second game.
@@ -512,10 +520,10 @@ class TestDefenseVsPosition(TestCase):
 			blocks_vs_position = self.dvpManager.calculate_defense_vs_position("blocks", p, "BOS", 2013, date=date(2013, 11, 2))
 			turnovers_vs_position = self.dvpManager.calculate_defense_vs_position("turnovers", p, "BOS", 2013, date=date(2013, 11, 2))
 
-			self.assertTrue(points_vs_position == 20)
-			self.assertTrue(offensive_rebs_vs_position == 5)
-			self.assertTrue(defensive_rebs_vs_position == 10)
-			self.assertTrue(assists_vs_position == 4)
-			self.assertTrue(steals_vs_position == 3)
-			self.assertTrue(blocks_vs_position == 2)
-			self.assertTrue(turnovers_vs_position == 5)
+			self.assertTrue(points_vs_position.value == 20)
+			self.assertTrue(offensive_rebs_vs_position.value == 5)
+			self.assertTrue(defensive_rebs_vs_position.value == 10)
+			self.assertTrue(assists_vs_position.value == 4)
+			self.assertTrue(steals_vs_position.value == 3)
+			self.assertTrue(blocks_vs_position.value == 2)
+			self.assertTrue(turnovers_vs_position.value == 5)

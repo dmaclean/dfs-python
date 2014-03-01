@@ -8,8 +8,15 @@ import test_vegas_odds
 import test_rg_player_stats
 import test_defense_vs_position
 import test_injury
+import test_calculate_dvp_rank
 
 logging.basicConfig(level=logging.WARNING)
+
+######################
+# Calculate DvP Rank
+######################
+suite = unittest.TestLoader().loadTestsFromTestCase(test_calculate_dvp_rank.TestCalculateDvPRank)
+unittest.TextTestRunner(verbosity=2).run(suite)
 
 ##########################
 # FantasyPointCalculator

@@ -2,7 +2,7 @@ __author__ = 'ap'
 
 class DefenseVsPosition:
 
-	def __init__(self, id=None, stat=None, position=None, team=None, season=None, value=None, date=None, site=None):
+	def __init__(self, id=None, stat=None, position=None, team=None, season=None, value=None, date=None, site=None, rank=None):
 		self.id = id
 		self.stat = stat
 		self.position = position
@@ -11,3 +11,4 @@ class DefenseVsPosition:
 		self.value = value
 		self.date = date
 		self.site = site
+		self.rank = rank
