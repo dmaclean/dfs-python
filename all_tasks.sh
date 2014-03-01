@@ -11,3 +11,6 @@ clear; time python fantasy_point_calculator.py site=STAR_STREET season=2013
 
 clear; time python determine_injuries.py season=2013 type=previous
 clear; time python determine_injuries.py season=2013 type=current
+
+# Calculate Defense-vs-position
+clear; time python utilities/calculate_dvp_rank.py season=2013

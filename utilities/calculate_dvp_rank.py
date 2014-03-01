@@ -1,4 +1,7 @@
 import mysql
+import logging
+import sys
+from datetime import date
 from dfs_constants import DFSConstants
 from models.defense_vs_position_manager import DefenseVsPositionManager
 
@@ -70,5 +73,16 @@ class DvPRankCalculator:
 			cursor.close()
 
 if __name__ == '__main__':
+	logging.basicConfig(level=logging.INFO)
+
+	season = date.today().year
+	for arg in sys.argv:
+		if arg == "calculate_dvp_rank.py":
+			pass
+		else:
+			pieces = arg.split("=")
+			if pieces[0] == "season":
+				season = int(pieces[1])
+
 	calculator = DvPRankCalculator()
-	calculator.calculate(2013)
+	calculator.calculate(season)
