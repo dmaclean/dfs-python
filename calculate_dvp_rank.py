@@ -1,9 +1,10 @@
 import mysql
 import logging
 import sys
-from datetime import date
+from datetime import date, timedelta
 from dfs_constants import DFSConstants
 from models.defense_vs_position_manager import DefenseVsPositionManager
+from models.defense_vs_position import DefenseVsPosition
 
 
 class DvPRankCalculator:
@@ -15,7 +16,12 @@ class DvPRankCalculator:
 
 		self.dvp_manager = DefenseVsPositionManager(cnx=self.cnx)
 
-	def calculate(self, season=None):
+		self.ranked_dvps = {}
+		self.one_day = timedelta(days=1)
+
+	def calculate(self, season=None, yesterday_only=False):
+		# self.get_existing_ranks(season)
+
 		cursor = self.cnx.cursor()
 
 		try:
@@ -25,7 +31,7 @@ class DvPRankCalculator:
 						DFSConstants.TOTAL_REBOUNDS, DFSConstants.ASSISTS, DFSConstants.STEALS,
 						DFSConstants.BLOCKS, DFSConstants.TURNOVERS]
 			positions = ["PG", "SG", "SF", "PF", "C"]
-			team_dates = {}
+			team_dates = []
 
 			# Get all teams for season
 			teams = []
@@ -36,13 +42,13 @@ class DvPRankCalculator:
 				teams.append(result[0])
 
 			# Get all teams that played on each date
-			query = "select date, team from team_game_totals where season = {}".format(season)
-			cursor.execute(query)
-			for result in cursor:
-				if result[0] not in team_dates:
-					team_dates[result[0]] = [result[1]]
-				else:
-					team_dates[result[0]].append(result[1])
+			if yesterday_only:
+				team_dates.append(date.today() - self.one_day)
+			else:
+				query = "select distinct date from team_game_totals where season = {} order by date".format(season)
+				cursor.execute(query)
+				for result in cursor:
+					team_dates.append(result[0])
 
 			for metric in metrics:
 				for position in positions:
@@ -54,9 +60,11 @@ class DvPRankCalculator:
 							ranks = []
 							dvp_val_map = {}    # Associates the DvP value with the actual DefenseVsPosition object.
 							for t in teams:
+								logging.info("Processing {}/{}/{}/{}/{}".format(metric, position, site, d, t))
 								dvp = self.dvp_manager.calculate_defense_vs_position(metric, position, t, season, site, d)
-								ranks.append((dvp.value, t))
-								dvp_val_map["{}_{}".format(dvp.value, t)] = dvp
+								if dvp:
+									ranks.append((dvp.value, t))
+									dvp_val_map["{}_{}".format(dvp.value, t)] = dvp
 
 							# Sort the results in ascending order (lowest value at element 0).
 							ranks.sort()
@@ -72,10 +80,22 @@ class DvPRankCalculator:
 		finally:
 			cursor.close()
 
+	def get_existing_ranks(self, season):
+		"""
+		Figure out which DvP entries don't have ranks.  It'll take forever to process
+		all of them, even for a single season.
+		"""
+		all_dvps = self.dvp_manager.get(DefenseVsPosition(season=season))
+
+		for dvp in all_dvps:
+			if dvp.rank:
+				self.ranked_dvps["{}_{}_{}_{}_{}_{}".format(dvp.stat, dvp.position, dvp.site, dvp.team, dvp.season, dvp.date)]
+
 if __name__ == '__main__':
 	logging.basicConfig(level=logging.INFO)
 
 	season = date.today().year
+	yesterday_only = False
 	for arg in sys.argv:
 		if arg == "calculate_dvp_rank.py":
 			pass
@@ -83,6 +103,8 @@ if __name__ == '__main__':
 			pieces = arg.split("=")
 			if pieces[0] == "season":
 				season = int(pieces[1])
+			elif pieces[0] == "yesterday_only":
+				yesterday_only = pieces[1] == "true"
 
 	calculator = DvPRankCalculator()
-	calculator.calculate(season)
+	calculator.calculate(season, yesterday_only)
