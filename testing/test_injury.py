@@ -33,7 +33,7 @@ class TestInjury(TestCase):
 
 		self.injury_manager.insert(injury)
 
-		self.assertTrue(self.injury_manager.exists(injury))
+		self.assertTrue(self.injury_manager.exists(injury) and injury.id == 1)
 
 		injuries = self.injury_manager.get(injury)
 		self.assertTrue(len(injuries) == 1)
@@ -780,6 +780,72 @@ class TestInjury(TestCase):
 
 		self.assertTrue(self.injury_manager.is_player_injured("test", "2014-01-01"))
 		self.assertFalse(self.injury_manager.is_player_injured("test", "2014-01-02"))
+
+	def test_fix_injuries_three_game_between_injury_span(self):
+		injury = Injury(player_id="dan", injury_date=date(2014, 2, 10), return_date=date(2014, 3, 2), details="test")
+
+		self.injury_manager.insert(injury)
+
+		gtb_info = self.test_util.generate_default_game_totals_basic_info()
+		gtb_info["player_id"] = "dan"
+		gtb_info["season"] = 2013
+		gtb_info["date"] = "2014-02-12"
+		self.test_util.insert_into_game_totals_basic(gtb_info)
+
+		gtb_info["date"] = "2014-02-18"
+		self.test_util.insert_into_game_totals_basic(gtb_info)
+
+		gtb_info["date"] = "2014-02-19"
+		self.test_util.insert_into_game_totals_basic(gtb_info)
+
+		self.injury_manager.fix_injuries(2013)
+
+		injuries = self.injury_manager.get(Injury())
+		self.assertTrue(len(injuries) == 3)
+
+		self.assertTrue(injuries[0].injury_date == "2014-02-10" and injuries[0].return_date == "2014-02-12")
+		self.assertTrue(injuries[1].injury_date == "2014-02-13" and injuries[1].return_date == "2014-02-18")
+		self.assertTrue(injuries[2].injury_date == "2014-02-20" and injuries[2].return_date == "2014-03-02")
+
+	def test_fix_injuries_first_day_and_middle_day(self):
+		injury = Injury(player_id="dan", injury_date="2014-02-09", return_date="2014-03-04", details="test")
+
+		self.injury_manager.insert(injury)
+
+		gtb_info = self.test_util.generate_default_game_totals_basic_info()
+		gtb_info["player_id"] = "dan"
+		gtb_info["season"] = 2013
+		gtb_info["date"] = "2014-02-09"
+		self.test_util.insert_into_game_totals_basic(gtb_info)
+
+		gtb_info["date"] = "2014-02-11"
+		self.test_util.insert_into_game_totals_basic(gtb_info)
+
+		self.injury_manager.fix_injuries(2013)
+
+		injuries = self.injury_manager.get(Injury())
+		self.assertTrue(len(injuries) == 2)
+
+		self.assertTrue(injuries[0].injury_date == "2014-02-10" and injuries[0].return_date == "2014-02-11")
+		self.assertTrue(injuries[1].injury_date == "2014-02-12" and injuries[1].return_date == "2014-03-04")
+
+	def test_fix_injuries_middle_day_and_last_day(self):
+		injury = Injury(player_id="dan", injury_date="2014-02-09", return_date="2014-02-11", details="test")
+
+		self.injury_manager.insert(injury)
+
+		gtb_info = self.test_util.generate_default_game_totals_basic_info()
+		gtb_info["player_id"] = "dan"
+		gtb_info["season"] = 2013
+		gtb_info["date"] = "2014-02-10"
+		self.test_util.insert_into_game_totals_basic(gtb_info)
+
+		self.injury_manager.fix_injuries(2013)
+
+		injuries = self.injury_manager.get(Injury())
+		self.assertTrue(len(injuries) == 1)
+
+		self.assertTrue(injuries[0].injury_date == "2014-02-09" and injuries[0].return_date == "2014-02-10")
 
 if __name__ == '__main__':
 	unittest.main()

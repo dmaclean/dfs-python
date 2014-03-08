@@ -56,6 +56,7 @@ class InjuryManager():
 
 		try:
 			cursor.execute(query)
+			injury.id = cursor.lastrowid
 		finally:
 			cursor.close()
 
@@ -135,6 +136,30 @@ class InjuryManager():
 		self.injury_cache[key] = injuries
 		return self.injury_cache[key]
 
+	def fix_injuries(self, season=None):
+		"""
+		Take a pass through each injury for each player and compare it to the GTB entries
+		to determine if any need to be adjusted.
+		"""
+		cursor = self.cnx.cursor()
+
+		try:
+			injuries = self.get(Injury())
+			for i in injuries:
+				query = """select date from game_totals_basic b
+							where season = {} and player_id = '{}'
+							and date between '{}' and '{}'""".format(season, i.player_id, i.injury_date, i.return_date)
+				cursor.execute(query)
+
+				for result in cursor:
+					new_injury = self.fix_injury_entry(i, result[0])
+
+					if new_injury:
+						injuries.append(new_injury)
+		finally:
+			cursor.close()
+
+
 	def fix_injury_entry(self, injury, game_played_date):
 		"""
 		Fix an injury entry where during its span the player actually played.
@@ -142,60 +167,67 @@ class InjuryManager():
 		1- Incorrect one-day injuries can be deleted.
 		2- Incorrect multi-day injuries can be shortened if the first or last day is incorrect.
 		3- They can also be split if one or more days in the middle are incorrect.
+
+		In the case of the third situation, we return the object representing the second injury.
 		"""
 		one_day = timedelta(days=1)
 
 		# Unfortunately, this is necessary because MySQL and Sqlite3 handle dates differently.
-		if not isinstance(game_played_date, date):
-			pieces = game_played_date.split("-")
-			gpd = date(int(pieces[0]), int(pieces[1]), int(pieces[2]))
-		else:
-			gpd = game_played_date
+		# if not isinstance(game_played_date, date):
+		# 	pieces = game_played_date.split("-")
+		# 	gpd = date(int(pieces[0]), int(pieces[1]), int(pieces[2]))
+		# else:
+		# 	gpd = game_played_date
+		gpd = self.date_conversion(game_played_date)
+		injury_date = self.date_conversion(injury.injury_date)
+		return_date = self.date_conversion(injury.return_date)
 
-		if injury.injury_date + one_day == injury.return_date:
+		if injury_date + one_day == return_date:
 			# Erroneous one-day injury.  Delete it.
 			logging.info("Injury ({} - {}) is a one-day injury where the player played.  Deleting it...".format(
-				injury.injury_date, injury.return_date
+				injury_date, return_date
 			))
 			self.delete(injury)
 			return
 
-		if injury.injury_date == gpd:
+		if injury_date == gpd:
 			# First day of injury - move it up one day
 			logging.info("Injury ({} - {}) is a multi-day injury where the player actually played on the first day."
 						"Changing first day to {}".format(
-				injury.injury_date, injury.return_date, injury.injury_date + one_day
+				injury_date, return_date, injury_date + one_day
 			))
-			injury.injury_date += one_day
+			injury.injury_date = injury_date + one_day
 			self.update(injury)
 
-		elif injury.return_date-one_day == gpd:
+		elif return_date-one_day == gpd:
 			# Last day of injury
 			logging.info("Injury ({} - {}) is a multi-day injury where the player actually played on the last day."
 						"Changing last day to {}".format(
-				injury.injury_date, injury.return_date, injury.return_date - one_day
+				injury_date, return_date, return_date - one_day
 			))
-			injury.return_date -= one_day
+			injury.return_date = return_date - one_day
 			self.update(injury)
 
-		else:
+		elif injury_date < gpd < return_date:
 			# Somewhere in between
-			old_injury_date = injury.injury_date
-			old_return_date = injury.return_date
+			old_injury_date = injury_date
+			old_return_date = return_date
 
 			new_injury = Injury(player_id=injury.player_id,
 								injury_date=gpd + one_day,
-								return_date=injury.return_date,
+								return_date=return_date,
 								details=injury.details)
 			injury.return_date = gpd
 			logging.info("Injury ({} - {}) is a multi-day injury where the player actually played in the middle."
 						"Splitting up the injuries to ({} - {}) and ({} - {})".format(
-				old_injury_date, old_return_date, injury.injury_date, injury.return_date, new_injury.injury_date,
+				old_injury_date, old_return_date, injury_date, return_date, new_injury.injury_date,
 				new_injury.return_date
 			))
 
 			self.update(injury)
 			self.insert(new_injury)
+
+			return new_injury
 
 	def is_player_injured(self, player_id, d=date.today()):
 		"""
@@ -450,6 +482,16 @@ class InjuryManager():
 																			injuries[0].injury_date,
 																			tomorrow))
 						self.update(injuries[0])
+
+	def date_conversion(self, d):
+		"""
+		Simple utility to convert a string to a date, if necessary.
+		"""
+		if not isinstance(d, date):
+			pieces = d.split("-")
+			return date(int(pieces[0]), int(pieces[1]), int(pieces[2]))
+
+		return d
 
 if __name__ == '__main__':
 	logging.basicConfig(level=logging.INFO)
