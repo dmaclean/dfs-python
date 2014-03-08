@@ -35,15 +35,19 @@ class DefenseVsPositionManager():
 			cursor.execute(query)
 
 			for result in cursor:
-				dvp = DefenseVsPosition(stat=metric, position=position, team=team, season=season, value=result[0],
-										date=date, site=site)
-				if not self.exists(dvp):
-					self.insert(dvp)
-				return dvp
+				if result[0] is not None:
+					dvp = DefenseVsPosition(stat=metric, position=position, team=team, season=season, value=result[0],
+											date=date, site=site)
+					if not self.exists(dvp):
+						self.insert(dvp)
+					else:
+						dvp = self.get(dvp)[0]
+					return dvp
+				else:
+					return None
 
 		finally:
 			cursor.close()
-
 
 	def exists(self, dvp):
 		cursor = self.cnx.cursor()
@@ -123,8 +127,8 @@ class DefenseVsPositionManager():
 					query += "and team = '%s' " % dvp.team
 				if dvp.season:
 					query += "and season = %d " % dvp.season
-				if dvp.value:
-					query += "and value = %f " % dvp.value
+				# if dvp.value:
+				# 	query += "and value = %f " % dvp.value
 				if dvp.date:
 					query += "and date = '%s' " % dvp.date
 				if dvp.site:
