@@ -1,4 +1,4 @@
-
+import json
 
 class PlayByPlay:
 	"""
@@ -100,5 +100,12 @@ class PlayByPlay:
 
 	def to_json(self):
 		"""
-		Convert the PBP object to its JSON representation.
+		Convert the PBP object to its JSON representation.  For PyMongo, the JSON rep will just
+		be a dictionary.
 		"""
+		json_rep = {}
+		for k in self.__dict__.keys():
+			if self.__dict__[k] is not None:
+				json_rep[k] = self.__dict__[k]
+
+		return json_rep
