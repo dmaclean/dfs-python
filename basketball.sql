@@ -291,6 +291,7 @@ create table fantasy_points (
 	foreign key (game_totals_basic_id) references game_totals_basic(id)
 );
 create index fantasy_points_site_idx on fantasy_points(site);
+create index fantasy_points_game_totals_basic_id on fantasy_points(game_totals_basic_id);
 create unique index fantasy_points_player_id_site_season_game_number_idx on fantasy_points(player_id, site, season, game_number);
 
 create table schedules (
@@ -350,6 +351,7 @@ create table defense_vs_position (
 );
 create index defense_vs_position_season_idx on defense_vs_position(season);
 create index defense_vs_position_site_idx on defense_vs_position(site);
+create index defense_vs_position_stat_idx on defense_vs_position(stat);
 
 create table injuries (
     id integer auto_increment primary key,
