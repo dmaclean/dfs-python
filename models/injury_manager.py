@@ -141,24 +141,65 @@ class InjuryManager():
 		Take a pass through each injury for each player and compare it to the GTB entries
 		to determine if any need to be adjusted.
 		"""
+		changes = True
+		while changes:
+			cursor = self.cnx.cursor()
+
+			changes = False
+			injury_game_pairs = []
+			try:
+				injuries = self.get(Injury())
+				for i in injuries:
+					query = """select date from game_totals_basic b
+								where season = {} and player_id = '{}'
+								and date between '{}' and '{}'""".format(season, i.player_id, i.injury_date, i.return_date)
+					cursor.execute(query)
+
+					for result in cursor:
+						injury_game_pairs.append([i, result[0]])
+
+			finally:
+				cursor.close()
+
+			for p in injury_game_pairs:
+				new_injury = self.fix_injury_entry(p[0], p[1])
+
+				if new_injury:
+					changes = True
+
+		self.remove_duplicates()
+
+	def remove_duplicates(self):
+		"""
+		Find and remove any duplicate injuries.  This can be defined as two injury entries
+		where i1.player_id = i2.player_id and i1.injury_date = i2.injury_date and i1.return_date = i2.return_date
+		"""
 		cursor = self.cnx.cursor()
 
+		query = """select i.id, i2.id from injuries i inner join injuries i2
+						on i.player_id = i2.player_id and
+						i.injury_date = i2.injury_date and
+						i.return_date = i2.return_date
+					where i.id != i2.id"""
+
 		try:
-			injuries = self.get(Injury())
-			for i in injuries:
-				query = """select date from game_totals_basic b
-							where season = {} and player_id = '{}'
-							and date between '{}' and '{}'""".format(season, i.player_id, i.injury_date, i.return_date)
-				cursor.execute(query)
+			cursor.execute(query)
 
-				for result in cursor:
-					new_injury = self.fix_injury_entry(i, result[0])
+			# Get all duplicates.  We want to keep the first entry.
+			delete_list = []
+			for result in cursor:
+				id1 = result[0]
+				id2 = result[1]
 
-					if new_injury:
-						injuries.append(new_injury)
+				if str(id1) not in delete_list:
+					delete_list.append(str(id2))
+
+			# Delete the injuries that we have found to be duplicates.
+			query = "delete from injuries where id in ({})".format(",".join(delete_list))
+			cursor.execute(query)
+
 		finally:
 			cursor.close()
-
 
 	def fix_injury_entry(self, injury, game_played_date):
 		"""
@@ -182,7 +223,7 @@ class InjuryManager():
 		injury_date = self.date_conversion(injury.injury_date)
 		return_date = self.date_conversion(injury.return_date)
 
-		if injury_date + one_day == return_date:
+		if gpd == injury_date and injury_date + one_day == return_date:
 			# Erroneous one-day injury.  Delete it.
 			logging.info("Injury ({} - {}) is a one-day injury where the player played.  Deleting it...".format(
 				injury_date, return_date

@@ -847,5 +847,22 @@ class TestInjury(TestCase):
 
 		self.assertTrue(injuries[0].injury_date == "2014-02-09" and injuries[0].return_date == "2014-02-10")
 
+	def test_fix_injuries_duplicates(self):
+		injury = Injury(player_id="dan", injury_date=date(2014, 2, 10), return_date=date(2014, 3, 2), details="test")
+		injury2 = Injury(player_id="dan", injury_date=date(2014, 2, 10), return_date=date(2014, 3, 2), details="test")
+		injury3 = Injury(player_id="dan", injury_date=date(2014, 2, 9), return_date=date(2014, 3, 2), details="test")
+
+		self.injury_manager.insert(injury)
+		self.injury_manager.insert(injury2)
+		self.injury_manager.insert(injury3)
+
+		self.injury_manager.fix_injuries(2013)
+
+		injuries = self.injury_manager.get(Injury())
+		self.assertTrue(len(injuries) == 2)
+
+		self.assertTrue(injuries[0].injury_date == "2014-02-10" and injuries[0].return_date == "2014-03-02")
+		self.assertTrue(injuries[1].injury_date == "2014-02-09" and injuries[1].return_date == "2014-03-02")
+
 if __name__ == '__main__':
 	unittest.main()
