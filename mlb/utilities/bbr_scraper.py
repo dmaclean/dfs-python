@@ -4,6 +4,7 @@ from httplib import HTTPConnection
 from mlb.parsers.player_list_parser import PlayerListParser
 
 import logging
+import random
 import time
 
 
@@ -67,6 +68,7 @@ class BaseballReferenceScraper:
             data = self.fetch_data(url, True)
 
             self.player_list_parser.parse(data)
+            time.sleep(5 + (5 * random.random()))
 
             for id in self.player_list_parser.player_ids:
                 player_url = "{}{}.shtml".format(url, id)
