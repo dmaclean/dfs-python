@@ -1,18 +1,27 @@
 import mysql.connector
 import re
 from bs4 import BeautifulSoup
+from pymongo import MongoClient
+from dfs_constants import DFSConstants
 from models.play_by_play import PlayByPlay
+from models.play_by_play_game import PlayByPlayGame
 
 
 class PlayByPlayManager:
-	def __init__(self, cnx=None):
+	def __init__(self, cnx=None, mongo_db=None):
 		# Use dependency injection to determine where the database connection comes from.
 		if not cnx:
 			self.cnx = mysql.connector.connect(user='fantasy', password='fantasy', host='localhost', database='basketball_reference')
 		else:
 			self.cnx = cnx
 
-	def scrape(self, source, source_type="site"):
+		if not mongo_db:
+			mongo_client = MongoClient()
+			self.mongo_db = mongo_client[DFSConstants.MONGO_DB_NAME]
+		else:
+			self.mongo_db = mongo_db
+
+	def scrape(self, source, source_type="site", additional_data=None):
 		"""
 		Scrapes the provided source for play-by-play data.  If the type is
 		"site" then the source is expected to be a URL.  Otherwise, the function
@@ -34,8 +43,11 @@ class PlayByPlayManager:
 
 		soup = BeautifulSoup(data)
 
+		pbps = []
+
 		table = soup.find("table", {"class": "no_highlight stats_table"})
 		trs = table.find_all('tr')
+		quarter = 0
 		for tr in trs:
 			ths = tr.find_all('th')
 			tds = tr.find_all('td')
@@ -43,12 +55,16 @@ class PlayByPlayManager:
 			# Detect a quarter announcement
 			if "id" in tr.attrs:
 				if tr.attrs["id"] == "q1":
+					quarter = 1
 					print "Found 1st quarter announcement"
 				elif tr.attrs["id"] == "q2":
+					quarter = 2
 					print "Found 2nd quarter announcement"
 				elif tr.attrs["id"] == "q3":
+					quarter = 3
 					print "Found 3rd quarter announcement"
 				elif tr.attrs["id"] == "q4":
+					quarter = 4
 					print "Found 4th quarter announcement"
 			# Detect a header
 			elif len(ths) > 0:
@@ -70,9 +86,31 @@ class PlayByPlayManager:
 
 				print "{:<20}{:<60}{:<10}{:<20}{:<10}{:<20}".format(time, t1_action, t1_scoring, game_score, t2_scoring, t2_action)
 
+				pbp = self.create_pbp_instance([time, t1_action, t1_scoring, game_score, t2_scoring, t2_action, quarter])
+				pbps.append(pbp)
+
+		if additional_data and PlayByPlayGame.GAME_DATE in additional_data:
+			game_date = additional_data[PlayByPlayGame.GAME_DATE]
+		if additional_data and PlayByPlayGame.HOME in additional_data:
+			home = additional_data[PlayByPlayGame.HOME]
+		if additional_data and PlayByPlayGame.AWAY in additional_data:
+			away = additional_data[PlayByPlayGame.AWAY]
+
+		pbp_game = PlayByPlayGame(pbp_data=pbps, game_date=game_date, home=home, away=away)
+		self.mongo_db[DFSConstants.MONGO_PBP_COLLECTION].save(pbp_game)
+
 	def create_pbp_instance(self, play_data):
 		"""
-
+		Creates an instance of PlayByPlay based on the data passed in.  A play can be one
+		of the following:
+		- Jump ball
+		- Shot (made/missed 2 or 3 point shot)
+		- Free throw (made/missed)
+		- Rebound
+		- Foul
+		- Turnover
+		- Substitution
+		- Timeout
 		"""
 		player_link_regex = "<a href=\"/players/[a-z]/([a-z]+[0-9]{2})\.html\">[A-Z]\. [A-Za-z \-\']+</a>"
 		jump_ball_regex = "Jump ball: {} vs\. {} \({} gains possession\)".format(player_link_regex, player_link_regex, player_link_regex)
@@ -95,14 +133,17 @@ class PlayByPlayManager:
 
 		pbp = PlayByPlay()
 
+		# Add players on court
+		pbp.home_players = play_data[len(play_data)-3]
+		pbp.away_players = play_data[len(play_data)-2]
+
 		# Split up the time
 		time_pieces = play_data[0].split(":")
 		pbp.minutes = int(time_pieces[0])
 		pbp.seconds = float(time_pieces[1])
 
 		# Record the quarter
-		if len(play_data) == 7:
-			pbp.quarter = play_data[6]
+		pbp.quarter = play_data[len(play_data)-1]
 
 		#############
 		# Jump ball
@@ -241,6 +282,11 @@ class PlayByPlayManager:
 
 			return pbp
 
+	def save(self, pbp_game):
+		pass
+
+	def get(self, play_by_play):
+		pass
 
 if __name__ == '__main__':
 	pbp_manager = PlayByPlayManager()

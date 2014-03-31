@@ -3,6 +3,7 @@ import BBRTestUtility
 
 from models.play_by_play_manager import PlayByPlayManager
 from models.play_by_play import PlayByPlay
+from models.play_by_play_game import PlayByPlayGame
 
 
 class TestPlayByPlay(unittest.TestCase):
@@ -16,10 +17,10 @@ class TestPlayByPlay(unittest.TestCase):
 		self.test_util.conn.close()
 
 	def test_create_pbp_instance_jump_ball(self):
-		home_players = []
-		away_players = []
+		home_players = ['duncati01', 'parketo01']
+		away_players = ['drumman01', 'baynear01']
 
-		pbp = self.pbp_manager.create_pbp_instance(['12:00.0', 'Jump ball: <a href="/players/d/drumman01.html">A. Drummond</a> vs. <a href="/players/d/duncati01.html">T. Duncan</a> (<a href="/players/p/parketo01.html">T. Parker</a> gains possession)', 1])
+		pbp = self.pbp_manager.create_pbp_instance(['12:00.0', 'Jump ball: <a href="/players/d/drumman01.html">A. Drummond</a> vs. <a href="/players/d/duncati01.html">T. Duncan</a> (<a href="/players/p/parketo01.html">T. Parker</a> gains possession)', home_players, away_players, 1])
 
 		self.assertTrue(pbp.quarter == 1)
 		self.assertTrue(pbp.minutes == 12)
@@ -29,6 +30,8 @@ class TestPlayByPlay(unittest.TestCase):
 		self.assertTrue(pbp.players[0] == 'drumman01')
 		self.assertTrue(pbp.players[1] == 'duncati01')
 		self.assertTrue(pbp.players[2] == 'parketo01')
+		self.assertTrue(pbp.home_players[0] == 'duncati01' and pbp.home_players[1] == 'parketo01')
+		self.assertTrue(pbp.away_players[0] == 'drumman01' and pbp.away_players[1] == 'baynear01')
 
 		json = pbp.to_json()
 		self.assertTrue(json["quarter"] == 1)
@@ -1580,6 +1583,13 @@ class TestPlayByPlay(unittest.TestCase):
 		self.assertTrue(len(json["players"]) == 0)
 
 	def test_scrape(self):
+		additional_data = {
+			PlayByPlayGame.GAME_DATE: '2014-01-01',
+		    PlayByPlayGame.HOME: 'LAL',
+		    PlayByPlayGame.AWAY: 'CLE'
+		}
+		self.pbp_manager.scrape(source="../tests/pbp_lakers_cavs_shortened.html", source_type="file", additional_data=additional_data)
+
 		self.fail("Not implemented")
 
 

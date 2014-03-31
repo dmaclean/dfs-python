@@ -52,7 +52,8 @@ class PlayByPlay:
 	TURNOVER_LOST_BALL = "lost ball"
 	TURNOVER_OFFENSIVE_FOUL = "offensive foul"
 
-	def __init__(self, quarter=None, minutes=None, seconds=None, play_type=None, detail=None, secondary_play_type=None, players=None):
+	def __init__(self, quarter=None, minutes=None, seconds=None, play_type=None,
+					detail=None, secondary_play_type=None, players=None, home_players=None, away_players=None):
 		# The quarter that is currently being played.
 		self.quarter = quarter
 
@@ -97,6 +98,12 @@ class PlayByPlay:
 
 		# The number of points the visitor team has
 		self.visitor_score = 0
+
+		# An array of player ids representing players on the court for the home team
+		self.home_players = home_players
+
+		# An array of player ids representing players on the court for the away team
+		self.away_players = away_players
 
 	def to_json(self):
 		"""
