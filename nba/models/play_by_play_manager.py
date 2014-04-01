@@ -1,8 +1,10 @@
-import mysql.connector
 import re
+
+import mysql.connector
 from bs4 import BeautifulSoup
+
 from pymongo import MongoClient
-from dfs_constants import DFSConstants
+from shared.dfs_constants import DFSConstants
 from models.play_by_play import PlayByPlay
 from models.play_by_play_game import PlayByPlayGame
 
