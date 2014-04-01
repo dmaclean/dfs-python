@@ -12,6 +12,7 @@ class PlayerSeasonStatsParser:
         self.player_data = {}
 
         self.pitching_standard_season_regex = re.compile("pitching_standard\.(\d+)")
+        self.player_value_pitching_regex = re.compile("pitching_value\.(\d+)")
 
     def parse(self, data):
         """
@@ -24,6 +25,15 @@ class PlayerSeasonStatsParser:
         self.player_data["position"] = soup.find("span", attrs={"itemprop": "role"}).text
 
         # Parse the Standard Pitching table.
+        self.parse_standard_pitching(soup)
+
+        # Parse the Player Value--Pitchers table
+        self.parse_player_value_pitchers(soup)
+
+    def parse_standard_pitching(self, soup):
+        """
+        Parses data from the Stanard Pitching table.
+        """
         pitching_standard_entries = soup.find_all(id=re.compile(self.pitching_standard_season_regex))
 
         for entry in pitching_standard_entries:
@@ -104,6 +114,58 @@ class PlayerSeasonStatsParser:
                 elif i == 32:
                     self.player_data[MLBConstants.STANDARD_PITCHING][season][MLBConstants.STRIKE_OUT_TO_WALK_RATIO] = self.resolve_value(td.text, "float")
 
+
+                i += 1
+
+    def parse_player_value_pitchers(self, soup):
+        """
+        Parses data in the Player Value--Pitchers table.
+        """
+        pitching_value_entries = soup.find_all(id=self.player_value_pitching_regex)
+
+        for entry in pitching_value_entries:
+            tds = entry.find_all("td")
+
+            i = 0
+            season = 0
+            for td in tds:
+                if i == 0:
+                    season = int(td.text)
+
+                    if MLBConstants.PLAYER_VALUE_PITCHING not in self.player_data:
+                        self.player_data[MLBConstants.PLAYER_VALUE_PITCHING] = {}
+
+                    self.player_data[MLBConstants.PLAYER_VALUE_PITCHING][season] = {}
+                elif i == 8:
+                    self.player_data[MLBConstants.PLAYER_VALUE_PITCHING][season][MLBConstants.RUNS_ALLOWED_PER_9_INNINGS] = self.resolve_value(td.text, "float")
+                elif i == 9:
+                    self.player_data[MLBConstants.PLAYER_VALUE_PITCHING][season][MLBConstants.RUNS_ALLOWED_PER_9_INNINGS_OPP] = self.resolve_value(td.text, "float")
+                elif i == 10:
+                    self.player_data[MLBConstants.PLAYER_VALUE_PITCHING][season][MLBConstants.RUNS_PER_9_INNINGS_IN_SUPPORT_FROM_DEFENSE] = self.resolve_value(td.text, "float")
+                elif i == 11:
+                    self.player_data[MLBConstants.PLAYER_VALUE_PITCHING][season][MLBConstants.RUNS_PER_9_INNINGS_BY_ROLE] = self.resolve_value(td.text, "float")
+                elif i == 12:
+                    self.player_data[MLBConstants.PLAYER_VALUE_PITCHING][season][MLBConstants.PARK_FACTORS] = self.resolve_value(td.text, "float")
+                elif i == 13:
+                    self.player_data[MLBConstants.PLAYER_VALUE_PITCHING][season][MLBConstants.RUNS_PER_9_INNINGS_FOR_AVG_PITCHER] = self.resolve_value(td.text, "float")
+                elif i == 14:
+                    self.player_data[MLBConstants.PLAYER_VALUE_PITCHING][season][MLBConstants.RUNS_BETTER_THAN_AVG] = self.resolve_value(td.text, "int")
+                elif i == 15:
+                    self.player_data[MLBConstants.PLAYER_VALUE_PITCHING][season][MLBConstants.WINS_ABOVE_AVG] = self.resolve_value(td.text, "float")
+                elif i == 16:
+                    self.player_data[MLBConstants.PLAYER_VALUE_PITCHING][season][MLBConstants.GAME_ENTERING_LEVERAGE_INDEX] = self.resolve_value(td.text, "float")
+                elif i == 17:
+                    self.player_data[MLBConstants.PLAYER_VALUE_PITCHING][season][MLBConstants.WINS_ABOVE_AVG_ADJUSTMENT] = self.resolve_value(td.text, "float")
+                elif i == 18:
+                    self.player_data[MLBConstants.PLAYER_VALUE_PITCHING][season][MLBConstants.WINS_ABOVE_REPLACEMENT] = self.resolve_value(td.text, "float")
+                elif i == 19:
+                    self.player_data[MLBConstants.PLAYER_VALUE_PITCHING][season][MLBConstants.RUNS_BETTER_THAN_REPLACEMENT] = self.resolve_value(td.text, "int")
+                elif i == 20:
+                    self.player_data[MLBConstants.PLAYER_VALUE_PITCHING][season][MLBConstants.WIN_LOSS_PCT_WITH_AVG_TEAM] = self.resolve_value(td.text, "float")
+                elif i == 21:
+                    self.player_data[MLBConstants.PLAYER_VALUE_PITCHING][season][MLBConstants.WIN_LOSS_PCT_WITH_AVG_TEAM_SEASON] = self.resolve_value(td.text, "float")
+                elif i == 22:
+                    self.player_data[MLBConstants.PLAYER_VALUE_PITCHING][season][MLBConstants.SALARY] = self.resolve_value(td.text.replace('$', '').replace(',',''), "int")
 
                 i += 1
 

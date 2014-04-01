@@ -3,6 +3,8 @@ __author__ = 'dan'
 from mlb.constants.mlb_constants import MLBConstants
 from mlb.parsers.player_season_stats_parser import PlayerSeasonStatsParser
 
+from bs4 import BeautifulSoup
+
 import unittest
 
 
@@ -22,7 +24,9 @@ class TestPlayerSeasonStatsParser(unittest.TestCase):
         self.assertTrue(self.player_season_stat_parser.player_data["name"] == "David Aardsma")
         self.assertTrue(self.player_season_stat_parser.player_data["position"] == "Pitcher")
 
+        ###########################
         # Standard pitching table
+        ###########################
         self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_PITCHING][2004]
                             [MLBConstants.AGE] == 22)
         self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_PITCHING][2004]
@@ -153,6 +157,73 @@ class TestPlayerSeasonStatsParser(unittest.TestCase):
                             [MLBConstants.STRIKE_OUTS_PER_9_INNINGS] == 8.2)
         self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_PITCHING][2013]
                             [MLBConstants.STRIKE_OUT_TO_WALK_RATIO] == 1.89)
+
+    def test_parse_player_value_pitchers(self):
+        soup = BeautifulSoup(open('../test_files/season_stats_pitcher.html'))
+
+        self.player_season_stat_parser.parse_player_value_pitchers(soup)
+
+        self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_PITCHING][2004]
+                            [MLBConstants.RUNS_ALLOWED_PER_9_INNINGS] == 6.75)
+        self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_PITCHING][2004]
+                            [MLBConstants.RUNS_ALLOWED_PER_9_INNINGS_OPP] == 5.02)
+        self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_PITCHING][2004]
+                            [MLBConstants.RUNS_PER_9_INNINGS_IN_SUPPORT_FROM_DEFENSE] == -0.37)
+        self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_PITCHING][2004]
+                            [MLBConstants.RUNS_PER_9_INNINGS_BY_ROLE] == -0.37)
+        self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_PITCHING][2004]
+                            [MLBConstants.PARK_FACTORS] == 99.2)
+        self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_PITCHING][2004]
+                            [MLBConstants.RUNS_PER_9_INNINGS_FOR_AVG_PITCHER] == 4.98)
+        self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_PITCHING][2004]
+                            [MLBConstants.RUNS_BETTER_THAN_AVG] == -2)
+        self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_PITCHING][2004]
+                            [MLBConstants.WINS_ABOVE_AVG] == -0.2)
+        self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_PITCHING][2004]
+                            [MLBConstants.GAME_ENTERING_LEVERAGE_INDEX] == 1.1)
+        self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_PITCHING][2004]
+                            [MLBConstants.WINS_ABOVE_AVG_ADJUSTMENT] == 0.0)
+        self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_PITCHING][2004]
+                            [MLBConstants.WINS_ABOVE_REPLACEMENT] == -0.2)
+        self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_PITCHING][2004]
+                            [MLBConstants.RUNS_BETTER_THAN_REPLACEMENT] == -1)
+        self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_PITCHING][2004]
+                            [MLBConstants.WIN_LOSS_PCT_WITH_AVG_TEAM] == .480)
+        self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_PITCHING][2004]
+                            [MLBConstants.WIN_LOSS_PCT_WITH_AVG_TEAM_SEASON] == .499)
+        self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_PITCHING][2004]
+                            [MLBConstants.SALARY] == 300000)
+
+        self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_PITCHING][2013]
+                            [MLBConstants.RUNS_ALLOWED_PER_9_INNINGS] == 4.54)
+        self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_PITCHING][2013]
+                            [MLBConstants.RUNS_ALLOWED_PER_9_INNINGS_OPP] == 4.14)
+        self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_PITCHING][2013]
+                            [MLBConstants.RUNS_PER_9_INNINGS_IN_SUPPORT_FROM_DEFENSE] == -0.04)
+        self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_PITCHING][2013]
+                            [MLBConstants.RUNS_PER_9_INNINGS_BY_ROLE] == -0.31)
+        self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_PITCHING][2013]
+                            [MLBConstants.PARK_FACTORS] == 92.9)
+        self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_PITCHING][2013]
+                            [MLBConstants.RUNS_PER_9_INNINGS_FOR_AVG_PITCHER] == 3.6)
+        self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_PITCHING][2013]
+                            [MLBConstants.RUNS_BETTER_THAN_AVG] == -4)
+        self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_PITCHING][2013]
+                            [MLBConstants.WINS_ABOVE_AVG] == -0.4)
+        self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_PITCHING][2013]
+                            [MLBConstants.GAME_ENTERING_LEVERAGE_INDEX] == 0.8)
+        self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_PITCHING][2013]
+                            [MLBConstants.WINS_ABOVE_AVG_ADJUSTMENT] == -0.1)
+        self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_PITCHING][2013]
+                            [MLBConstants.WINS_ABOVE_REPLACEMENT] == -0.2)
+        self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_PITCHING][2013]
+                            [MLBConstants.RUNS_BETTER_THAN_REPLACEMENT] == -1)
+        self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_PITCHING][2013]
+                            [MLBConstants.WIN_LOSS_PCT_WITH_AVG_TEAM] == .490)
+        self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_PITCHING][2013]
+                            [MLBConstants.WIN_LOSS_PCT_WITH_AVG_TEAM_SEASON] == .497)
+        self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_PITCHING][2013]
+                            [MLBConstants.SALARY] == 0)
 
 
 if __name__ == '__main__':
