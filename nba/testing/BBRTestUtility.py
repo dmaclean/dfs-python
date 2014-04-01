@@ -2,7 +2,9 @@ import sqlite3
 import os
 import inspect
 import sys
+from dfs_constants import DFSConstants
 from datetime import date
+from pymongo import MongoClient
 
 ###########################################
 # Utility class for helping with testing.
@@ -13,6 +15,8 @@ class BBRTestUtility():
 		self.readSQL()
 		
 		self.conn = sqlite3.connect(':memory:')
+
+		self.mongo_client = None
 		
 		cmd_folder = os.path.realpath(os.path.abspath(os.path.split(inspect.getfile( inspect.currentframe() ))[0]))
 		if cmd_folder not in sys.path:
@@ -22,6 +26,15 @@ class BBRTestUtility():
 		cmd_subfolder = os.path.realpath(os.path.abspath(os.path.join(os.path.split(inspect.getfile( inspect.currentframe() ))[0],"subfolder")))
 		if cmd_subfolder not in sys.path:
 			sys.path.insert(0, cmd_subfolder)
+
+	def get_mongo_db_instance(self):
+		"""
+		Retrieve an instance of a MongoDB database.  For our testing purposes we'll
+		call our test database "test_basketball"
+		"""
+		self.mongo_client = MongoClient()
+
+		return self.mongo_client[DFSConstants.MONGO_TEST_DB_NAME]
 	
 	##########################################################################
 	# Reads in the basketball.sql file, where all SQL for the project lives.
