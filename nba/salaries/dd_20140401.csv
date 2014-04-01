@@ -1,0 +1,130 @@
+Position,PlayerName,Team,Opponent,Salary,PPG
+C,Dirk Nowitzki,Mavericks,Warriors,14850,34.7
+PF,Dirk Nowitzki,Mavericks,Warriors,14850,34.7
+PF,Shawn Marion,Mavericks,Warriors,9100,23.6
+SF,Shawn Marion,Mavericks,Warriors,9100,23.6
+PG,Monta Ellis,Mavericks,Warriors,12500,33.0
+SG,Monta Ellis,Mavericks,Warriors,12500,33.0
+C,Brandan Wright,Mavericks,Warriors,6900,17.3
+PF,Brandan Wright,Mavericks,Warriors,6900,17.3
+SG,Vince Carter,Mavericks,Warriors,8700,22.5
+SF,Vince Carter,Mavericks,Warriors,8700,22.5
+C,Samuel Dalembert,Mavericks,Warriors,7650,18.0
+C,DeJuan Blair,Mavericks,Warriors,5000,14.8
+PF,DeJuan Blair,Mavericks,Warriors,5000,14.8
+PG,Jose Calderon,Mavericks,Warriors,10250,24.4
+PG,Devin Harris,Mavericks,Warriors,5500,16.8
+SG,Devin Harris,Mavericks,Warriors,5500,16.8
+PF,Jae Crowder,Mavericks,Warriors,5600,11.2
+SF,Jae Crowder,Mavericks,Warriors,5600,11.2
+PG,Shane Larkin,Mavericks,Warriors,5000,6.8
+C,Jermaine O'Neal,Warriors,Mavericks,6700,16.5
+C,David Lee,Warriors,Mavericks,12450,33.5
+PF,David Lee,Warriors,Mavericks,12450,33.5
+PG,Stephen Curry,Warriors,Mavericks,18200,44.9
+SG,Stephen Curry,Warriors,Mavericks,18200,44.9
+SG,Klay Thompson,Warriors,Mavericks,10450,27.8
+SF,Klay Thompson,Warriors,Mavericks,10450,27.8
+PG,Steve Blake,Warriors,Mavericks,6200,21.8
+SG,Steve Blake,Warriors,Mavericks,6200,21.8
+C,Andrew Bogut,Warriors,Mavericks,9350,26.7
+SG,Andre Iguodala,Warriors,Mavericks,8700,24.2
+SF,Andre Iguodala,Warriors,Mavericks,8700,24.2
+C,Marreese Speights,Warriors,Mavericks,5550,10.7
+PF,Marreese Speights,Warriors,Mavericks,5550,10.7
+PG,Jordan Crawford,Warriors,Mavericks,5000,19.3
+SG,Jordan Crawford,Warriors,Mavericks,5000,19.3
+PF,Harrison Barnes,Warriors,Mavericks,5450,17.3
+SF,Harrison Barnes,Warriors,Mavericks,5450,17.3
+SF,Draymond Green,Warriors,Mavericks,8650,17.8
+C,Omer Asik,Rockets,Nets,5750,14.1
+PF,Omer Asik,Rockets,Nets,5750,14.1
+SF,Omri Casspi,Rockets,Nets,5000,14.5
+SF,Jordan Hamilton,Rockets,Nets,5000,14.2
+PG,Jeremy Lin,Rockets,Nets,7450,23.0
+SG,Jeremy Lin,Rockets,Nets,7450,23.0
+PF,Donatas Motiejunas,Rockets,Nets,6650,11.3
+SF,Donatas Motiejunas,Rockets,Nets,6650,11.3
+PF,Chandler Parsons,Rockets,Nets,11800,31.2
+SF,Chandler Parsons,Rockets,Nets,11800,31.2
+SG,James Harden,Rockets,Nets,17800,41.8
+SF,James Harden,Rockets,Nets,17800,41.8
+C,Dwight Howard,Rockets,Nets,16050,39.6
+PF,Dwight Howard,Rockets,Nets,16050,39.6
+SG,Francisco Garcia,Rockets,Nets,5000,12.6
+SF,Francisco Garcia,Rockets,Nets,5000,12.6
+PF,Terrence Jones,Rockets,Nets,9250,25.2
+SF,Terrence Jones,Rockets,Nets,9250,25.2
+PG,Patrick Beverley,Rockets,Nets,8050,21.8
+SG,Patrick Beverley,Rockets,Nets,8050,21.8
+PG,Isaiah Canaan,Rockets,Nets,5250,5.4
+C,Jordan Hill,Lakers,Trail Blazers,9950,19.7
+PF,Jordan Hill,Lakers,Trail Blazers,9950,19.7
+C,Chris Kaman,Lakers,Trail Blazers,13000,20.6
+PF,Chris Kaman,Lakers,Trail Blazers,13000,20.6
+C,Pau Gasol,Lakers,Trail Blazers,13700,36.3
+PF,Pau Gasol,Lakers,Trail Blazers,13700,36.3
+SG,Xavier Henry,Lakers,Trail Blazers,6200,16.4
+SF,Xavier Henry,Lakers,Trail Blazers,6200,16.4
+SG,Wesley Johnson,Lakers,Trail Blazers,5750,19.5
+SF,Wesley Johnson,Lakers,Trail Blazers,5750,19.5
+PG,Jordan Farmar,Lakers,Trail Blazers,8400,21.9
+SG,MarShon Brooks,Lakers,Trail Blazers,5000,8.5
+SF,MarShon Brooks,Lakers,Trail Blazers,5000,8.5
+PF,Shawne Williams,Lakers,Trail Blazers,7200,15.4
+SF,Shawne Williams,Lakers,Trail Blazers,7200,15.4
+SG,Jodie Meeks,Lakers,Trail Blazers,9750,24.1
+PG,Steve Nash,Lakers,Trail Blazers,5950,17.0
+SG,Nick Young,Lakers,Trail Blazers,9250,23.0
+SF,Nick Young,Lakers,Trail Blazers,9250,23.0
+PG,Kendall Marshall,Lakers,Trail Blazers,10200,26.1
+C,Robert Sacre,Lakers,Trail Blazers,7450,11.8
+SG,Kent Bazemore,Lakers,Trail Blazers,8950,10.4
+SF,Kent Bazemore,Lakers,Trail Blazers,8950,10.4
+PF,Ryan Kelly,Lakers,Trail Blazers,7150,16.5
+SG,Joe Johnson,Nets,Rockets,9450,24.8
+SF,Joe Johnson,Nets,Rockets,9450,24.8
+C,Jason Collins,Nets,Rockets,5000,2.3
+PF,Jason Collins,Nets,Rockets,5000,2.3
+C,Kevin Garnett,Nets,Rockets,6250,18.9
+PF,Kevin Garnett,Nets,Rockets,6250,18.9
+PF,Paul Pierce,Nets,Rockets,11450,25.4
+SF,Paul Pierce,Nets,Rockets,11450,25.4
+PG,Shaun Livingston,Nets,Rockets,8650,18.7
+SG,Shaun Livingston,Nets,Rockets,8650,18.7
+PG,Deron Williams,Nets,Rockets,12950,29.4
+SG,Marcus Thornton,Nets,Rockets,6250,15.3
+PF,Andrei Kirilenko,Nets,Rockets,5000,12.6
+SF,Andrei Kirilenko,Nets,Rockets,5000,12.6
+C,Andray Blatche,Nets,Rockets,9100,21.8
+PF,Andray Blatche,Nets,Rockets,9100,21.8
+SG,Alan Anderson,Nets,Rockets,6050,13.0
+SF,Alan Anderson,Nets,Rockets,6050,13.0
+PG,Marquis Teague,Nets,Rockets,5000,5.7
+PF,Mirza Teletovic,Nets,Rockets,7400,15.8
+SF,Mirza Teletovic,Nets,Rockets,7400,15.8
+C,Mason Plumlee,Nets,Rockets,6400,14.7
+PF,Mason Plumlee,Nets,Rockets,6400,14.7
+PG,Jorge Gutierrez,Nets,Rockets,5000,9.0
+SG,Dorell Wright,Trail Blazers,Lakers,5000,11.1
+SF,Dorell Wright,Trail Blazers,Lakers,5000,11.1
+PG,Mo Williams,Trail Blazers,Lakers,8200,19.7
+SG,Mo Williams,Trail Blazers,Lakers,8200,19.7
+C,Robin Lopez,Trail Blazers,Lakers,10850,26.2
+C,LaMarcus Aldridge,Trail Blazers,Lakers,16500,42.0
+PF,LaMarcus Aldridge,Trail Blazers,Lakers,16500,42.0
+SG,Nicolas Batum,Trail Blazers,Lakers,13000,32.5
+SF,Nicolas Batum,Trail Blazers,Lakers,13000,32.5
+SG,Wesley Matthews,Trail Blazers,Lakers,9200,26.7
+SF,Wesley Matthews,Trail Blazers,Lakers,9200,26.7
+C,Joel Freeland,Trail Blazers,Lakers,5000,9.7
+PF,Joel Freeland,Trail Blazers,Lakers,5000,9.7
+PF,Thomas Robinson,Trail Blazers,Lakers,7750,11.0
+PG,Damian Lillard,Trail Blazers,Lakers,12850,34.8
+C,Meyers Leonard,Trail Blazers,Lakers,5000,7.0
+PF,Meyers Leonard,Trail Blazers,Lakers,5000,7.0
+SG,Will Barton,Trail Blazers,Lakers,5000,6.9
+SG,Victor Claver,Trail Blazers,Lakers,5000,5.2
+SF,Victor Claver,Trail Blazers,Lakers,5000,5.2
+PG,C.J. McCollum,Trail Blazers,Lakers,5000,8.6
+SG,C.J. McCollum,Trail Blazers,Lakers,5000,8.6
