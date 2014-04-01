@@ -1,0 +1,61 @@
+Position,Name,Team,Opponent,Game Time,Avg Fantasy Points,Price,Starter,Injury Status
+SF,LeBron James,MIA,MIA vs LAL, 8:00 PM,44.1,18200,"",
+PF,LaMarcus Aldridge,POR,POR vs DEN,10:30 PM,45.2,17900,"",
+PF-C,Pau Gasol,LAL,LAL @ MIA, 8:00 PM,35.1,14600,"",
+PG,Ty Lawson,DEN,DEN @ POR,10:30 PM,35.9,13900,"",
+PG,Damian Lillard,POR,POR vs DEN,10:30 PM,34.4,13700,"",
+SG,Dwyane Wade,MIA,MIA vs LAL, 8:00 PM,34.0,12300,"",OUT
+PG,Kendall Marshall,LAL,LAL @ MIA, 8:00 PM,25.4,11500,"",
+SG,Jodie Meeks,LAL,LAL @ MIA, 8:00 PM,21.5,11400,"",
+C,JJ Hickson,DEN,DEN @ POR,10:30 PM,25.9,11300,"",
+SG-SF,Nick Young,LAL,LAL @ MIA, 8:00 PM,22.9,11200,"",
+PF-C,Chris Bosh,MIA,MIA vs LAL, 8:00 PM,28.6,11000,"",
+SF,Wilson Chandler,DEN,DEN @ POR,10:30 PM,24.5,10900,"",
+SF,Nicolas Batum,POR,POR vs DEN,10:30 PM,30.5,10900,"",
+SG,Wesley Matthews,POR,POR vs DEN,10:30 PM,26.5,10600,"",
+C,Robin Lopez,POR,POR vs DEN,10:30 PM,24.3,10200,"",
+SG,Kobe Bryant,LAL,LAL @ MIA, 8:00 PM,25.8,10100,"",OUT
+PF,Ryan Kelly,LAL,LAL @ MIA, 8:00 PM,11.0,9900,"",
+PG,Steve Blake,LAL,LAL @ MIA, 8:00 PM,24.8,9700,"",OUT
+PG,Mario Chalmers,MIA,MIA vs LAL, 8:00 PM,22.7,9100,"",
+SG,Randy Foye,DEN,DEN @ POR,10:30 PM,18.1,8700,"",OUT
+PG,Mo Williams,POR,POR vs DEN,10:30 PM,19.5,8100,"",
+PF,Udonis Haslem,MIA,MIA vs LAL, 8:00 PM,7.4,8000,"",
+SG,Evan Fournier,DEN,DEN @ POR,10:30 PM,9.7,8000,"",
+SG-SF,Wesley Johnson,LAL,LAL @ MIA, 8:00 PM,18.5,8000,"",
+SG,Ray Allen,MIA,MIA vs LAL, 8:00 PM,17.3,8000,"",
+PG,Jordan Farmar,LAL,LAL @ MIA, 8:00 PM,19.5,7600,"",OUT
+C,Timofey Mozgov,DEN,DEN @ POR,10:30 PM,18.5,7600,"",
+PG,Norris Cole,MIA,MIA vs LAL, 8:00 PM,16.2,7500,"",
+PG,Nate Robinson,DEN,DEN @ POR,10:30 PM,17.6,7500,"",
+PF,Kenneth Faried,DEN,DEN @ POR,10:30 PM,23.0,7300,"",
+SG-SF,Xavier Henry,LAL,LAL @ MIA, 8:00 PM,16.4,6400,"",OUT
+PF-C,Chris Andersen,MIA,MIA vs LAL, 8:00 PM,15.1,6400,"",
+PF,Anthony Randolph,DEN,DEN @ POR,10:30 PM,10.9,6300,"",
+PF-C,Jordan Hill,LAL,LAL @ MIA, 8:00 PM,20.2,6200,"",
+SF,Shane Battier,MIA,MIA vs LAL, 8:00 PM,10.1,6000,"",
+SG,Manny Harris,LAL,LAL @ MIA, 8:00 PM,12.8,6000,"",
+PG,Steve Nash,LAL,LAL @ MIA, 8:00 PM,14.8,5800,"",OUT
+SF,Jordan Hamilton,DEN,DEN @ POR,10:30 PM,14.4,5600,"",
+PG,Andre Miller,DEN,DEN @ POR,10:30 PM,14.3,5600,"",
+SG,CJ McCollum,POR,POR vs DEN,10:30 PM,9.4,5500,"",
+C,Robert Sacre,LAL,LAL @ MIA, 8:00 PM,11.4,5500,"",
+SF,Rashard Lewis,MIA,MIA vs LAL, 8:00 PM,10.5,5500,"",
+PF,Thomas Robinson,POR,POR vs DEN,10:30 PM,9.9,5500,"",
+C,JaVale McGee,DEN,DEN @ POR,10:30 PM,13.5,5300,"",OUT
+PF,Darrell Arthur,DEN,DEN @ POR,10:30 PM,13.1,5100,"",OUT
+SG-SF,James Jones,MIA,MIA vs LAL, 8:00 PM,4.5,5000,"",
+PF-C,Joel Freeland,POR,POR vs DEN,10:30 PM,9.9,5000,"",
+SF,Dorell Wright,POR,POR vs DEN,10:30 PM,8.6,5000,"",
+C,Meyers Leonard,POR,POR vs DEN,10:30 PM,7.1,5000,"",
+SF,Quincy Miller,DEN,DEN @ POR,10:30 PM,6.9,5000,"",
+SG,Will Barton,POR,POR vs DEN,10:30 PM,4.9,5000,"",
+SG,Allen Crabbe,POR,POR vs DEN,10:30 PM,3.3,5000,"",
+PG,Earl Watson,POR,POR vs DEN,10:30 PM,1.7,5000,"",
+SF,Danilo Gallinari,DEN,DEN @ POR,10:30 PM,0,5000,"",OUT
+SF,Victor Claver,POR,POR vs DEN,10:30 PM,0.0,5000,"",
+C,Chris Kaman,LAL,LAL @ MIA, 8:00 PM,16.9,5000,"",
+SF,Michael Beasley,MIA,MIA vs LAL, 8:00 PM,14.8,5000,"",
+PG,Toney Douglas,MIA,MIA vs LAL, 8:00 PM,6.2,5000,"",
+SG,Roger Mason,MIA,MIA vs LAL, 8:00 PM,5.7,5000,"",
+C,Greg Oden,MIA,MIA vs LAL, 8:00 PM,4.6,5000,"",

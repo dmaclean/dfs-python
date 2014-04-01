@@ -1,0 +1,85 @@
+Position,Name,Team,Opponent,Game Time,Avg Fantasy Points,Price,Starter,Injury Status
+SF,Kevin Durant,OKC,OKC vs MIA, 8:00 PM,50.4,20000,"",
+SF,LeBron James,MIA,MIA @ OKC, 8:00 PM,45.5,20000,"",
+PG,Stephen Curry,GSW,GSW vs HOU,10:30 PM,43.2,16800,"",
+C,Dwight Howard,HOU,HOU @ GSW,10:30 PM,39.3,16400,"",
+SG,James Harden,HOU,HOU @ GSW,10:30 PM,38.3,15500,"",
+PF,David Lee,GSW,GSW vs HOU,10:30 PM,34.2,13900,"",
+PG,Russell Westbrook,OKC,OKC vs MIA, 8:00 PM,39.0,13500,"",OUT
+SF,Chandler Parsons,HOU,HOU @ GSW,10:30 PM,30.6,13100,"",
+PG,Ty Lawson,DEN,DEN @ MIL, 8:00 PM,35.8,13000,"",OUT
+SG,Dwyane Wade,MIA,MIA @ OKC, 8:00 PM,32.9,12100,"",
+PF-C,Serge Ibaka,OKC,OKC vs MIA, 8:00 PM,31.9,12000,"",
+PF-C,Chris Bosh,MIA,MIA @ OKC, 8:00 PM,29.0,11800,"",
+PG,Brandon Knight,MIL,MIL vs DEN, 8:00 PM,28.0,11800,"",
+C,Andrew Bogut,GSW,GSW vs HOU,10:30 PM,27.5,10800,"",OUT
+SG-SF,Andre Iguodala,GSW,GSW vs HOU,10:30 PM,24.1,10500,"",
+PF,John Henson,MIL,MIL vs DEN, 8:00 PM,28.1,10400,"",
+PF,Kenneth Faried,DEN,DEN @ MIL, 8:00 PM,23.8,10400,"",
+C,JJ Hickson,DEN,DEN @ MIL, 8:00 PM,26.6,10100,"",
+SG,Klay Thompson,GSW,GSW vs HOU,10:30 PM,27.1,9900,"",
+SF,Wilson Chandler,DEN,DEN @ MIL, 8:00 PM,24.9,9600,"",
+PG,Patrick Beverley,HOU,HOU @ GSW,10:30 PM,21.3,9500,"",OUT
+PG,Nate Wolters,MIL,MIL vs DEN, 8:00 PM,16.6,9500,"",
+PG,Reggie Jackson,OKC,OKC vs MIA, 8:00 PM,24.7,9400,"",
+PG,Mario Chalmers,MIA,MIA @ OKC, 8:00 PM,22.4,9200,"",
+SF,Caron Butler,MIL,MIL vs DEN, 8:00 PM,19.5,8800,"",
+PF,Ersan Ilyasova,MIL,MIL vs DEN, 8:00 PM,20.4,8700,"",
+SF-PF,Terrence Jones,HOU,HOU @ GSW,10:30 PM,25.5,8700,"",
+C,Larry Sanders,MIL,MIL vs DEN, 8:00 PM,21.9,8600,"",OUT
+SF,Draymond Green,GSW,GSW vs HOU,10:30 PM,16.2,8600,"",
+PG,Jeremy Lin,HOU,HOU @ GSW,10:30 PM,23.2,8400,"",
+SG,Jeremy Lamb,OKC,OKC vs MIA, 8:00 PM,17.5,8400,"",
+SG,Evan Fournier,DEN,DEN @ MIL, 8:00 PM,11.3,8000,"",
+SG,Ray Allen,MIA,MIA @ OKC, 8:00 PM,16.6,8000,"",
+SG,Randy Foye,DEN,DEN @ MIL, 8:00 PM,20.3,8000,"",
+C,Zaza Pachulia,MIL,MIL vs DEN, 8:00 PM,18.9,8000,"",
+C,Timofey Mozgov,DEN,DEN @ MIL, 8:00 PM,18.3,8000,"",
+SF,Harrison Barnes,GSW,GSW vs HOU,10:30 PM,18.6,8000,"",
+SF,Jordan Hamilton,DEN,DEN @ MIL, 8:00 PM,14.0,8000,"",
+SG,Gary Neal,MIL,MIL vs DEN, 8:00 PM,13.6,7500,"",
+SG,Jordan Crawford,GSW,GSW vs HOU,10:30 PM,22.2,7500,"",
+PF-C,Chris Andersen,MIA,MIA @ OKC, 8:00 PM,15.5,7500,"",
+PF-C,Marreese Speights,GSW,GSW vs HOU,10:30 PM,11.2,7500,"",
+PG,Norris Cole,MIA,MIA @ OKC, 8:00 PM,15.7,7500,"",
+SG-SF,Giannis Antetokounmpo,MIL,MIL vs DEN, 8:00 PM,16.6,7500,"",
+SG,Thabo Sefolosha,OKC,OKC vs MIA, 8:00 PM,16.2,7500,"",
+SF,Quincy Miller,DEN,DEN @ MIL, 8:00 PM,8.8,7500,"",
+SF,Shane Battier,MIA,MIA @ OKC, 8:00 PM,10.7,7500,"",
+C,Kendrick Perkins,OKC,OKC vs MIA, 8:00 PM,12.0,7500,"",
+SF,Khris Middleton,MIL,MIL vs DEN, 8:00 PM,20.8,7500,"",
+SF,Michael Beasley,MIA,MIA @ OKC, 8:00 PM,14.1,7500,"",
+SG,OJ Mayo,MIL,MIL vs DEN, 8:00 PM,18.9,7400,"",OUT
+PG,Nate Robinson,DEN,DEN @ MIL, 8:00 PM,17.4,6700,"",OUT
+PG,Derek Fisher,OKC,OKC vs MIA, 8:00 PM,9.8,6000,"",
+PF-C,Nick Collison,OKC,OKC vs MIA, 8:00 PM,11.6,6000,"",
+PF,Anthony Randolph,DEN,DEN @ MIL, 8:00 PM,10.9,6000,"",
+PF-C,Jermaine O'Neal,GSW,GSW vs HOU,10:30 PM,14.3,5700,"",OUT
+PG,Andre Miller,DEN,DEN @ MIL, 8:00 PM,14.3,5600,"",
+SG-SF,Francisco Garcia,HOU,HOU @ GSW,10:30 PM,12.2,5500,"",
+PF,Darrell Arthur,DEN,DEN @ MIL, 8:00 PM,12.0,5500,"",
+PG,Toney Douglas,MIA,MIA @ OKC, 8:00 PM,6.0,5500,"",
+C,JaVale McGee,DEN,DEN @ MIL, 8:00 PM,13.5,5300,"",OUT
+PF-C,Donatas Motiejunas,HOU,HOU @ GSW,10:30 PM,10.7,5200,"",
+PG,Luke Ridnour,MIL,MIL vs DEN, 8:00 PM,13.1,5100,"",
+PG,Nemanja Nedovic,GSW,GSW vs HOU,10:30 PM,2.4,5000,"",OUT
+SG,Kent Bazemore,GSW,GSW vs HOU,10:30 PM,4.3,5000,"",
+SG,MarShon Brooks,GSW,GSW vs HOU,10:30 PM,4.8,5000,"",
+PF,Greg Smith,HOU,HOU @ GSW,10:30 PM,6.6,5000,"",OUT
+SF,Ronnie Brewer,HOU,HOU @ GSW,10:30 PM,2.2,5000,"",
+SF,Danilo Gallinari,DEN,DEN @ MIL, 8:00 PM,0,5000,"",OUT
+PG,Aaron Brooks,HOU,HOU @ GSW,10:30 PM,11.9,5000,"",
+C,Omer Asik,HOU,HOU @ GSW,10:30 PM,13.1,5000,"",
+SG-SF,Carlos Delfino,MIL,MIL vs DEN, 8:00 PM,0,5000,"",OUT
+C,Ekpe Udoh,MIL,MIL vs DEN, 8:00 PM,11.8,5000,"",OUT
+C,Steven Adams,OKC,OKC vs MIA, 8:00 PM,11.1,5000,"",
+SF,Omri Casspi,HOU,HOU @ GSW,10:30 PM,15.1,5000,"",
+C,Miroslav Raduljica,MIL,MIL vs DEN, 8:00 PM,8.9,5000,"",
+SF,Rashard Lewis,MIA,MIA @ OKC, 8:00 PM,9.7,5000,"",
+PF,Perry Jones,OKC,OKC vs MIA, 8:00 PM,7.2,5000,"",
+C,Greg Oden,MIA,MIA @ OKC, 8:00 PM,7.2,5000,"",
+PF,Udonis Haslem,MIA,MIA @ OKC, 8:00 PM,7.1,5000,"",
+C,Hasheem Thabeet,OKC,OKC vs MIA, 8:00 PM,3.2,5000,"",
+SG,Roger Mason,MIA,MIA @ OKC, 8:00 PM,5.4,5000,"",
+SG-SF,James Jones,MIA,MIA @ OKC, 8:00 PM,4.5,5000,"",
+C,Festus Ezeli,GSW,GSW vs HOU,10:30 PM,0,5000,"",OUT

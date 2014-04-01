@@ -1,0 +1,118 @@
+Position,Name,Team,Opponent,Game Time,Avg Fantasy Points,Price,Starter,Injury Status
+SF,LeBron James,MIA,MIA vs NYK, 8:00 PM,45.5,19300,"",OUT
+SF,Carmelo Anthony,NYK,NYK @ MIA, 8:00 PM,44.6,18700,"",OUT
+SG-SF,Paul George,IND,IND vs MIL, 7:00 PM,37.2,16100,"",
+PG,John Wall,WAS,WAS @ TOR, 7:00 PM,39.5,15300,"",
+SG,Dwyane Wade,MIA,MIA vs NYK, 8:00 PM,33.7,14600,"",
+PG,Ty Lawson,DEN,DEN vs BKN,10:30 PM,35.8,14000,"",OUT
+PG,Kyle Lowry,TOR,TOR vs WAS, 7:00 PM,35.1,13700,"",
+SG,DeMar DeRozan,TOR,TOR vs WAS, 7:00 PM,34.9,13500,"",
+PF-C,Chris Bosh,MIA,MIA vs NYK, 8:00 PM,29.6,13300,"",
+PG,Deron Williams,BKN,BKN @ DEN,10:30 PM,27.4,13100,"",
+C,Brook Lopez,BKN,BKN @ DEN,10:30 PM,32.6,12700,"",OUT
+PG,Brandon Knight,MIL,MIL @ IND, 7:00 PM,28.4,12700,"",
+SG,Lance Stephenson,IND,IND vs MIL, 7:00 PM,29.9,12200,"",
+PF,David West,IND,IND vs MIL, 7:00 PM,28.3,12100,"",
+C,Marcin Gortat,WAS,WAS @ TOR, 7:00 PM,28.2,12000,"",
+C,Tyson Chandler,NYK,NYK @ MIA, 8:00 PM,25.3,11800,"",
+PF-C,Nene Hilario,WAS,WAS @ TOR, 7:00 PM,28.1,11700,"",OUT
+SF,Trevor Ariza,WAS,WAS @ TOR, 7:00 PM,29.0,11400,"",
+PG,Raymond Felton,NYK,NYK @ MIA, 8:00 PM,24.1,10800,"",OUT
+SG-SF,Evan Turner,IND,IND vs MIL, 7:00 PM,29.6,10600,"",
+SG,Bradley Beal,WAS,WAS @ TOR, 7:00 PM,27.2,10400,"",
+C,JJ Hickson,DEN,DEN vs BKN,10:30 PM,26.5,10200,"",
+SG-SF,Joe Johnson,BKN,BKN @ DEN,10:30 PM,23.0,10100,"",
+PF,John Henson,MIL,MIL @ IND, 7:00 PM,27.6,9700,"",
+PF-C,Andray Blatche,BKN,BKN @ DEN,10:30 PM,22.3,9600,"",
+SG,Randy Foye,DEN,DEN vs BKN,10:30 PM,21.0,9500,"",
+PG,Mario Chalmers,MIA,MIA vs NYK, 8:00 PM,22.5,9500,"",
+SG,JR Smith,NYK,NYK @ MIA, 8:00 PM,23.4,9300,"",
+PF,Amir Johnson,TOR,TOR vs WAS, 7:00 PM,22.6,9200,"",
+SF,Caron Butler,MIL,MIL @ IND, 7:00 PM,19.7,9100,"",OUT
+PF-C,Andrea Bargnani,NYK,NYK @ MIA, 8:00 PM,23.2,9100,"",OUT
+PF,Ersan Ilyasova,MIL,MIL @ IND, 7:00 PM,20.8,9100,"",
+SF,Paul Pierce,BKN,BKN @ DEN,10:30 PM,24.2,9100,"",
+C,Roy Hibbert,IND,IND vs MIL, 7:00 PM,26.8,9000,"",
+PG,Aaron Brooks,DEN,DEN vs BKN,10:30 PM,12.7,9000,"",
+PF,Kenneth Faried,DEN,DEN vs BKN,10:30 PM,23.8,8600,"",
+C,Larry Sanders,MIL,MIL @ IND, 7:00 PM,21.9,8600,"",OUT
+SG,Evan Fournier,DEN,DEN vs BKN,10:30 PM,12.3,8400,"",
+SG,OJ Mayo,MIL,MIL @ IND, 7:00 PM,18.9,8400,"",
+C,Jonas Valanciunas,TOR,TOR vs WAS, 7:00 PM,22.6,8300,"",
+SG-SF,Giannis Antetokounmpo,MIL,MIL @ IND, 7:00 PM,17.2,8200,"",
+PG,George Hill,IND,IND vs MIL, 7:00 PM,22.3,8100,"",
+PG,Nate Wolters,MIL,MIL @ IND, 7:00 PM,16.3,8000,"",
+PF,Trevor Booker,WAS,WAS @ TOR, 7:00 PM,15.5,8000,"",
+SG,Ray Allen,MIA,MIA vs NYK, 8:00 PM,16.5,8000,"",
+SG,Tim Hardaway Jr,NYK,NYK @ MIA, 8:00 PM,13.4,8000,"",
+SF,Shane Battier,MIA,MIA vs NYK, 8:00 PM,10.8,8000,"",
+SF,Wilson Chandler,DEN,DEN vs BKN,10:30 PM,24.1,8000,"",
+SF,Andrei Kirilenko,BKN,BKN @ DEN,10:30 PM,13.7,8000,"",
+PG,Shaun Livingston,BKN,BKN @ DEN,10:30 PM,17.7,8000,"",OUT
+SG,Terrence Ross,TOR,TOR vs WAS, 7:00 PM,16.9,8000,"",
+C,Timofey Mozgov,DEN,DEN vs BKN,10:30 PM,18.6,7800,"",
+PG,Ramon Sessions,MIL,MIL @ IND, 7:00 PM,18.5,7700,"",
+PG,Greivis Vasquez,TOR,TOR vs WAS, 7:00 PM,16.1,7600,"",
+SG-SF,Martell Webster,WAS,WAS @ TOR, 7:00 PM,17.4,7500,"",
+PF,Mirza Teletovic,BKN,BKN @ DEN,10:30 PM,15.0,7500,"",
+C,Zaza Pachulia,MIL,MIL @ IND, 7:00 PM,18.8,7500,"",
+PG,Pablo Prigioni,NYK,NYK @ MIA, 8:00 PM,14.1,7500,"",
+SF,Khris Middleton,MIL,MIL @ IND, 7:00 PM,20.5,7500,"",
+SF,Michael Beasley,MIA,MIA vs NYK, 8:00 PM,14.2,7500,"",
+C,Kevin Seraphin,WAS,WAS @ TOR, 7:00 PM,9.6,7500,"",OUT
+PF-C,Chris Andersen,MIA,MIA vs NYK, 8:00 PM,15.5,7500,"",
+PF-C,Amar'e Stoudemire,NYK,NYK @ MIA, 8:00 PM,16.5,7500,"",
+PF,Patrick Patterson,TOR,TOR vs WAS, 7:00 PM,18.9,7400,"",
+C,Andrew Bynum,IND,IND vs MIL, 7:00 PM,18.3,7100,"",
+PF,Kevin Garnett,BKN,BKN @ DEN,10:30 PM,19.3,6800,"",OUT
+PG,Nate Robinson,DEN,DEN vs BKN,10:30 PM,17.4,6700,"",OUT
+SG-SF,Iman Shumpert,NYK,NYK @ MIA, 8:00 PM,16.6,6500,"",OUT
+SF,Quincy Miller,DEN,DEN vs BKN,10:30 PM,9.1,6000,"",
+PG,Norris Cole,MIA,MIA vs NYK, 8:00 PM,15.5,6000,"",
+SG-SF,Rasual Butler,IND,IND vs MIL, 7:00 PM,4.1,6000,"",
+SG-SF,Alan Anderson,BKN,BKN @ DEN,10:30 PM,13.7,6000,"",
+PG-SG,CJ Watson,IND,IND vs MIL, 7:00 PM,12.2,6000,"",
+C,Ian Mahinmi,IND,IND vs MIL, 7:00 PM,10.3,6000,"",
+PF,Jeff Adrien,MIL,MIL @ IND, 7:00 PM,9.6,6000,"",
+C,Greg Oden,MIA,MIA vs NYK, 8:00 PM,7.5,6000,"",
+PF-C,Mason Plumlee,BKN,BKN @ DEN,10:30 PM,13.1,5800,"",
+PF,Kenyon Martin,NYK,NYK @ MIA, 8:00 PM,14.3,5600,"",OUT
+PF,Luis Scola,IND,IND vs MIL, 7:00 PM,15.2,5600,"",
+PF,Anthony Randolph,DEN,DEN vs BKN,10:30 PM,11.1,5500,"",
+SG,Marcus Thornton,BKN,BKN @ DEN,10:30 PM,14.0,5500,"",OUT
+SG-SF,John Salmons,TOR,TOR vs WAS, 7:00 PM,12.8,5500,"",
+SF,Jan Vesely,DEN,DEN vs BKN,10:30 PM,10.6,5300,"",
+C,JaVale McGee,DEN,DEN vs BKN,10:30 PM,13.5,5300,"",OUT
+PF-C,Tyler Hansbrough,TOR,TOR vs WAS, 7:00 PM,12.6,5100,"",
+PG,Andre Miller,WAS,WAS @ TOR, 7:00 PM,14.0,5100,"",
+PF,Chuck Hayes,TOR,TOR vs WAS, 7:00 PM,8.4,5000,"",
+SF,Chris Singleton,WAS,WAS @ TOR, 7:00 PM,7.7,5000,"",
+SF,Landry Fields,TOR,TOR vs WAS, 7:00 PM,6.8,5000,"",
+PG,Dwight Buycks,TOR,TOR vs WAS, 7:00 PM,6.7,5000,"",
+SG-SF,Glen Rice,WAS,WAS @ TOR, 7:00 PM,6.6,5000,"",
+SG,Garrett Temple,WAS,WAS @ TOR, 7:00 PM,6.5,5000,"",
+SF,Steve Novak,TOR,TOR vs WAS, 7:00 PM,5.5,5000,"",
+SF,Otto Porter,WAS,WAS @ TOR, 7:00 PM,4.2,5000,"",
+SG,Julyan Stone,TOR,TOR vs WAS, 7:00 PM,3.1,5000,"",
+SF,Danilo Gallinari,DEN,DEN vs BKN,10:30 PM,0,5000,"",OUT
+C-F,Drew Gooden,WAS,WAS @ TOR, 7:00 PM,0,5000,"",
+C,Jason Collins,BKN,BKN @ DEN,10:30 PM,1.3,5000,"",
+PG,Marquis Teague,BKN,BKN @ DEN,10:30 PM,6.3,5000,"",
+PF,Darrell Arthur,DEN,DEN vs BKN,10:30 PM,11.7,5000,"",OUT
+PF-C,Lavoy Allen,IND,IND vs MIL, 7:00 PM,14.8,5000,"",
+C,Ekpe Udoh,MIL,MIL @ IND, 7:00 PM,11.8,5000,"",OUT
+C,Miroslav Raduljica,MIL,MIL @ IND, 7:00 PM,8.6,5000,"",
+SF,Chris Copeland,IND,IND vs MIL, 7:00 PM,4.5,5000,"",
+SF,Solomon Hill,IND,IND vs MIL, 7:00 PM,4.4,5000,"",
+PG,Donald Sloan,IND,IND vs MIL, 7:00 PM,3.4,5000,"",
+SG-SF,Carlos Delfino,MIL,MIL @ IND, 7:00 PM,0,5000,"",OUT
+SG,DeAndre Liggins,MIA,MIA vs NYK, 8:00 PM,0,5000,"",
+C,Cole Aldrich,NYK,NYK @ MIA, 8:00 PM,4.2,5000,"",
+SG-SF,James Jones,MIA,MIA vs NYK, 8:00 PM,4.5,5000,"",
+SG,Toure' Murry,NYK,NYK @ MIA, 8:00 PM,5.6,5000,"",
+PG,Toney Douglas,MIA,MIA vs NYK, 8:00 PM,5.8,5000,"",
+PF,Udonis Haslem,MIA,MIA vs NYK, 8:00 PM,7.1,5000,"",
+PF-C,Jeremy Tyler,NYK,NYK @ MIA, 8:00 PM,9.0,5000,"",
+SF,Rashard Lewis,MIA,MIA vs NYK, 8:00 PM,9.7,5000,"",
+PF,Al Harrington,WAS,WAS @ TOR, 7:00 PM,10.0,5000,"",
+PG,Nando De Colo,TOR,TOR vs WAS, 7:00 PM,8.8,5000,"",

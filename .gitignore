@@ -1,6 +1,5 @@
 *.pyc
 nba/projections/*
 .idea/*
-nba/salaries/*.csv
 regression.csv
 output.txt
