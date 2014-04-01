@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import re
 
+
 class BasketballReferenceTeamGameLogParser():
 	"""
 	Parses a team's game log.
@@ -12,7 +13,7 @@ class BasketballReferenceTeamGameLogParser():
 		soup = BeautifulSoup(data)
 
 		game_number = 1
-		trs = soup.find_all(attrs={"id":re.compile("tgl_basic\.\d+")})
+		trs = soup.find_all(attrs={"id": re.compile("tgl_basic\.\d+")})
 		for tr in trs:
 			td_count = 0
 			for td in tr.find_all("td"):
@@ -38,7 +39,7 @@ class BasketballReferenceTeamGameLogParser():
 					self.game_stats[game_number]["opponent"] = td.string
 				# # Game Result (Win or loss)
 				elif td_count == 6:
-					self.game_stats[game_number]["result"] = td.string
+					self.game_stats[game_number]["result"] = "W" if td.text.startswith("W") else "L"
 				# # Team points
 				elif td_count == 7:
 					self.game_stats[game_number]["points"] = int(td.string)

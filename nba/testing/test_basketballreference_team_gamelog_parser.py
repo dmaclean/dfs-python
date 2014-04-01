@@ -1,8 +1,8 @@
 from datetime import date
 import unittest
 import BBRTestUtility
-from basketball import Processor
-from parsers.basketballreference_team_gamelog_parser import BasketballReferenceTeamGameLogParser
+from nba.basketball import Processor
+from nba.parsers.basketballreference_team_gamelog_parser import BasketballReferenceTeamGameLogParser
 
 
 class TestBasketballReferenceTeamGameLogParser(unittest.TestCase):
@@ -174,6 +174,8 @@ class TestBasketballReferenceTeamGameLogParser(unittest.TestCase):
 		self.assertTrue(self.team_game_log_parser.game_stats[1]["opp_turnovers"] == 17)
 		self.assertTrue(self.team_game_log_parser.game_stats[1]["opp_personal_fouls"] == 25)
 
+		self.assertTrue(self.team_game_log_parser.game_stats[44]["result"] == "W")
+
 		####################################
 		# Game 21 - this is in a new table
 		####################################
@@ -296,3 +298,7 @@ class TestBasketballReferenceTeamGameLogParser(unittest.TestCase):
 		self.assertTrue(self.team_game_log_parser.game_stats[66]["opp_blocks"] == 4)
 		self.assertTrue(self.team_game_log_parser.game_stats[66]["opp_turnovers"] == 23)
 		self.assertTrue(self.team_game_log_parser.game_stats[66]["opp_personal_fouls"] == 14)
+
+
+if __name__ == '__main__':
+    unittest.main()
