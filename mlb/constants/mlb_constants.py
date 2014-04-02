@@ -5,6 +5,20 @@ class MLBConstants:
     def __init__(self):
         pass
 
+    #################
+    # MongoDB stuff
+    #################
+    MONGO_MLB_DB_NAME = "baseball"
+    MONGO_MLB_TEST_DB_NAME = "test_baseball"
+    MONGO_MLB_PLAYERS_COLLECTION = "players"
+
+    ##############
+    # Basic info
+    ##############
+    PLAYER_ID = "player_id"
+    NAME = "name"
+    POSITION = "position"
+
     ##############################
     # Stats in Standard Pitching
     ##############################

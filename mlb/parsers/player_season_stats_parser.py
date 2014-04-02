@@ -8,8 +8,8 @@ import re
 
 
 class PlayerSeasonStatsParser:
-    def __init__(self):
-        self.player_data = {}
+    def __init__(self, player_data=None):
+        self.player_data = player_data
 
         self.pitching_standard_season_regex = re.compile("pitching_standard\.(\d+)")
         self.player_value_pitching_regex = re.compile("pitching_value\.(\d+)")
@@ -21,8 +21,8 @@ class PlayerSeasonStatsParser:
         soup = BeautifulSoup(data)
 
         # Find player's name and position
-        self.player_data["name"] = soup.find("span", attrs={"itemprop": "name"}).text
-        self.player_data["position"] = soup.find("span", attrs={"itemprop": "role"}).text
+        self.player_data[MLBConstants.NAME] = soup.find("span", attrs={"itemprop": "name"}).text
+        self.player_data[MLBConstants.POSITION] = soup.find("span", attrs={"itemprop": "role"}).text
 
         # Parse the Standard Pitching table.
         self.parse_standard_pitching(soup)
@@ -40,10 +40,10 @@ class PlayerSeasonStatsParser:
             tds = entry.find_all("td")
 
             i = 0
-            season = 0
+            season = ""
             for td in tds:
                 if i == 0:
-                    season = int(td.text)
+                    season = td.text
 
                     if MLBConstants.STANDARD_PITCHING not in self.player_data:
                         self.player_data[MLBConstants.STANDARD_PITCHING] = {}
@@ -127,10 +127,10 @@ class PlayerSeasonStatsParser:
             tds = entry.find_all("td")
 
             i = 0
-            season = 0
+            season = ""
             for td in tds:
                 if i == 0:
-                    season = int(td.text)
+                    season = td.text
 
                     if MLBConstants.PLAYER_VALUE_PITCHING not in self.player_data:
                         self.player_data[MLBConstants.PLAYER_VALUE_PITCHING] = {}
