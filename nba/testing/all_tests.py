@@ -9,8 +9,15 @@ import test_rg_player_stats
 import test_defense_vs_position
 import test_injury
 import test_calculate_dvp_rank
+import test_play_by_play
 
 logging.basicConfig(level=logging.WARNING)
+
+################
+# Play by Play
+################
+suite = unittest.TestLoader().loadTestsFromTestCase(test_play_by_play.TestPlayByPlay)
+unittest.TextTestRunner(verbosity=2).run(suite)
 
 ######################
 # Calculate DvP Rank
