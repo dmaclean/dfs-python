@@ -1,9 +1,11 @@
 __author__ = 'ap'
 
 import mysql.connector
-from dfs_constants import DFSConstants
+
+from shared.dfs_constants import DFSConstants
 from projections import Projections
 from models.defense_vs_position_manager import DefenseVsPositionManager
+
 
 cnx = mysql.connector.connect(user='fantasy', password='fantasy', host='localhost', database='basketball_reference')
 dvp_manager = DefenseVsPositionManager(cnx=cnx)

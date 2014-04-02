@@ -1,9 +1,9 @@
 import unittest
 import BBRTestUtility
 
-from models.play_by_play_manager import PlayByPlayManager
-from models.play_by_play import PlayByPlay
-from models.play_by_play_game import PlayByPlayGame
+from nba.models.play_by_play_manager import PlayByPlayManager
+from nba.models.play_by_play import PlayByPlay
+from nba.models.play_by_play_game import PlayByPlayGame
 
 
 class TestPlayByPlay(unittest.TestCase):

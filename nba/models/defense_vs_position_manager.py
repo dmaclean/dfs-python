@@ -1,8 +1,10 @@
 __author__ = 'ap'
 
-import mysql.connector
-from dfs_constants import DFSConstants
 from datetime import date
+
+import mysql.connector
+
+from shared.dfs_constants import DFSConstants
 from defense_vs_position import DefenseVsPosition
 
 

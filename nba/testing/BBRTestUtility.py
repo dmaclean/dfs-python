@@ -2,9 +2,11 @@ import sqlite3
 import os
 import inspect
 import sys
-from dfs_constants import DFSConstants
 from datetime import date
+
+from shared.dfs_constants import DFSConstants
 from pymongo import MongoClient
+
 
 ###########################################
 # Utility class for helping with testing.

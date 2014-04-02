@@ -2,16 +2,15 @@ import sys
 sys.path.append('..')
 
 from datetime import date
-import sqlite3
 import unittest
 import BBRTestUtility
-import import_salaries
-from dfs_constants import DFSConstants
+from nba.import_salaries import SalaryImporter
+from shared.dfs_constants import DFSConstants
 
 class TestSalaryImporter(unittest.TestCase):
 	def setUp(self):
 		self.testUtil = BBRTestUtility.BBRTestUtility()
-		self.salary_importer = import_salaries.SalaryImporter(self.testUtil.conn)
+		self.salary_importer = SalaryImporter(self.testUtil.conn)
 		self.testUtil.runSQL()
 		
 		# Initialize the player info map.

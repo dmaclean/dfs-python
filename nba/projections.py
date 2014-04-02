@@ -1,15 +1,15 @@
 import logging
 import sys
 import time
+from datetime import date, timedelta
+
 import mysql.connector
 
 from fantasy_point_calculator import FantasyPointCalculator
-from dfs_constants import DFSConstants
+from shared.dfs_constants import DFSConstants
 from models.defense_vs_position_manager import DefenseVsPositionManager
 from models.defense_vs_position import DefenseVsPosition
-from models.injury_manager import InjuryManager,Injury
-
-from datetime import date, timedelta
+from models.injury_manager import InjuryManager
 
 
 class Projections:

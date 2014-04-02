@@ -2,16 +2,15 @@ import sys
 sys.path.append('..')
 
 from datetime import date
-import sqlite3
 import unittest
 import BBRTestUtility
-import vegas_odds
-from dfs_constants import DFSConstants
+from nba.vegas_odds import VegasOdds
+
 
 class TestVegasOdds(unittest.TestCase):
 	def setUp(self):
 		self.testUtil = BBRTestUtility.BBRTestUtility()
-		self.odds = vegas_odds.VegasOdds(self.testUtil.conn)
+		self.odds = VegasOdds(self.testUtil.conn)
 		
 		self.testUtil.runSQL()
 	

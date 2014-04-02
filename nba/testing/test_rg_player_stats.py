@@ -1,17 +1,15 @@
 import sys
 sys.path.append('..')
 
-from datetime import date
-import sqlite3
 import unittest
 import BBRTestUtility
-import rg_player_stats
-from dfs_constants import DFSConstants
+from nba.rg_player_stats import RGPlayerStats
+
 
 class TestRGPlayerStats(unittest.TestCase):
 	def setUp(self):
 		self.testUtil = BBRTestUtility.BBRTestUtility()
-		self.ps = rg_player_stats.RGPlayerStats(self.testUtil.conn)
+		self.ps = RGPlayerStats(self.testUtil.conn)
 		
 		self.testUtil.runSQL()
 		

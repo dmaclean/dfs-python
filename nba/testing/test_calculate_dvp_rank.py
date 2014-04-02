@@ -1,7 +1,7 @@
 import unittest
 from datetime import date
 
-from dfs_constants import DFSConstants
+from shared.dfs_constants import DFSConstants
 from calculate_dvp_rank import DvPRankCalculator
 from models.defense_vs_position_manager import DefenseVsPositionManager, DefenseVsPosition
 import BBRTestUtility

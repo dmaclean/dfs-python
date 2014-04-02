@@ -8,7 +8,7 @@ import BBRTestUtility
 from projections import Projections
 from models.injury_manager import InjuryManager, Injury
 from fantasy_point_calculator import FantasyPointCalculator
-from dfs_constants import DFSConstants
+from shared.dfs_constants import DFSConstants
 
 class TestProjections(unittest.TestCase):
 	def setUp(self):

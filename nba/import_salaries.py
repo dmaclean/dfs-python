@@ -1,8 +1,10 @@
 import sys
 from datetime import date
+
 import mysql.connector
 
-from dfs_constants import DFSConstants
+from shared.dfs_constants import DFSConstants
+
 
 class SalaryImporter:
 	

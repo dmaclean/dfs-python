@@ -2,11 +2,13 @@ __author__ = 'ap'
 
 from datetime import date
 from unittest import TestCase
+
 import BBRTestUtility
-from dfs_constants import DFSConstants
-from projections import Projections
-from models.defense_vs_position import DefenseVsPosition
-from models.defense_vs_position_manager import DefenseVsPositionManager
+from shared.dfs_constants import DFSConstants
+from nba.projections import Projections
+from nba.models.defense_vs_position import DefenseVsPosition
+from nba.models.defense_vs_position_manager import DefenseVsPositionManager
+
 
 class TestDefenseVsPosition(TestCase):
 	def setUp(self):

@@ -1,8 +1,10 @@
-import mysql
 import logging
 import sys
 from datetime import date, timedelta
-from dfs_constants import DFSConstants
+
+import mysql
+
+from shared.dfs_constants import DFSConstants
 from models.defense_vs_position_manager import DefenseVsPositionManager
 from models.defense_vs_position import DefenseVsPosition
 
