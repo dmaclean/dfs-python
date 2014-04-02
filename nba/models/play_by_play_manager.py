@@ -5,8 +5,8 @@ from bs4 import BeautifulSoup
 
 from pymongo import MongoClient
 from shared.dfs_constants import DFSConstants
-from models.play_by_play import PlayByPlay
-from models.play_by_play_game import PlayByPlayGame
+from nba.models.play_by_play import PlayByPlay
+from nba.models.play_by_play_game import PlayByPlayGame
 
 
 class PlayByPlayManager:
