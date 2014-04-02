@@ -21,7 +21,6 @@ if sys.argv[1] == "fix_injuries":
 	injury_manager.fix_injuries(season)
 
 elif sys.argv[1] == "scrape_basketball_reference":
-	# clear; time python basketball.py source=site season=2013 yesterday_only=true
 	processor = Processor()
 	processor.readCLI()
 	processor.process()
