@@ -20,6 +20,6 @@ class DFSConstants:
     BLOCKS = "blocks"
     TURNOVERS = "turnovers"
 
-    MONGO_DB_NAME = "basketball"
-    MONGO_TEST_DB_NAME = "test_basketball"
-    MONGO_PBP_COLLECTION = "pbp"
+    MONGO_NBA_DB_NAME = "basketball"
+    MONGO_NBA_TEST_DB_NAME = "test_basketball"
+    MONGO_NBA_PBP_COLLECTION = "pbp"

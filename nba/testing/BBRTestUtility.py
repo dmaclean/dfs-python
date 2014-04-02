@@ -36,7 +36,7 @@ class BBRTestUtility():
 		"""
 		self.mongo_client = MongoClient()
 
-		return self.mongo_client[DFSConstants.MONGO_TEST_DB_NAME]
+		return self.mongo_client[DFSConstants.MONGO_NBA_TEST_DB_NAME]
 	
 	##########################################################################
 	# Reads in the basketball.sql file, where all SQL for the project lives.

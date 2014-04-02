@@ -19,7 +19,7 @@ class PlayByPlayManager:
 
 		if not mongo_db:
 			mongo_client = MongoClient()
-			self.mongo_db = mongo_client[DFSConstants.MONGO_DB_NAME]
+			self.mongo_db = mongo_client[DFSConstants.MONGO_NBA_DB_NAME]
 		else:
 			self.mongo_db = mongo_db
 
@@ -99,7 +99,7 @@ class PlayByPlayManager:
 			away = additional_data[PlayByPlayGame.AWAY]
 
 		pbp_game = PlayByPlayGame(pbp_data=pbps, game_date=game_date, home=home, away=away)
-		self.mongo_db[DFSConstants.MONGO_PBP_COLLECTION].save(pbp_game)
+		self.mongo_db[DFSConstants.MONGO_NBA_PBP_COLLECTION].save(pbp_game)
 
 	def create_pbp_instance(self, play_data):
 		"""
