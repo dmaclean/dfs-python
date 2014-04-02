@@ -4,6 +4,7 @@ import logging
 import sys
 import mysql.connector
 
+
 class FantasyPointCalculator():
 	DRAFT_DAY = "DRAFT_DAY"
 	DRAFT_KINGS = "DRAFT_KINGS"
@@ -17,10 +18,24 @@ class FantasyPointCalculator():
 		self.season = season
 		
 		# Use dependency injection to determine where the database connection comes from.
-		if(not cnx):
+		if not cnx:
 			self.cnx = mysql.connector.connect(user='fantasy', password='fantasy', host='localhost', database='basketball_reference')
 		else:
 			self.cnx = cnx
+
+	def read_cli(self):
+		self.site = ""
+		self.season = date.today().year
+
+		for arg in sys.argv:
+			if arg == "fantasy_point_calculator.py":
+				pass
+			else:
+				pieces = arg.split("=")
+				if pieces[0] == "site":
+					self.site = pieces[1]
+				elif pieces[0] == "season":
+					self.season = int(pieces[1])
 
 	def calculate(self, stats):
 		fantasy_points = 0
@@ -164,22 +179,3 @@ class FantasyPointCalculator():
 					logging.info("Processed {} games".format(count))
 		finally:
 			cursor.close()
-
-if __name__ == '__main__':
-	logging.basicConfig(level=logging.INFO)
-
-	curr_site = ""
-	season = date.today().year
-
-	for arg in sys.argv:
-		if arg == "fantasy_point_calculator.py":
-			pass
-		else:
-			pieces = arg.split("=")
-			if pieces[0] == "site":
-				curr_site = pieces[1]
-			elif pieces[0] == "season":
-				season = int(pieces[1])
-	fpc = FantasyPointCalculator(site=curr_site, season=season)
-	fpc.run()
-	

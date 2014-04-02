@@ -21,6 +21,20 @@ class DvPRankCalculator:
 		self.ranked_dvps = {}
 		self.one_day = timedelta(days=1)
 
+		self.season = date.today().year
+		self.yesterday_only = False
+
+	def read_cli(self):
+		for arg in sys.argv:
+			if arg == "calculate_dvp_rank.py":
+				pass
+			else:
+				pieces = arg.split("=")
+				if pieces[0] == "season":
+					self.season = int(pieces[1])
+				elif pieces[0] == "yesterday_only":
+					self.yesterday_only = pieces[1] == "true"
+
 	def calculate(self, season=None, yesterday_only=False):
 		# self.get_existing_ranks(season)
 
@@ -96,17 +110,6 @@ class DvPRankCalculator:
 if __name__ == '__main__':
 	logging.basicConfig(level=logging.INFO)
 
-	season = date.today().year
-	yesterday_only = False
-	for arg in sys.argv:
-		if arg == "calculate_dvp_rank.py":
-			pass
-		else:
-			pieces = arg.split("=")
-			if pieces[0] == "season":
-				season = int(pieces[1])
-			elif pieces[0] == "yesterday_only":
-				yesterday_only = pieces[1] == "true"
-
 	calculator = DvPRankCalculator()
-	calculator.calculate(season, yesterday_only)
+	calculator.read_cli()
+	calculator.calculate(calculator.season, calculator.yesterday_only)

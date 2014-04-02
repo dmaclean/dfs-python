@@ -3,14 +3,14 @@ import logging
 import random
 import sys
 import time
-import mysql.connector
 from datetime import date, timedelta
 from HTMLParser import HTMLParser
 
-from models.injury_manager import InjuryManager, Injury
-from parsers.basketballreference_team_gamelog_parser import BasketballReferenceTeamGameLogParser
-from projections import Projections
+import mysql.connector
 
+from parsers.basketballreference_team_gamelog_parser import BasketballReferenceTeamGameLogParser
+from nba.projections import Projections
+from nba.models.injury_manager import InjuryManager
 
 class Processor:
 	source = ""

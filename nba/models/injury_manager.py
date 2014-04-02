@@ -3,11 +3,12 @@ __author__ = 'ap'
 import httplib
 import logging
 import time
+import sys
 import mysql.connector
 from datetime import date, timedelta
 
 from bs4 import BeautifulSoup
-from models.injury import Injury
+from nba.models.injury import Injury
 
 
 class InjuryManager():
