@@ -90,6 +90,7 @@ class BaseballReferenceScraper:
 				self.player_season_stats_parser.player_data = player
 				self.player_season_stats_parser.parse(player_page_data)
 
+				# Should we get the pitcher or batter page?
 				if self.player_season_stats_parser.player_data[MLBConstants.POSITION] == "Pitcher":
 					player_season_stats_detail_url = "/players/{}/{}-pitch.shtml".format(letter, player_id)
 				else:
