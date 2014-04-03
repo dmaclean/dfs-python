@@ -1,5 +1,6 @@
 import logging
 import unittest
+from mlb.testing.test_player_gamelog_parser import TestPlayerGamelogParser
 from mlb.testing.test_player_manager import TestPlayerManager
 
 from test_player_list_parser import TestPlayerListParser
@@ -17,6 +18,12 @@ unittest.TextTestRunner(verbosity=2).run(suite)
 # Player Season Stats Parser
 ##############################
 suite = unittest.TestLoader().loadTestsFromTestCase(TestPlayerSeasonStatsParser)
+unittest.TextTestRunner(verbosity=2).run(suite)
+
+#########################
+# Player Gamelog Parser
+#########################
+suite = unittest.TestLoader().loadTestsFromTestCase(TestPlayerGamelogParser)
 unittest.TextTestRunner(verbosity=2).run(suite)
 
 ##################
