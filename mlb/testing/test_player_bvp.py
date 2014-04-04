@@ -1,6 +1,6 @@
 import unittest
 from mlb.constants.mlb_constants import MLBConstants
-from mlb.parsers.player_bvp import PlayerBvPParser
+from mlb.parsers.player_bvp_parser import PlayerBvPParser
 
 __author__ = 'dan'
 
