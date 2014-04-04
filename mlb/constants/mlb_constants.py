@@ -116,3 +116,21 @@ class MLBConstants:
 	BASE_OUT_RUNS_SAVED = "base_out_runs_saved"
 	ENTRY_SITUATION = "entry_situation"
 	EXIT_SITUATION = "exit_situation"
+
+	#####################
+	# Batter vs Pitcher
+	#####################
+	BATTER_VS_PITCHER = "batter_vs_pitcher"
+	BVP_TYPE_BATTER = "batter"
+	BVP_TYPE_PITCHER = "pitcher"
+
+	###########
+	# Batters
+	###########
+	PLATE_APPEARANCES = "plate_appearances"
+	RBI = "rbi"
+	BATTING_AVERAGE = "batting_average"
+	ON_BASE_PERCENTAGE = "on_base_percentage"
+	SLUGGING_PERCENTAGE = "slugging_percentage"
+	OPS = "ops"
+	SACRIFICE_HITS = "sacrifice_hits"

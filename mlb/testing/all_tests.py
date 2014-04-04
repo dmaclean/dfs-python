@@ -1,5 +1,6 @@
 import logging
 import unittest
+from mlb.testing.test_player_bvp import TestPlayerBvPParser
 from mlb.testing.test_player_gamelog_parser import TestPlayerGamelogParser
 from mlb.testing.test_player_manager import TestPlayerManager
 
@@ -30,4 +31,10 @@ unittest.TextTestRunner(verbosity=2).run(suite)
 # Player Manager
 ##################
 suite = unittest.TestLoader().loadTestsFromTestCase(TestPlayerManager)
+unittest.TextTestRunner(verbosity=2).run(suite)
+
+############################
+# Player Batter vs Pitcher
+############################
+suite = unittest.TestLoader().loadTestsFromTestCase(TestPlayerBvPParser)
 unittest.TextTestRunner(verbosity=2).run(suite)
