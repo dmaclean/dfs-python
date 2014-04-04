@@ -35,7 +35,7 @@ class PlayerBvPParser:
 			opponent_id = ""
 			for td in tds:
 				if i == 0:
-					if self.type == MLBConstants.BVP_TYPE_BATTER:
+					if self.type == MLBConstants.BATTER_TYPE:
 						m = self.pitcher_id_regex.match(td.a.attrs["href"])
 					else:
 						m = self.batter_id_regex.match(td.a.attrs["href"])

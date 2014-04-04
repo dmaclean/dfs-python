@@ -14,7 +14,7 @@ class TestPlayerBvPParser(unittest.TestCase):
 
 	def test_parse_batter(self):
 		self.player_bvp_parser.player_data = {MLBConstants.PLAYER_ID: "cabremi01"}
-		self.player_bvp_parser.type = MLBConstants.BVP_TYPE_BATTER
+		self.player_bvp_parser.type = MLBConstants.BATTER_TYPE
 		self.player_bvp_parser.parse(open('../test_files/batter_bvp.html'))
 
 		self.assertTrue(self.player_bvp_parser.player_data[MLBConstants.BATTER_VS_PITCHER]["hernali01"][MLBConstants.NAME] == "Livan Hernandez")
@@ -59,7 +59,7 @@ class TestPlayerBvPParser(unittest.TestCase):
 
 	def test_parse_pitcher(self):
 		self.player_bvp_parser.player_data = {MLBConstants.PLAYER_ID: "sabatc.01"}
-		self.player_bvp_parser.type = MLBConstants.BVP_TYPE_PITCHER
+		self.player_bvp_parser.type = MLBConstants.PITCHER_TYPE
 		self.player_bvp_parser.parse(open('../test_files/pitcher_bvp.html'))
 
 		self.assertTrue(self.player_bvp_parser.player_data[MLBConstants.BATTER_VS_PITCHER]["konerpa01"][MLBConstants.NAME] == "Paul Konerko")
