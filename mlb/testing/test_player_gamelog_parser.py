@@ -17,6 +17,7 @@ class TestPlayerGamelogParser(unittest.TestCase):
 
 	def test_parse_pitcher(self):
 		self.player_gamelog_parser.season = "2013"
+		self.player_gamelog_parser.type = MLBConstants.PITCHER_TYPE
 		self.player_gamelog_parser.player_data = {MLBConstants.PLAYER_ID: "aardsda01"}
 		self.player_gamelog_parser.parse(open('../test_files/gamelog_pitcher.html'))
 
@@ -208,6 +209,153 @@ class TestPlayerGamelogParser(unittest.TestCase):
 								MLBConstants.ENTRY_SITUATION] == "7t --- 2 out tie")
 		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_PITCHING]["2013"]["161"][
 								MLBConstants.EXIT_SITUATION] == "7t 3 out tie")
+
+	def test_parse_batter(self):
+		self.player_gamelog_parser.season = "2013"
+		self.player_gamelog_parser.type = MLBConstants.BATTER_TYPE
+		self.player_gamelog_parser.player_data = {MLBConstants.PLAYER_ID: "cabremi01"}
+		self.player_gamelog_parser.parse(open('../test_files/gamelog_batter.html'))
+
+		self.assertTrue(strftime("%b %d %Y", self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][MLBConstants.DATE]) == "Apr 01 2013")
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
+								MLBConstants.TEAM] == "DET")
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
+								MLBConstants.OPPONENT] == "MIN")
+		self.assertTrue(not self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
+								MLBConstants.HOME_GAME])
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
+								MLBConstants.RESULT] == "W")
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
+								MLBConstants.TEAM_SCORE] == 4)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
+								MLBConstants.OPPONENT_SCORE] == 2)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
+								MLBConstants.INNINGS] == "CG")
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
+								MLBConstants.PLATE_APPEARANCES] == 5)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
+								MLBConstants.AT_BATS] == 5)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
+								MLBConstants.RUNS] == 1)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
+								MLBConstants.HITS] == 0)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
+								MLBConstants.DOUBLES] == 0)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
+								MLBConstants.TRIPLES] == 0)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
+								MLBConstants.HOME_RUNS] == 0)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
+								MLBConstants.RBI] == 1)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
+								MLBConstants.WALKS] == 0)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
+								MLBConstants.INTENTIONAL_WALKS] == 0)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
+								MLBConstants.STRIKE_OUTS] == 2)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
+								MLBConstants.HIT_BY_PITCH] == 0)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
+								MLBConstants.SACRIFICE_HITS] == 0)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
+								MLBConstants.SACRIFICE_FLIES] == 0)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
+								MLBConstants.REACHED_ON_ERROR] == 0)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
+								MLBConstants.DOUBLE_PLAYS_GROUNDED_INTO] == 0)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
+								MLBConstants.STOLEN_BASES] == 0)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
+								MLBConstants.CAUGHT_STEALING] == 0)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
+								MLBConstants.BATTING_AVERAGE] == 0.0)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
+								MLBConstants.ON_BASE_PERCENTAGE] == 0.0)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
+								MLBConstants.SLUGGING_PERCENTAGE] == 0.0)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
+								MLBConstants.OPS] == 0.0)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
+								MLBConstants.BATTING_ORDER_POSITION] == 3)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
+								MLBConstants.AVERAGE_LEVERAGE_INDEX] == .71)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
+								MLBConstants.WIN_PROBABILITY_ADDED] == -0.037)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
+								MLBConstants.BASE_OUT_RUNS_ADDED] == -0.76)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
+								MLBConstants.POSITION] == "3B")
+
+		# Game 161
+		self.assertTrue(strftime("%b %d %Y", self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][MLBConstants.DATE]) == "Sep 28 2013")
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][
+								MLBConstants.TEAM] == "DET")
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][
+								MLBConstants.OPPONENT] == "MIA")
+		self.assertTrue(not self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][
+								MLBConstants.HOME_GAME])
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][
+								MLBConstants.RESULT] == "L")
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][
+								MLBConstants.TEAM_SCORE] == 1)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][
+								MLBConstants.OPPONENT_SCORE] == 2)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][
+								MLBConstants.INNINGS] == "GS-8")
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][
+								MLBConstants.PLATE_APPEARANCES] == 4)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][
+								MLBConstants.AT_BATS] == 4)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][
+								MLBConstants.RUNS] == 0)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][
+								MLBConstants.HITS] == 2)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][
+								MLBConstants.DOUBLES] == 0)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][
+								MLBConstants.TRIPLES] == 0)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][
+								MLBConstants.HOME_RUNS] == 0)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][
+								MLBConstants.RBI] == 0)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][
+								MLBConstants.WALKS] == 0)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][
+								MLBConstants.INTENTIONAL_WALKS] == 0)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][
+								MLBConstants.STRIKE_OUTS] == 1)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][
+								MLBConstants.HIT_BY_PITCH] == 0)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][
+								MLBConstants.SACRIFICE_HITS] == 0)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][
+								MLBConstants.SACRIFICE_FLIES] == 0)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][
+								MLBConstants.REACHED_ON_ERROR] == 0)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][
+								MLBConstants.DOUBLE_PLAYS_GROUNDED_INTO] == 0)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][
+								MLBConstants.STOLEN_BASES] == 0)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][
+								MLBConstants.CAUGHT_STEALING] == 0)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][
+								MLBConstants.BATTING_AVERAGE] == 0.348)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][
+								MLBConstants.ON_BASE_PERCENTAGE] == 0.442)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][
+								MLBConstants.SLUGGING_PERCENTAGE] == 0.636)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][
+								MLBConstants.OPS] == 1.078)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][
+								MLBConstants.BATTING_ORDER_POSITION] == 3)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][
+								MLBConstants.AVERAGE_LEVERAGE_INDEX] == .82)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][
+								MLBConstants.WIN_PROBABILITY_ADDED] == 0.025)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][
+								MLBConstants.BASE_OUT_RUNS_ADDED] == 0.27)
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][
+								MLBConstants.POSITION] == "3B")
 
 if __name__ == '__main__':
 	unittest.main()
