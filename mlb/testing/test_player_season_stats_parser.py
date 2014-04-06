@@ -228,6 +228,129 @@ class TestPlayerSeasonStatsParser(unittest.TestCase):
 		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_PITCHING]["2013"]
 							[MLBConstants.SALARY] == 0)
 
+	def test_parse_standard_batting(self):
+		self.player_season_stat_parser.player_data = {MLBConstants.PLAYER_ID: "cabremi01"}
+		self.player_season_stat_parser.parse(open('../test_files/season_stats_batter.html'))
+
+		# Name and position
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_ID] == "cabremi01")
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.NAME] == "Miguel Cabrera")
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.POSITION] == "Third Baseman, First Baseman and Leftfielder")
+
+		###########################
+		# Standard batting table
+		###########################
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2003"]
+							[MLBConstants.AGE] == 20)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2003"]
+							[MLBConstants.TEAM] == "FLA")
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2003"]
+							[MLBConstants.LEAGUE] == "NL")
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2003"]
+							[MLBConstants.GAMES_PLAYED] == 87)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2003"]
+							[MLBConstants.PLATE_APPEARANCES] == 346)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2003"]
+							[MLBConstants.AT_BATS] == 314)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2003"]
+							[MLBConstants.RUNS] == 39)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2003"]
+							[MLBConstants.HITS] == 84)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2003"]
+							[MLBConstants.DOUBLES] == 21)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2003"]
+							[MLBConstants.TRIPLES] == 3)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2003"]
+							[MLBConstants.HOME_RUNS] == 12)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2003"]
+							[MLBConstants.RBI] == 62)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2003"]
+							[MLBConstants.STOLEN_BASES] == 0)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2003"]
+							[MLBConstants.CAUGHT_STEALING] == 2)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2003"]
+							[MLBConstants.WALKS] == 25)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2003"]
+							[MLBConstants.STRIKE_OUTS] == 84)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2003"]
+							[MLBConstants.BATTING_AVERAGE] == 0.268)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2003"]
+							[MLBConstants.ON_BASE_PERCENTAGE] == 0.325)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2003"]
+							[MLBConstants.SLUGGING_PERCENTAGE] == 0.468)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2003"]
+							[MLBConstants.OPS] == 0.793)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2003"]
+							[MLBConstants.OPS_PLUS] == 106)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2003"]
+							[MLBConstants.TOTAL_BASES] == 147)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2003"]
+							[MLBConstants.DOUBLE_PLAYS_GROUNDED_INTO] == 12)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2003"]
+							[MLBConstants.HIT_BY_PITCH] == 2)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2003"]
+							[MLBConstants.SACRIFICE_HITS] == 4)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2003"]
+							[MLBConstants.SACRIFICE_FLIES] == 1)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2003"]
+							[MLBConstants.POSITION] == "75")
+
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2014"]
+							[MLBConstants.AGE] == 31)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2014"]
+							[MLBConstants.TEAM] == "DET")
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2014"]
+							[MLBConstants.LEAGUE] == "AL")
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2014"]
+							[MLBConstants.GAMES_PLAYED] == 1)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2014"]
+							[MLBConstants.PLATE_APPEARANCES] == 4)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2014"]
+							[MLBConstants.AT_BATS] == 3)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2014"]
+							[MLBConstants.RUNS] == 0)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2014"]
+							[MLBConstants.HITS] == 1)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2014"]
+							[MLBConstants.DOUBLES] == 1)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2014"]
+							[MLBConstants.TRIPLES] == 0)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2014"]
+							[MLBConstants.HOME_RUNS] == 0)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2014"]
+							[MLBConstants.RBI] == 0)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2014"]
+							[MLBConstants.STOLEN_BASES] == 0)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2014"]
+							[MLBConstants.CAUGHT_STEALING] == 0)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2014"]
+							[MLBConstants.WALKS] == 1)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2014"]
+							[MLBConstants.STRIKE_OUTS] == 0)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2014"]
+							[MLBConstants.BATTING_AVERAGE] == 0.333)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2014"]
+							[MLBConstants.ON_BASE_PERCENTAGE] == 0.5)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2014"]
+							[MLBConstants.SLUGGING_PERCENTAGE] == 0.667)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2014"]
+							[MLBConstants.OPS] == 1.167)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2014"]
+							[MLBConstants.OPS_PLUS] == 225)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2014"]
+							[MLBConstants.TOTAL_BASES] == 2)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2014"]
+							[MLBConstants.DOUBLE_PLAYS_GROUNDED_INTO] == 0)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2014"]
+							[MLBConstants.HIT_BY_PITCH] == 0)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2014"]
+							[MLBConstants.SACRIFICE_HITS] == 0)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2014"]
+							[MLBConstants.SACRIFICE_FLIES] == 0)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2014"]
+							[MLBConstants.POSITION] == "*/3")
+
+
 
 if __name__ == '__main__':
 	unittest.main()

@@ -127,6 +127,7 @@ class MLBConstants:
 	###########
 	# Batters
 	###########
+	STANDARD_BATTING = "standard_batting"
 	PLAYER_GAMELOG_BATTING = "player_gamelog_batting"
 	PLATE_APPEARANCES = "plate_appearances"
 	RBI = "rbi"
@@ -134,7 +135,10 @@ class MLBConstants:
 	ON_BASE_PERCENTAGE = "on_base_percentage"
 	SLUGGING_PERCENTAGE = "slugging_percentage"
 	OPS = "ops"
+	OPS_PLUS = "ops_plus"
 	SACRIFICE_HITS = "sacrifice_hits"
 	BATTING_ORDER_POSITION = "batting_order_position"
 	WIN_PROBABILITY_ADDED = "win_probability_added"
 	BASE_OUT_RUNS_ADDED = "base_out_runs_added"
+	GAMES_PLAYED = "games_played"
+	TOTAL_BASES = "total_bases"
