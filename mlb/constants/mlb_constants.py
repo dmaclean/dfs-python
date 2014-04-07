@@ -157,3 +157,21 @@ class MLBConstants:
 	OFF_WAR = "offensive_wins_above_replacement"
 	DEF_WAR = "defensive_wins_above_replacement"
 	OFF_RAR = "offensive_runs_above_replacement"
+	BABIP = "babip"
+	T_OPS_PLUS = "tOPS+"
+	S_OPS_PLUS = "sOPS+"
+
+	BATTER_SPLITS = "batter_splits"
+
+	#################
+	# Batter Splits
+	#################
+	SPLITS_TYPE = "type"
+	SPLITS_SEASON_TOTALS = ""
+	SPLITS_SEASON_TOTALS_HEADER = "Season Totals"
+	SPLITS_LAST_7 = "Last 7 days"
+	SPLITS_LAST_14 = "Last 14 days"
+	SPLITS_LAST_28 = "Last 28 days"
+	SPLITS_LAST_365 = "Last 365days"
+
+	SPLITS_VS_RHP = "vs RHP"

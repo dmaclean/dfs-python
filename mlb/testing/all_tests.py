@@ -3,6 +3,7 @@ import unittest
 from mlb.testing.test_player_bvp import TestPlayerBvPParser
 from mlb.testing.test_player_gamelog_parser import TestPlayerGamelogParser
 from mlb.testing.test_player_manager import TestPlayerManager
+from mlb.testing.test_player_splits_parser import TestPlayerSplitsParser
 
 from test_player_list_parser import TestPlayerListParser
 from test_player_season_stats_parser import TestPlayerSeasonStatsParser
@@ -37,4 +38,10 @@ unittest.TextTestRunner(verbosity=2).run(suite)
 # Player Batter vs Pitcher
 ############################
 suite = unittest.TestLoader().loadTestsFromTestCase(TestPlayerBvPParser)
+unittest.TextTestRunner(verbosity=2).run(suite)
+
+#################
+# Player Splits
+#################
+suite = unittest.TestLoader().loadTestsFromTestCase(TestPlayerSplitsParser)
 unittest.TextTestRunner(verbosity=2).run(suite)
