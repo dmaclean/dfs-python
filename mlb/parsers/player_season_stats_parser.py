@@ -16,6 +16,7 @@ class PlayerSeasonStatsParser:
 		self.player_value_pitching_regex = re.compile("pitching_value\.(\d+)")
 
 		self.batting_standard_season_regex = re.compile("batting_standard\.(\d+)")
+		self.player_value_batting_regex = re.compile("batting_value\.(\d+)")
 
 	def parse(self, data):
 		"""
@@ -36,6 +37,9 @@ class PlayerSeasonStatsParser:
 		else:
 			# Parse the Standard Batting table
 			self.parse_standard_batting(soup)
+
+			# Parse the Player Value--Batters table
+			self.parse_player_value_batting(soup)
 
 	def parse_standard_pitching(self, soup):
 		"""
@@ -251,5 +255,57 @@ class PlayerSeasonStatsParser:
 					self.player_data[MLBConstants.STANDARD_BATTING][season][MLBConstants.INTENTIONAL_WALKS] = MLBUtilities.resolve_value(td.text, "int")
 				elif i == 28:
 					self.player_data[MLBConstants.STANDARD_BATTING][season][MLBConstants.POSITION] = td.text
+
+				i += 1
+
+	def parse_player_value_batting(self, soup):
+		"""
+		Parses data from the Stanard Batting table.
+		"""
+		player_value_batting_entries = soup.find_all(id=self.player_value_batting_regex)
+
+		for entry in player_value_batting_entries:
+			tds = entry.find_all("td")
+
+			i = 0
+			season = ""
+			for td in tds:
+				if i == 0:
+					season = td.text
+
+					if MLBConstants.PLAYER_VALUE_BATTING not in self.player_data:
+						self.player_data[MLBConstants.PLAYER_VALUE_BATTING] = {}
+
+					self.player_data[MLBConstants.PLAYER_VALUE_BATTING][season] = {}
+				elif i == 6:
+					self.player_data[MLBConstants.PLAYER_VALUE_BATTING][season][MLBConstants.RUNS_BATTING] = MLBUtilities.resolve_value(td.text, "int")
+				elif i == 7:
+					self.player_data[MLBConstants.PLAYER_VALUE_BATTING][season][MLBConstants.RUNS_FROM_BASERUNNING] = MLBUtilities.resolve_value(td.text, "int")
+				elif i == 8:
+					self.player_data[MLBConstants.PLAYER_VALUE_BATTING][season][MLBConstants.RUNS_GROUNDED_INTO_DOUBLE_PLAY] = MLBUtilities.resolve_value(td.text, "int")
+				elif i == 9:
+					self.player_data[MLBConstants.PLAYER_VALUE_BATTING][season][MLBConstants.RUNS_FROM_FIELDING] = MLBUtilities.resolve_value(td.text, "int")
+				elif i == 10:
+					self.player_data[MLBConstants.PLAYER_VALUE_BATTING][season][MLBConstants.RUNS_FROM_POSITION_SCARCITY] = MLBUtilities.resolve_value(td.text, "int")
+				elif i == 11:
+					self.player_data[MLBConstants.PLAYER_VALUE_BATTING][season][MLBConstants.RAA] = MLBUtilities.resolve_value(td.text, "int")
+				elif i == 12:
+					self.player_data[MLBConstants.PLAYER_VALUE_BATTING][season][MLBConstants.WAA] = MLBUtilities.resolve_value(td.text, "float")
+				elif i == 13:
+					self.player_data[MLBConstants.PLAYER_VALUE_BATTING][season][MLBConstants.RUNS_FROM_REPLACEMENT_LEVEL] = MLBUtilities.resolve_value(td.text, "int")
+				elif i == 14:
+					self.player_data[MLBConstants.PLAYER_VALUE_BATTING][season][MLBConstants.RAR] = MLBUtilities.resolve_value(td.text, "float")
+				elif i == 15:
+					self.player_data[MLBConstants.PLAYER_VALUE_BATTING][season][MLBConstants.WAR] = MLBUtilities.resolve_value(td.text, "float")
+				elif i == 16:
+					self.player_data[MLBConstants.PLAYER_VALUE_BATTING][season][MLBConstants.WIN_LOSS_PCT_WITH_AVG_TEAM] = MLBUtilities.resolve_value(td.text, "float")
+				elif i == 17:
+					self.player_data[MLBConstants.PLAYER_VALUE_BATTING][season][MLBConstants.WIN_LOSS_PCT_WITH_AVG_TEAM_SEASON] = MLBUtilities.resolve_value(td.text, "float")
+				elif i == 18:
+					self.player_data[MLBConstants.PLAYER_VALUE_BATTING][season][MLBConstants.OFF_WAR] = MLBUtilities.resolve_value(td.text, "float")
+				elif i == 19:
+					self.player_data[MLBConstants.PLAYER_VALUE_BATTING][season][MLBConstants.DEF_WAR] = MLBUtilities.resolve_value(td.text, "float")
+				elif i == 20:
+					self.player_data[MLBConstants.PLAYER_VALUE_BATTING][season][MLBConstants.OFF_RAR] = MLBUtilities.resolve_value(td.text, "float")
 
 				i += 1

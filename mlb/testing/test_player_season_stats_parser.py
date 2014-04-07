@@ -350,6 +350,74 @@ class TestPlayerSeasonStatsParser(unittest.TestCase):
 		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_BATTING]["2014"]
 							[MLBConstants.POSITION] == "*/3")
 
+	def test_parse_player_value_batting(self):
+		self.player_season_stat_parser.player_data = {MLBConstants.PLAYER_ID: "cabremi01"}
+		self.player_season_stat_parser.parse(open('../test_files/season_stats_batter.html'))
+
+		##############################
+		# Player value batting table
+		##############################
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_BATTING]["2003"]
+							[MLBConstants.RUNS_BATTING] == 2)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_BATTING]["2003"]
+							[MLBConstants.RUNS_FROM_BASERUNNING] == 0)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_BATTING]["2003"]
+							[MLBConstants.RUNS_GROUNDED_INTO_DOUBLE_PLAY] == -2)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_BATTING]["2003"]
+							[MLBConstants.RUNS_FROM_FIELDING] == -2)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_BATTING]["2003"]
+							[MLBConstants.RUNS_FROM_POSITION_SCARCITY] == -2)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_BATTING]["2003"]
+							[MLBConstants.RAA] == -4)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_BATTING]["2003"]
+							[MLBConstants.WAA] == -0.4)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_BATTING]["2003"]
+							[MLBConstants.RUNS_FROM_REPLACEMENT_LEVEL] == 11)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_BATTING]["2003"]
+							[MLBConstants.RAR] == 7)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_BATTING]["2003"]
+							[MLBConstants.WAR] == 0.6)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_BATTING]["2003"]
+							[MLBConstants.WIN_LOSS_PCT_WITH_AVG_TEAM] == 0.496)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_BATTING]["2003"]
+							[MLBConstants.WIN_LOSS_PCT_WITH_AVG_TEAM_SEASON] == 0.498)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_BATTING]["2003"]
+							[MLBConstants.OFF_WAR] == 0.8)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_BATTING]["2003"]
+							[MLBConstants.DEF_WAR] == -0.4)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_BATTING]["2003"]
+							[MLBConstants.OFF_RAR] == 9)
+
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_BATTING]["2013"]
+							[MLBConstants.RUNS_BATTING] == 65)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_BATTING]["2013"]
+							[MLBConstants.RUNS_FROM_BASERUNNING] == 0)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_BATTING]["2013"]
+							[MLBConstants.RUNS_GROUNDED_INTO_DOUBLE_PLAY] == 0)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_BATTING]["2013"]
+							[MLBConstants.RUNS_FROM_FIELDING] == -18)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_BATTING]["2013"]
+							[MLBConstants.RUNS_FROM_POSITION_SCARCITY] == 2)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_BATTING]["2013"]
+							[MLBConstants.RAA] == 49)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_BATTING]["2013"]
+							[MLBConstants.WAA] == 5.3)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_BATTING]["2013"]
+							[MLBConstants.RUNS_FROM_REPLACEMENT_LEVEL] == 23)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_BATTING]["2013"]
+							[MLBConstants.RAR] == 72)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_BATTING]["2013"]
+							[MLBConstants.WAR] == 7.5)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_BATTING]["2013"]
+							[MLBConstants.WIN_LOSS_PCT_WITH_AVG_TEAM] == 0.534)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_BATTING]["2013"]
+							[MLBConstants.WIN_LOSS_PCT_WITH_AVG_TEAM_SEASON] == 0.531)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_BATTING]["2013"]
+							[MLBConstants.OFF_WAR] == 9.2)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_BATTING]["2013"]
+							[MLBConstants.DEF_WAR] == -1.5)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_VALUE_BATTING]["2013"]
+							[MLBConstants.OFF_RAR] == 90)
 
 
 if __name__ == '__main__':
