@@ -13,16 +13,199 @@ class PlayerSplitsParser:
 	def __init__(self, player_data=None):
 		self.player_data = player_data
 
-	def parse(self, data):
-		soup = BeautifulSoup(data)
+	def parse(self, data, season):
+		s = data.read().decode('utf-8', 'ignore')
+
+		# Terrible hack to fix bad HTML that uses a tbody close tag instead of an open tag.
+		s = s.replace("</colgroup></tbody>", "</colgroup><tbody>")
+		soup = BeautifulSoup(s, 'html.parser')
 
 		if self.player_data[MLBConstants.POSITION] == "Pitcher":
-			self.parse_pitcher_splits(soup)
+			self.parse_pitcher_splits(soup, season)
 		else:
-			self.parse_batter_splits(soup, "2014")
+			self.parse_batter_splits(soup, season)
 
-	def parse_pitcher_splits(self, soup):
-		pass
+	def parse_pitcher_splits(self, soup, season):
+		split_divs = soup.find_all("div", attrs={"class": "stw"})
+
+		for split_div in split_divs:
+			table = split_div.find("table")
+
+			pitcher_extras = False
+			if table.attrs["id"].find("_extra") > -1:
+				pitcher_extras = True
+
+			tbody = split_div.find("tbody")
+
+			trs = tbody.find_all("tr")
+
+			for tr in trs:
+				tds = tr.find_all("td")
+				if len(tds) == 0:
+					continue
+
+				i = 0
+				split_type = ""
+				for td in tds:
+					# There are (sometimes) two table for each split type for pitchers - normal and extras.  The id for
+					# each extras table ends in "_extras", so when that is detected, we set a flag indicating that we're
+					# processing an extras table.
+					if not pitcher_extras:
+						if i == 0:
+							if MLBConstants.PITCHER_SPLITS not in self.player_data:
+								self.player_data[MLBConstants.PITCHER_SPLITS] = {}
+
+							if season not in self.player_data[MLBConstants.PITCHER_SPLITS]:
+								self.player_data[MLBConstants.PITCHER_SPLITS][season] = {}
+
+							if td.text not in self.player_data[MLBConstants.PITCHER_SPLITS][season]:
+								split_type = td.text
+								self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type] = {}
+						elif i == 1 and not pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.GAMES_PLAYED] = MLBUtilities.resolve_value(td.text, "int")
+						elif i == 2 and not pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.PLATE_APPEARANCES] = MLBUtilities.resolve_value(td.text, "int")
+						elif i == 3 and not pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.AT_BATS] = MLBUtilities.resolve_value(td.text, "int")
+						elif i == 4 and not pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.RUNS] = MLBUtilities.resolve_value(td.text, "int")
+						elif i == 5 and not pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.HITS] = MLBUtilities.resolve_value(td.text, "int")
+						elif i == 6 and not pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.DOUBLES] = MLBUtilities.resolve_value(td.text, "int")
+						elif i == 7 and not pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.TRIPLES] = MLBUtilities.resolve_value(td.text, "int")
+						elif i == 8 and not pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.HOME_RUNS] = MLBUtilities.resolve_value(td.text, "int")
+						elif i == 9 and not pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.STOLEN_BASES] = MLBUtilities.resolve_value(td.text, "int")
+						elif i == 10 and not pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.CAUGHT_STEALING] = MLBUtilities.resolve_value(td.text, "int")
+						elif i == 11 and not pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.WALKS] = MLBUtilities.resolve_value(td.text, "int")
+						elif i == 12 and not pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.STRIKE_OUTS] = MLBUtilities.resolve_value(td.text, "int")
+						elif i == 13 and not pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.STRIKE_OUT_TO_WALK_RATIO] = MLBUtilities.resolve_value(td.text, "float")
+						elif i == 14 and not pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.BATTING_AVERAGE] = MLBUtilities.resolve_value(td.text, "float")
+						elif i == 15 and not pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.ON_BASE_PERCENTAGE] = MLBUtilities.resolve_value(td.text, "float")
+						elif i == 16 and not pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.SLUGGING_PERCENTAGE] = MLBUtilities.resolve_value(td.text, "float")
+						elif i == 17 and not pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.OPS] = MLBUtilities.resolve_value(td.text, "float")
+						elif i == 18 and not pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.TOTAL_BASES] = MLBUtilities.resolve_value(td.text, "int")
+						elif i == 19 and not pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.DOUBLE_PLAYS_GROUNDED_INTO] = MLBUtilities.resolve_value(td.text, "int")
+						elif i == 20 and not pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.HIT_BY_PITCH] = MLBUtilities.resolve_value(td.text, "int")
+						elif i == 21 and not pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.SACRIFICE_HITS] = MLBUtilities.resolve_value(td.text, "int")
+						elif i == 22 and not pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.SACRIFICE_FLIES] = MLBUtilities.resolve_value(td.text, "int")
+						elif i == 23 and not pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.INTENTIONAL_WALKS] = MLBUtilities.resolve_value(td.text, "int")
+						elif i == 24 and not pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.REACHED_ON_ERROR] = MLBUtilities.resolve_value(td.text, "int")
+						elif i == 25 and not pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.BABIP] = MLBUtilities.resolve_value(td.text, "float")
+						elif i == 26 and not pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.T_OPS_PLUS] = MLBUtilities.resolve_value(td.text, "int")
+						elif i == 27 and not pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.S_OPS_PLUS] = MLBUtilities.resolve_value(td.text, "int")
+					else:
+						if i == 1 and pitcher_extras:
+							if MLBConstants.PITCHER_SPLITS not in self.player_data:
+								self.player_data[MLBConstants.PITCHER_SPLITS] = {}
+
+							if season not in self.player_data[MLBConstants.PITCHER_SPLITS]:
+								self.player_data[MLBConstants.PITCHER_SPLITS][season] = {}
+
+							split_type = td.text
+							if td.text not in self.player_data[MLBConstants.PITCHER_SPLITS][season]:
+								self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type] = {}
+						elif i == 2 and pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.WINS] = MLBUtilities.resolve_value(td.text, "int")
+						elif i == 3 and pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.LOSSES] = MLBUtilities.resolve_value(td.text, "int")
+						elif i == 4 and pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.WIN_LOSS_PCT] = MLBUtilities.resolve_value(td.text, "float")
+						elif i == 5 and pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.ERA] = MLBUtilities.resolve_value(td.text, "float")
+						# elif i == 6 and pitcher_extras:
+						# 	self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+						# 		MLBConstants.GAMES_PLAYED] = MLBUtilities.resolve_value(td.text, "int")
+						elif i == 7 and pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.GAMES_STARTED] = MLBUtilities.resolve_value(td.text, "int")
+						elif i == 8 and pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.GAMES_FINISHED] = MLBUtilities.resolve_value(td.text, "int")
+						elif i == 9 and pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.COMPLETE_GAMES] = MLBUtilities.resolve_value(td.text, "int")
+						elif i == 10 and pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.SHUT_OUTS] = MLBUtilities.resolve_value(td.text, "int")
+						elif i == 11 and pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.SAVES] = MLBUtilities.resolve_value(td.text, "int")
+						elif i == 12 and pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.INNINGS_PITCHED] = MLBUtilities.resolve_value(td.text, "float")
+						# elif i == 12 and pitcher_extras:
+						# 	self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+						# 		MLBConstants.HITS] = MLBUtilities.resolve_value(td.text, "int")
+						elif i == 15 and pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.EARNED_RUNS] = MLBUtilities.resolve_value(td.text, "int")
+						elif i == 21 and pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.BALKS] = MLBUtilities.resolve_value(td.text, "int")
+						elif i == 22 and pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.WILD_PITCHES] = MLBUtilities.resolve_value(td.text, "int")
+						elif i == 24 and pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.WHIP] = MLBUtilities.resolve_value(td.text, "float")
+						elif i == 25 and pitcher_extras:
+							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
+								MLBConstants.STRIKE_OUTS_PER_9_INNINGS] = MLBUtilities.resolve_value(td.text, "float")
+
+					i += 1
 
 	def parse_batter_splits(self, soup, season):
 		split_divs = soup.find_all("div", attrs={"class": "stw"})
@@ -38,8 +221,13 @@ class PlayerSplitsParser:
 
 				i = 0
 				split_type = ""
+				pitcher_extras = False
 				for td in tds:
 					if i == 0:
+						if td.text == "":
+							pitcher_extras = True
+							continue
+
 						if MLBConstants.BATTER_SPLITS not in self.player_data:
 							self.player_data[MLBConstants.BATTER_SPLITS] = {}
 
@@ -49,89 +237,139 @@ class PlayerSplitsParser:
 						if td.text not in self.player_data[MLBConstants.BATTER_SPLITS][season]:
 							split_type = td.text
 							self.player_data[MLBConstants.BATTER_SPLITS][season][split_type] = {}
-					elif i == 1:
+					elif i == 1 and not pitcher_extras:
 						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
 							MLBConstants.GAMES_PLAYED] = MLBUtilities.resolve_value(td.text, "int")
-					elif i == 2:
+					elif i == 2 and not pitcher_extras:
 						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
 							MLBConstants.GAMES_STARTED] = MLBUtilities.resolve_value(td.text, "int")
-					elif i == 3:
+					elif i == 3 and not pitcher_extras:
 						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
 							MLBConstants.PLATE_APPEARANCES] = MLBUtilities.resolve_value(td.text, "int")
-					elif i == 4:
+					elif i == 4 and not pitcher_extras:
 						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
 							MLBConstants.AT_BATS] = MLBUtilities.resolve_value(td.text, "int")
-					elif i == 5:
+					elif i == 5 and not pitcher_extras:
 						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
 							MLBConstants.RUNS] = MLBUtilities.resolve_value(td.text, "int")
-					elif i == 6:
+					elif i == 6 and not pitcher_extras:
 						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
 							MLBConstants.HITS] = MLBUtilities.resolve_value(td.text, "int")
-					elif i == 7:
+					elif i == 7 and not pitcher_extras:
 						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
 							MLBConstants.DOUBLES] = MLBUtilities.resolve_value(td.text, "int")
-					elif i == 8:
+					elif i == 8 and not pitcher_extras:
 						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
 							MLBConstants.TRIPLES] = MLBUtilities.resolve_value(td.text, "int")
-					elif i == 9:
+					elif i == 9 and not pitcher_extras:
 						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
 							MLBConstants.HOME_RUNS] = MLBUtilities.resolve_value(td.text, "int")
-					elif i == 10:
+					elif i == 10 and not pitcher_extras:
 						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
 							MLBConstants.RBI] = MLBUtilities.resolve_value(td.text, "int")
-					elif i == 11:
+					elif i == 11 and not pitcher_extras:
 						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
 							MLBConstants.STOLEN_BASES] = MLBUtilities.resolve_value(td.text, "int")
-					elif i == 12:
+					elif i == 12 and not pitcher_extras:
 						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
 							MLBConstants.CAUGHT_STEALING] = MLBUtilities.resolve_value(td.text, "int")
-					elif i == 13:
+					elif i == 13 and not pitcher_extras:
 						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
 							MLBConstants.WALKS] = MLBUtilities.resolve_value(td.text, "int")
-					elif i == 14:
+					elif i == 14 and not pitcher_extras:
 						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
 							MLBConstants.STRIKE_OUTS] = MLBUtilities.resolve_value(td.text, "int")
-					elif i == 15:
+					elif i == 15 and not pitcher_extras:
 						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
 							MLBConstants.BATTING_AVERAGE] = MLBUtilities.resolve_value(td.text, "float")
-					elif i == 16:
+					elif i == 16 and not pitcher_extras:
 						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
 							MLBConstants.ON_BASE_PERCENTAGE] = MLBUtilities.resolve_value(td.text, "float")
-					elif i == 17:
+					elif i == 17 and not pitcher_extras:
 						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
 							MLBConstants.SLUGGING_PERCENTAGE] = MLBUtilities.resolve_value(td.text, "float")
-					elif i == 18:
+					elif i == 18 and not pitcher_extras:
 						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
 							MLBConstants.OPS] = MLBUtilities.resolve_value(td.text, "float")
-					elif i == 19:
+					elif i == 19 and not pitcher_extras:
 						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
 							MLBConstants.TOTAL_BASES] = MLBUtilities.resolve_value(td.text, "int")
-					elif i == 20:
+					elif i == 20 and not pitcher_extras:
 						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
 							MLBConstants.DOUBLE_PLAYS_GROUNDED_INTO] = MLBUtilities.resolve_value(td.text, "int")
-					elif i == 21:
+					elif i == 21 and not pitcher_extras:
 						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
 							MLBConstants.HIT_BY_PITCH] = MLBUtilities.resolve_value(td.text, "int")
-					elif i == 22:
+					elif i == 22 and not pitcher_extras:
 						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
 							MLBConstants.SACRIFICE_HITS] = MLBUtilities.resolve_value(td.text, "int")
-					elif i == 23:
+					elif i == 23 and not pitcher_extras:
 						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
 							MLBConstants.SACRIFICE_FLIES] = MLBUtilities.resolve_value(td.text, "int")
-					elif i == 24:
+					elif i == 24 and not pitcher_extras:
 						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
 							MLBConstants.INTENTIONAL_WALKS] = MLBUtilities.resolve_value(td.text, "int")
-					elif i == 25:
+					elif i == 25 and not pitcher_extras:
 						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
 							MLBConstants.REACHED_ON_ERROR] = MLBUtilities.resolve_value(td.text, "int")
-					elif i == 26:
+					elif i == 26 and not pitcher_extras:
 						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
 							MLBConstants.BABIP] = MLBUtilities.resolve_value(td.text, "float")
-					elif i == 27:
+					elif i == 27 and not pitcher_extras:
 						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
 							MLBConstants.T_OPS_PLUS] = MLBUtilities.resolve_value(td.text, "int")
-					elif i == 28:
+					elif i == 28 and not pitcher_extras:
 						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
 							MLBConstants.S_OPS_PLUS] = MLBUtilities.resolve_value(td.text, "int")
+
+					elif i == 1 and pitcher_extras:
+						if MLBConstants.BATTER_SPLITS not in self.player_data:
+							self.player_data[MLBConstants.BATTER_SPLITS] = {}
+
+						if season not in self.player_data[MLBConstants.BATTER_SPLITS]:
+							self.player_data[MLBConstants.BATTER_SPLITS][season] = {}
+
+						if td.text not in self.player_data[MLBConstants.BATTER_SPLITS][season]:
+							split_type = td.text
+							self.player_data[MLBConstants.BATTER_SPLITS][season][split_type] = {}
+					elif i == 2 and pitcher_extras:
+						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
+							MLBConstants.WINS] = MLBUtilities.resolve_value(td.text, "int")
+					elif i == 3 and pitcher_extras:
+						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
+							MLBConstants.LOSSES] = MLBUtilities.resolve_value(td.text, "int")
+					elif i == 4 and pitcher_extras:
+						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
+							MLBConstants.WIN_LOSS_PCT] = MLBUtilities.resolve_value(td.text, "float")
+					elif i == 5 and pitcher_extras:
+						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
+							MLBConstants.ERA] = MLBUtilities.resolve_value(td.text, "float")
+					elif i == 6 and pitcher_extras:
+						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
+							MLBConstants.GAMES_PLAYED] = MLBUtilities.resolve_value(td.text, "int")
+					elif i == 7 and pitcher_extras:
+						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
+							MLBConstants.GAMES_STARTED] = MLBUtilities.resolve_value(td.text, "int")
+					elif i == 8 and pitcher_extras:
+						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
+							MLBConstants.GAMES_FINISHED] = MLBUtilities.resolve_value(td.text, "int")
+					elif i == 9 and pitcher_extras:
+						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
+							MLBConstants.COMPLETE_GAMES] = MLBUtilities.resolve_value(td.text, "int")
+					elif i == 10 and pitcher_extras:
+						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
+							MLBConstants.SHUT_OUTS] = MLBUtilities.resolve_value(td.text, "int")
+					elif i == 11 and pitcher_extras:
+						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
+							MLBConstants.SAVES] = MLBUtilities.resolve_value(td.text, "int")
+					elif i == 12 and pitcher_extras:
+						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
+							MLBConstants.INNINGS_PITCHED] = MLBUtilities.resolve_value(td.text, "float")
+					elif i == 13 and pitcher_extras:
+						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
+							MLBConstants.HITS] = MLBUtilities.resolve_value(td.text, "int")
+					elif i == 3 and pitcher_extras:
+						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
+							MLBConstants.LOSSES] = MLBUtilities.resolve_value(td.text, "int")
 
 					i += 1

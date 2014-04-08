@@ -162,6 +162,7 @@ class MLBConstants:
 	S_OPS_PLUS = "sOPS+"
 
 	BATTER_SPLITS = "batter_splits"
+	PITCHER_SPLITS = "pitcher_splits"
 
 	#################
 	# Batter Splits
