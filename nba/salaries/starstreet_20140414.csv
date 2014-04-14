@@ -1,0 +1,301 @@
+Position,Name,Team,Opponent,Game Time,Avg Fantasy Points,Price,Starter,Injury Status
+SF,Kevin Durant,OKC,OKC @ NOP, 8:00 PM,50.1,19000,"",
+SG,James Harden,HOU,HOU vs SAS, 8:00 PM,40.8,19000,"",
+SF,LeBron James,MIA,MIA @ WAS, 7:00 PM,45.6,18800,"",
+PF-C,Kevin Love,MIN,MIN @ GSW,10:30 PM,48.2,18500,"",OUT
+PG,Stephen Curry,GSW,GSW vs MIN,10:30 PM,41.8,18300,"",
+C,Al Jefferson,CHA,CHA @ ATL, 7:30 PM,40.8,18100,"",
+PF-C,Anthony Davis,NOP,NOP vs OKC, 8:00 PM,42.4,17600,"",OUT
+PG,Russell Westbrook,OKC,OKC @ NOP, 8:00 PM,39.4,17100,"",
+C,Joakim Noah,CHI,CHI vs ORL, 8:00 PM,37.7,15800,"",
+PG,John Wall,WAS,WAS vs MIA, 7:00 PM,38.8,14500,"",
+PG,Eric Bledsoe,PHO,PHO vs MEM,10:00 PM,33.0,14400,"",
+PG,Rajon Rondo,BOS,BOS @ PHI, 7:00 PM,32.3,14300,"",OUT
+PG,Michael Carter-Williams,PHI,PHI vs BOS, 7:00 PM,35.2,14200,"",
+PG,Kyle Lowry,TOR,TOR vs MIL, 7:00 PM,35.9,14100,"",
+PF,Paul Millsap,ATL,ATL vs CHA, 7:30 PM,36.3,14000,"",
+PF-C,Pau Gasol,LAL,LAL @ UTA, 9:00 PM,36.1,14000,"",OUT
+C,Marc Gasol,MEM,MEM @ PHO,10:00 PM,31.5,14000,"",
+C,Dwight Howard,HOU,HOU vs SAS, 8:00 PM,38.6,14000,"",
+PG,Kemba Walker,CHA,CHA @ ATL, 7:30 PM,33.1,13600,"",OUT
+SG,DeMar DeRozan,TOR,TOR vs MIL, 7:00 PM,34.9,13500,"",
+C,Marcin Gortat,WAS,WAS vs MIA, 7:00 PM,29.9,13500,"",
+PF,Tim Duncan,SAS,SAS @ HOU, 8:00 PM,34.7,13400,"",OUT
+PG,Goran Dragic,PHO,PHO vs MEM,10:00 PM,33.7,13300,"",
+SG,Dwyane Wade,MIA,MIA @ WAS, 7:00 PM,33.2,13200,"",
+PF,Zach Randolph,MEM,MEM @ PHO,10:00 PM,33.0,13200,"",
+PF-C,Serge Ibaka,OKC,OKC @ NOP, 8:00 PM,32.2,13200,"",
+PG,Jeff Teague,ATL,ATL vs CHA, 7:30 PM,29.8,13100,"",
+PF,David Lee,GSW,GSW vs MIN,10:30 PM,32.9,12900,"",
+SG,Brandon Knight,MIL,MIL @ TOR, 7:00 PM,29.3,12900,"",OUT
+SF,Chandler Parsons,HOU,HOU vs SAS, 8:00 PM,30.7,12800,"",OUT
+C,Nikola Vucevic,ORL,ORL @ CHI, 8:00 PM,32.5,12700,"",OUT
+PF-C,Jordan Hill,LAL,LAL @ UTA, 9:00 PM,21.2,12200,"",
+C,Jonas Valanciunas,TOR,TOR vs MIL, 7:00 PM,24.0,12200,"",
+PG,Mike Conley,MEM,MEM @ PHO,10:00 PM,31.1,12000,"",
+PG,Ricky Rubio,MIN,MIN @ GSW,10:30 PM,29.9,12000,"",
+SG-SF,Kawhi Leonard,SAS,SAS @ HOU, 8:00 PM,27.3,12000,"",
+SG-SF,Gordon Hayward,UTA,UTA vs LAL, 9:00 PM,31.3,11900,"",
+C,Nikola Pekovic,MIN,MIN @ GSW,10:30 PM,30.1,11800,"",OUT
+PF-C,Derrick Favors,UTA,UTA vs LAL, 9:00 PM,29.0,11800,"",
+C,Enes Kanter,UTA,UTA vs LAL, 9:00 PM,22.8,11600,"",
+PG-SG,Avery Bradley,BOS,BOS @ PHI, 7:00 PM,22.4,11400,"",
+PF-C,Jared Sullinger,BOS,BOS @ PHI, 7:00 PM,26.5,11200,"",OUT
+SG,Bradley Beal,WAS,WAS vs MIA, 7:00 PM,27.3,11100,"",
+PF,Thaddeus Young,PHI,PHI vs BOS, 7:00 PM,31.8,11100,"",
+SG-SF,Nick Young,LAL,LAL @ UTA, 9:00 PM,23.2,11000,"",
+SG,Klay Thompson,GSW,GSW vs MIN,10:30 PM,26.9,10900,"",
+SG-SF,Tyreke Evans,NOP,NOP vs OKC, 8:00 PM,27.6,10700,"",OUT
+SF,Corey Brewer,MIN,MIN @ GSW,10:30 PM,20.9,10700,"",
+PG,Jameer Nelson,ORL,ORL @ CHI, 8:00 PM,26.0,10600,"",
+SF-PF,Terrence Jones,HOU,HOU vs SAS, 8:00 PM,25.4,10600,"",
+SG-SF,Arron Afflalo,ORL,ORL @ CHI, 8:00 PM,27.3,10600,"",
+PG,Tony Parker,SAS,SAS @ HOU, 8:00 PM,27.4,10500,"",
+PG,Ramon Sessions,MIL,MIL @ TOR, 7:00 PM,21.1,10500,"",
+SF-PF,Jeff Green,BOS,BOS @ PHI, 7:00 PM,25.5,10400,"",
+PG,DJ Augustin,CHI,CHI vs ORL, 8:00 PM,21.9,10400,"",
+PF,Kyle O'Quinn,ORL,ORL @ CHI, 8:00 PM,16.9,10400,"",
+PG,Patrick Beverley,HOU,HOU vs SAS, 8:00 PM,21.2,10400,"",OUT
+C,Omer Asik,HOU,HOU vs SAS, 8:00 PM,17.3,10400,"",
+SG,Kevin Martin,MIN,MIN @ GSW,10:30 PM,26.0,10300,"",OUT
+SG-SF,Jimmy Butler,CHI,CHI vs ORL, 8:00 PM,26.5,10300,"",
+SF-PF,Tobias Harris,ORL,ORL @ CHI, 8:00 PM,26.8,10300,"",
+SG,Austin Rivers,NOP,NOP vs OKC, 8:00 PM,13.6,10300,"",
+SG,Eric Gordon,NOP,NOP vs OKC, 8:00 PM,24.1,10300,"",OUT
+PF-C,Chris Bosh,MIA,MIA @ WAS, 7:00 PM,28.6,10100,"",
+SF,DeMarre Carroll,ATL,ATL vs CHA, 7:30 PM,23.2,10100,"",
+SG,Kobe Bryant,LAL,LAL @ UTA, 9:00 PM,25.8,10100,"",OUT
+PF-C,Taj Gibson,CHI,CHI vs ORL, 8:00 PM,25.4,10100,"",
+PF,Jeff Adrien,MIL,MIL @ TOR, 7:00 PM,16.2,9800,"",
+SG-SF,Gerald Green,PHO,PHO vs MEM,10:00 PM,23.4,9700,"",
+PG,Reggie Jackson,OKC,OKC @ NOP, 8:00 PM,24.5,9700,"",
+PF-C,Nene Hilario,WAS,WAS vs MIA, 7:00 PM,27.7,9600,"",OUT
+PG,Trey Burke,UTA,UTA vs LAL, 9:00 PM,24.0,9600,"",
+PG,Jordan Farmar,LAL,LAL @ UTA, 9:00 PM,20.7,9500,"",
+SG,Victor Oladipo,ORL,ORL @ CHI, 8:00 PM,26.4,9400,"",
+C,Andrew Bogut,GSW,GSW vs MIN,10:30 PM,25.9,9400,"",
+PF,Markieff Morris,PHO,PHO vs MEM,10:00 PM,24.9,9400,"",
+PF-C,John Henson,MIL,MIL @ TOR, 7:00 PM,25.2,9400,"",
+PG,Phil Pressey,BOS,BOS @ PHI, 7:00 PM,10.0,9400,"",
+SG,Jodie Meeks,LAL,LAL @ UTA, 9:00 PM,23.0,9400,"",
+SF,Trevor Ariza,WAS,WAS vs MIA, 7:00 PM,27.9,9200,"",
+PF,Carlos Boozer,CHI,CHI vs ORL, 8:00 PM,26.3,9200,"",
+SG,Gerald Henderson,CHA,CHA @ ATL, 7:30 PM,23.8,9100,"",
+PF,Brandon Bass,BOS,BOS @ PHI, 7:00 PM,21.1,9000,"",
+PG,Jeremy Lin,HOU,HOU vs SAS, 8:00 PM,22.4,9000,"",
+C,Zaza Pachulia,MIL,MIL @ TOR, 7:00 PM,20.0,9000,"",
+PG,Mario Chalmers,MIA,MIA @ WAS, 7:00 PM,22.4,9000,"",
+C,Gorgui Dieng,MIN,MIN @ GSW,10:30 PM,13.3,9000,"",
+PF-C,Kelly Olynyk,BOS,BOS @ PHI, 7:00 PM,17.1,8800,"",
+PF,Khris Middleton,MIL,MIL @ TOR, 7:00 PM,20.8,8800,"",
+SG-SF,Mike Dunleavy,CHI,CHI vs ORL, 8:00 PM,21.2,8800,"",
+SG-SF,Danny Green,SAS,SAS @ HOU, 8:00 PM,18.2,8600,"",
+C,Larry Sanders,MIL,MIL @ TOR, 7:00 PM,21.9,8600,"",OUT
+SG-SF,PJ Tucker,PHO,PHO vs MEM,10:00 PM,22.4,8500,"",
+PF-C,Channing Frye,PHO,PHO vs MEM,10:00 PM,21.2,8500,"",
+PF,Ersan Ilyasova,MIL,MIL @ TOR, 7:00 PM,21.8,8500,"",OUT
+SG,Anthony Morrow,NOP,NOP vs OKC, 8:00 PM,12.4,8400,"",
+PF,Josh McRoberts,CHA,CHA @ ATL, 7:30 PM,22.6,8400,"",
+PG-SG,Kirk Hinrich,CHI,CHI vs ORL, 8:00 PM,19.6,8300,"",
+PF,Dante Cunningham,MIN,MIN @ GSW,10:30 PM,15.4,8200,"",
+C,Alexis Ajinca,NOP,NOP vs OKC, 8:00 PM,14.2,8200,"",
+C,Henry Sims,PHI,PHI vs BOS, 7:00 PM,16.6,8200,"",
+PF,Trevor Booker,WAS,WAS vs MIA, 7:00 PM,16.2,8200,"",
+SF,Robbie Hummel,MIN,MIN @ GSW,10:30 PM,7.3,8200,"",
+SG-SF,Francisco Garcia,HOU,HOU vs SAS, 8:00 PM,12.0,8200,"",
+PF-C,Elton Brand,ATL,ATL vs CHA, 7:30 PM,16.1,8200,"",
+PF,Mike Scott,ATL,ATL vs CHA, 7:30 PM,15.1,8200,"",
+SF,Moe Harkless,ORL,ORL @ CHI, 8:00 PM,15.5,8200,"",
+SG,Alec Burks,UTA,UTA vs LAL, 9:00 PM,22.3,8200,"",
+PF,Ryan Kelly,LAL,LAL @ UTA, 9:00 PM,16.8,8200,"",
+SG,Tony Wroten,PHI,PHI vs BOS, 7:00 PM,21.3,8100,"",
+SG-SF,Wesley Johnson,LAL,LAL @ UTA, 9:00 PM,19.5,8100,"",
+SG,Manu Ginobili,SAS,SAS @ HOU, 8:00 PM,23.2,8100,"",OUT
+C,Chris Kaman,LAL,LAL @ UTA, 9:00 PM,20.6,8100,"",OUT
+SG-SF,Hollis Thompson,PHI,PHI vs BOS, 7:00 PM,12.4,8100,"",
+SG-SF,Andre Iguodala,GSW,GSW vs MIN,10:30 PM,23.4,8100,"",OUT
+SF,Luke Babbitt,NOP,NOP vs OKC, 8:00 PM,12.2,8000,"",
+PG,Derrick Rose,CHI,CHI vs ORL, 8:00 PM,24.2,8000,"",OUT
+PF,Udonis Haslem,MIA,MIA @ WAS, 7:00 PM,9.1,8000,"",
+SG-SF,Kyle Korver,ATL,ATL vs CHA, 7:30 PM,22.6,8000,"",
+SG,Courtney Lee,MEM,MEM @ PHO,10:00 PM,16.4,8000,"",
+SF,James Johnson,MEM,MEM @ PHO,10:00 PM,17.2,8000,"",
+SG-SF,James Anderson,PHI,PHI vs BOS, 7:00 PM,18.8,8000,"",
+PG,Kendall Marshall,LAL,LAL @ UTA, 9:00 PM,23.7,8000,"",
+SG-SF,Terrence Ross,TOR,TOR vs MIL, 7:00 PM,17.5,8000,"",
+SF,Draymond Green,GSW,GSW vs MIN,10:30 PM,18.0,7900,"",
+SF,Darius Miller,NOP,NOP vs OKC, 8:00 PM,7.6,7900,"",
+PF-C,Jason Smith,NOP,NOP vs OKC, 8:00 PM,20.1,7900,"",OUT
+SG-SF,Giannis Antetokounmpo,MIL,MIL @ TOR, 7:00 PM,16.7,7900,"",
+SG,Louis Williams,ATL,ATL vs CHA, 7:30 PM,18.2,7900,"",
+PG,Greivis Vasquez,TOR,TOR vs MIL, 7:00 PM,17.4,7900,"",
+PG,Steve Blake,GSW,GSW vs MIN,10:30 PM,18.9,7900,"",
+PF,Patrick Patterson,TOR,TOR vs MIL, 7:00 PM,18.8,7900,"",
+SF-PF,Jeremy Evans,UTA,UTA vs LAL, 9:00 PM,14.6,7800,"",
+SG,Gary Neal,CHA,CHA @ ATL, 7:30 PM,14.3,7800,"",
+PG,Luke Ridnour,CHA,CHA @ ATL, 7:30 PM,11.7,7800,"",
+PF,Boris Diaw,SAS,SAS @ HOU, 8:00 PM,18.8,7800,"",
+PG,Patty Mills,SAS,SAS @ HOU, 8:00 PM,16.8,7800,"",
+PF-C,Miles Plumlee,PHO,PHO vs MEM,10:00 PM,21.0,7700,"",
+SG,Jordan Crawford,GSW,GSW vs MIN,10:30 PM,18.4,7700,"",
+C,Robert Sacre,LAL,LAL @ UTA, 9:00 PM,12.7,7700,"",
+SF,Caron Butler,OKC,OKC @ NOP, 8:00 PM,19.1,7700,"",
+SF,Richard Jefferson,UTA,UTA vs LAL, 9:00 PM,16.5,7600,"",
+C,Greg Stiemsma,NOP,NOP vs OKC, 8:00 PM,11.6,7600,"",
+SG,Marco Belinelli,SAS,SAS @ HOU, 8:00 PM,18.4,7600,"",
+PF,Marcus Morris,PHO,PHO vs MEM,10:00 PM,17.1,7600,"",
+C,Jeff Withey,NOP,NOP vs OKC, 8:00 PM,8.5,7600,"",
+SG-SF,Chris Douglas-Roberts,CHA,CHA @ ATL, 7:30 PM,12.6,7600,"",
+SF,Otto Porter,WAS,WAS vs MIA, 7:00 PM,4.6,7500,"",
+PF-C,Donatas Motiejunas,HOU,HOU vs SAS, 8:00 PM,11.3,7500,"",
+SF,Jordan Hamilton,HOU,HOU vs SAS, 8:00 PM,13.3,7500,"",
+C,Steven Adams,OKC,OKC @ NOP, 8:00 PM,11.0,7500,"",
+PF,Ryan Anderson,NOP,NOP vs OKC, 8:00 PM,29.6,7500,"",OUT
+PF,Marvin Williams,UTA,UTA vs LAL, 9:00 PM,19.0,7400,"",OUT
+PF-C,Marreese Speights,GSW,GSW vs MIN,10:30 PM,11.6,7400,"",
+SF,Harrison Barnes,GSW,GSW vs MIN,10:30 PM,17.4,7400,"",
+SG,Ray Allen,MIA,MIA @ WAS, 7:00 PM,16.6,7400,"",
+PF,Amir Johnson,TOR,TOR vs MIL, 7:00 PM,23.2,7400,"",
+SG,Tony Allen,MEM,MEM @ PHO,10:00 PM,18.5,7400,"",
+PF,Luc Mbah a Moute,MIN,MIN @ GSW,10:30 PM,7.9,7300,"",
+SF,Michael Kidd-Gilchrist,CHA,CHA @ ATL, 7:30 PM,16.7,7300,"",
+SG,Elliot Williams,PHI,PHI vs BOS, 7:00 PM,10.1,7300,"",
+PF-C,Kris Humphries,BOS,BOS @ PHI, 7:00 PM,19.0,7300,"",
+C,Tiago Splitter,SAS,SAS @ HOU, 8:00 PM,18.8,7300,"",
+SF,Al-Farouq Aminu,NOP,NOP vs OKC, 8:00 PM,19.1,7300,"",
+PF,Drew Gooden,WAS,WAS vs MIA, 7:00 PM,17.0,7300,"",
+PF-C,Jermaine O'Neal,GSW,GSW vs MIN,10:30 PM,17.0,7300,"",OUT
+SG,OJ Mayo,MIL,MIL @ TOR, 7:00 PM,17.7,7300,"",OUT
+SF,Michael Beasley,MIA,MIA @ WAS, 7:00 PM,13.2,7000,"",
+PG,Nate Wolters,MIL,MIL @ TOR, 7:00 PM,16.0,6300,"",OUT
+SG-SF,Xavier Henry,LAL,LAL @ UTA, 9:00 PM,16.2,6300,"",OUT
+PF-C,Jeff Ayres,SAS,SAS @ HOU, 8:00 PM,8.9,6200,"",
+C,Joel Anthony,BOS,BOS @ PHI, 7:00 PM,3.0,6200,"",
+PG,Brian Roberts,NOP,NOP vs OKC, 8:00 PM,16.9,6200,"",OUT
+SG-SF,Chris Johnson,BOS,BOS @ PHI, 7:00 PM,11.0,6100,"",
+PG,Derek Fisher,OKC,OKC @ NOP, 8:00 PM,10.5,6100,"",
+SF,Omri Casspi,HOU,HOU vs SAS, 8:00 PM,13.9,6100,"",
+SG,Jerryd Bayless,BOS,BOS @ PHI, 7:00 PM,16.6,6100,"",OUT
+PF,Rashard Lewis,MIA,MIA @ WAS, 7:00 PM,9.7,6100,"",
+PG,Steve Nash,LAL,LAL @ UTA, 9:00 PM,17.0,6100,"",OUT
+C,Ronny Turiaf,MIN,MIN @ GSW,10:30 PM,15.5,6000,"",
+PF-C,Chris Andersen,MIA,MIA @ WAS, 7:00 PM,16.6,6000,"",
+C,Kendrick Perkins,OKC,OKC @ NOP, 8:00 PM,11.6,6000,"",
+PG,Jose Barea,MIN,MIN @ GSW,10:30 PM,15.6,6000,"",
+PG,Isaiah Canaan,HOU,HOU vs SAS, 8:00 PM,7.5,5900,"",
+SG,Nick Calathes,MEM,MEM @ PHO,10:00 PM,12.5,5900,"",
+PG,Norris Cole,MIA,MIA @ WAS, 7:00 PM,13.8,5900,"",
+PG,Shelvin Mack,ATL,ATL vs CHA, 7:30 PM,15.8,5900,"",
+PF-C,Cody Zeller,CHA,CHA @ ATL, 7:30 PM,14.1,5900,"",
+C,Byron Mullens,PHI,PHI vs BOS, 7:00 PM,7.7,5900,"",
+PF,Andrew Nicholson,ORL,ORL @ CHI, 8:00 PM,10.6,5900,"",
+C,Dewayne Dedmon,ORL,ORL @ CHI, 8:00 PM,8.7,5900,"",
+SG-SF,Martell Webster,WAS,WAS vs MIA, 7:00 PM,16.0,5800,"",
+PF,Ed Davis,MEM,MEM @ PHO,10:00 PM,13.0,5800,"",
+SG-SF,John Salmons,TOR,TOR vs MIL, 7:00 PM,11.6,5800,"",
+SF,Shane Battier,MIA,MIA @ WAS, 7:00 PM,9.9,5800,"",
+SF,Gerald Wallace,BOS,BOS @ PHI, 7:00 PM,14.7,5800,"",OUT
+SG,Thabo Sefolosha,OKC,OKC @ NOP, 8:00 PM,15.4,5800,"",
+PF-C,Nick Collison,OKC,OKC @ NOP, 8:00 PM,11.3,5700,"",
+PF-C,Matt Bonner,SAS,SAS @ HOU, 8:00 PM,7.2,5700,"",
+SG-SF,Chris Babb,BOS,BOS @ PHI, 7:00 PM,4.4,5700,"",
+PG,Ish Smith,PHO,PHO vs MEM,10:00 PM,10.5,5700,"",
+SG,Alexey Shved,MIN,MIN @ GSW,10:30 PM,7.6,5700,"",
+SF,Chris Wright,MIL,MIL @ TOR, 7:00 PM,13.7,5700,"",
+C,Pero Antic,ATL,ATL vs CHA, 7:30 PM,14.4,5600,"",OUT
+SG,Doron Lamb,ORL,ORL @ CHI, 8:00 PM,5.6,5600,"",
+C,Kosta Koufos,MEM,MEM @ PHO,10:00 PM,15.5,5500,"",
+SF,Mike Miller,MEM,MEM @ PHO,10:00 PM,12.4,5500,"",
+SG,Jeremy Lamb,OKC,OKC @ NOP, 8:00 PM,15.3,5500,"",
+PF-C,Jarvis Varnado,PHI,PHI vs BOS, 7:00 PM,10.9,5500,"",OUT
+C,Miroslav Raduljica,MIL,MIL @ TOR, 7:00 PM,7.7,5400,"",
+PG,Toney Douglas,MIA,MIA @ WAS, 7:00 PM,7.8,5400,"",
+PG,Nando De Colo,TOR,TOR vs MIL, 7:00 PM,7.8,5400,"",
+PG,Cory Joseph,SAS,SAS @ HOU, 8:00 PM,10.0,5400,"",
+PF,Chuck Hayes,TOR,TOR vs MIL, 7:00 PM,8.4,5400,"",
+PF,Al Harrington,WAS,WAS vs MIA, 7:00 PM,10.4,5300,"",
+PG,Diante Garrett,UTA,UTA vs LAL, 9:00 PM,8.0,5300,"",
+PG,Jannero Pargo,CHA,CHA @ ATL, 7:30 PM,8.4,5300,"",
+PG,E'Twaun Moore,ORL,ORL @ CHI, 8:00 PM,11.6,5300,"",
+PF-C,Gustavo Ayon,ATL,ATL vs CHA, 7:30 PM,13.5,5300,"",OUT
+SF,Tayshaun Prince,MEM,MEM @ PHO,10:00 PM,13.1,5100,"",OUT
+C,Justin Hamilton,MIA,MIA @ WAS, 7:00 PM,3.3,5000,"",
+SF,Chase Budinger,MIN,MIN @ GSW,10:30 PM,11.4,5000,"",OUT
+SG,Garrett Temple,WAS,WAS vs MIA, 7:00 PM,5.2,5000,"",
+SG-SF,Glen Rice,WAS,WAS vs MIA, 7:00 PM,6.6,5000,"",
+PF-C,Hilton Armstrong,GSW,GSW vs MIN,10:30 PM,6.1,5000,"",
+SF,Shabazz Muhammad,MIN,MIN @ GSW,10:30 PM,6.0,5000,"",OUT
+SG-SF,Othyus Jeffers,MIN,MIN @ GSW,10:30 PM,3.5,5000,"",
+PG,Nemanja Nedovic,GSW,GSW vs MIN,10:30 PM,2.3,5000,"",
+C,Ognjen Kuzmic,GSW,GSW vs MIN,10:30 PM,1.7,5000,"",
+C,Festus Ezeli,GSW,GSW vs MIN,10:30 PM,0,5000,"",OUT
+SF,Chris Singleton,WAS,WAS vs MIA, 7:00 PM,6.4,5000,"",
+SG-SF,James Jones,MIA,MIA @ WAS, 7:00 PM,6.6,5000,"",
+C,Greg Oden,MIA,MIA @ WAS, 7:00 PM,7.1,5000,"",
+C,Kevin Seraphin,WAS,WAS vs MIA, 7:00 PM,8.7,5000,"",
+PG,Andre Miller,WAS,WAS vs MIA, 7:00 PM,13.2,5000,"",
+PF,Grant Jerrett,OKC,OKC @ NOP, 8:00 PM,0,5000,"",
+C,Hasheem Thabeet,OKC,OKC @ NOP, 8:00 PM,3.9,5000,"",
+SG-SF,Andre Roberson,OKC,OKC @ NOP, 8:00 PM,6.2,5000,"",
+SF,Perry Jones,OKC,OKC @ NOP, 8:00 PM,7.1,5000,"",
+SF,James Southerland,NOP,NOP vs OKC, 8:00 PM,8.9,5000,"",
+C,Vitor Faverani,BOS,BOS @ PHI, 7:00 PM,10.5,5000,"",OUT
+PF,Arnett Moultrie,PHI,PHI vs BOS, 7:00 PM,8.3,5000,"",OUT
+PG,Ware Casper,PHI,PHI vs BOS, 7:00 PM,8.8,5000,"",
+PG,Mike James,CHI,CHI vs ORL, 8:00 PM,4.0,5000,"",
+PF,Brandon Davies,PHI,PHI vs BOS, 7:00 PM,6.5,5000,"",
+SG-SF,Keith Bogans,BOS,BOS @ PHI, 7:00 PM,3.5,5000,"",OUT
+SG-SF,Adonis Thomas,PHI,PHI vs BOS, 7:00 PM,3.4,5000,"",
+PG,Jrue Holiday,NOP,NOP vs OKC, 8:00 PM,32.3,5000,"",OUT
+SG,Jason Richardson,PHI,PHI vs BOS, 7:00 PM,0,5000,"",OUT
+C,Nerlens Noel,PHI,PHI vs BOS, 7:00 PM,0,5000,"",OUT
+C,Emeka Okafor,PHO,PHO vs MEM,10:00 PM,0,5000,"",OUT
+SG,Jamaal Franklin,MEM,MEM @ PHO,10:00 PM,3.8,5000,"",
+SG,Dionte Christmas,PHO,PHO vs MEM,10:00 PM,4.3,5000,"",
+PF,Shavlik Randolph,PHO,PHO vs MEM,10:00 PM,4.3,5000,"",
+C,Alex Len,PHO,PHO vs MEM,10:00 PM,5.7,5000,"",
+SG,Archie Goodwin,PHO,PHO vs MEM,10:00 PM,6.2,5000,"",
+SF,Quincy Pondexter,MEM,MEM @ PHO,10:00 PM,10.3,5000,"",OUT
+PG,Beno Udrih,MEM,MEM @ PHO,10:00 PM,11.1,5000,"",
+PF,Jon Leuer,MEM,MEM @ PHO,10:00 PM,11.5,5000,"",
+SG,Leandro Barbosa,PHO,PHO vs MEM,10:00 PM,12.4,5000,"",OUT
+SF,Tornike Shengelia,CHI,CHI vs ORL, 8:00 PM,2.5,5000,"",
+SF,Ronnie Brewer,CHI,CHI vs ORL, 8:00 PM,2.2,5000,"",
+SG,Tony Snell,CHI,CHI vs ORL, 8:00 PM,8.4,5000,"",
+PG-SG,Jimmer Fredette,CHI,CHI vs ORL, 8:00 PM,8.3,5000,"",
+PF,Jason Maxiell,ORL,ORL @ CHI, 8:00 PM,8.1,5000,"",
+PF-C,Lou Amundson,CHI,CHI vs ORL, 8:00 PM,7.9,5000,"",
+PG,Ronnie Price,ORL,ORL @ CHI, 8:00 PM,7.5,5000,"",
+C,Nazr Mohammed,CHI,CHI vs ORL, 8:00 PM,5.3,5000,"",
+PF,Erik Murphy,UTA,UTA vs LAL, 9:00 PM,1.1,5000,"",
+SG,Brandon Rush,UTA,UTA vs LAL, 9:00 PM,4.8,5000,"",
+SG,Ian Clark,UTA,UTA vs LAL, 9:00 PM,5.4,5000,"",
+PF,Malcolm Thomas,UTA,UTA vs LAL, 9:00 PM,5.0,5000,"",
+PG,John Lucas III,UTA,UTA vs LAL, 9:00 PM,6.6,5000,"",
+SG,MarShon Brooks,LAL,LAL @ UTA, 9:00 PM,8.2,5000,"",
+C,Rudy Gobert,UTA,UTA vs LAL, 9:00 PM,8.1,5000,"",
+SG,Kent Bazemore,LAL,LAL @ UTA, 9:00 PM,10.8,5000,"",OUT
+C,Brendan Haywood,CHA,CHA @ ATL, 7:30 PM,0,5000,"",OUT
+PF,DJ White,CHA,CHA @ ATL, 7:30 PM,2.3,5000,"",
+SG,John Jenkins,ATL,ATL vs CHA, 7:30 PM,5.9,5000,"",OUT
+PF-C,Tyler Hansbrough,TOR,TOR vs MIL, 7:00 PM,11.1,5000,"",
+PF-C,Ekpe Udoh,MIL,MIL @ TOR, 7:00 PM,10.8,5000,"",OUT
+PG,Dwight Buycks,TOR,TOR vs MIL, 7:00 PM,6.7,5000,"",
+SF,Landry Fields,TOR,TOR vs MIL, 7:00 PM,6.2,5000,"",OUT
+SF,Steve Novak,TOR,TOR vs MIL, 7:00 PM,5.4,5000,"",
+SG,Julyan Stone,TOR,TOR vs MIL, 7:00 PM,3.0,5000,"",
+SG-SF,Carlos Delfino,MIL,MIL @ TOR, 7:00 PM,0,5000,"",OUT
+SF,James Nunnally,ATL,ATL vs CHA, 7:30 PM,6.8,5000,"",
+PF-C,Mike Muscala,ATL,ATL vs CHA, 7:30 PM,7.0,5000,"",
+PG,Dennis Schroder,ATL,ATL vs CHA, 7:30 PM,7.4,5000,"",
+SF,Cartier Martin,ATL,ATL vs CHA, 7:30 PM,8.9,5000,"",
+PF-C,Bismack Biyombo,CHA,CHA @ ATL, 7:30 PM,10.7,5000,"",
+PF,Anthony Tolliver,CHA,CHA @ ATL, 7:30 PM,11.0,5000,"",
+SG-SF,Jeff Taylor,CHA,CHA @ ATL, 7:30 PM,12.6,5000,"",OUT
+PF-C,Al Horford,ATL,ATL vs CHA, 7:30 PM,35.6,5000,"",OUT
+SF,Damion James,SAS,SAS @ HOU, 8:00 PM,1.3,5000,"",
+C,Dexter Pittman,HOU,HOU vs SAS, 8:00 PM,1.9,5000,"",
+SF,Robert Covington,HOU,HOU vs SAS, 8:00 PM,4.0,5000,"",
+SF,Austin Daye,SAS,SAS @ HOU, 8:00 PM,5.4,5000,"",
+SG,Troy Daniels,HOU,HOU vs SAS, 8:00 PM,5.4,5000,"",
+PF-C,Aron Baynes,SAS,SAS @ HOU, 8:00 PM,6.9,5000,"",
