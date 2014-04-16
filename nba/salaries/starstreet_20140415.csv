@@ -1,0 +1,59 @@
+Position,Name,Team,Opponent,Game Time,Avg Fantasy Points,Price,Starter,Injury Status
+PF,Blake Griffin,LAC,LAC vs DEN,10:30 PM,42.5,17400,"",
+PG,Chris Paul,LAC,LAC vs DEN,10:30 PM,43.4,16900,"",
+SF,Carmelo Anthony,NYK,NYK @ BKN, 8:00 PM,43.4,15800,"",
+PF,Kenneth Faried,DEN,DEN @ LAC,10:30 PM,27.9,14300,"",
+C,DeAndre Jordan,LAC,LAC vs DEN,10:30 PM,34.5,14000,"",
+PG,Ty Lawson,DEN,DEN @ LAC,10:30 PM,35.4,13800,"",OUT
+C,Brook Lopez,BKN,BKN vs NYK, 8:00 PM,32.6,12700,"",OUT
+SG,Randy Foye,DEN,DEN @ LAC,10:30 PM,22.5,11800,"",
+C,Timofey Mozgov,DEN,DEN @ LAC,10:30 PM,20.0,11700,"",
+PG,Deron Williams,BKN,BKN vs NYK, 8:00 PM,28.1,11000,"",
+C,JJ Hickson,DEN,DEN @ LAC,10:30 PM,26.3,10300,"",OUT
+SF,Paul Pierce,BKN,BKN vs NYK, 8:00 PM,24.0,10200,"",
+SG,JR Smith,NYK,NYK @ BKN, 8:00 PM,24.4,10200,"",
+SG-SF,Joe Johnson,BKN,BKN vs NYK, 8:00 PM,24.0,9800,"",
+PG,Raymond Felton,NYK,NYK @ BKN, 8:00 PM,23.3,9500,"",
+SG,Jamal Crawford,LAC,LAC vs DEN,10:30 PM,26.2,9300,"",
+PF-C,Andrea Bargnani,NYK,NYK @ BKN, 8:00 PM,23.2,9100,"",OUT
+PF-C,Amar'e Stoudemire,NYK,NYK @ BKN, 8:00 PM,19.3,9000,"",
+PG,Aaron Brooks,DEN,DEN @ LAC,10:30 PM,16.3,9000,"",
+C,Tyson Chandler,NYK,NYK @ BKN, 8:00 PM,25.1,8800,"",
+PF-C,Mason Plumlee,BKN,BKN vs NYK, 8:00 PM,15.7,8600,"",
+SG,Evan Fournier,DEN,DEN @ LAC,10:30 PM,13.7,8600,"",
+SF,Wilson Chandler,DEN,DEN @ LAC,10:30 PM,23.8,8500,"",
+SF,Matt Barnes,LAC,LAC vs DEN,10:30 PM,19.9,8500,"",
+PF,Mirza Teletovic,BKN,BKN vs NYK, 8:00 PM,15.1,8400,"",
+PG,Darren Collison,LAC,LAC vs DEN,10:30 PM,20.9,8100,"",
+SF,Quincy Miller,DEN,DEN @ LAC,10:30 PM,10.0,8100,"",
+SG-SF,Iman Shumpert,NYK,NYK @ BKN, 8:00 PM,16.2,8000,"",
+SG-SF,Alan Anderson,BKN,BKN vs NYK, 8:00 PM,12.3,7800,"",OUT
+SG,JJ Redick,LAC,LAC vs DEN,10:30 PM,21.8,7800,"",
+PF-C,Glen Davis,LAC,LAC vs DEN,10:30 PM,19.1,7700,"",
+SF,Andrei Kirilenko,BKN,BKN vs NYK, 8:00 PM,12.5,7700,"",
+PF-C,Andray Blatche,BKN,BKN vs NYK, 8:00 PM,21.7,7700,"",
+PG,Shaun Livingston,BKN,BKN vs NYK, 8:00 PM,19.1,7600,"",OUT
+PF,Kevin Garnett,BKN,BKN vs NYK, 8:00 PM,19.2,7600,"",
+SG,Tim Hardaway Jr,NYK,NYK @ BKN, 8:00 PM,13.8,7600,"",
+SG,Marcus Thornton,BKN,BKN vs NYK, 8:00 PM,15.3,7600,"",
+PG,Jorge Gutierrez,BKN,BKN vs NYK, 8:00 PM,8.7,7400,"",
+PG,Marquis Teague,BKN,BKN vs NYK, 8:00 PM,5.4,7300,"",
+PG,Nate Robinson,DEN,DEN @ LAC,10:30 PM,17.4,6700,"",OUT
+C,Cole Aldrich,NYK,NYK @ BKN, 8:00 PM,5.8,6500,"",
+PF,Darrell Arthur,DEN,DEN @ LAC,10:30 PM,12.8,6200,"",OUT
+PF,Jan Vesely,DEN,DEN @ LAC,10:30 PM,11.1,6100,"",
+SF,Jared Dudley,LAC,LAC vs DEN,10:30 PM,12.4,6000,"",
+PF,Kenyon Martin,NYK,NYK @ BKN, 8:00 PM,14.3,5600,"",OUT
+PG,Pablo Prigioni,NYK,NYK @ BKN, 8:00 PM,12.9,5600,"",
+SF,Danny Granger,LAC,LAC vs DEN,10:30 PM,14.1,5500,"",OUT
+C,JaVale McGee,DEN,DEN @ LAC,10:30 PM,13.5,5300,"",OUT
+PF,Jeremy Tyler,NYK,NYK @ BKN, 8:00 PM,7.8,5000,"",
+SG,Toure' Murry,NYK,NYK @ BKN, 8:00 PM,4.8,5000,"",
+SG,Shannon Brown,NYK,NYK @ BKN, 8:00 PM,3.7,5000,"",
+C,Jason Collins,BKN,BKN vs NYK, 8:00 PM,2.3,5000,"",
+SF,Danilo Gallinari,DEN,DEN @ LAC,10:30 PM,0,5000,"",OUT
+PF,Anthony Randolph,DEN,DEN @ LAC,10:30 PM,10.2,5000,"",
+SG,Willie Green,LAC,LAC vs DEN,10:30 PM,8.6,5000,"",
+SF,Hedo Turkoglu,LAC,LAC vs DEN,10:30 PM,8.0,5000,"",
+C,Ryan Hollins,LAC,LAC vs DEN,10:30 PM,5.1,5000,"",
+SG,Reggie Bullock,LAC,LAC vs DEN,10:30 PM,4.8,5000,"",
