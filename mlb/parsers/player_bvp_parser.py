@@ -15,8 +15,8 @@ class PlayerBvPParser:
 		self.player_data = player_data
 		self.type = type
 
-		self.pitcher_id_regex = re.compile(".*?pitcher=([0-9a-z\.]+)")
-		self.batter_id_regex = re.compile(".*?batter=([0-9a-z\'\.]+)&.*?")
+		self.pitcher_id_regex = re.compile(".*?pitcher=([0-9a-z_\.]+)")
+		self.batter_id_regex = re.compile(".*?batter=([0-9a-z_\'\.]+)&.*?")
 
 	def parse(self, data):
 		"""
@@ -39,7 +39,8 @@ class PlayerBvPParser:
 						m = self.pitcher_id_regex.match(td.a.attrs["href"])
 					else:
 						m = self.batter_id_regex.match(td.a.attrs["href"])
-					opponent_id = m.group(1)
+
+					opponent_id = m.group(1).replace(".", "_")
 
 					if opponent_id not in self.player_data[MLBConstants.BATTER_VS_PITCHER]:
 						self.player_data[MLBConstants.BATTER_VS_PITCHER][opponent_id] = {}
