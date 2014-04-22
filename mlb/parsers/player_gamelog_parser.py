@@ -1,7 +1,9 @@
+import logging
 import re
 
 from bs4 import BeautifulSoup
-from time import strptime
+from time import strptime, mktime
+from datetime import datetime
 from mlb.constants.mlb_constants import MLBConstants
 from mlb.utilities.mlb_utilities import MLBUtilities
 
@@ -20,7 +22,7 @@ class PlayerGamelogParser:
 
 		self.pitching_gamelog_regex = re.compile("pitching_gamelogs\.\d+")
 		self.batting_gamelog_regex = re.compile("batting_gamelogs\.\d+")
-		self.result_regex = re.compile("([W|L]),(\d+)-(\d+)")
+		self.result_regex = re.compile("([W|L|T]),(\d+)-(\d+)")
 
 	def parse(self, data):
 		"""
@@ -58,7 +60,7 @@ class PlayerGamelogParser:
 						self.player_data[MLBConstants.PLAYER_GAMELOG_PITCHING][self.season][game_number] = {}
 				elif i == 3:
 					self.player_data[MLBConstants.PLAYER_GAMELOG_PITCHING][self.season][game_number][
-						MLBConstants.DATE] = strptime("{} {}".format(td.a.text.replace(u'\xa0', u' '), self.season), "%b %d %Y")
+						MLBConstants.DATE] = datetime.fromtimestamp(mktime(strptime("{} {}".format(td.a.text.replace(u'\xa0', u' '), self.season), "%b %d %Y")))
 				elif i == 4:
 					self.player_data[MLBConstants.PLAYER_GAMELOG_PITCHING][self.season][game_number][
 						MLBConstants.TEAM] = td.a.text
@@ -116,8 +118,15 @@ class PlayerGamelogParser:
 					self.player_data[MLBConstants.PLAYER_GAMELOG_PITCHING][self.season][game_number][
 						MLBConstants.BATTERS_FACED] = MLBUtilities.resolve_value(td.text, "int")
 				elif i == 21:
-					self.player_data[MLBConstants.PLAYER_GAMELOG_PITCHING][self.season][game_number][
-						MLBConstants.NUM_PITCHES] = MLBUtilities.resolve_value(td.a.text, "int")
+					try:
+						self.player_data[MLBConstants.PLAYER_GAMELOG_PITCHING][self.season][game_number][
+							MLBConstants.NUM_PITCHES] = MLBUtilities.resolve_value(td.a.text, "int")
+					except:
+						try:
+							self.player_data[MLBConstants.PLAYER_GAMELOG_PITCHING][self.season][game_number][
+							MLBConstants.NUM_PITCHES] = MLBUtilities.resolve_value(td.text, "int")
+						except:
+							logging.info("Giving up on NUM_PITCHES")
 				elif i == 22:
 					self.player_data[MLBConstants.PLAYER_GAMELOG_PITCHING][self.season][game_number][
 						MLBConstants.STRIKES] = MLBUtilities.resolve_value(td.text, "int")
@@ -224,7 +233,7 @@ class PlayerGamelogParser:
 						self.player_data[MLBConstants.PLAYER_GAMELOG_BATTING][self.season][game_number] = {}
 				elif i == 3:
 					self.player_data[MLBConstants.PLAYER_GAMELOG_BATTING][self.season][game_number][
-						MLBConstants.DATE] = strptime("{} {}".format(td.a.text.replace(u'\xa0', u' '), self.season), "%b %d %Y")
+						MLBConstants.DATE] = datetime.fromtimestamp(mktime(strptime("{} {}".format(td.a.text.replace(u'\xa0', u' '), self.season), "%b %d %Y")))
 				elif i == 4:
 					self.player_data[MLBConstants.PLAYER_GAMELOG_BATTING][self.season][game_number][
 						MLBConstants.TEAM] = td.a.text
