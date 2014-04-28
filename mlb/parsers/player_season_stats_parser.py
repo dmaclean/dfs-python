@@ -202,9 +202,15 @@ class PlayerSeasonStatsParser:
 				elif i == 1:
 					self.player_data[MLBConstants.STANDARD_BATTING][season][MLBConstants.AGE] = MLBUtilities.resolve_value(td.text, "int")
 				elif i == 2:
-					self.player_data[MLBConstants.STANDARD_BATTING][season][MLBConstants.TEAM] = td.a.text
+					try:
+						self.player_data[MLBConstants.STANDARD_BATTING][season][MLBConstants.TEAM] = td.a.text
+					except AttributeError:
+						self.player_data[MLBConstants.STANDARD_BATTING][season][MLBConstants.TEAM] = td.text
 				elif i == 3:
-					self.player_data[MLBConstants.STANDARD_BATTING][season][MLBConstants.LEAGUE] = td.a.text
+					try:
+						self.player_data[MLBConstants.STANDARD_BATTING][season][MLBConstants.LEAGUE] = td.a.text
+					except AttributeError:
+						self.player_data[MLBConstants.STANDARD_BATTING][season][MLBConstants.LEAGUE] = td.text
 				elif i == 4:
 					self.player_data[MLBConstants.STANDARD_BATTING][season][MLBConstants.GAMES_PLAYED] = MLBUtilities.resolve_value(td.text, "int")
 				elif i == 5:
