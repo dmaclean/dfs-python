@@ -59,8 +59,9 @@ class PlayerGamelogParser:
 					if game_number not in self.player_data[MLBConstants.PLAYER_GAMELOG_PITCHING][self.season]:
 						self.player_data[MLBConstants.PLAYER_GAMELOG_PITCHING][self.season][game_number] = {}
 				elif i == 3:
-					self.player_data[MLBConstants.PLAYER_GAMELOG_PITCHING][self.season][game_number][
-						MLBConstants.DATE] = datetime.fromtimestamp(mktime(strptime("{} {}".format(td.a.text.replace(u'\xa0', u' '), self.season), "%b %d %Y")))
+					if int(self.season) >= 1900:
+						self.player_data[MLBConstants.PLAYER_GAMELOG_PITCHING][self.season][game_number][
+							MLBConstants.DATE] = datetime.fromtimestamp(mktime(strptime("{} {}".format(td.a.text.replace(u'\xa0', u' '), self.season), "%b %d %Y")))
 				elif i == 4:
 					self.player_data[MLBConstants.PLAYER_GAMELOG_PITCHING][self.season][game_number][
 						MLBConstants.TEAM] = td.a.text
