@@ -176,3 +176,8 @@ class MLBConstants:
 	SPLITS_LAST_365 = "Last 365days"
 
 	SPLITS_VS_RHP = "vs RHP"
+
+	#########
+	# Stats
+	#########
+	STATS_LLC = "stats_llc"
