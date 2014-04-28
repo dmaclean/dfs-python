@@ -14,10 +14,10 @@ class PlayerSplitsParser:
 		self.player_data = player_data
 
 	def parse(self, data, season):
-		s = data.read().decode('utf-8', 'ignore')
+		s = data.encode('ascii', 'ignore')
 
 		# Terrible hack to fix bad HTML that uses a tbody close tag instead of an open tag.
-		s = s.replace("</colgroup></tbody>", "</colgroup><tbody>")
+		s = s.replace('\n','').replace("</colgroup></tbody>", "</colgroup>")
 		soup = BeautifulSoup(s, 'html.parser')
 
 		if self.player_data[MLBConstants.POSITION] == "Pitcher":
@@ -36,6 +36,9 @@ class PlayerSplitsParser:
 				pitcher_extras = True
 
 			tbody = split_div.find("tbody")
+
+			if(tbody is None):
+				print ""
 
 			trs = tbody.find_all("tr")
 
@@ -58,8 +61,8 @@ class PlayerSplitsParser:
 							if season not in self.player_data[MLBConstants.PITCHER_SPLITS]:
 								self.player_data[MLBConstants.PITCHER_SPLITS][season] = {}
 
-							if td.text not in self.player_data[MLBConstants.PITCHER_SPLITS][season]:
-								split_type = td.text
+							split_type = td.text.replace(".", "_")
+							if split_type not in self.player_data[MLBConstants.PITCHER_SPLITS][season]:
 								self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type] = {}
 						elif i == 1 and not pitcher_extras:
 							self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
@@ -150,7 +153,7 @@ class PlayerSplitsParser:
 							if season not in self.player_data[MLBConstants.PITCHER_SPLITS]:
 								self.player_data[MLBConstants.PITCHER_SPLITS][season] = {}
 
-							split_type = td.text
+							split_type = td.text.replace(".", "_")
 							if td.text not in self.player_data[MLBConstants.PITCHER_SPLITS][season]:
 								self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type] = {}
 						elif i == 2 and pitcher_extras:
@@ -234,8 +237,8 @@ class PlayerSplitsParser:
 						if season not in self.player_data[MLBConstants.BATTER_SPLITS]:
 							self.player_data[MLBConstants.BATTER_SPLITS][season] = {}
 
-						if td.text not in self.player_data[MLBConstants.BATTER_SPLITS][season]:
-							split_type = td.text
+						split_type = td.text.replace(".", "_")
+						if split_type not in self.player_data[MLBConstants.BATTER_SPLITS][season]:
 							self.player_data[MLBConstants.BATTER_SPLITS][season][split_type] = {}
 					elif i == 1 and not pitcher_extras:
 						self.player_data[MLBConstants.BATTER_SPLITS][season][split_type][
