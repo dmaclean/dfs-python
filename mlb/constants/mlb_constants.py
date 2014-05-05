@@ -11,6 +11,13 @@ class MLBConstants:
 	MONGO_MLB_DB_NAME = "baseball"
 	MONGO_MLB_TEST_DB_NAME = "test_baseball"
 	MONGO_MLB_PLAYERS_COLLECTION = "players"
+	MONGO_MLB_LINEUPS_COLLECTION = "lineups"
+
+	MONGO_STATS_MLB_DB_NAME = "mlb_stats"
+	MONGO_MLB_GAMES_COLLECTION = "games"
+	MONGO_MLB_BVP_COLLECTION = "bvp"
+	MONGO_MLB_GAMELOGS_COLLECTION = "gamelogs"
+	MONGO_MLB_YTD_COLLECTION = "ytd"
 
 	##############
 	# Basic info
