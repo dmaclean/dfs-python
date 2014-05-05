@@ -3,6 +3,8 @@ import logging
 import mysql.connector
 from bs4 import BeautifulSoup
 from datetime import date
+import sys
+
 
 class VegasOdds:
 	def __init__(self, cnx=None):
@@ -10,6 +12,8 @@ class VegasOdds:
 			self.cnx = mysql.connector.connect(user='fantasy', password='fantasy', host='localhost', database='basketball_reference')
 		else:
 			self.cnx = cnx
+
+		self.odds_date = date.today()
 		
 		# Translation map for full name --> abbreviations
 		self.team_names = {
@@ -46,6 +50,17 @@ class VegasOdds:
 		}
 		
 	
+	def read_cli(self):
+		for arg in sys.argv:
+			if arg == "vegas_odds.py":
+				pass
+			else:
+				pieces = arg.split("=")
+				if pieces[0] == "date":
+					date_pieces = pieces[1].split("-")
+					self.odds_date = date(int(date_pieces[0]), int(date_pieces[1]), int(date_pieces[2]))
+
+
 	###################################################################################
 	# As the name suggests, this function does an insert for a new record, or updates
 	# it if it already exists.
@@ -132,7 +147,7 @@ class VegasOdds:
 				logging.error("Error parsing one of the values.  The odds are probably not fully updated.")
 				quit()
 	
-			odds.append( { "date": date.today(), 
+			odds.append( { "date": self.odds_date,
 				"road_team": road_team, 
 				"home_team": home_team, 
 				"spread_road": road_spread, 
@@ -153,4 +168,5 @@ if __name__ == '__main__':
 	logging.basicConfig(level=logging.INFO)
 
 	odds = VegasOdds()
+	odds.read_cli()
 	odds.process()
