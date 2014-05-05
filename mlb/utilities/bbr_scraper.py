@@ -49,6 +49,8 @@ class BaseballReferenceScraper:
 					self.all_players = pieces[1] == "true"
 				elif pieces[0] == "yesterday_only":
 					self.yesterday_only = pieces[1] == "true"
+				elif pieces[0] == "sleep":
+					self.sleep_time = int(pieces[1])
 
 	# Recursively follow redirects until there isn't a location header
 	# From http://www.zacwitte.com/resolving-http-redirects-in-python
@@ -103,7 +105,7 @@ class BaseballReferenceScraper:
 				logging.error("Issue connecting to baseball-reference ({}).  Retrying in 10 seconds...".format(err))
 				time.sleep(10)
 
-		time.sleep(5 + (5 * random.random()))
+		time.sleep(self.sleep_time + (self.sleep_time * random.random()))
 		return data
 
 	def process_players(self):
