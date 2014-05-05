@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+<!--
+         ______        __          ______       _             __                 
+        / __  /____   / /_ ___    / ____/_____ (_)____   ____/ /___   _____ _____
+       / /_/ // __ \ / __// __ \ / / __ / ___// // __ \ / __  // _ \ / ___// ___/
+      / __  // /_/ // /_ / /_/ // /_/ // /   / // / / // /_/ //  __// /   (__  ) 
+     /_/  \_\\____/ \__/ \____/ \____//_/   /_//_/ /_/ \__,_/ \___//_/   /____/  
+                                                         _____ ____   ____ ___    
+                                                        / ___// __ \ / __ `__ \     
+                                                     _ / /__ / /_/ // / / / / /    
+                                                    (_)\___/ \____//_/ /_/ /_/    
+-->
+<html>
+<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>MLB Lineups - Daily Starting Lineups</title>
+	<link href="/favicon.ico" type="image/x-icon" rel="icon" /><link href="/favicon.ico" type="image/x-icon" rel="shortcut icon" />	
+
+	<link rel="stylesheet" type="text/css" href="http://rical-rg.s3.amazonaws.com/css/layouts_default.css?42.3" />
+	
+	<link rel="stylesheet" type="text/css" href="http://rical-rg.s3.amazonaws.com/css/lineups.css?42.3" />	
+	<script type="text/javascript" src="http://rical-global.s3.amazonaws.com/js/jquery-1.4.2.custom.js?42.3"></script>
+
+	<!--<script type="text/javascript" src=""></script>-->
+
+	
+	<script type="text/javascript" src="http://rical-global.s3.amazonaws.com/js/jquery-ui-1.8.5.core.fx.min.js?42.3"></script>
+	<script type="text/javascript" src="http://rical-global.s3.amazonaws.com/js/jquery-ui-1.8.5.widgets.min.js?42.3"></script>
+	<script type="text/javascript" src="http://rical-global.s3.amazonaws.com/js/jquery.fancybox-1.3.1.pack.js?42.3"></script>
+	<script type="text/javascript" src="http://rical-global.s3.amazonaws.com/js/sortable.js?42.3"></script>
+	<script type="text/javascript" src="http://rical-global.s3.amazonaws.com/js/global.js?42.3"></script>
+	<!-- script type="text/javascript" src="http://rical-rg.s3.amazonaws.com/js/H5F/h5f.js?42.3"></script -->
+
+	<script type="text/javascript" src="http://rical-rg.s3.amazonaws.com/js/layouts_default.js?42.3"></script>
+
+	<script type="text/javascript" src="http://rical-rg.s3.amazonaws.com/js/lineups_index.js?42.3"></script>
+	<script type="text/javascript">
+    function _replace_html(html, striplinks){
+
+        if(striplinks=='none'){
+        html = html
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/((http|ftp|https):\/\/[a-z0-9\-_]+(\.[a-z0-9\-_]+)+([a-z0-9_\-\.,@\?^=%&;:\/~\+#]*[a-z0-9_\-@\?^=%&;\/~\+#])?)/ig, '<a href="$1" target="_blank">$1</a>')
+        }
+        html = html
+                        .replace(/(^|["?'?(]|\s)(Fan ?Duel|FD)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://partners.fanduel.com/processing/clickthrgh.asp?btag=a_282b_432" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(DK|Draft ?Kings)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://partners.draftkings.com/aff_c?offer_id=18&aff_id=2" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(D\$|Draft ?Street|DS)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://www.draftstreet.com?r=grinders&pid=635" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(Draft ?Day|DD)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://www.draftday.com/?affiliateRefCode=RotoGrinders" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(Star ?Street|SS)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="https://www.starstreet.com/?invite_code=RotoGrinders" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(Fantasy ?Feud|Fantasy ?Fued|Feud|Fued|FF)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://www.fantasyfeud.com/l/2013-nfl-grinders/?aid=2&subid=x&referral_code=Grinders&cid=1" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(FTD|Fan ?Throw ?Down|Throwdown)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="https://fanthrowdown.com/?user=RotoGrinders" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(SFL|Star ?Fantasy|Star ?Fantasy ?Leagues)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="https://www.starfantasyleagues.com/?referral=RotoGrinders " target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(StatClash|Stat ?Clash|SC)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="https://statclash.com/account/register/grinders" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(Sports ?Tradex|Tradex|SportsTradex)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="https://sportstradex.com/?friend_code=GRINDERS" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(Fanium|FE|Fantasy ?Elite)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://rg2.fantasyelite.com/" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(Fanex)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://fanex.com" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(ballr)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://go.ballr.com/aff_c?offer_id=5&aff_id=1017" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(FantasyAces|Fantasy ?Aces|FA)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://fantasyaces.com/r/RotoGrinders/" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(SZ|Skyll|Skyll ?Zone)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://www.SKYLLZONE.com?marketingid=501001" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(Draft ?Team|DT|Draftteam)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://www.draftteam.com" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(DailyMVP|Daily ?MVP)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://www.dailymvp.com" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(WD|War ?Draft|WarDraft)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="https://www.wardraft.com/crc/0/d64157f04c9085485be77b64fdc08358c35ce389" target="_blank">$2</a>$3')
+            
+            .replace(/"<``>/g, '"http');
+
+        return html;
+    }
+
+    (function($){
+        $.fn.linkify = function() {
+                this.each(function() {
+                var childNodes = this.childNodes;
+                var i = childNodes.length;
+
+                while(i--) {
+                    var n = childNodes[i];
+
+                    if (n.nodeType == 3) {
+                        var html = n.nodeValue;
+
+                        if (html.length > 1 && /\S/.test(html)) {
+                            var pre = html;
+
+                            html = _replace_html(pre,"none");
+
+                            $(n).after(html).remove();
+                        }
+                    } else if (n.nodeType == 1 && !/^(a|button|textarea)$/i.test(n.tagName)) {
+                        $(n).linkify();
+                    }
+                }
+            });
+        };
+    })(jQuery);
+</script>
+
+	<!--[if IE 7]><link rel="stylesheet" type="text/css" href="http://rical-rg.s3.amazonaws.com/css/ie7.css?42.3" /><![endif]-->
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	 
+		<meta name="robots" content="noindex, nofollow" />	
+		
+	
+	<link rel="alternate" type="application/rss+xml" title="Articles RSS Feed" href="http://rotogrinders.com/articles/index.rss">
+	<link rel="alternate" type="application/rss+xml" title="Podcasts RSS Feed" href="http://rotogrinders.com/podcasts/feed.rss">
+
+	 
+</head>
+
+<body id="lineups" class="index Baseball FanDuel">
+	<script src="http://rical-global.s3.amazonaws.com/js/modernizr-1.1.min.js?42.3"></script>
+	<div id="user-meta">
+		<input type="hidden" id="user-meta-id" value="23229" />
+		<input type="hidden" id="user-meta-username" value="dmaclean" />
+		<input type="hidden" id="user-meta-facebook-id" value="" />
+	</div>
+
+	<!--<div class="hidden">-->
+							<!--</div>-->
+		<header id="layout-header">
+	<div id="logo-and-banner">
+		<h2 id="logo-layout" class="logo"><a href="/">Roto Grinders</a></h2>
+				<div id="main-banner">
+			<a href="http://www.siriusxm.com/fantasysportsradio" class="advert-link"><img src="http://rical-rg.s3.amazonaws.com/ad/20140205_sirux_banner_728x90.jpg?42.3" class="advert-img" width="728" height="90" /></a>		</div>
+			</div>
+</header>
+	<div id="wrapper">
+		<nav id="mainnav">
+	<div id="first-row" class="top-level-nav">
+		<ul class="nav">
+		    <li id="mainnav-home" class=""><a href="/">Home</a></li>
+		    <li id="mainnav-blogs" class=""><a href="/fantasyblogs">Blogs</a></li>
+			<li id="mainnav-articles" class="has-submenu"><a href="/articles">Articles</a></li>
+		    <li id="mainnav-reviews" class="has-submenu"><a href="/reviews">Reviews</a></li>
+		    <li id="mainnav-podcasts" class=""><a href="/podcasts">Podcasts</a></li>
+		    <li id="mainnav-grindersu" class=""><a href="/lessons/GrindersU_Introduction_Daily_Fantasy_Lessons-177082">GrindersU</a></li>
+				    <li id="mainnav-videos" class=""><a class="" href="/live">GrindersLive</a></li>
+		</ul>
+		<ul id="login-nav" class="nav">
+		   					<li id="mainnav-user" class="has-submenu"><a href="/profiles/dmaclean"><em id="loggedin-username">dmaclean</em></a></li>
+					</ul>
+	</div>
+	<div id="first-row-drawer" class="drawer">
+		<ul id="submenu-user" class="submenu nav">
+			<li><a href="/profiles/dmaclean">Profile</a></li>
+			<li><a href="/users/logout">Sign Out</a></li>
+		</ul>
+
+		<ul id="submenu-articles" class="submenu nav">
+		    <li	class=""><a href="/articles/index">Main</a></li>
+		    <li	class=""><a href="/articles/index/news">News</a></li>
+		    <li	class=""><a href="/articles/index/promotions">Promotions</a></li>
+		    <li	class=""><a href="/articles/index/strategy">Strategy</a></li>
+		    <li	class=""><a href="/pages/RotoGrinders_Championship_Coverage-100358">Championship Coverage</a></li>
+		    <li	class=""><a href="/articles/index/interviews">Interviews</a></li>
+		</ul>
+		
+		<ul id="submenu-reviews" class="submenu nav">
+									
+												<li class=""><a href="/reviews/FanDuel_Promocode-115"><img src="/img/sites/2/icon_16.png?1328741534" width="16" height="16" class="site-icon sideid-2" title="FanDuel" alt="FanDuel" /> FanDuel</a></li>
+																				<li class=""><a href="/reviews/DraftKings-46814"><img src="/img/sites/20/icon_16.png?1339697206" width="16" height="16" class="site-icon sideid-20" title="DraftKings" alt="DraftKings" /> DraftKings</a></li>
+																				<li class=""><a href="/reviews/DraftStreet-1151"><img src="/img/sites/9/icon_16.png?1328741534" width="16" height="16" class="site-icon sideid-9" title="DraftStreet" alt="DraftStreet" /> DraftStreet</a></li>
+																				<li class=""><a href="/reviews/DraftDay_Review-12991"><img src="/img/sites/15/icon_16.png?1328741534" width="16" height="16" class="site-icon sideid-15" title="DraftDay" alt="DraftDay" /> DraftDay</a></li>
+																				<li class=""><a href="/reviews/StarStreet-35703"><img src="/img/sites/18/icon_16.png?1348530355" width="16" height="16" class="site-icon sideid-18" title="StarStreet" alt="StarStreet" /> StarStreet</a></li>
+																				<li class=""><a href="/reviews/Fantasy_Feud_Recruiting_Code-38218"><img src="/img/sites/19/icon_16.png?1332954189" width="16" height="16" class="site-icon sideid-19" title="FantasyFeud" alt="FantasyFeud" /> FantasyFeud</a></li>
+																									<li class=""><a href="/reviews/FanThrowDown_Review-117343"><img src="/img/sites/24/icon_16.png?1360274435" width="16" height="16" class="site-icon sideid-24" title="FanThrowDown" alt="FanThrowDown" /> FanThrowDown</a></li>
+																				<li class=""><a href="/reviews/index/">See All</a></li>
+							</ul>
+	</div>
+	<div id="second-row" class="top-level-nav">
+		<ul class="nav">
+		    <li id="mainnav-dailyresearch" class='dailyresearch-box-image has-submenu' ><a href="/sites/offers/FanDuel/Baseball">Daily Research</a></li>	
+		    <li id="mainnav-forums" class=""><a href="/threads">Forums</a></li>
+		    <li id="mainnav-rankings" class="has-submenu"><a href="/rankings">Rankings</a></li>
+							<li id="mainnav-lineups" class="active"><a href="/lineups">Lineups</a></li>
+					    <li id="mainnav-incentives" class=""><a href="/incentives">Incentives</a></li>
+		</ul>
+		<div id="mainnav-search">
+			<form id="mainnav-player-search" style="width:150px;">
+				<div class="fake-input" style="width:150px;">
+					<input type="hidden" name="player-slug" id="ds-player-slug" value="" />
+					<input type="text" name="player-name" placeholder="Player Search" class="player-autocomplete" id="ds-search-player" value="" />
+					<button class="button" type="submit">Go</button>
+				</div>
+			</form>
+			<form id="mainnav-site-player-search" action="/site_players/search" method="get" style="width:150px;">
+				<div class="fake-input" style="width:150px;">
+					<input type="text" name="player_name" placeholder="Opponent Search" />
+					<button type="submit">search</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div id="second-row-drawer" class="drawer">
+		
+		
+<div id="daily-research" class="">
+	<nav id='daily-research-nav'>
+		<span id="image-preloader" class="hidden"></span>
+		
+		
+		<div id="daily-research-sites" class="filter-list">
+		
+<ul class="nav-list">
+<li class="active" ><a href="/sites/offers/FanDuel/Baseball" id="siteid-2" class="active"><img src="/img/sites/2/icon_16.png?1328741534" width="16" height="16" class="site-icon sideid-2" title="FanDuel" alt="FanDuel" /> FanDuel</a></li><li ><a href="/sites/offers/DraftKings/Baseball" id="siteid-20"><img src="/img/sites/20/icon_16.png?1339697206" width="16" height="16" class="site-icon sideid-20" title="DraftKings" alt="DraftKings" /> DraftKings</a></li><li ><a href="/sites/offers/DraftStreet/Baseball" id="siteid-9"><img src="/img/sites/9/icon_16.png?1328741534" width="16" height="16" class="site-icon sideid-9" title="DraftStreet" alt="DraftStreet" /> DraftStreet</a></li><li ><a href="/sites/offers/DraftDay/Baseball" id="siteid-15"><img src="/img/sites/15/icon_16.png?1328741534" width="16" height="16" class="site-icon sideid-15" title="DraftDay" alt="DraftDay" /> DraftDay</a></li><li ><a href="/sites/offers/FantasyFeud/Baseball" id="siteid-19"><img src="/img/sites/19/icon_16.png?1332954189" width="16" height="16" class="site-icon sideid-19" title="FantasyFeud" alt="FantasyFeud" /> FantasyFeud</a></li><li ><a href="/sites/offers/StarStreet/Baseball" id="siteid-18"><img src="/img/sites/18/icon_16.png?1348530355" width="16" height="16" class="site-icon sideid-18" title="StarStreet" alt="StarStreet" /> StarStreet</a></li><li ><a href="/sites/offers/FanThrowDown/Baseball" id="siteid-24"><img src="/img/sites/24/icon_16.png?1360274435" width="16" height="16" class="site-icon sideid-24" title="FanThrowDown" alt="FanThrowDown" /> FanThrowDown</a></li></ul>
+	
+	</div>
+		
+		<div id="daily-research-sports" class="filter-list">
+		
+<ul class="nav-list">
+<li class="active" ><a href="/sites/offers/FanDuel/Baseball" id="sportid-2" class="active"><span class="baseball sport-icon"></span>Baseball</a></li><li ><a href="/sites/offers/FanDuel/Football" id="sportid-1"><span class="football sport-icon"></span>Football</a></li><li ><a href="/sites/offers/FanDuel/Basketball" id="sportid-3"><span class="basketball sport-icon"></span>Basketball</a></li><li ><a href="/sites/offers/FanDuel/Hockey" id="sportid-4"><span class="hockey sport-icon"></span>Hockey</a></li><li ><a href="/sites/offers/FanDuel/CFB" id="sportid-7"><span class="CFB sport-icon"></span>CFB</a></li><li ><a href="/sites/offers/FanDuel/CBB" id="sportid-8"><span class="CBB sport-icon"></span>CBB</a></li></ul>
+	
+	</div>
+	</nav>
+	<div id="daily-research-drawer" class="alt drawer-menu">
+		<div id="daily-research-results-container" class="grid-10-2">
+			<div id="daily-research-results" class="column-3">
+				<div id="daily-research-results-holder">
+					
+
+	
+<div id="special-ad">
+    <div id="gold-advice">
+
+    <p>Gold Banner Buttons are for FanDuel Incentives Members. &nbsp<strong> Sign Up Instructions</strong></p>
+            <div class="incentives"></div>
+    </div>
+
+    <div class="incentive-box" style="display:none;">
+    <div class="content">
+    <p class="access-text">Gain access to FanDuel Incentives by following these simple steps:</p>	
+    <ul>
+        <li>
+            <span class="number">1</span>
+            <span class="descrip">
+            <a href="http://partners.fanduel.com/processing/clickthrgh.asp?btag=a_282b_432">Click through this link</a> to create your FanDuel account.
+			NOTE: This option is for new accounts only.  If you already have a  FanDuel Account you can <a href="/incentives"> purchase access to Grinders Incentives through Paypal.</a>
+            </span>
+        </li>
+        <li>
+            <span class="number">2</span>
+            <span class="descrip">Make a deposit.
+            </span>
+        </li>
+        <li>
+            <span class="number">3</span>
+            <span class="descrip">Be sure your FanDuel Screen Name is listed in your Rotogrinders Profile. When we see your FanDuel username show up in our referral reports we will grant you access to FanDuel incentives.
+            </span>
+        </li>
+    </ul>
+    <p>It's that simple. Feel free to email support as soon as you make your first deposit to speed up the process.</p>
+    <p class='center-incentives-box'><a href="/pages/RotoGrinders_Daily_Research_FAQ-133999">RotoGrinders: Daily Research FAQ</a></p>
+    <!--Content Here--></div>
+    </div>
+</div>
+
+
+<div id="daily-research-boxes">
+
+<ul>
+
+	        
+        <li id="dailyOffers"><a href="/lineups/index/Baseball/FanDuel" class="dLineups"><span>Daily Lineups & Weather </span></a></li>
+        <li id="dailyOffers"><a href="/projected_stats/index/FanDuel/Baseball" class="playerProjections"><span>Player Projections</span></a> <a href="/projected_stats/index/FanDuel/Baseball" class="incentives">Incentives</a></li>
+       				<li id="dailyOffers"><a href="/pages/FanDuel_MLB_Beermakerfan_s_Head_to_Head_50_50_Picks-267202" class="grindDown"><span>Beermakersfan's Head2Head Picks</span></a><a href="/pages/FanDuel_MLB_Beermakerfan_s_Head_to_Head_50_50_Picks-267202" class="incentives">Incentives</a></li>
+							<li id="dailyOffers"><a href="/pages/FanDuel_MLB_Pepsi7_s_Tourney_GPP_Picks-262242" class="grindDown"><span>Pepsi7's Tourney Picks</span></a><a href="/pages/FanDuel_MLB_Pepsi7_s_Tourney_GPP_Picks-262242" class="incentives">Incentives</a></li>
+							<li id="dailyOffers"><a href="/pages/FanDuel_MLB_CrackMonkey83_s_Expert_Picks-269146" class="grindDown"><span>CrackMonkey83's Expert Picks</span></a><a href="/pages/FanDuel_MLB_CrackMonkey83_s_Expert_Picks-269146" class="incentives">Incentives</a></li>
+							<li id="dailyOffers"><a href="/pages/FanDuel_MLB_Notorious_Top_Stacks-262243" class="grindDown"><span>Notorious' Top Stacks</span></a><a href="/pages/FanDuel_MLB_Notorious_Top_Stacks-262243" class="incentives">Incentives</a></li>
+		
+					<li id="dailyOffers"><a href="/pages/Expert_Consensus_Rankings_FanDuel-252141" class="weeklyTopTen"><span>Expert Consensus Rankings</span></a> <a href="/pages/Expert_Consensus_Rankings_FanDuel-252141" class="incentives">Incentives</a></li>
+		
+		<li id="dailyOffers"><a href="/split_stats/index/Baseball/Pitcher" class="splitTool"><span>MLB Splits</span></a></li>
+		<li id="dailyOffers"><a href="/pages/Daily_MLB_Pitcher_Analysis-138128" class="PvB"><span>Daily SP Hub</span></a></li>
+		<li id="dailyOffers"><a href="/pages/Hot_Streak_Hitters-56970" class="hotHitters"><span>Daily Batter Hub</span></a></li>
+					<li id="dailyOffers"><a href="/pages/MLB_Bargain_Bin_Ballers_FanDuel-252130" class="bargainBin"><span>Bargain Bin Ballers</span></a><a href="/pages/MLB_Bargain_Bin_Ballers_FanDuel-252130" class="incentives">Incentives</a></li>
+				<li id="dailyOffers"><a href="/pages/expert_chat" class="expertChat"><span>Expert Chat: Notorious</span></a><a href="/pages/expert_chat" class="incentives">Incentives</a></li>
+		        	<li id="dailyOffers"><a href="/salaries/projected/FanDuel/Baseball" class="dProjectedLineup"><span>Algorithm-Projected Lineup</span></a></li>
+				<li id="dailyOffers"><a href="/pages/Lineup_Email_Alerts_MLB-252004" class="lineupsEmailAlerts"><span>Lineup Email Alerts</span></a><a href="" class="incentives">Incentives</a></li>
+		<li id="dailyOffers"><a href="/pages/Vegas_Odds_and_Lines-49366" class="vegasOdds"><span>Vegas Odds and Lines</span></a></li>
+		<li id="dailyOffers"><a href="/pages/MLB_Market_Watch_Tool-127806" class="marketWatch"><span>Market Watch</span></a></li>
+		<li id="dailyOffers"><a href="/pages/MLB_Advanced_Statistics_First_Basemen-123713" class="advancedStats"><span>Adv. Stats & Sabermetrics</span></a></li>
+		<li id="dailyOffers"><a href="/pages/Ballpark_Factors-49556" class="ballParkFactors"><span>Ballpark Factors</span></a></li>
+		<li id="dailyOffers"><a href="/pages/2013_MLB_Player_Stats-123225" class="playerStatsMLB"><span>Player Stats</span></a></li>
+        <li id="dailyOffers"><a href="/pages/MLB_Team_Statistics_Team_Batting-123257" class="teamStatsMLB"><span>Teams Stats</span></a></li>
+        <li id="dailyOffers"><a href="/pages/MLB_2013_Closer_Chart-120525" class="closeChartMLB"><span>The Bullpen</span></a></li>
+        <li id="dailyOffers"><a href="/pages/MLB_Scoring_Systems_By_SIte-59367" class="siteScoring"><span>Site Scoring Comparison</span></a></li>
+        <li id="dailyOffers"><a href="/pages/RotoGrinders_Daily_Fantasy_Browser_Extensions-245335" class="browserExtensions"><span>Browser Extensions</span></a></li>
+       				<li id="dailyOffers"><a href="/pages/Daily_Fantasy_Bankroll_Tracking_FanDuel_Bankroll_Spreadsheet-158034" class="bankrollTracker"><span>Bankroll Tracker</span></a></li>
+		        <li id="dailyOffers"><a href="/articles/Daily_Fantasy_Strategy_Vault-17113" class="strategyArchive"><span>Strategy Vault</span></a></li>
+
+    
+
+
+	
+	</ul>
+
+</div>
+
+				</div>
+				<div id="daily-research-results-mask">
+					<div id="daily-research-results-mask-spinner"></div>
+				</div>
+			</div>
+		</div>
+		<div class="clearer"></div>
+	</div>
+</div>
+
+
+		<ul id="submenu-threads" class="submenu nav navbar">
+
+			
+          <li class=""><a href="/threads/index/all">Main</a></li>
+
+    
+
+
+   
+
+    <li class="dropdown has-submenu">
+      <a class="show-dropdown" href="#">By Sport</a>
+        <ul class="dropdown-menu">
+                     
+          <li class="">
+            <a class="item" href="/threads/index/nfl"><span class="football sport-icon">NFL</a>
+          </li>      
+                     
+          <li class="">
+            <a class="item" href="/threads/index/mlb"><span class="baseball sport-icon"></span>MLB</a>
+          </li>      
+                     
+          <li class="">
+            <a class="item" href="/threads/index/nba"><span class="basketball sport-icon">NBA</a>
+          </li>      
+                     
+          <li class="">
+            <a class="item" href="/threads/index/cfb"><span class="football sport-icon">CFB</a>
+          </li>      
+                     
+          <li class="">
+            <a class="item" href="/threads/index/cbb"><span class="basketball sport-icon"></span>CBB</a>
+          </li>      
+                     
+          <li class="">
+            <a class="item" href="/threads/index/nhl"><span class="hockey sport-icon"></span>NHL</a>
+          </li>      
+                     
+          <li class="">
+            <a class="item" href="/threads/index/pga"><span class="golf sport-icon"></span>PGA</a>
+          </li>      
+          
+        </ul>    
+    </li>
+    
+
+
+          <li class=""><a href="/threads/index/strategy">Strategy</a></li>
+
+    
+
+
+          <li class=""><a href="/threads/index/industry">Industry</a></li>
+
+    
+
+
+          <li class=""><a href="/threads/index/bankroll">Bankroll</a></li>
+
+    
+
+
+          <li class=""><a href="/threads/index/tools">Tools</a></li>
+
+    
+
+
+          <li class=""><a href="/threads/index/rsd">R.S.D.</a></li>
+
+    
+
+
+          <li class=""><a href="/threads/index/support">Support</a></li>
+
+    
+
+
+          <li class=""><a href="/threads/index/off_topic">Off Topic</a></li>
+
+    
+
+    
+
+        </ul>
+
+		<ul id="submenu-rankings" class="submenu nav">
+			<li class=""><a href="/rankings/index/grinder">Grinder Rankings</a></li>
+			<li class=""><a href="/rankings/index/annual">TPOY</a></li>
+			<li class=""><a href="/rankings/index/monthly">Monthly GLB</a></li>
+			<li class=""><a href="/rankings/index/seasonal/all/Baseball">Seasonal GLB</a></li>
+			<li class=""><a href="/pages/RotoGrinders_Rankings_FAQ-158">FAQ</a></li>
+		</ul>
+
+		<ul id="submenu-lineups" class="submenu nav active ">
+			<li class=""><span class="football sport-icon"></span><a style="display:inline-block;" href="/lineups/index/Football">Football</a></li>
+			<li class=""><span class="basketball sport-icon"></span><a style="display:inline-block;" href="/lineups/index/Basketball">Basketball</a></li>
+			<li class=""><span class="hockey sport-icon"></span><a style="display:inline-block;" href="/lineups/index/Hockey">Hockey</a></li>
+			<li class="active"><span class="baseball sport-icon"></span><a style="display:inline-block;" href="/lineups">Baseball</a></li>
+        </ul>
+
+	</div>
+</nav>
+
+
+		
+
+		
+				
+		        
+		<div id="middle">
+												<div id="main-section" >
+									<section id="main-content" >
+						<style type="text/css">
+.fancy td { border-right: 1px solid #dad9c7; }
+</style>
+
+
+
+<header id="screen-header">
+	<div id="lineups-ad">
+		<h1 style="padding-bottom:5px;">MLB Lineups - Daily Starting Lineups</h1>
+		<div style="text-align:center; margin-bottom:30px">MAY, 1ST LINEUPS with SALARIES</div>
+		<!--<em class="descrip">DraftKings.com is offering huge value every day in their Guaranteed Tournaments!
+		Guaranteed Prizes last 30 days: <strong>$604,694</strong> Contributed by DK (Overlay): <strong>$106,590</strong></em>-->
+		<!--<a href="" class="link">Click here to sign up to DraftKings and get a 100% deposit bonus up to $600!</a>-->
+		<!--<a href="" class="logo"><img src="/static/img/draftkings-sponsor.jpg" /></a>-->
+	</div>
+
+
+	<!--<h1 style="width:75%;"><span> Lineups</span> with Player Salaries and Value Plays
+	<em> </em>
+	</h1>
+	<a href="" target="_blank">
+	echo "normal"
+	echo "normal"
+	<img class="sponsor" src="/static/img/20120413-ad-draftday-sponsor.jpg" width="210" height="56" alt="DraftDay" />
+	</a>-->
+	
+
+
+
+	<nav id='lineups-research-nav'>
+		<span id="image-preloader" class="hidden"></span>
+				<div id="lineups-research-sites" class="filter-list">
+		
+<ul class="nav-list">
+<li class="active" ><a href="/lineups/index/Baseball/FanDuel" id="siteid-2" data-name="FanDuel" class="active"><img src="/img/sites/2/icon_16.png?1328741534" width="16" height="16" class="site-icon sideid-2" title="FanDuel" alt="FanDuel" /> FanDuel</a></li><li ><a href="/lineups/index/Baseball/DraftStreet" id="siteid-9" data-name="DraftStreet"><img src="/img/sites/9/icon_16.png?1328741534" width="16" height="16" class="site-icon sideid-9" title="DraftStreet" alt="DraftStreet" /> DraftStreet</a></li><li ><a href="/lineups/index/Baseball/DraftKings" id="siteid-20" data-name="DraftKings"><img src="/img/sites/20/icon_16.png?1339697206" width="16" height="16" class="site-icon sideid-20" title="DraftKings" alt="DraftKings" /> DraftKings</a></li><li ><a href="/lineups/index/Baseball/DraftDay" id="siteid-15" data-name="DraftDay"><img src="/img/sites/15/icon_16.png?1328741534" width="16" height="16" class="site-icon sideid-15" title="DraftDay" alt="DraftDay" /> DraftDay</a></li><li ><a href="/lineups/index/Baseball/FantasyFeud" id="siteid-19" data-name="FantasyFeud"><img src="/img/sites/19/icon_16.png?1332954189" width="16" height="16" class="site-icon sideid-19" title="FantasyFeud" alt="FantasyFeud" /> FantasyFeud</a></li><li ><a href="/lineups/index/Baseball/StarStreet" id="siteid-18" data-name="StarStreet"><img src="/img/sites/18/icon_16.png?1348530355" width="16" height="16" class="site-icon sideid-18" title="StarStreet" alt="StarStreet" /> StarStreet</a></li><li ><a href="/lineups/index/Baseball/FanThrowDown" id="siteid-24" data-name="FanThrowDown"><img src="/img/sites/24/icon_16.png?1360274435" width="16" height="16" class="site-icon sideid-24" title="FanThrowDown" alt="FanThrowDown" /> FanThrowDown</a></li></ul>
+	
+	</div>
+				<div id="lineups-research-sports" class="filter-list">
+		
+<ul class="nav-list">
+<li class="active" ><a href="/lineups/index/Baseball/FanDuel" id="sportid-2" data-name="Baseball" class="active"><span class="baseball sport-icon"></span>Baseball</a></li><li ><a href="/lineups/index/Football/FanDuel" id="sportid-1" data-name="Football"><span class="football sport-icon"></span>Football</a></li><li ><a href="/lineups/index/Basketball/FanDuel" id="sportid-3" data-name="Basketball"><span class="basketball sport-icon"></span>Basketball</a></li><li ><a href="/lineups/index/Hockey/FanDuel" id="sportid-4" data-name="Hockey"><span class="hockey sport-icon"></span>Hockey</a></li></ul>
+	
+	</div>
+	</nav>
+</header>
+
+		
+
+<div id="lineups-research-display" class="clearfix data-frame">
+
+	
+
+
+
+	<div id="lineups-research-container" class="clearfix data-container">
+
+		
+	
+	<!--<div class="ad-banner">
+		 <a href="http://www.fantasyfeud.com/?applet=join.ashx&lid=176517&aid=1&subid=x&cid=1">
+		<img src="http://rical-rg.s3.amazonaws.com/img/ad_background_orange_998x30.jpg" width="978" height="30" >
+		<div class="ad-banner-text">$500 MLB Mayhem Freeroll on FantasyFeud this Friday.&nbsp;&nbsp;70% Deposit bonus up to $250.&nbsp;&nbsp;Click here to partake.</div>
+		</a>
+ 	</div>-->
+	<div id="filter-lineups">
+		<div class="filter-cont">
+	        <!--<div class="filter-box">FILTER</div>-->
+	        <img src="http://rical-rg.s3.amazonaws.com/img/filter-sh.png" />
+	    																			<a href="" class="position filter-link" pos='P'>P</a>
+												
+																						<a href="" class="position filter-link" pos='C'>C</a>
+												
+																						<a href="" class="position filter-link" pos='1B'>1B</a>
+												
+																						<a href="" class="position filter-link" pos='2B'>2B</a>
+												
+																						<a href="" class="position filter-link" pos='3B'>3B</a>
+												
+																						<a href="" class="position filter-link" pos='SS'>SS</a>
+												
+																						<a href="" class="position filter-link" pos='OF'>OF</a>
+												
+																	
+																	
+								        	<a href="#" class="clear-values filter-link">Clear</a>
+	        <div class="salary"><div class="salary-input" action="" method="get"><div>Salary:</div> <input placeholder="Use a decimal, like 14.5" name="" value="" type="text" /></div></div>
+	    </div>
+	</div>
+	
+		<div class="grid-6-6">
+			<div class="column-1">
+								<ul class="schedule-list" style="font-size:9pt;">
+
+													
+										<li>
+
+
+
+
+
+
+<header class="sunny">
+	<time> 1:05 PM ET </time>
+		<div class="match-teams">
+		<span class="lineup-pitcher"><a href="/fantasyplayers/Cesar_Ramos-10881">C. Ramos (L)</a> <span class="lineup-salary high">$4.3K</span></span> @ <span class="lineup-pitcher"><a href="/fantasyplayers/Jake_Peavy-11201">J. Peavy (R)</a> <span class="lineup-salary high">$7.6K</span></span>	</div>
+		<a href="http://www.weather.com/weather/hourbyhour/graph/02215?pagenum=2" class="weather sunny" target="_blank" title="FEELS LIKE: 61 HUMIDITY: 93% PRECIP: 0% WIND:SSW at 11 mph">sunny</a>
+		<div class="weather-graphic">
+	<span class="NNW big">NNW at 11 mph</span>	</div>
+	</header>
+
+<div class="grid-3-3 mlb">
+	<div style="text-align:center; padding-top:4px;">Last Updated: 1 PM ET; Humidity: 93%; Wind: SSW at 11 mph<br />Precip: <a href="http://www.weather.com/weather/hourbyhour/graph/02215?pagenum=2" target="_blank">12 PM: 0% | 1 PM: 0% | 2 PM: 0% | 3 PM: 0%</a></div>
+	<div class="column-1 away">
+		<div class="team">
+			<span class="team-logo mlb tbr"></span>Tampa Bay Rays
+							<br />
+				<a class="fancy" href="/split_stats/index/Baseball/Pitcher/106">BvP</a>
+				&middot;
+
+				
+								<a class="fancy" href="/split_stats/index/Baseball/Righty/106">vs. R</a>
+				&middot;
+				
+				<a class="fancy" href="/split_stats/index/Baseball/Away/106">Away</a>
+				&middot;
+
+								<a class="fancy" href="/split_stats/index/Baseball/Day/106">Day</a>
+							
+					</div>
+
+		<ul class="lineup-list lineup">
+	<li class="player 2b 2b first-of-position matched">
+		<span class="counter">1</span> <a href="/fantasyplayers/Ben_Zobrist-10373">B. Zobrist</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">S</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$3.7K</span></span> (<span class="position">2B</span>)	</li>
+			
+	<li class="player of cf first-of-position matched">
+		<span class="counter">2</span> <a href="/fantasyplayers/Desmond_Jennings-10594">D. Jennings</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$3.3K</span></span> (<span class="position">OF</span>)	</li>
+			
+	<li class="player of lf matched">
+		<span class="counter">3</span> <a href="/fantasyplayers/Matt_Joyce-10596">M. Joyce</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">L</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$3.3K</span></span> (<span class="position">OF</span>)	</li>
+			
+	<li class="player 3b 3b first-of-position matched">
+		<span class="counter">4</span> <a href="/fantasyplayers/Evan_Longoria-10426">E. Longoria</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$4K</span></span> (<span class="position">3B</span>)	</li>
+			
+	<li class="player 1b 1b first-of-position matched">
+		<span class="counter">5</span> <a href="/fantasyplayers/James_Loney-10337">J. Loney</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">L</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$2.9K</span></span> (<span class="position">1B</span>)	</li>
+			
+	<li class="player of rf first-of-position matched">
+		<span class="counter">6</span> <a href="/fantasyplayers/Wil_Myers-14944">W. Myers</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$3K</span></span> (<span class="position">OF</span>)	</li>
+			
+	<li class="player of dh matched">
+		<span class="counter">7</span> <a href="/fantasyplayers/David_DeJesus-10531">D. DeJesus</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">L</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$2.8K</span></span> (<span class="position">OF</span>)	</li>
+			
+	<li class="player ss ss first-of-position matched">
+		<span class="counter">8</span> <a href="/fantasyplayers/Yunel_Escobar-10480">Y. Escobar</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$2.2K</span></span> (<span class="position">SS</span>)	</li>
+			
+	<li class="player c c first-of-position matched">
+		<span class="counter">9</span> <a href="/fantasyplayers/Jose_Molina-10315">J. Molina</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$2.2K</span></span> (<span class="position">C</span>)	</li>
+			
+</ul>
+	</div>
+	<div class="column-2 home">
+		<div class="team">
+			<span class="team-logo mlb bos"></span>Boston Red Sox
+							<br />
+				<a class="fancy" href="/split_stats/index/Baseball/Pitcher/95">BvP</a>
+				&middot;
+
+								<a class="fancy" href="/split_stats/index/Baseball/Lefty/95">vs. L</a>
+				&middot;
+				
+				
+				<a class="fancy" href="/split_stats/index/Baseball/Home/95">Home</a>
+				&middot;
+
+								<a class="fancy" href="/split_stats/index/Baseball/Day/95">Day</a>
+							
+					</div>
+
+		<ul class="lineup-list lineup">
+	<li class="player 2b 2b first-of-position matched">
+		<span class="counter">1</span> <a href="/fantasyplayers/Dustin_Pedroia-10375">D. Pedroia</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$3.4K</span></span> (<span class="position">2B</span>)	</li>
+			
+	<li class="player of rf first-of-position matched">
+		<span class="counter">2</span> <a href="/fantasyplayers/Shane_Victorino-10521">S. Victorino</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">S</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$3K</span></span> (<span class="position">OF</span>)	</li>
+			
+	<li class="player 1b dh first-of-position matched">
+		<span class="counter">3</span> <a href="/fantasyplayers/David_Ortiz-10897">D. Ortiz</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">L</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$3.8K</span></span> (<span class="position">1B</span>)	</li>
+			
+	<li class="player 1b 1b matched">
+		<span class="counter">4</span> <a href="/fantasyplayers/Mike_Napoli-10281">M. Napoli</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$3.6K</span></span> (<span class="position">1B</span>)	</li>
+			
+	<li class="player of lf first-of-position matched">
+		<span class="counter">5</span> <a href="/fantasyplayers/Jonny_Gomes-10574">J. Gomes</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$3.1K</span></span> (<span class="position">OF</span>)	</li>
+			
+	<li class="player ss ss first-of-position matched">
+		<span class="counter">6</span> <a href="/fantasyplayers/Xander_Bogaerts-15873">X. Bogaerts</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$3.1K</span></span> (<span class="position">SS</span>)	</li>
+			
+	<li class="player 3b 3b first-of-position matched">
+		<span class="counter">7</span> <a href="/fantasyplayers/Will_Middlebrooks-13437">W. Middlebrooks</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$3.5K</span></span> (<span class="position">3B</span>)	</li>
+			
+	<li class="player c c first-of-position matched">
+		<span class="counter">8</span> <a href="/fantasyplayers/David_Ross-10298">D. Ross</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$2.5K</span></span> (<span class="position">C</span>)	</li>
+			
+	<li class="player of cf first-of-position matched">
+		<span class="counter">9</span> <a href="/fantasyplayers/Jackie_Bradley-14581">J. Bradley</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">L</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$2.5K</span></span> (<span class="position">OF</span>)	</li>
+			
+</ul>
+	</div>
+</div>
+
+<div class="clearer"></div>
+ </li>
+																			
+										<li>
+
+
+
+
+
+
+<header class="rainy">
+	<time> 1:10 PM ET </time>
+		<div class="match-teams">
+		<span class="lineup-pitcher"><a href="/fantasyplayers/Dan_Haren-10958">D. Haren (R)</a> <span class="lineup-salary high">$8.1K</span></span> @ <span class="lineup-pitcher"><a href="/fantasyplayers/Mike_Pelfrey-10972">M. Pelfrey (R)</a> <span class="lineup-salary high">$4K</span></span>	</div>
+		<a href="http://www.weather.com/weather/hourbyhour/graph/55403?pagenum=2" class="weather rainy" target="_blank" title="FEELS LIKE: 36 HUMIDITY: 82% PRECIP: 40% WIND:NW at 13 mph">rainy</a>
+		<div class="weather-graphic">
+	<span class="ENE big">ENE at 13 mph</span>	</div>
+	</header>
+
+<div class="grid-3-3 mlb">
+	<div style="text-align:center; padding-top:4px;">Last Updated: 1 PM ET; Humidity: 82%; Wind: NW at 13 mph<br />Precip: <a href="http://www.weather.com/weather/hourbyhour/graph/55403?pagenum=2" target="_blank">12 PM: 40% | 1 PM: 0% | 2 PM: 0% | 3 PM: 0%</a></div>
+	<div class="column-1 away">
+		<div class="team">
+			<span class="team-logo mlb lad"></span>Los Angeles Dodgers
+							<br />
+				<a class="fancy" href="/split_stats/index/Baseball/Pitcher/116">BvP</a>
+				&middot;
+
+				
+								<a class="fancy" href="/split_stats/index/Baseball/Righty/116">vs. R</a>
+				&middot;
+				
+				<a class="fancy" href="/split_stats/index/Baseball/Away/116">Away</a>
+				&middot;
+
+								<a class="fancy" href="/split_stats/index/Baseball/Day/116">Day</a>
+							
+					</div>
+
+		<ul class="lineup-list lineup">
+	<li class="player 2b 2b first-of-position matched">
+		<span class="counter">1</span> <a href="/fantasyplayers/Dee_Gordon-11305">D. Gordon</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">L</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$3.4K</span></span> (<span class="position">2B</span>)	</li>
+			
+	<li class="player of rf first-of-position matched">
+		<span class="counter">2</span> <a href="/fantasyplayers/Yasiel_Puig-15854">Y. Puig</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$3.9K</span></span> (<span class="position">OF</span>)	</li>
+			
+	<li class="player ss ss first-of-position matched">
+		<span class="counter">3</span> <a href="/fantasyplayers/Hanley_Ramirez-10471">H. Ramirez</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$4.5K</span></span> (<span class="position">SS</span>)	</li>
+			
+	<li class="player 1b 1b first-of-position matched">
+		<span class="counter">4</span> <a href="/fantasyplayers/Adrian_Gonzalez-10340">A. Gonzalez</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">L</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$4.9K</span></span> (<span class="position">1B</span>)	</li>
+			
+	<li class="player of dh first-of-position matched">
+		<span class="counter">5</span> <a href="/fantasyplayers/Matt_Kemp-10534">M. Kemp</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$3.8K</span></span> (<span class="position">OF</span>)	</li>
+			
+	<li class="player of cf matched">
+		<span class="counter">6</span> <a href="/fantasyplayers/Andre_Ethier-10526">A. Ethier</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">L</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$3K</span></span> (<span class="position">OF</span>)	</li>
+			
+	<li class="player 3b 3b first-of-position matched">
+		<span class="counter">7</span> <a href="/fantasyplayers/Juan_Uribe-10392">J. Uribe</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$3K</span></span> (<span class="position">3B</span>)	</li>
+			
+	<li class="player c c first-of-position matched">
+		<span class="counter">8</span> <a href="/fantasyplayers/Miguel_Olivo-10268">M. Olivo</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$2.2K</span></span> (<span class="position">C</span>)	</li>
+			
+	<li class="player of lf first-of-position matched">
+		<span class="counter">9</span> <a href="/fantasyplayers/Carl_Crawford-10543">C. Crawford</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">L</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$2.8K</span></span> (<span class="position">OF</span>)	</li>
+			
+</ul>
+	</div>
+	<div class="column-2 home">
+		<div class="team">
+			<span class="team-logo mlb min"></span>Minnesota Twins
+							<br />
+				<a class="fancy" href="/split_stats/index/Baseball/Pitcher/102">BvP</a>
+				&middot;
+
+				
+								<a class="fancy" href="/split_stats/index/Baseball/Righty/102">vs. R</a>
+				&middot;
+				
+				<a class="fancy" href="/split_stats/index/Baseball/Home/102">Home</a>
+				&middot;
+
+								<a class="fancy" href="/split_stats/index/Baseball/Day/102">Day</a>
+							
+					</div>
+
+		<ul class="lineup-list lineup">
+	<li class="player 2b 2b first-of-position matched">
+		<span class="counter">1</span> <a href="/fantasyplayers/Brian_Dozier-13440">B. Dozier</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$3.9K</span></span> (<span class="position">2B</span>)	</li>
+			
+	<li class="player 1b 1b first-of-position matched">
+		<span class="counter">2</span> <a href="/fantasyplayers/Joe_Mauer-10260">J. Mauer</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">L</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$3.2K</span></span> (<span class="position">1B</span>)	</li>
+			
+	<li class="player 3b 3b first-of-position matched">
+		<span class="counter">3</span> <a href="/fantasyplayers/Trevor_Plouffe-11174">T. Plouffe</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$3.7K</span></span> (<span class="position">3B</span>)	</li>
+			
+	<li class="player of lf first-of-position matched">
+		<span class="counter">4</span> <a href="/fantasyplayers/Jason_Kubel-10563">J. Kubel</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">L</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$2.9K</span></span> (<span class="position">OF</span>)	</li>
+			
+	<li class="player c dh first-of-position matched">
+		<span class="counter">5</span> <a href="/fantasyplayers/Josmil_Pinto-15797">J. Pinto</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$3.4K</span></span> (<span class="position">C</span>)	</li>
+			
+	<li class="player c c matched">
+		<span class="counter">6</span> <a href="/fantasyplayers/Kurt_Suzuki-10265">K. Suzuki</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$3.1K</span></span> (<span class="position">C</span>)	</li>
+			
+	<li class="player of rf first-of-position matched">
+		<span class="counter">7</span> <a href="/fantasyplayers/Sam_Fuld-10628">S. Fuld</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">L</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$3.1K</span></span> (<span class="position">OF</span>)	</li>
+			
+	<li class="player of cf matched">
+		<span class="counter">8</span> <a href="/fantasyplayers/Aaron_Hicks-14541">A. Hicks</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">S</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$2.7K</span></span> (<span class="position">OF</span>)	</li>
+			
+	<li class="player ss ss first-of-position matched">
+		<span class="counter">9</span> <a href="/fantasyplayers/Eduardo_Escobar-11507">E. Escobar</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">S</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$2.2K</span></span> (<span class="position">SS</span>)	</li>
+			
+</ul>
+	</div>
+</div>
+
+<div class="clearer"></div>
+ </li>
+																			
+										<li>
+
+
+
+
+
+
+<header class="rainy">
+	<time> 4:05 PM ET </time>
+		<div class="match-teams">
+		<span class="lineup-pitcher"><a href="/fantasyplayers/Charlie_Morton-10985">C. Morton (R)</a> <span class="lineup-salary high">$5K</span></span> @ <span class="lineup-pitcher"><a href="/fantasyplayers/Bud_Norris-11022">B. Norris (R)</a> <span class="lineup-salary high">$6.1K</span></span>	</div>
+		<a href="http://www.weather.com/weather/hourbyhour/graph/21201?pagenum=2" class="weather rainy" target="_blank" title="FEELS LIKE: 75 HUMIDITY: 51% PRECIP: 40% WIND:WSW at 9 mph">rainy</a>
+		<div class="weather-graphic">
+	<span class="NE">NE at 9 mph</span>	</div>
+	</header>
+
+<div class="grid-3-3 mlb">
+	<div style="text-align:center; padding-top:4px;">Last Updated: 2 PM ET; Humidity: 51%; Wind: WSW at 9 mph<br />Precip: <a href="http://www.weather.com/weather/hourbyhour/graph/21201?pagenum=2" target="_blank">3 PM: 0% | 4 PM: 0% | 5 PM: 40% | 6 PM: 30%</a></div>
+	<div class="column-1 away">
+		<div class="team">
+			<span class="team-logo mlb pit"></span>Pittsburgh Pirates
+							<br />
+				<a class="fancy" href="/split_stats/index/Baseball/Pitcher/120">BvP</a>
+				&middot;
+
+				
+								<a class="fancy" href="/split_stats/index/Baseball/Righty/120">vs. R</a>
+				&middot;
+				
+				<a class="fancy" href="/split_stats/index/Baseball/Away/120">Away</a>
+				&middot;
+
+								<a class="fancy" href="/split_stats/index/Baseball/Day/120">Day</a>
+							
+					</div>
+
+		<ul class="lineup-list lineup">
+	<li class="player of rf first-of-position matched">
+		<span class="counter">1</span> <a href="/fantasyplayers/Jose_Tabata-10546">J. Tabata</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$2.3K</span></span> (<span class="position">OF</span>)	</li>
+			
+	<li class="player 1b 1b first-of-position matched">
+		<span class="counter">2</span> <a href="/fantasyplayers/Ike_Davis-10347">I. Davis</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">L</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$2.6K</span></span> (<span class="position">1B</span>)	</li>
+			
+	<li class="player of cf first-of-position matched">
+		<span class="counter">3</span> <a href="/fantasyplayers/Andrew_McCutchen-10517">A. McCutchen</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$4K</span></span> (<span class="position">OF</span>)	</li>
+			
+	<li class="player 3b 3b first-of-position matched">
+		<span class="counter">4</span> <a href="/fantasyplayers/Pedro_Alvarez-10435">P. Alvarez</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">L</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$3.2K</span></span> (<span class="position">3B</span>)	</li>
+			
+	<li class="player 1b dh first-of-position matched">
+		<span class="counter">5</span> <a href="/fantasyplayers/Gaby_Sanchez-10343">G. Sanchez</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$2.8K</span></span> (<span class="position">1B</span>)	</li>
+			
+	<li class="player 2b 2b first-of-position matched">
+		<span class="counter">6</span> <a href="/fantasyplayers/Neil_Walker-10376">N. Walker</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">S</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$3.1K</span></span> (<span class="position">2B</span>)	</li>
+			
+	<li class="player of lf first-of-position matched">
+		<span class="counter">7</span> <a href="/fantasyplayers/Starling_Marte-13518">S. Marte</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$3.1K</span></span> (<span class="position">OF</span>)	</li>
+			
+	<li class="player c c first-of-position matched">
+		<span class="counter">8</span> <a href="/fantasyplayers/Tony_Sanchez-15003">T. Sanchez</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$2.2K</span></span> (<span class="position">C</span>)	</li>
+			
+	<li class="player ss ss first-of-position matched">
+		<span class="counter">9</span> <a href="/fantasyplayers/Jordy_Mercer-13480">J. Mercer</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$2.2K</span></span> (<span class="position">SS</span>)	</li>
+			
+</ul>
+	</div>
+	<div class="column-2 home">
+		<div class="team">
+			<span class="team-logo mlb bal"></span>Baltimore Orioles
+							<br />
+				<a class="fancy" href="/split_stats/index/Baseball/Pitcher/96">BvP</a>
+				&middot;
+
+				
+								<a class="fancy" href="/split_stats/index/Baseball/Righty/96">vs. R</a>
+				&middot;
+				
+				<a class="fancy" href="/split_stats/index/Baseball/Home/96">Home</a>
+				&middot;
+
+								<a class="fancy" href="/split_stats/index/Baseball/Day/96">Day</a>
+							
+					</div>
+
+		<ul class="lineup-list lineup">
+	<li class="player 2b 2b first-of-position matched">
+		<span class="counter">1</span> <a href="/fantasyplayers/Jemile_Weeks-11303">J. Weeks</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">S</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$2.8K</span></span> (<span class="position">2B</span>)	</li>
+			
+	<li class="player of lf first-of-position matched">
+		<span class="counter">2</span> <a href="/fantasyplayers/Nelson_Cruz-10512">N. Cruz</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$4.2K</span></span> (<span class="position">OF</span>)	</li>
+			
+	<li class="player of rf matched">
+		<span class="counter">3</span> <a href="/fantasyplayers/Nick_Markakis-10533">N. Markakis</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">L</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$3.1K</span></span> (<span class="position">OF</span>)	</li>
+			
+	<li class="player of cf matched">
+		<span class="counter">4</span> <a href="/fantasyplayers/Adam_Jones-10551">A. Jones</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$3K</span></span> (<span class="position">OF</span>)	</li>
+			
+	<li class="player of dh matched">
+		<span class="counter">5</span> <a href="/fantasyplayers/Delmon_Young-10532">D. Young</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$2.3K</span></span> (<span class="position">OF</span>)	</li>
+			
+	<li class="player c c first-of-position matched">
+		<span class="counter">6</span> <a href="/fantasyplayers/Steve_Clevenger-13283">S. Clevenger</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">L</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$2.4K</span></span> (<span class="position">C</span>)	</li>
+			
+	<li class="player ss ss first-of-position matched">
+		<span class="counter">7</span> <a href="/fantasyplayers/J_J_Hardy-10492">J. Hardy</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$2.6K</span></span> (<span class="position">SS</span>)	</li>
+			
+	<li class="player 1b 1b first-of-position matched">
+		<span class="counter">8</span> <a href="/fantasyplayers/Steve_Pearce-10364">S. Pearce</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$2.2K</span></span> (<span class="position">1B</span>)	</li>
+			
+	<li class="player 2b 3b first-of-position matched">
+		<span class="counter">9</span> <a href="/fantasyplayers/Ryan_Flaherty-13396">R. Flaherty</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">L</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$2.2K</span></span> (<span class="position">2B</span>)	</li>
+			
+</ul>
+	</div>
+</div>
+
+<div class="clearer"></div>
+ </li>
+																			
+										<li>
+
+
+
+
+
+
+<header class="rainy">
+	<time> 7:05 PM ET </time>
+		<div class="match-teams">
+		<span class="lineup-pitcher"><a href="/fantasyplayers/Brandon_Cumpton-15861">B. Cumpton (R)</a> <span class="lineup-salary high">$4.2K</span></span> @ <span class="lineup-pitcher"><a href="/fantasyplayers/Bud_Norris-11022">B. Norris (R)</a> <span class="lineup-salary high">$6.1K</span></span>	</div>
+		<a href="http://www.weather.com/weather/hourbyhour/graph/21201?pagenum=2" class="weather rainy" target="_blank" title="FEELS LIKE: 71 HUMIDITY: 53% PRECIP: 30% WIND:WNW at 9 mph">rainy</a>
+		<div class="weather-graphic">
+	<span class="E">E at 9 mph</span>	</div>
+	</header>
+
+<div class="grid-3-3 mlb">
+	<div style="text-align:center; padding-top:4px;">Last Updated: 2 PM ET; Humidity: 53%; Wind: WNW at 9 mph<br />Precip: <a href="http://www.weather.com/weather/hourbyhour/graph/21201?pagenum=2" target="_blank">6 PM: 30% | 7 PM: 5% | 8 PM: 0% | 9 PM: 0%</a></div>
+	<div class="column-1 away">
+		<div class="team">
+			<span class="team-logo mlb pit"></span>Pittsburgh Pirates
+							<br />
+				<a class="fancy" href="/split_stats/index/Baseball/Pitcher/120">BvP</a>
+				&middot;
+
+				
+								<a class="fancy" href="/split_stats/index/Baseball/Righty/120">vs. R</a>
+				&middot;
+				
+				<a class="fancy" href="/split_stats/index/Baseball/Away/120">Away</a>
+				&middot;
+
+								<a class="fancy" href="/split_stats/index/Baseball/Night/120">Night</a>
+							
+					</div>
+
+		<div class="notice">Check Back Soon for Daily Lineup</div>	</div>
+	<div class="column-2 home">
+		<div class="team">
+			<span class="team-logo mlb bal"></span>Baltimore Orioles
+							<br />
+				<a class="fancy" href="/split_stats/index/Baseball/Pitcher/96">BvP</a>
+				&middot;
+
+				
+								<a class="fancy" href="/split_stats/index/Baseball/Righty/96">vs. R</a>
+				&middot;
+				
+				<a class="fancy" href="/split_stats/index/Baseball/Home/96">Home</a>
+				&middot;
+
+								<a class="fancy" href="/split_stats/index/Baseball/Night/96">Night</a>
+							
+					</div>
+
+		<div class="notice">Check Back Soon for Daily Lineup</div>	</div>
+</div>
+
+<div class="clearer"></div>
+ </li>
+																			
+										<li>
+
+
+
+
+
+
+<header class="stormy">
+	<time> 7:05 PM ET </time>
+		<div class="match-teams">
+		<span class="lineup-pitcher"><a href="/fantasyplayers/Roenis_Elias-17450">R. Elias (L)</a> <span class="lineup-salary high">$4.7K</span></span> @ <span class="lineup-pitcher"><a href="/fantasyplayers/Hiroki_Kuroda-10922">H. Kuroda (R)</a> <span class="lineup-salary high">$7.1K</span></span>	</div>
+		<a href="http://www.weather.com/weather/hourbyhour/graph/10451?pagenum=2" class="weather stormy" target="_blank" title="FEELS LIKE: 68 HUMIDITY: 65% PRECIP: 80% WIND:S at 12 mph">stormy</a>
+		<div class="weather-graphic">
+	<span class="W big">W at 12 mph</span>	</div>
+	</header>
+
+<div class="grid-3-3 mlb">
+	<div style="text-align:center; padding-top:4px;">Last Updated: 2 PM ET; Humidity: 65%; Wind: S at 12 mph<br />Precip: <a href="http://www.weather.com/weather/hourbyhour/graph/10451?pagenum=2" target="_blank">6 PM: 0% | 7 PM: 10% | 8 PM: 80% | 9 PM: 0%</a></div>
+	<div class="column-1 away">
+		<div class="team">
+			<span class="team-logo mlb sea"></span>Seattle Mariners
+							<br />
+				<a class="fancy" href="/split_stats/index/Baseball/Pitcher/105">BvP</a>
+				&middot;
+
+				
+								<a class="fancy" href="/split_stats/index/Baseball/Righty/105">vs. R</a>
+				&middot;
+				
+				<a class="fancy" href="/split_stats/index/Baseball/Away/105">Away</a>
+				&middot;
+
+								<a class="fancy" href="/split_stats/index/Baseball/Night/105">Night</a>
+							
+					</div>
+
+		<ul class="lineup-list lineup">
+	<li class="player of cf first-of-position matched">
+		<span class="counter">1</span> <a href="/fantasyplayers/Michael_Saunders-10602">M. Saunders</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">L</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$2.9K</span></span> (<span class="position">OF</span>)	</li>
+			
+	<li class="player 2b rf first-of-position matched">
+		<span class="counter">2</span> <a href="/fantasyplayers/Stefen_Romero-15104">S. Romero</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$2.5K</span></span> (<span class="position">2B</span>)	</li>
+			
+	<li class="player 2b 2b matched">
+		<span class="counter">3</span> <a href="/fantasyplayers/Robinson_Cano-10370">R. Cano</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">L</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$3.9K</span></span> (<span class="position">2B</span>)	</li>
+			
+	<li class="player of dh first-of-position matched">
+		<span class="counter">4</span> <a href="/fantasyplayers/Corey_Hart-10576">C. Hart</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$3K</span></span> (<span class="position">OF</span>)	</li>
+			
+	<li class="player 3b 3b first-of-position matched">
+		<span class="counter">5</span> <a href="/fantasyplayers/Kyle_Seager-11373">K. Seager</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">L</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$4K</span></span> (<span class="position">3B</span>)	</li>
+			
+	<li class="player 1b 1b first-of-position matched">
+		<span class="counter">6</span> <a href="/fantasyplayers/Justin_Smoak-10351">J. Smoak</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">S</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$3K</span></span> (<span class="position">1B</span>)	</li>
+			
+	<li class="player of lf first-of-position matched">
+		<span class="counter">7</span> <a href="/fantasyplayers/Dustin_Ackley-11333">D. Ackley</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">L</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$2.5K</span></span> (<span class="position">OF</span>)	</li>
+			
+	<li class="player c c first-of-position matched">
+		<span class="counter">8</span> <a href="/fantasyplayers/Mike_Zunino-15860">M. Zunino</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$2.6K</span></span> (<span class="position">C</span>)	</li>
+			
+	<li class="player ss ss first-of-position matched">
+		<span class="counter">9</span> <a href="/fantasyplayers/Brad_Miller-15160">B. Miller</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">L</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$3.1K</span></span> (<span class="position">SS</span>)	</li>
+			
+</ul>
+	</div>
+	<div class="column-2 home">
+		<div class="team">
+			<span class="team-logo mlb nyy"></span>New York Yankees
+							<br />
+				<a class="fancy" href="/split_stats/index/Baseball/Pitcher/103">BvP</a>
+				&middot;
+
+								<a class="fancy" href="/split_stats/index/Baseball/Lefty/103">vs. L</a>
+				&middot;
+				
+				
+				<a class="fancy" href="/split_stats/index/Baseball/Home/103">Home</a>
+				&middot;
+
+								<a class="fancy" href="/split_stats/index/Baseball/Night/103">Night</a>
+							
+					</div>
+
+		<div class="notice">Check Back Soon for Daily Lineup</div>	</div>
+</div>
+
+<div class="clearer"></div>
+ </li>
+																			
+										<li>
+
+
+
+
+
+
+<header class="rainy">
+	<time> 7:10 PM ET </time>
+		<div class="match-teams">
+		<span class="lineup-pitcher"><a href="/fantasyplayers/Red_Patterson-16309">R. Patterson (R)</a> <span class="lineup-salary high">$3K</span></span> @ <span class="lineup-pitcher"><a href="/fantasyplayers/Kris_Johnson-15525">K. Johnson (L)</a> <span class="lineup-salary high">$4.2K</span></span>	</div>
+		<a href="http://www.weather.com/weather/hourbyhour/graph/55403?pagenum=2" class="weather rainy" target="_blank" title="FEELS LIKE: 42 HUMIDITY: 74% PRECIP: 30% WIND:NW at 10 mph">rainy</a>
+		<div class="weather-graphic">
+	<span class="ENE">ENE at 10 mph</span>	</div>
+	</header>
+
+<div class="grid-3-3 mlb">
+	<div style="text-align:center; padding-top:4px;">Last Updated: 2 PM ET; Humidity: 74%; Wind: NW at 10 mph<br />Precip: <a href="http://www.weather.com/weather/hourbyhour/graph/55403?pagenum=2" target="_blank">6 PM: 0% | 7 PM: 0% | 8 PM: 30% | 9 PM: 30%</a></div>
+	<div class="column-1 away">
+		<div class="team">
+			<span class="team-logo mlb lad"></span>Los Angeles Dodgers
+							<br />
+				<a class="fancy" href="/split_stats/index/Baseball/Pitcher/116">BvP</a>
+				&middot;
+
+								<a class="fancy" href="/split_stats/index/Baseball/Lefty/116">vs. L</a>
+				&middot;
+				
+				
+				<a class="fancy" href="/split_stats/index/Baseball/Away/116">Away</a>
+				&middot;
+
+								<a class="fancy" href="/split_stats/index/Baseball/Night/116">Night</a>
+							
+					</div>
+
+		<div class="notice">Check Back Soon for Daily Lineup</div>	</div>
+	<div class="column-2 home">
+		<div class="team">
+			<span class="team-logo mlb min"></span>Minnesota Twins
+							<br />
+				<a class="fancy" href="/split_stats/index/Baseball/Pitcher/102">BvP</a>
+				&middot;
+
+				
+								<a class="fancy" href="/split_stats/index/Baseball/Righty/102">vs. R</a>
+				&middot;
+				
+				<a class="fancy" href="/split_stats/index/Baseball/Home/102">Home</a>
+				&middot;
+
+								<a class="fancy" href="/split_stats/index/Baseball/Night/102">Night</a>
+							
+					</div>
+
+		<div class="notice">Check Back Soon for Daily Lineup</div>	</div>
+</div>
+
+<div class="clearer"></div>
+ </li>
+																			
+										<li>
+
+
+
+
+
+
+<header class="sunny">
+	<time> 7:10 PM ET </time>
+		<div class="match-teams">
+		<span class="lineup-pitcher"><a href="/fantasyplayers/Chris_Archer-17449">C. Archer (R)</a> <span class="lineup-salary high">$7.6K</span></span> @ <span class="lineup-pitcher"><a href="/fantasyplayers/Felix_Doubront-11057">F. Doubront (L)</a> <span class="lineup-salary high">$5.6K</span></span>	</div>
+		<a href="http://www.weather.com/weather/hourbyhour/graph/02215?pagenum=2" class="weather sunny" target="_blank" title="FEELS LIKE: 65 HUMIDITY: 75% PRECIP: 0% WIND:SSW at 11 mph">sunny</a>
+		<div class="weather-graphic">
+	<span class="NNW big">NNW at 11 mph</span>	</div>
+	</header>
+
+<div class="grid-3-3 mlb">
+	<div style="text-align:center; padding-top:4px;">Last Updated: 2 PM ET; Humidity: 75%; Wind: SSW at 11 mph<br />Precip: <a href="http://www.weather.com/weather/hourbyhour/graph/02215?pagenum=2" target="_blank">6 PM: 0% | 7 PM: 0% | 8 PM: 0% | 9 PM: 0%</a></div>
+	<div class="column-1 away">
+		<div class="team">
+			<span class="team-logo mlb tbr"></span>Tampa Bay Rays
+							<br />
+				<a class="fancy" href="/split_stats/index/Baseball/Pitcher/106">BvP</a>
+				&middot;
+
+								<a class="fancy" href="/split_stats/index/Baseball/Lefty/106">vs. L</a>
+				&middot;
+				
+				
+				<a class="fancy" href="/split_stats/index/Baseball/Away/106">Away</a>
+				&middot;
+
+								<a class="fancy" href="/split_stats/index/Baseball/Night/106">Night</a>
+							
+					</div>
+
+		<div class="notice">Check Back Soon for Daily Lineup</div>	</div>
+	<div class="column-2 home">
+		<div class="team">
+			<span class="team-logo mlb bos"></span>Boston Red Sox
+							<br />
+				<a class="fancy" href="/split_stats/index/Baseball/Pitcher/95">BvP</a>
+				&middot;
+
+				
+								<a class="fancy" href="/split_stats/index/Baseball/Righty/95">vs. R</a>
+				&middot;
+				
+				<a class="fancy" href="/split_stats/index/Baseball/Home/95">Home</a>
+				&middot;
+
+								<a class="fancy" href="/split_stats/index/Baseball/Night/95">Night</a>
+							
+					</div>
+
+		<div class="notice">Check Back Soon for Daily Lineup</div>	</div>
+</div>
+
+<div class="clearer"></div>
+ </li>
+																			
+										<li>
+
+
+
+
+
+
+<header class="rainy">
+	<time> 7:35 PM ET </time>
+		<div class="match-teams">
+		<span class="lineup-pitcher"><a href="/fantasyplayers/Brandon_Cumpton-15861">B. Cumpton (R)</a> <span class="lineup-salary high">$4.2K</span></span> @ <span class="lineup-pitcher"><a href="/fantasyplayers/Chris_Tillman-10992">C. Tillman (R)</a> <span class="lineup-salary high">$7K</span></span>	</div>
+		<a href="http://www.weather.com/weather/hourbyhour/graph/21201?pagenum=2" class="weather rainy" target="_blank" title="FEELS LIKE: 71 HUMIDITY: 53% PRECIP: 30% WIND:WNW at 9 mph">rainy</a>
+		<div class="weather-graphic">
+	<span class="E">E at 9 mph</span>	</div>
+	</header>
+
+<div class="grid-3-3 mlb">
+	<div style="text-align:center; padding-top:4px;">Last Updated: 2 PM ET; Humidity: 53%; Wind: WNW at 9 mph<br />Precip: <a href="http://www.weather.com/weather/hourbyhour/graph/21201?pagenum=2" target="_blank">6 PM: 30% | 7 PM: 5% | 8 PM: 0% | 9 PM: 0%</a></div>
+	<div class="column-1 away">
+		<div class="team">
+			<span class="team-logo mlb pit"></span>Pittsburgh Pirates
+							<br />
+				<a class="fancy" href="/split_stats/index/Baseball/Pitcher/120">BvP</a>
+				&middot;
+
+				
+								<a class="fancy" href="/split_stats/index/Baseball/Righty/120">vs. R</a>
+				&middot;
+				
+				<a class="fancy" href="/split_stats/index/Baseball/Away/120">Away</a>
+				&middot;
+
+								<a class="fancy" href="/split_stats/index/Baseball/Night/120">Night</a>
+							
+					</div>
+
+		<div class="notice">Check Back Soon for Daily Lineup</div>	</div>
+	<div class="column-2 home">
+		<div class="team">
+			<span class="team-logo mlb bal"></span>Baltimore Orioles
+							<br />
+				<a class="fancy" href="/split_stats/index/Baseball/Pitcher/96">BvP</a>
+				&middot;
+
+				
+								<a class="fancy" href="/split_stats/index/Baseball/Righty/96">vs. R</a>
+				&middot;
+				
+				<a class="fancy" href="/split_stats/index/Baseball/Home/96">Home</a>
+				&middot;
+
+								<a class="fancy" href="/split_stats/index/Baseball/Night/96">Night</a>
+							
+					</div>
+
+		<div class="notice">Check Back Soon for Daily Lineup</div>	</div>
+</div>
+
+<div class="clearer"></div>
+ </li>
+																			
+										<li>
+
+
+
+
+
+
+<header class="sunny">
+	<time> 8:10 PM ET </time>
+		<div class="match-teams">
+		<span class="lineup-pitcher"><a href="/fantasyplayers/Mark_Buehrle-10963">M. Buehrle (L)</a> <span class="lineup-salary high">$7.4K</span></span> @ <span class="lineup-pitcher"><a href="/fantasyplayers/Jeremy_Guthrie-10953">J. Guthrie (R)</a> <span class="lineup-salary high">$5.9K</span></span>	</div>
+		<a href="http://www.weather.com/weather/hourbyhour/graph/64129?pagenum=2" class="weather sunny" target="_blank" title="FEELS LIKE: 51 HUMIDITY: 51% PRECIP: 0% WIND:NW at 9 mph">sunny</a>
+		<div class="weather-graphic">
+	<span class="E">E at 9 mph</span>	</div>
+	</header>
+
+<div class="grid-3-3 mlb">
+	<div style="text-align:center; padding-top:4px;">Last Updated: 2 PM ET; Humidity: 51%; Wind: NW at 9 mph<br />Precip: <a href="http://www.weather.com/weather/hourbyhour/graph/64129?pagenum=2" target="_blank">7 PM: 0% | 8 PM: 0% | 9 PM: 0% | 10 PM: 0%</a></div>
+	<div class="column-1 away">
+		<div class="team">
+			<span class="team-logo mlb tor"></span>Toronto Blue Jays
+							<br />
+				<a class="fancy" href="/split_stats/index/Baseball/Pitcher/108">BvP</a>
+				&middot;
+
+				
+								<a class="fancy" href="/split_stats/index/Baseball/Righty/108">vs. R</a>
+				&middot;
+				
+				<a class="fancy" href="/split_stats/index/Baseball/Away/108">Away</a>
+				&middot;
+
+								<a class="fancy" href="/split_stats/index/Baseball/Night/108">Night</a>
+							
+					</div>
+
+		<div class="notice">Check Back Soon for Daily Lineup</div>	</div>
+	<div class="column-2 home">
+		<div class="team">
+			<span class="team-logo mlb kcr"></span>Kansas City Royals
+							<br />
+				<a class="fancy" href="/split_stats/index/Baseball/Pitcher/100">BvP</a>
+				&middot;
+
+								<a class="fancy" href="/split_stats/index/Baseball/Lefty/100">vs. L</a>
+				&middot;
+				
+				
+				<a class="fancy" href="/split_stats/index/Baseball/Home/100">Home</a>
+				&middot;
+
+								<a class="fancy" href="/split_stats/index/Baseball/Night/100">Night</a>
+							
+					</div>
+
+		<div class="notice">Check Back Soon for Daily Lineup</div>	</div>
+</div>
+
+<div class="clearer"></div>
+ </li>
+																		<ul>
+			</div>
+			<div class="column-2">
+								<ul class="schedule-list" style="font-size:9pt;">
+														<li>
+
+
+
+
+
+
+<header class="cloudy">
+	<time> 7:10 PM ET </time>
+		<div class="match-teams">
+		<span class="lineup-pitcher"><a href="/fantasyplayers/Marco_Estrada-11014">M. Estrada (R)</a> <span class="lineup-salary high">$7.4K</span></span> @ <span class="lineup-pitcher"><a href="/fantasyplayers/Homer_Bailey-11179">H. Bailey (R)</a> <span class="lineup-salary high">$7.7K</span></span>	</div>
+		<a href="http://www.weather.com/weather/hourbyhour/graph/45202?pagenum=2" class="weather cloudy" target="_blank" title="FEELS LIKE: 59 HUMIDITY: 46% PRECIP: 20% WIND:WSW at 13 mph">cloudy</a>
+		<div class="weather-graphic">
+	<span class="NW big">NW at 13 mph</span>	</div>
+	</header>
+
+<div class="grid-3-3 mlb">
+	<div style="text-align:center; padding-top:4px;">Last Updated: 2 PM ET; Humidity: 46%; Wind: WSW at 13 mph<br />Precip: <a href="http://www.weather.com/weather/hourbyhour/graph/45202?pagenum=2" target="_blank">6 PM: 20% | 7 PM: 0% | 8 PM: 10% | 9 PM: 0%</a></div>
+	<div class="column-1 away">
+		<div class="team">
+			<span class="team-logo mlb mil"></span>Milwaukee Brewers
+							<br />
+				<a class="fancy" href="/split_stats/index/Baseball/Pitcher/117">BvP</a>
+				&middot;
+
+				
+								<a class="fancy" href="/split_stats/index/Baseball/Righty/117">vs. R</a>
+				&middot;
+				
+				<a class="fancy" href="/split_stats/index/Baseball/Away/117">Away</a>
+				&middot;
+
+								<a class="fancy" href="/split_stats/index/Baseball/Night/117">Night</a>
+							
+					</div>
+
+		<div class="notice">Check Back Soon for Daily Lineup</div>	</div>
+	<div class="column-2 home">
+		<div class="team">
+			<span class="team-logo mlb cin"></span>Cincinnati Reds
+							<br />
+				<a class="fancy" href="/split_stats/index/Baseball/Pitcher/112">BvP</a>
+				&middot;
+
+				
+								<a class="fancy" href="/split_stats/index/Baseball/Righty/112">vs. R</a>
+				&middot;
+				
+				<a class="fancy" href="/split_stats/index/Baseball/Home/112">Home</a>
+				&middot;
+
+								<a class="fancy" href="/split_stats/index/Baseball/Night/112">Night</a>
+							
+					</div>
+
+		<ul class="lineup-list lineup">
+	<li class="player of cf first-of-position matched">
+		<span class="counter">1</span> <a href="/fantasyplayers/Billy_Hamilton-15551">B. Hamilton</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">S</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$3K</span></span> (<span class="position">OF</span>)	</li>
+			
+	<li class="player 1b 1b first-of-position matched">
+		<span class="counter">2</span> <a href="/fantasyplayers/Joey_Votto-10325">J. Votto</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">L</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$4K</span></span> (<span class="position">1B</span>)	</li>
+			
+	<li class="player 2b 2b first-of-position matched">
+		<span class="counter">3</span> <a href="/fantasyplayers/Brandon_Phillips-10377">B. Phillips</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$2.7K</span></span> (<span class="position">2B</span>)	</li>
+			
+	<li class="player of rf first-of-position matched">
+		<span class="counter">4</span> <a href="/fantasyplayers/Jay_Bruce-10536">J. Bruce</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">L</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$3.7K</span></span> (<span class="position">OF</span>)	</li>
+			
+	<li class="player 3b 3b first-of-position matched">
+		<span class="counter">5</span> <a href="/fantasyplayers/Todd_Frazier-11254">T. Frazier</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$3.2K</span></span> (<span class="position">3B</span>)	</li>
+			
+	<li class="player of lf first-of-position matched">
+		<span class="counter">6</span> <a href="/fantasyplayers/Ryan_Ludwick-10558">R. Ludwick</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$2.7K</span></span> (<span class="position">OF</span>)	</li>
+			
+	<li class="player ss ss first-of-position matched">
+		<span class="counter">7</span> <a href="/fantasyplayers/Zack_Cozart-11375">Z. Cozart</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$2.3K</span></span> (<span class="position">SS</span>)	</li>
+			
+	<li class="player c c first-of-position matched">
+		<span class="counter">8</span> <a href="/fantasyplayers/Tucker_Barnhart-14759">T. Barnhart</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">S</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$3.1K</span></span> (<span class="position">C</span>)	</li>
+			
+	<li class="player p p first-of-position matched">
+		<span class="counter">9</span> <a href="/fantasyplayers/Homer_Bailey-11179">H. Bailey</a> <span class="status">(<span style="font-weight:bold; color:#ff9900;">R</span>)</span> <span class="salary" title="Daily Site Salary"><span class="lineup-salary high">$7.7K</span></span> (<span class="position">P</span>)	</li>
+			
+</ul>
+	</div>
+</div>
+
+<div class="clearer"></div>
+ </li>
+																			<li>
+
+
+
+
+
+
+<header class="dome">
+	<time> 7:10 PM ET </time>
+		<div class="match-teams">
+		<span class="lineup-pitcher"><a href="/fantasyplayers/Ervin_Santana-10654">E. Santana (R)</a> <span class="lineup-salary high">$9K</span></span> @ <span class="lineup-pitcher"><a href="/fantasyplayers/Henderson_Alvarez-11447">H. Alvarez (R)</a> <span class="lineup-salary high">$7K</span></span>	</div>
+		<span class="weather dome" title="Game is played in a dome.">dome</span>
+	</header>
+
+<div class="grid-3-3 mlb">
+	
+	<div class="column-1 away">
+		<div class="team">
+			<span class="team-logo mlb atl"></span>Atlanta Braves
+							<br />
+				<a class="fancy" href="/split_stats/index/Baseball/Pitcher/110">BvP</a>
+				&middot;
+
+				
+								<a class="fancy" href="/split_stats/index/Baseball/Righty/110">vs. R</a>
+				&middot;
+				
+				<a class="fancy" href="/split_stats/index/Baseball/Away/110">Away</a>
+				&middot;
+
+								<a class="fancy" href="/split_stats/index/Baseball/Night/110">Night</a>
+							
+					</div>
+
+		<div class="notice">Check Back Soon for Daily Lineup</div>	</div>
+	<div class="column-2 home">
+		<div class="team">
+			<span class="team-logo mlb mia"></span>Miami Marlins
+							<br />
+				<a class="fancy" href="/split_stats/index/Baseball/Pitcher/114">BvP</a>
+				&middot;
+
+				
+								<a class="fancy" href="/split_stats/index/Baseball/Righty/114">vs. R</a>
+				&middot;
+				
+				<a class="fancy" href="/split_stats/index/Baseball/Home/114">Home</a>
+				&middot;
+
+								<a class="fancy" href="/split_stats/index/Baseball/Night/114">Night</a>
+							
+					</div>
+
+		<div class="notice">Check Back Soon for Daily Lineup</div>	</div>
+</div>
+
+<div class="clearer"></div>
+ </li>
+																			<li>
+
+
+
+
+
+
+<header class="sunny">
+	<time> 8:40 PM ET </time>
+		<div class="match-teams">
+		<span class="lineup-pitcher"><a href="/fantasyplayers/Bartolo_Colon-10702">B. Colon (R)</a> <span class="lineup-salary high">$6.7K</span></span> @ <span class="lineup-pitcher"><a href="/fantasyplayers/Juan_Nicasio-11273">J. Nicasio (R)</a> <span class="lineup-salary high">$4.9K</span></span>	</div>
+		<a href="http://www.weather.com/weather/hourbyhour/graph/80205?pagenum=2" class="weather sunny" target="_blank" title="FEELS LIKE: 51 HUMIDITY: 28% PRECIP: 0% WIND:N at 9 mph">sunny</a>
+		<div class="weather-graphic">
+	<span class="S">S at 9 mph</span>	</div>
+	</header>
+
+<div class="grid-3-3 mlb">
+	<div style="text-align:center; padding-top:4px;">Last Updated: 2 PM ET; Humidity: 28%; Wind: N at 9 mph<br />Precip: <a href="http://www.weather.com/weather/hourbyhour/graph/80205?pagenum=2" target="_blank">7 PM: 0% | 8 PM: 0% | 9 PM: 0% | 10 PM: 0%</a></div>
+	<div class="column-1 away">
+		<div class="team">
+			<span class="team-logo mlb nym"></span>New York Mets
+							<br />
+				<a class="fancy" href="/split_stats/index/Baseball/Pitcher/118">BvP</a>
+				&middot;
+
+				
+								<a class="fancy" href="/split_stats/index/Baseball/Righty/118">vs. R</a>
+				&middot;
+				
+				<a class="fancy" href="/split_stats/index/Baseball/Away/118">Away</a>
+				&middot;
+
+								<a class="fancy" href="/split_stats/index/Baseball/Night/118">Night</a>
+							
+					</div>
+
+		<div class="notice">Check Back Soon for Daily Lineup</div>	</div>
+	<div class="column-2 home">
+		<div class="team">
+			<span class="team-logo mlb col"></span>Colorado Rockies
+							<br />
+				<a class="fancy" href="/split_stats/index/Baseball/Pitcher/113">BvP</a>
+				&middot;
+
+				
+								<a class="fancy" href="/split_stats/index/Baseball/Righty/113">vs. R</a>
+				&middot;
+				
+				<a class="fancy" href="/split_stats/index/Baseball/Home/113">Home</a>
+				&middot;
+
+								<a class="fancy" href="/split_stats/index/Baseball/Night/113">Night</a>
+							
+					</div>
+
+		<div class="notice">Check Back Soon for Daily Lineup</div>	</div>
+</div>
+
+<div class="clearer"></div>
+ </li>
+													<ul>
+			</div>
+		</div>
+		<div class="clearer"></div>
+	</div>	
+
+	<div id="lineups-research-mask" class="data-mask">
+	    <div class="data-indicator"></div>
+	</div>
+	<div id="color-key">
+		<p style="font-weight:normal; padding: 4px 35px;"><strong>Weather Note:</strong> Our feed is provided by <a href='http://www.weather.com'>weather.com</a>. Click a weather icon to be directed to <a href='http://www.weather.com'>weather.com's</a> page for the home city - for best results, check the "Future Radar" on that page.</p>
+		<span class="no-thread">
+		<strong>No apparent weather threat </strong></span> <span class="caution"><strong>Caution!</strong> 30-60% chance of rain. <!-- Be sure to check the weather --></span> <span class="warning"><strong>Warning!</strong> 60%+ chance of rain. <!-- Be careful with these players. --></span>
+	</div>
+	<div id="salary-key">
+		<span class="value-play"></span> Value Play, <!-- span class="high-salary">High Salary</span --> <span class="low-salary">Low Salary</span>, <span style="color: #0094d9;">Projected Points</span> (Incentives Only)
+
+		<div style="font-weight:normal; padding:6px;">
+			<strong>(P)</strong> Probable |
+			<strong>(B)</strong> Best Guess |
+			<strong>(C)</strong> Confirmed |
+			<strong>(O)</strong> Out |
+			<strong>(Q)</strong> Questionable |
+			<strong>(D)</strong> Doubtful, Disabled (MLB) |
+			<strong>(GTD)</strong> Game-Time Decision
+		</div>
+
+			<p>For more info on RG's Lineup page and Projections check out our <a href="/pages/view/41957">Projections FAQ</a></p>
+			<p>Daily Lineups provided by <a href="http://www.rotowire.com/users/ad_jump.asp?id=1044">RotoWire.com</a></p>
+                        	</div>
+
+
+	<div id="incentives-note" class="clearfix">
+		<div class="grid-3-9">
+			<h2 class="column-1">Grinder Incentives</h2>
+			<div class="column-2" id="incentives-description">
+				<p>When you're ready to try a new daily fantasy site <a href="/incentives">remember to sign up by using links</a> on RotoGrinders and get the best deals!</p>
+				<p>Bonuses include exclusive daily strategy content and the best deposit bonuses. <a href="/incentives">Click here for more info!</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+					</section>
+								<div class="clearer"></div>
+			</div>
+			<div class="clearer"></div>
+		</div>
+		
+		<footer id="main-footer" class="grid-3-9">
+			<div class="column-1">
+				<a id="footer-logo" href="/">Roto Grinders</a>
+			</div>
+			<div class="column-2">
+				<ul class="nav-list">
+					<li><a href="/">Home</a>					</li><li><a href="/pages/view/1140">Contact Us</a>					</li><li><a href="/pages/terms">Terms of Service</a>					</li><li><a href="/pages/privacy_policy">Privacy Policy</a>					</li><li><a href="/threads">Forums</a>					</li><li><a href="/reviews/FanDuel_Promocode-115">FanDuel Review</a>					</li><li><a href="/reviews/DraftStreet-1151">DraftStreet Review</a>					</li> 
+				</ul>
+				<p>RotoGrinders.com is the home of the daily fantasy sports community.  Our content, rankings, member blogs, promotions and forum discussion all cater to the players that like to create a new fantasy team every day of the week.  Our goal is to help all of our members make more money playing daily fantasy sports!</p>
+			</div>
+			
+			<div id="copyright">RotoGrinders.com &copy; 2014 | 10.251.122.182</div>
+		</footer>
+
+		<div style="display:none;">
+			
+<div id="user-login">
+		<h2>Sign In</h2>
+	
+	<form id="UserAddForm" method="post" action="/users/signin"><fieldset style="display:none;"><input type="hidden" name="_method" value="POST" /></fieldset>		<div class="input text"><label for="UserUsername">Username or E-Mail Address</label><input name="data[User][username]" type="text" class="notEmpty" placeholder="Username" maxlength="32" value="" id="UserUsername" /></div>	<div class="input password"><label for="UserPassword">Password</label><input type="password" name="data[User][password]" placeholder="Password" class="notEmpty" value="" id="UserPassword" /></div>	<div class="input checkbox"><input type="hidden" name="data[User][remember]" id="UserRemember_" value="0" /><input type="checkbox" name="data[User][remember]" checked="checked" value="1" id="UserRemember" /><label for="UserRemember">Remember</label></div>	<input type="hidden" name="data[User][redirect]" value="" id="UserRedirect" />
+	<div class="submit">
+		<button type="submit">Sign In</button>
+	</div>
+	</form>	
+	<div id="signup">
+		<a href="/users/forgot_password" id="forgot-password">Forgot your username or password?</a>		Don&#39;t have an account? <a href="/users/signup" class="button call">Sign Up</a> 
+	</div>
+</div>
+		</div>
+	</div>
+	
+	<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-PZPRPW" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-PZPRPW');</script>
+</body>
+</html>
