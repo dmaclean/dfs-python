@@ -1,0 +1,8 @@
+Backup database
+clear; time mysqldump --user=xxxx --password=xxxx --host=localhost -v --result-file=/Users/dan/Downloads/basketball_reference_20140415.sql basketball_reference
+
+Import salaries
+clear; time python launcher.py import_salaries site=DRAFT_DAY file=nba/salaries/dd.csv; time python launcher.py import_salaries site=DRAFT_KINGS file=nba/salaries/DKSalaries.csv; time python launcher.py import_salaries site=FAN_DUEL file=nba/salaries/fanduel.csv ; time python launcher.py import_salaries site=STAR_STREET file=nba/salaries/starstreet.csv
+
+Fetch all data
+clear; ./all_tasks.sh
