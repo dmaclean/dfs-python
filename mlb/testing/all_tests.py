@@ -1,5 +1,6 @@
 import logging
 import unittest
+from mlb.testing.test_lineup_manager import TestLineupManager
 from mlb.testing.test_player_bvp import TestPlayerBvPParser
 from mlb.testing.test_player_gamelog_parser import TestPlayerGamelogParser
 from mlb.testing.test_player_manager import TestPlayerManager
@@ -44,4 +45,10 @@ unittest.TextTestRunner(verbosity=2).run(suite)
 # Player Splits
 #################
 suite = unittest.TestLoader().loadTestsFromTestCase(TestPlayerSplitsParser)
+unittest.TextTestRunner(verbosity=2).run(suite)
+
+##################
+# Lineup Manager
+##################
+suite = unittest.TestLoader().loadTestsFromTestCase(TestLineupManager)
 unittest.TextTestRunner(verbosity=2).run(suite)
