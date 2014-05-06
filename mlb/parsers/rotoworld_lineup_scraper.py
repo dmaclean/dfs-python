@@ -9,13 +9,13 @@ __author__ = 'dan'
 
 
 class RotoworldLineupScraper:
-	def __init__(self):
+	def __init__(self, sleep_time=2):
 		self.source = "site"
 		self.player_regex = re.compile("/baseball/player.htm\?id=\d+")
 		self.player_manager = PlayerManager()
 		self.lineup_manager = LineupManager()
 		self.bbr_scraper = BaseballReferenceScraper()
-		self.bbr_scraper.sleep_time = 2
+		self.bbr_scraper.sleep_time = sleep_time
 
 	def parse(self, data):
 		data = data.replace("\r", "").replace("\n", "").replace("\t", "")

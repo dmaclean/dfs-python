@@ -3,15 +3,22 @@ import random
 import sys
 import time
 
+from datetime import date, timedelta
 from httplib import HTTPConnection
 from mlb.parsers.rotoworld_lineup_scraper import RotoworldLineupScraper
+from mlb.models.lineup_manager import LineupManager
+from mlb.utilities.bbr_scraper import BaseballReferenceScraper
 
 __author__ = 'dan'
 
 
 class LineupScraper:
 	def __init__(self):
-			self.source = "site"
+		self.source = "site"
+		self.sleep_time = 2
+		self.lineup_manager = LineupManager()
+		self.bbr_scraper = BaseballReferenceScraper()
+		self.bbr_scraper.sleep_time = self.sleep_time
 
 	def fetch_data(self, url, log_to_console):
 		"""
@@ -56,20 +63,56 @@ class LineupScraper:
 			pieces = arg.split("=")
 			if pieces[0] == "source":
 				self.source = pieces[1]
+			elif pieces[0] == "sleep":
+				self.sleep_time = int(pieces[1])
+
+	def scrape_yesterdays_lineups(self):
+		"""
+		Expedite the process of collecting data by getting stats for yesterday's lineups.  There's likely
+		little that's going to change in terms of who is in the lineup (their exact spot could change) so
+		this will give us a good head start.
+		"""
+
+		# Reset the sleep on BBR scraper, in case what was passed in from the CLI is different.
+		self.bbr_scraper.sleep_time = self.sleep_time
+
+		one_day = timedelta(days=1)
+		yesterday = date.today()-one_day
+
+		print "Fetching data for yesterday's lineups ({})".format(yesterday)
+
+		players = self.lineup_manager.lineups_collection.find_one({"date": str(yesterday)})
+
+		for player in players["players"]:
+			if self.lineup_manager.is_processed(player):
+				continue
+
+			# Found a player.  Let's update their stuff.
+			url = "/players/{}/".format(player[0:1])
+			self.bbr_scraper.process_player(player, url, active=True)
+
+			# Mark the player as processed (write to the lineup) once their stats have been updated.
+			self.lineup_manager.add_player_to_lineup(player)
 
 	def process(self):
-		start = time.time()
+		while True:
+			start = time.time()
 
-		if self.source == "site":
-			data = self.fetch_data("/baseball/daily_lineups.htm", True)
-		else:
-			data = open(self.source)
-		rotoworld_scraper = RotoworldLineupScraper()
-		rotoworld_scraper.parse(data)
+			if self.source == "site":
+				data = self.fetch_data("/baseball/daily_lineups.htm", True)
+			else:
+				data = open(self.source)
+			rotoworld_scraper = RotoworldLineupScraper(sleep_time=self.sleep_time)
+			rotoworld_scraper.parse(data)
 
-		end = time.time()
-		print "Scraped starting line-ups in {} minutes".format((end-start)/60.0)
+			end = time.time()
+			print "Scraped starting line-ups in {} minutes".format((end-start)/60.0)
+
+			print "All done.  Sleeping for 10 minutes then re-evaluating..."
+			time.sleep(60*10)
 
 if __name__ == '__main__':
 	scraper = LineupScraper()
+	scraper.readCLI()
+	scraper.scrape_yesterdays_lineups()
 	scraper.process()
