@@ -85,10 +85,11 @@ class StatsCollector:
 		return result
 
 	def collect_stats(self):
-		doc = self.player_manager.
-
-		data = self.fetch_data("/v1/stats/baseball/mlb/teams/", True)
-		result = self.get_mlb_teams(data)
+		# doc = self.player_manager.
+		#
+		# data = self.fetch_data("/v1/stats/baseball/mlb/teams/", True)
+		# result = self.get_mlb_teams(data)
+		pass
 
 
 
