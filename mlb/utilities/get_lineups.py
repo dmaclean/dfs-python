@@ -5,6 +5,8 @@ import time
 
 from datetime import date, timedelta
 from httplib import HTTPConnection
+from mlb.constants.mlb_constants import MLBConstants
+from mlb.models.player_manager import PlayerManager
 from mlb.parsers.rotoworld_lineup_scraper import RotoworldLineupScraper
 from mlb.models.lineup_manager import LineupManager
 from mlb.utilities.bbr_scraper import BaseballReferenceScraper
@@ -16,6 +18,7 @@ class LineupScraper:
 	def __init__(self):
 		self.source = "site"
 		self.sleep_time = 2
+		self.player_manager = PlayerManager()
 		self.lineup_manager = LineupManager()
 		self.bbr_scraper = BaseballReferenceScraper()
 		self.bbr_scraper.sleep_time = self.sleep_time
@@ -84,15 +87,22 @@ class LineupScraper:
 		players = self.lineup_manager.lineups_collection.find_one({"date": str(yesterday)})
 
 		for player in players["players"]:
+			unescaped_player = player.replace("_", ".")
 			if self.lineup_manager.is_processed(player):
 				continue
 
+			# Ignore pitchers
+			player_record = self.player_manager.players_collection.find_one({"player_id": unescaped_player})
+			if player_record[MLBConstants.POSITION].lower() == MLBConstants.PITCHER_TYPE:
+				logging.info("{} is a pitcher.  Skipping...".format(player))
+				continue
+
 			# Found a player.  Let's update their stuff.
-			url = "/players/{}/".format(player[0:1])
-			self.bbr_scraper.process_player(player, url, active=True)
+			url = "/players/{}/".format(unescaped_player[0:1])
+			self.bbr_scraper.process_player(unescaped_player, url, active=True)
 
 			# Mark the player as processed (write to the lineup) once their stats have been updated.
-			self.lineup_manager.add_player_to_lineup(player)
+			self.lineup_manager.add_player_to_lineup(player, {})
 
 	def process(self):
 		while True:

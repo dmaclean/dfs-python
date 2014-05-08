@@ -37,13 +37,15 @@ class LineupManager:
 		if self.processed_players is None:
 			self.processed_players = []
 			lineups = self.lineups_collection.find_one({'date': d})
-			for player in lineups["players"]:
-				self.processed_players.append(player)
+
+			if lineups is not None:
+				for player in lineups["players"]:
+					self.processed_players.append(player)
 
 		#if lineups is None or player_id not in lineups["players"]:
 		return player_id in self.processed_players
 
-	def add_player_to_lineup(self, player_id, d=str(date.today())):
+	def add_player_to_lineup(self, player_id, player_lineup_data, d=str(date.today())):
 		lineups = self.lineups_collection.find_one({'date': d})
 		if lineups is None:
 			lineups = {
@@ -51,13 +53,18 @@ class LineupManager:
 			    "players": {}
 			}
 
-		lineups["players"][player_id] = True
-		self.lineups_collection.save(lineups)
+		lineups["players"][player_id] = player_lineup_data
 
-		self.processed_players.append(player_id)
+		try:
+			self.lineups_collection.save(lineups)
+		except:
+			print "WTF?"
+
+		if player_id not in self.processed_players:
+			self.processed_players.append(player_id)
 
 	def get_id_for_player_name(self, name):
-		player_data = self.player_manager.read({"name": name})
+		player_data = self.player_manager.players_collection.find_one({"name": name}, {"player_id": 1})
 
 		if player_data is None or "player_id" not in player_data:
 			return None

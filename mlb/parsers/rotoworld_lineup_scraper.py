@@ -9,11 +9,11 @@ __author__ = 'dan'
 
 
 class RotoworldLineupScraper:
-	def __init__(self, sleep_time=2):
+	def __init__(self, sleep_time=2, testing=False):
 		self.source = "site"
 		self.player_regex = re.compile("/baseball/player.htm\?id=\d+")
-		self.player_manager = PlayerManager()
-		self.lineup_manager = LineupManager()
+		self.player_manager = PlayerManager(testing=testing)
+		self.lineup_manager = LineupManager(testing=testing)
 		self.bbr_scraper = BaseballReferenceScraper()
 		self.bbr_scraper.sleep_time = sleep_time
 
@@ -21,33 +21,54 @@ class RotoworldLineupScraper:
 		data = data.replace("\r", "").replace("\n", "").replace("\t", "")
 		soup = BeautifulSoup(data)
 
-		players = soup.find_all(href=self.player_regex)
-		for player in players:
-			player_name = None
+		matchups = soup.find_all(attrs={"class": "offset1 span15"})
+		for matchup in matchups:
+			away_team = matchup.find(attrs={"class": "dlineups-topboxleft"}).text
+			home_team = matchup.find(attrs={"class": "span5 dlineups-topboxright"}).text
 
-			# Pitcher
-			if "title" not in player.attrs:
-				print "{} (Starting pitcher)".format(player.text)
-				player_name = player.text
-			# Position player
-			else:
-				print "{}".format(player.text)
-				player_name = player.attrs["title"]
+			lineup_divs = matchup.find_all(attrs={"class": "dlineups-half"})
+			away_lineup = lineup_divs[0]
+			home_lineup = lineup_divs[1]
 
-			player_data = self.player_manager.players_collection.find_one({'name': player_name})
-			if player_data is None:
-				logging.critical("Could not find record for {}".format(player_name))
-				continue
+			pitchers_divs = matchup.find(attrs={"class": "span11 dlineups-pitchers"}).find_all("div")
+			away_pitcher = pitchers_divs[0].a.text
+			home_pitcher = pitchers_divs[1].a.text
 
-			player_id = player_data["player_id"]
-			escaped_player_id = self.lineup_manager.get_id_for_player_name(player_name)
-			if self.lineup_manager.is_processed(escaped_player_id):
-				print "{} already processed.".format(player_name)
-				continue
+			for lineup in [away_lineup, home_lineup]:
+				players = lineup.find_all(href=self.player_regex)
+				batting_order_position = 1
+				for player in players:
+					player_name = None
 
-			# Found a player.  Let's update their stuff.
-			url = "/players/{}/".format(player_id[0:1])
-			self.bbr_scraper.process_player(player_id, url, active=True)
+					# Pitcher
+					if "title" not in player.attrs:
+						print "{} (Starting pitcher)".format(player.text)
+						player_name = player.text
+					# Position player
+					else:
+						print "{}".format(player.text)
+						player_name = player.attrs["title"]
 
-			# Mark the player as processed (write to the lineup) once their stats have been updated.
-			self.lineup_manager.add_player_to_lineup(escaped_player_id)
+					player_data = self.player_manager.players_collection.find_one({'name': player_name}, {"player_id": 1})
+					if player_data is None:
+						logging.critical("Could not find record for {}".format(player_name))
+						continue
+
+					player_id = player_data["player_id"]
+					escaped_player_id = self.lineup_manager.get_id_for_player_name(player_name)
+					if self.lineup_manager.is_processed(escaped_player_id):
+						print "{} already processed.  No scraping necessary.".format(player_name)
+					else:
+						# Found a player.  Let's update their stuff.
+						url = "/players/{}/".format(player_id[0:1])
+						self.bbr_scraper.process_player(player_id, url, active=True)
+
+					# Mark the player as processed (write to the lineup) once their stats have been updated.
+					player_lineup_data = {
+						"batting_order_position": batting_order_position,
+					    "opposing_pitcher": home_pitcher if lineup == away_lineup else away_pitcher,
+					    "team": home_team if lineup == home_lineup else away_team
+					}
+					self.lineup_manager.add_player_to_lineup(escaped_player_id, player_lineup_data)
+
+					batting_order_position += 1

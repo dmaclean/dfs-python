@@ -8,7 +8,7 @@ class TestRotoworldLinupScraper(unittest.TestCase):
 	player_list_parser = None
 
 	def setUp(self):
-		self.parser = RotoworldLineupScraper()
+		self.parser = RotoworldLineupScraper(testing=True)
 
 	def tearDown(self):
 		self.parser = None
