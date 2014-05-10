@@ -57,8 +57,8 @@ class LineupManager:
 
 		try:
 			self.lineups_collection.save(lineups)
-		except:
-			print "WTF?"
+		except Exception as e:
+			print "WTF? - {}".format(str(e))
 
 		if player_id not in self.processed_players:
 			self.processed_players.append(player_id)
