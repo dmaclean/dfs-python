@@ -17,6 +17,7 @@ __author__ = 'dan'
 class LineupScraper:
 	def __init__(self):
 		self.source = "site"
+		self.scrape_yesterdays_players = True
 		self.sleep_time = 2
 		self.player_manager = PlayerManager()
 		self.lineup_manager = LineupManager()
@@ -68,6 +69,8 @@ class LineupScraper:
 				self.source = pieces[1]
 			elif pieces[0] == "sleep":
 				self.sleep_time = int(pieces[1])
+			elif pieces[0] == "scrape_yesterdays_players":
+				self.scrape_yesterdays_players = pieces[1] == "true"
 
 	def scrape_yesterdays_lineups(self):
 		"""
@@ -124,5 +127,7 @@ class LineupScraper:
 if __name__ == '__main__':
 	scraper = LineupScraper()
 	scraper.readCLI()
-	scraper.scrape_yesterdays_lineups()
+
+	if scraper.scrape_yesterdays_players:
+		scraper.scrape_yesterdays_lineups()
 	scraper.process()
