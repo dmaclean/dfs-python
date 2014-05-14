@@ -1,4 +1,5 @@
 from mlb.constants.mlb_constants import MLBConstants
+from mlb.models.stat_calculator import StatCalculator
 from mlb.utilities.mlb_utilities import MLBUtilities
 
 __author__ = 'dan'
@@ -17,6 +18,8 @@ class PlayerSeasonStatsParser:
 
 		self.batting_standard_season_regex = re.compile("batting_standard\.(\d+)")
 		self.player_value_batting_regex = re.compile("batting_value\.(\d+)")
+
+		self.stat_calculator = StatCalculator()
 
 	def parse(self, data):
 		"""
@@ -125,8 +128,9 @@ class PlayerSeasonStatsParser:
 				elif i == 32:
 					self.player_data[MLBConstants.STANDARD_PITCHING][season][MLBConstants.STRIKE_OUT_TO_WALK_RATIO] = MLBUtilities.resolve_value(td.text, "float")
 
-
 				i += 1
+
+			self.player_data[MLBConstants.STANDARD_PITCHING][season][MLBConstants.FIP] = self.stat_calculator.calculate_fip(self.player_data[MLBConstants.STANDARD_PITCHING][season])
 
 	def parse_player_value_pitchers(self, soup):
 		"""
@@ -263,6 +267,9 @@ class PlayerSeasonStatsParser:
 					self.player_data[MLBConstants.STANDARD_BATTING][season][MLBConstants.POSITION] = td.text
 
 				i += 1
+
+			# Compute additional stats
+			self.player_data[MLBConstants.STANDARD_BATTING][season][MLBConstants.WOBA] = self.stat_calculator.calculate_woba(self.player_data[MLBConstants.STANDARD_BATTING][season])
 
 	def parse_player_value_batting(self, soup):
 		"""

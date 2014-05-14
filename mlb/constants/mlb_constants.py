@@ -66,6 +66,7 @@ class MLBConstants:
 	WALKS_PER_9_INNINGS = "walks_per_9_innings"
 	STRIKE_OUTS_PER_9_INNINGS = "strike_outs_per_9_innings"
 	STRIKE_OUT_TO_WALK_RATIO = "strike_out_to_walk_ratio"
+	FIP = "fip"
 
 	###########################
 	# Player Value - Pitching
@@ -171,6 +172,7 @@ class MLBConstants:
 	BABIP = "babip"
 	T_OPS_PLUS = "tOPS+"
 	S_OPS_PLUS = "sOPS+"
+	WOBA = "woba"
 
 	BATTER_SPLITS = "batter_splits"
 	PITCHER_SPLITS = "pitcher_splits"
