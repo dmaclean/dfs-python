@@ -83,16 +83,17 @@ class RotoworldLineupScraper:
 		"""
 		player_data = self.player_manager.players_collection.find_one({'name': player_name}, {"player_id": 1})
 		if player_data is None:
+			original_name = player_name
 			player_name = self.name_mapping_manager.get_player_name(MLBConstants.MONGO_MLB_NAME_MAPPING_ROTOWIRE, MLBConstants.MONGO_MLB_NAME_MAPPING_BBR, player_name)
 			player_data = self.player_manager.players_collection.find_one({'name': player_name}, {"player_id": 1})
 			if player_data is None:
-				logging.critical("Could not find record for {}".format(player_name))
+				logging.critical("Could not find record for {}".format(original_name))
 				return
 
 		player_id = player_data["player_id"]
 		escaped_player_id = self.lineup_manager.get_id_for_player_name(player_name)
 		if self.lineup_manager.is_processed(escaped_player_id):
-			print "{} already processed.  No scraping necessary.".format(player_name)
+			print "{} already processed.  No scraping necessary.".format(player_name.encode('ascii','ignore'))
 		else:
 			# Found a player.  Let's update their stuff.
 			url = "/players/{}/".format(player_id[0:1])
