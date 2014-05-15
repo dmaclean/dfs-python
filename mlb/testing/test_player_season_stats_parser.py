@@ -25,6 +25,8 @@ class TestPlayerSeasonStatsParser(unittest.TestCase):
 		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_ID] == "aardsda01")
 		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.NAME] == "David Aardsma")
 		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.POSITION] == "Pitcher")
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.HANDEDNESS_BATTING] == "Right")
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.HANDEDNESS_THROWING] == "Right")
 
 		###########################
 		# Standard pitching table

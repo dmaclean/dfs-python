@@ -29,6 +29,8 @@ class MLBConstants:
 	PLAYER_ID = "player_id"
 	NAME = "name"
 	POSITION = "position"
+	HANDEDNESS_BATTING = "handedness_batting"
+	HANDEDNESS_THROWING = "handedness_throwing"
 
 	##############################
 	# Stats in Standard Pitching

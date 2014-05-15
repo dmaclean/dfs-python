@@ -19,6 +19,9 @@ class PlayerSeasonStatsParser:
 		self.batting_standard_season_regex = re.compile("batting_standard\.(\d+)")
 		self.player_value_batting_regex = re.compile("batting_value\.(\d+)")
 
+		self.batting_handedness_regex = re.compile(".*?Bats:\s*(Right|Left).*?")
+		self.throwing_handedness_regex = re.compile(".*?Throws:\s*(Right|Left).*?")
+
 		self.stat_calculator = StatCalculator()
 
 	def parse(self, data):
@@ -29,7 +32,19 @@ class PlayerSeasonStatsParser:
 
 		# Find player's name and position
 		self.player_data[MLBConstants.NAME] = soup.find("span", attrs={"itemprop": "name"}).text
-		self.player_data[MLBConstants.POSITION] = soup.find("span", attrs={"itemprop": "role"}).text
+
+		position_span = soup.find("span", attrs={"itemprop": "role"})
+		self.player_data[MLBConstants.POSITION] = position_span.text
+
+		# Determine throwing handedness
+		m = self.throwing_handedness_regex.match(position_span.parent.text.replace("\n", "").replace("\t", ""))
+		if m:
+			self.player_data[MLBConstants.HANDEDNESS_THROWING] = m.group(1)
+
+		# Determine batting handedness
+		m = self.batting_handedness_regex.match(position_span.parent.text.replace("\n", "").replace("\t", ""))
+		if m:
+			self.player_data[MLBConstants.HANDEDNESS_BATTING] = m.group(1)
 
 		if self.player_data[MLBConstants.POSITION] == "Pitcher":
 			# Parse the Standard Pitching table.
