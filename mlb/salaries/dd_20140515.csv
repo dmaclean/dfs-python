@@ -1,0 +1,721 @@
+Position,PlayerName,Team,Opponent,Salary,PPG
+1B,David Ortiz,Red Sox,Twins,12300,18.0
+P,John Lackey,Red Sox,Twins,13000,29.8
+2B,Dustin Pedroia,Red Sox,Twins,10200,13.4
+P,Jon Lester,Red Sox,Twins,17550,36.8
+P,Andrew Miller,Red Sox,Twins,7500,5.5
+P,Clay Buchholz,Red Sox,Twins,13250,9.7
+P,Junichi Tazawa,Red Sox,Twins,7500,3.7
+P,Felix Doubront,Red Sox,Twins,10200,13.1
+C,A.J. Pierzynski,Red Sox,Twins,8450,10.1
+P,Jake Peavy,Red Sox,Twins,13150,18.0
+OF,Grady Sizemore,Red Sox,Twins,7000,10.2
+P,Craig Breslow,Red Sox,Twins,7500,4.7
+OF,Mike Carp,Red Sox,Twins,6700,4.3
+1B,Mike Carp,Red Sox,Twins,6700,4.3
+1B,Mike Napoli,Red Sox,Twins,9450,14.4
+P,Koji Uehara,Red Sox,Twins,7500,6.1
+3B,Ryan Roberts,Red Sox,Twins,6500,1.6
+2B,Ryan Roberts,Red Sox,Twins,6500,1.6
+C,David Ross,Red Sox,Twins,7500,7.8
+P,Ryan Dempster,Red Sox,Twins,7500,0.0
+3B,Jonathan Herrera,Red Sox,Twins,7250,3.7
+2B,Jonathan Herrera,Red Sox,Twins,7250,3.7
+P,Edward Mujica,Red Sox,Twins,7500,1.1
+P,Burke Badenhop,Red Sox,Twins,7500,3.0
+P,Chris Capuano,Red Sox,Twins,7500,5.0
+OF,Shane Victorino,Red Sox,Twins,10250,13.3
+OF,Jonny Gomes,Red Sox,Twins,8200,10.3
+C,Ryan Lavarnway,Red Sox,Twins,5700,9.6
+3B,Will Middlebrooks,Red Sox,Twins,7000,9.2
+OF,Daniel Nava,Red Sox,Twins,8200,7.5
+3B,Brock Holt,Red Sox,Twins,8700,13.6
+2B,Brock Holt,Red Sox,Twins,8700,13.6
+SS,Xander Bogaerts,Red Sox,Twins,7000,9.5
+3B,Xander Bogaerts,Red Sox,Twins,7000,9.5
+OF,Jackie Bradley Jr.,Red Sox,Twins,6150,9.5
+P,Alex Wilson,Red Sox,Twins,5000,0.0
+P,Steven Wright,Red Sox,Twins,7500,0.0
+P,Brandon Workman,Red Sox,Twins,9100,10.7
+1B,Joe Mauer,Twins,Red Sox,9750,13.2
+C,Joe Mauer,Twins,Red Sox,9750,13.2
+OF,Jason Kubel,Twins,Red Sox,7850,9.6
+P,Glen Perkins,Twins,Red Sox,7500,6.1
+P,Brian Duensing,Twins,Red Sox,7500,2.8
+P,Anthony Swarzak,Twins,Red Sox,7500,2.7
+3B,Trevor Plouffe,Twins,Red Sox,6650,14.2
+P,Scott Diamond,Twins,Red Sox,7650,4.5
+P,Phil Hughes,Twins,Red Sox,13250,21.7
+3B,Eduardo Nunez,Twins,Red Sox,7400,12.5
+SS,Eduardo Nunez,Twins,Red Sox,7400,12.5
+OF,Josh Willingham,Twins,Red Sox,8350,10.5
+C,Kurt Suzuki,Twins,Red Sox,6500,12.4
+OF,Sam Fuld,Twins,Red Sox,7950,11.1
+OF,Wilkin Ramirez,Twins,Red Sox,7150,4.7
+P,Jared Burton,Twins,Red Sox,7500,2.3
+P,Ricky Nolasco,Twins,Red Sox,9900,13.8
+P,Mike Pelfrey,Twins,Red Sox,7500,-2.2
+P,Kevin Correia,Twins,Red Sox,9350,3.6
+C,Eric Fryer,Twins,Red Sox,5150,13.7
+SS,Jason Bartlett,Twins,Red Sox,5000,5.7
+P,Samuel Deduno,Twins,Red Sox,8850,9.1
+SS,Eduardo Escobar,Twins,Red Sox,8900,8.9
+OF,Chris Parmelee,Twins,Red Sox,7300,15.4
+1B,Chris Parmelee,Twins,Red Sox,7300,15.4
+SS,Pedro Florimon,Twins,Red Sox,5350,3.9
+2B,Pedro Florimon,Twins,Red Sox,5350,3.9
+2B,Brian Dozier,Twins,Red Sox,9500,18.7
+SS,Brian Dozier,Twins,Red Sox,9500,18.7
+P,Casey Fien,Twins,Red Sox,7500,5.1
+OF,Chris Herrmann,Twins,Red Sox,5900,1.1
+P,Kyle Gibson,Twins,Red Sox,9300,11.0
+OF,Aaron Hicks,Twins,Red Sox,7100,7.5
+OF,Oswaldo Arcia,Twins,Red Sox,6900,6.0
+P,Caleb Thielbar,Twins,Red Sox,7500,3.7
+OF,Chris Colabello,Twins,Red Sox,7250,12.0
+1B,Chris Colabello,Twins,Red Sox,7250,12.0
+P,Michael Tonkin,Twins,Red Sox,7500,0.9
+2B,Doug Bernier,Twins,Red Sox,6650,5.0
+P,Kris Johnson,Twins,Red Sox,5000,18.0
+C,Josmil Pinto,Twins,Red Sox,7000,12.3
+SS,Danny Santana,Twins,Red Sox,5000,11.5
+2B,Danny Santana,Twins,Red Sox,5000,11.5
+P,Jake Arrieta,Cubs,Cardinals,9150,14.0
+OF,Darnell McDonald,Cubs,Cardinals,7200,5.7
+3B,Luis Valbuena,Cubs,Cardinals,7700,8.7
+OF,Ryan Sweeney,Cubs,Cardinals,6950,4.8
+OF,Justin Ruggiano,Cubs,Cardinals,8100,7.7
+P,Pedro Strop,Cubs,Cardinals,7500,2.9
+P,Carlos Villanueva,Cubs,Cardinals,7500,1.1
+P,Jeff Samardzija,Cubs,Cardinals,17350,26.9
+SS,Starlin Castro,Cubs,Cardinals,9100,12.6
+P,James Russell,Cubs,Cardinals,7500,1.6
+P,Brian Schlitter,Cubs,Cardinals,7500,3.4
+C,Welington Castillo,Cubs,Cardinals,6000,10.6
+2B,Darwin Barney,Cubs,Cardinals,5450,4.2
+P,Travis Wood,Cubs,Cardinals,12750,13.8
+2B,Chris Valaika,Cubs,Cardinals,5200,6.6
+SS,Chris Valaika,Cubs,Cardinals,5200,6.6
+P,Jason Hammel,Cubs,Cardinals,13750,30.6
+2B,Emilio Bonifacio,Cubs,Cardinals,7700,12.3
+OF,Emilio Bonifacio,Cubs,Cardinals,7700,12.3
+C,John Baker,Cubs,Cardinals,5000,1.1
+OF,Chris Coghlan,Cubs,Cardinals,5000,1.9
+P,Wesley Wright,Cubs,Cardinals,7500,3.3
+P,Jose Veras,Cubs,Cardinals,7500,-2.8
+P,James McDonald,Cubs,Cardinals,7900,0.0
+P,Edwin Jackson,Cubs,Cardinals,10700,16.6
+1B,Anthony Rizzo,Cubs,Cardinals,9900,15.7
+OF,Nate Schierholtz,Cubs,Cardinals,7700,6.8
+P,Hector Rondon,Cubs,Cardinals,7500,5.1
+OF,Ryan Kalish,Cubs,Cardinals,5000,5.9
+P,Blake Parker,Cubs,Cardinals,7500,-4.5
+P,Justin Grimm,Cubs,Cardinals,7600,3.3
+3B,Mike Olt,Cubs,Cardinals,7200,10.3
+P,Chris Rusin,Cubs,Cardinals,7500,11.0
+P,Kyuji Fujikawa,Cubs,Cardinals,7500,0.0
+OF,Junior Lake,Cubs,Cardinals,7450,9.2
+P,Zac Rosscup,Cubs,Cardinals,7500,6.0
+SS,Javier Baez,Cubs,Cardinals,6500,0.0
+P,Alfredo Simon,Reds,Padres,13650,20.9
+3B,Jack Hannahan,Reds,Padres,5800,0.0
+SS,Ramon Santiago,Reds,Padres,6750,4.3
+2B,Ramon Santiago,Reds,Padres,6750,4.3
+P,Jeff Francis,Reds,Padres,7250,6.3
+C,Brayan Pena,Reds,Padres,6100,9.0
+P,Trevor Bell,Reds,Padres,7500,-10.0
+P,Sean Marshall,Reds,Padres,7500,1.5
+2B,Brandon Phillips,Reds,Padres,8950,8.9
+P,Homer Bailey,Reds,Padres,15800,19.6
+1B,Joey Votto,Reds,Padres,10700,14.4
+OF,Jay Bruce,Reds,Padres,8600,13.7
+P,Johnny Cueto,Reds,Padres,19050,45.2
+P,Aroldis Chapman,Reds,Padres,8100,7.5
+OF,Chris Heisey,Reds,Padres,6550,5.7
+SS,Zack Cozart,Reds,Padres,6050,4.9
+3B,Todd Frazier,Reds,Padres,9000,14.9
+1B,Todd Frazier,Reds,Padres,9000,14.9
+P,Mike Leake,Reds,Padres,13050,17.4
+P,Logan Ondrusek,Reds,Padres,7500,1.7
+P,Sam LeCure,Reds,Padres,7500,5.5
+3B,Chris Nelson,Reds,Padres,6300,7.5
+2B,Chris Nelson,Reds,Padres,6300,7.5
+OF,Jason Bourgeois,Reds,Padres,7200,5.2
+P,Jonathan Broxton,Reds,Padres,7500,5.4
+P,Manny Parra,Reds,Padres,7500,3.1
+OF,Ryan Ludwick,Reds,Padres,6850,9.2
+2B,Skip Schumaker,Reds,Padres,7450,8.9
+OF,Skip Schumaker,Reds,Padres,7450,8.9
+P,Mat Latos,Reds,Padres,9450,0.0
+OF,Roger Bernadina,Reds,Padres,6750,2.8
+C,Devin Mesoraco,Reds,Padres,6150,23.5
+OF,Billy Hamilton,Reds,Padres,8700,9.8
+SS,Billy Hamilton,Reds,Padres,8700,9.8
+P,J.J. Hoover,Reds,Padres,7500,1.6
+P,Tony Cingrani,Reds,Padres,16700,22.3
+C,Corky Miller,Reds,Padres,7350,7.3
+P,Brett Marshall,Reds,Padres,7500,0.0
+1B,Neftali Soto,Reds,Padres,5000,1.3
+P,Curtis Partch,Reds,Padres,7500,6.0
+P,Nick Christiani,Reds,Padres,7500,2.1
+C,Tucker Barnhart,Reds,Padres,5000,2.6
+1B,Mark Reynolds,Brewers,Pirates,8250,12.3
+3B,Mark Reynolds,Brewers,Pirates,8250,12.3
+P,Jeremy Jeffress,Brewers,Pirates,7500,-1.0
+1B,Lyle Overbay,Brewers,Pirates,5500,6.6
+P,Zach Duke,Brewers,Pirates,7550,6.5
+3B,Aramis Ramirez,Brewers,Pirates,8550,10.7
+P,Matt Garza,Brewers,Pirates,14600,16.4
+P,Francisco Rodriguez,Brewers,Pirates,7500,5.9
+2B,Rickie Weeks,Brewers,Pirates,7750,4.9
+P,Yovani Gallardo,Brewers,Pirates,13200,19.8
+OF,Carlos Gomez,Brewers,Pirates,10800,17.8
+OF,Ryan Braun,Brewers,Pirates,11400,18.2
+P,Marco Estrada,Brewers,Pirates,14000,25.9
+C,Jonathan Lucroy,Brewers,Pirates,9050,12.4
+P,Brandon Kintzler,Brewers,Pirates,7500,2.5
+P,Kyle Lohse,Brewers,Pirates,14250,27.6
+P,Tom Gorzelanny,Brewers,Pirates,7500,0.0
+P,Wily Peralta,Brewers,Pirates,13850,27.5
+C,Martin Maldonado,Brewers,Pirates,7700,12.9
+1B,Martin Maldonado,Brewers,Pirates,7700,12.9
+OF,Logan Schafer,Brewers,Pirates,7600,5.8
+P,Mike Fiers,Brewers,Pirates,8250,1.3
+OF,Elian Herrera,Brewers,Pirates,5000,2.3
+2B,Elian Herrera,Brewers,Pirates,5000,2.3
+P,Will Smith,Brewers,Pirates,7500,5.4
+P,Tyler Thornburg,Brewers,Pirates,8750,5.9
+SS,Jeff Bianchi,Brewers,Pirates,7100,2.7
+2B,Jeff Bianchi,Brewers,Pirates,7100,2.7
+SS,Jean Segura,Brewers,Pirates,9350,9.3
+P,Jim Henderson,Brewers,Pirates,7500,4.3
+P,Alfredo Figaro,Brewers,Pirates,7400,13.0
+OF,Khris Davis,Brewers,Pirates,6650,9.6
+P,Hiram Burgos,Brewers,Pirates,6650,4.7
+P,Donovan Hand,Brewers,Pirates,7450,3.9
+2B,Scooter Gennett,Brewers,Pirates,7000,8.3
+SS,Scooter Gennett,Brewers,Pirates,7000,8.3
+OF,Caleb Gindl,Brewers,Pirates,6050,2.4
+P,Johnny Hellweg,Brewers,Pirates,8250,-4.2
+P,Rob Wooten,Brewers,Pirates,7500,2.8
+P,Jimmy Nelson,Brewers,Pirates,7050,11.0
+P,Wei-Chung Wang,Brewers,Pirates,7500,-3.0
+2B,Robert Andino,Pirates,Brewers,7100,3.6
+SS,Robert Andino,Pirates,Brewers,7100,3.6
+3B,Brent Morel,Pirates,Brewers,6750,-1.0
+P,Jeanmar Gomez,Pirates,Brewers,8600,4.1
+P,Francisco Liriano,Pirates,Brewers,12350,17.3
+C,Russell Martin,Pirates,Brewers,7300,12.5
+OF,Chris Dickerson,Pirates,Brewers,7750,6.0
+OF,Travis Snider,Pirates,Brewers,6500,6.5
+P,Edinson Volquez,Pirates,Brewers,11600,12.2
+1B,Gaby Sanchez,Pirates,Brewers,6500,8.5
+SS,Clint Barmes,Pirates,Brewers,6800,4.7
+P,Wandy Rodriguez,Pirates,Brewers,10150,6.2
+P,Mark Melancon,Pirates,Brewers,7500,4.0
+1B,Ike Davis,Pirates,Brewers,8400,10.0
+P,Vance Worley,Pirates,Brewers,6300,-1.1
+P,Jason Grilli,Pirates,Brewers,7500,2.6
+OF,Andrew McCutchen,Pirates,Brewers,11450,16.5
+P,Charlie Morton,Pirates,Brewers,9700,14.8
+2B,Neil Walker,Pirates,Brewers,8950,14.5
+3B,Neil Walker,Pirates,Brewers,8950,14.5
+3B,Pedro Alvarez,Pirates,Brewers,9250,13.1
+OF,Jose Tabata,Pirates,Brewers,6800,5.2
+3B,Josh Harrison,Pirates,Brewers,6550,6.3
+P,Tony Watson,Pirates,Brewers,7500,7.3
+C,Chris Stewart,Pirates,Brewers,5000,3.9
+P,Jeff Locke,Pirates,Brewers,8300,5.0
+OF,Starling Marte,Pirates,Brewers,9600,11.7
+P,Gerrit Cole,Pirates,Brewers,13300,21.1
+SS,Jordy Mercer,Pirates,Brewers,6750,5.3
+2B,Jordy Mercer,Pirates,Brewers,6750,5.3
+P,Bryan Morris,Pirates,Brewers,7500,4.2
+P,Justin Wilson,Pirates,Brewers,7500,3.1
+P,Kyle McPherson,Pirates,Brewers,7350,0.0
+OF,Andrew Lambo,Pirates,Brewers,5800,4.3
+P,Brandon Cumpton,Pirates,Brewers,9450,15.5
+OF,Jaff Decker,Pirates,Brewers,6700,-1.0
+C,Tony Sanchez,Pirates,Brewers,7350,5.9
+P,Stolmy Pimentel,Pirates,Brewers,7500,9.7
+P,Casey Sadler,Pirates,Brewers,7500,8.5
+SS,Jhonny Peralta,Cardinals,Cubs,8450,13.3
+OF,Peter Bourjos,Cardinals,Cubs,8250,7.4
+2B,Mark Ellis,Cardinals,Cubs,6750,6.0
+P,Randy Choate,Cardinals,Cubs,7500,1.5
+P,Adam Wainwright,Cardinals,Cubs,20300,35.8
+OF,Matt Holliday,Cardinals,Cubs,10450,12.6
+C,Yadier Molina,Cardinals,Cubs,7800,12.3
+P,Jaime Garcia,Cardinals,Cubs,7550,0.0
+P,Jason Motte,Cardinals,Cubs,7500,0.0
+OF,Allen Craig,Cardinals,Cubs,9600,9.7
+1B,Allen Craig,Cardinals,Cubs,9600,9.7
+P,Lance Lynn,Cardinals,Cubs,18150,25.8
+OF,Jon Jay,Cardinals,Cubs,6750,7.0
+2B,Daniel Descalso,Cardinals,Cubs,5100,2.1
+SS,Daniel Descalso,Cardinals,Cubs,5100,2.1
+SS,Pete Kozma,Cardinals,Cubs,5000,0.8
+C,Tony Cruz,Cardinals,Cubs,5000,6.1
+3B,Matt Carpenter,Cardinals,Cubs,9250,11.7
+2B,Matt Carpenter,Cardinals,Cubs,9250,11.7
+P,Pat Neshek,Cardinals,Cubs,7500,5.0
+OF,Shane Robinson,Cardinals,Cubs,5000,0.8
+1B,Matt Adams,Cardinals,Cubs,7600,9.1
+2B,Kolten Wong,Cardinals,Cubs,5400,6.5
+P,Trevor Rosenthal,Cardinals,Cubs,7500,3.9
+P,Joe Kelly,Cardinals,Cubs,9100,20.0
+P,Shelby Miller,Cardinals,Cubs,13450,20.9
+P,Michael Wacha,Cardinals,Cubs,16400,28.4
+P,Seth Maness,Cardinals,Cubs,7500,3.9
+P,Carlos Martinez,Cardinals,Cubs,7500,2.6
+P,John Gast,Cardinals,Cubs,6800,14.7
+P,Tyler Lyons,Cardinals,Cubs,10500,10.0
+P,Keith Butler,Cardinals,Cubs,7500,-7.0
+P,Kevin Siegrist,Cardinals,Cubs,7500,4.6
+P,Eric Fornataro,Cardinals,Cubs,7500,1.0
+P,Jorge Rondon,Cardinals,Cubs,7500,0.0
+2B,Greg Garcia,Cardinals,Cubs,5000,6.0
+OF,Randal Grichuk,Cardinals,Cubs,5000,3.6
+OF,Carlos Quentin,Padres,Reds,7500,2.0
+P,Joaquin Benoit,Padres,Reds,7500,4.9
+OF,Alexi Amarista,Padres,Reds,6700,5.3
+3B,Alexi Amarista,Padres,Reds,6700,5.3
+C,Rene Rivera,Padres,Reds,5450,5.7
+P,Tyson Ross,Padres,Reds,15200,26.1
+P,Alex Torres,Padres,Reds,7500,4.5
+OF,Xavier Nady,Padres,Reds,5000,4.9
+P,Ian Kennedy,Padres,Reds,14200,28.8
+P,Andrew Cashner,Padres,Reds,14050,20.8
+1B,Yonder Alonso,Padres,Reds,6850,5.0
+P,Huston Street,Padres,Reds,7500,5.9
+P,Eric Stults,Padres,Reds,9950,8.0
+OF,Seth Smith,Padres,Reds,8600,14.4
+P,Josh Johnson,Padres,Reds,8950,0.0
+P,Dale Thayer,Padres,Reds,7500,5.0
+OF,Ben Francisco,Padres,Reds,7000,2.7
+P,Tim Stauffer,Padres,Reds,7500,6.0
+OF,Chris Denorfia,Padres,Reds,7250,8.7
+OF,Cameron Maybin,Padres,Reds,7600,8.7
+3B,Chase Headley,Padres,Reds,9900,10.5
+2B,Alberto Gonzalez,Padres,Reds,6600,4.2
+3B,Alberto Gonzalez,Padres,Reds,6600,4.2
+C,Nick Hundley,Padres,Reds,5000,3.3
+OF,Will Venable,Padres,Reds,8550,5.2
+OF,Kyle Blanks,Padres,Reds,5600,1.4
+1B,Kyle Blanks,Padres,Reds,5600,1.4
+SS,Everth Cabrera,Padres,Reds,8250,7.5
+P,Cory Luebke,Padres,Reds,7500,0.0
+C,Yasmani Grandal,Padres,Reds,8200,8.9
+2B,Jedd Gyorko,Padres,Reds,8050,8.0
+3B,Jedd Gyorko,Padres,Reds,8050,8.0
+P,Casey Kelly,Padres,Reds,7500,0.0
+P,Joe Wieland,Padres,Reds,7500,0.0
+P,Nick Vincent,Padres,Reds,7500,3.9
+OF,Alex Castellanos,Padres,Reds,7150,4.4
+P,Bobby LaFromboise,Padres,Reds,7500,0.0
+P,Robbie Erlin,Padres,Reds,10700,18.1
+OF,Reymond Fuentes,Padres,Reds,7050,2.9
+1B,Tommy Medica,Padres,Reds,6100,4.3
+OF,Tommy Medica,Padres,Reds,6100,4.3
+3B,Jace Peterson,Padres,Reds,5000,2.1
+P,Donn Roach,Padres,Reds,7500,4.8
+SS,J.J. Hardy,Orioles,Royals,6600,6.6
+OF,Nick Markakis,Orioles,Royals,7250,10.7
+OF,Adam Jones,Orioles,Royals,10000,12.2
+OF,Nolan Reimold,Orioles,Royals,5900,0.0
+1B,Chris Davis,Orioles,Royals,10650,13.1
+P,Tommy Hunter,Orioles,Royals,7500,2.1
+C,Matt Wieters,Orioles,Royals,9900,14.3
+P,Chris Tillman,Orioles,Royals,14150,20.5
+P,Brian Matusz,Orioles,Royals,7500,2.2
+P,Zach Britton,Orioles,Royals,7950,7.1
+P,Ubaldo Jimenez,Orioles,Royals,11750,18.9
+OF,Delmon Young,Orioles,Royals,5350,7.7
+2B,Alexi Casilla,Orioles,Royals,6150,5.3
+SS,Alexi Casilla,Orioles,Royals,6150,5.3
+2B,Jemile Weeks,Orioles,Royals,5000,9.0
+P,Aaron Laffey,Orioles,Royals,6900,1.0
+OF,Nelson Cruz,Orioles,Royals,9800,17.7
+P,Darren O'Day,Orioles,Royals,7500,3.9
+P,Edgmer Escalona,Orioles,Royals,7500,0.0
+P,Ryan Webb,Orioles,Royals,7500,4.2
+P,Bud Norris,Orioles,Royals,11150,18.7
+P,Johan Santana,Orioles,Royals,7750,0.0
+OF,Steve Pearce,Orioles,Royals,8250,11.0
+1B,Steve Pearce,Orioles,Royals,8250,11.0
+P,Evan Meek,Orioles,Royals,7500,1.2
+P,Josh Stinson,Orioles,Royals,7500,0.1
+2B,Steve Lombardozzi,Orioles,Royals,7300,6.3
+OF,Steve Lombardozzi,Orioles,Royals,7300,6.3
+C,Steve Clevenger,Orioles,Royals,5400,10.6
+OF,David Lough,Orioles,Royals,5300,4.8
+P,Wei-Yin Chen,Orioles,Royals,13650,20.9
+3B,Jonathan Schoop,Orioles,Royals,6250,8.6
+2B,Jonathan Schoop,Orioles,Royals,6250,8.6
+3B,Manny Machado,Orioles,Royals,7600,5.6
+SS,Ryan Flaherty,Orioles,Royals,7000,6.6
+3B,Ryan Flaherty,Orioles,Royals,7000,6.6
+P,Miguel Gonzalez,Orioles,Royals,10350,13.8
+OF,Quintin Berry,Orioles,Royals,5900,9.2
+P,Steve Johnson,Orioles,Royals,8250,5.1
+OF,Francisco Peguero,Orioles,Royals,5000,0.0
+P,Kevin Gausman,Orioles,Royals,7800,-5.0
+OF,Henry Urrutia,Orioles,Royals,5750,3.5
+3B,Michael Almanzar,Orioles,Royals,5000,0.0
+C,Caleb Joseph,Orioles,Royals,5000,-1.0
+P,Scott Atchison,Indians,Blue Jays,7500,5.0
+3B,Mike Aviles,Indians,Blue Jays,7100,10.4
+SS,Mike Aviles,Indians,Blue Jays,7100,10.4
+SS,Asdrubal Cabrera,Indians,Blue Jays,8800,11.7
+P,Carlos Carrasco,Indians,Blue Jays,8850,7.2
+P,Justin Masterson,Indians,Blue Jays,12650,20.1
+OF,Michael Brantley,Indians,Blue Jays,9000,15.2
+3B,Carlos Santana,Indians,Blue Jays,8250,10.9
+C,Carlos Santana,Indians,Blue Jays,8250,10.9
+P,Josh Tomlin,Indians,Blue Jays,10700,28.0
+P,Vinnie Pestano,Indians,Blue Jays,7500,-0.3
+3B,Lonnie Chisenhall,Indians,Blue Jays,6350,9.7
+2B,Jason Kipnis,Indians,Blue Jays,9450,12.7
+P,Zach McAllister,Indians,Blue Jays,11100,20.2
+OF,Ryan Raburn,Indians,Blue Jays,7100,4.1
+OF,Jeff Francoeur,Indians,Blue Jays,6700,5.4
+P,Blake Wood,Indians,Blue Jays,7500,1.9
+1B,Nick Swisher,Indians,Blue Jays,8600,9.6
+OF,Nick Swisher,Indians,Blue Jays,8600,9.6
+P,Josh Outman,Indians,Blue Jays,7500,4.3
+OF,Elliot Johnson,Indians,Blue Jays,7000,1.1
+2B,Elliot Johnson,Indians,Blue Jays,7000,1.1
+OF,David Murphy,Indians,Blue Jays,7150,11.5
+1B,David Cooper,Indians,Blue Jays,6100,0.0
+P,Bryan Shaw,Indians,Blue Jays,7500,4.4
+OF,Michael Bourn,Indians,Blue Jays,8250,10.5
+1B,Jason Giambi,Indians,Blue Jays,5000,-1.2
+SS,Justin Sellers,Indians,Blue Jays,5000,0.0
+P,Shaun Marcum,Indians,Blue Jays,7950,8.5
+C,George Kottaras,Indians,Blue Jays,7850,64.0
+OF,Nyjer Morgan,Indians,Blue Jays,7000,12.2
+P,John Axford,Indians,Blue Jays,7500,3.1
+P,Marc Rzepczynski,Indians,Blue Jays,7500,2.8
+P,Corey Kluber,Indians,Blue Jays,13300,27.7
+P,Trevor Bauer,Indians,Blue Jays,10450,32.0
+C,Yan Gomes,Indians,Blue Jays,8300,12.3
+P,Cody Allen,Indians,Blue Jays,7500,5.6
+OF,Matt Carson,Indians,Blue Jays,6200,6.3
+P,Danny Salazar,Indians,Blue Jays,13050,17.7
+P,CC Lee,Indians,Blue Jays,7500,3.0
+2B,Jose Ramirez,Indians,Blue Jays,5000,2.1
+SS,Jose Ramirez,Indians,Blue Jays,5000,2.1
+P,Jeremy Guthrie,Royals,Orioles,10000,12.2
+SS,Jason Donald,Royals,Orioles,6000,0.0
+3B,Jason Donald,Royals,Orioles,6000,0.0
+P,Bruce Chen,Royals,Orioles,7550,9.8
+1B,Billy Butler,Royals,Orioles,7200,7.6
+OF,Alex Gordon,Royals,Orioles,8300,10.2
+P,Luke Hochevar,Royals,Orioles,7500,0.0
+SS,Alcides Escobar,Royals,Orioles,8500,11.9
+P,Aaron Crow,Royals,Orioles,7500,4.1
+3B,Mike Moustakas,Royals,Orioles,6600,8.0
+P,Greg Holland,Royals,Orioles,7500,5.2
+OF,Jarrod Dyson,Royals,Orioles,6800,6.3
+1B,Eric Hosmer,Royals,Orioles,9300,11.4
+P,Tim Collins,Royals,Orioles,7500,-1.5
+P,Louis Coleman,Royals,Orioles,7500,3.5
+P,Danny Duffy,Royals,Orioles,8250,10.2
+2B,Johnny Giavotella,Royals,Orioles,7950,13.2
+C,Salvador Perez,Royals,Orioles,8250,11.2
+3B,Danny Valencia,Royals,Orioles,7450,8.0
+2B,Danny Valencia,Royals,Orioles,7450,8.0
+P,Jason Vargas,Royals,Orioles,11050,23.4
+C,Adam Moore,Royals,Orioles,6250,6.6
+P,James Shields,Royals,Orioles,17250,30.9
+P,Wade Davis,Royals,Orioles,9550,8.5
+P,P.J. Walters,Royals,Orioles,7100,3.9
+C,Ramon Hernandez,Royals,Orioles,6400,9.2
+2B,Omar Infante,Royals,Orioles,7950,12.2
+C,Brett Hayes,Royals,Orioles,5000,-0.9
+OF,Jimmy Paredes,Royals,Orioles,6400,4.8
+3B,Jimmy Paredes,Royals,Orioles,6400,4.8
+3B,Pedro Ciriaco,Royals,Orioles,6250,4.7
+2B,Pedro Ciriaco,Royals,Orioles,6250,4.7
+OF,Justin Maxwell,Royals,Orioles,6100,2.8
+OF,Lorenzo Cain,Royals,Orioles,7550,11.4
+P,Kelvin Herrera,Royals,Orioles,7500,4.8
+OF,Norichika Aoki,Royals,Orioles,8000,9.5
+P,Francisley Bueno,Royals,Orioles,7500,-1.5
+P,Donnie Joseph,Royals,Orioles,7500,0.0
+P,Yordano Ventura,Royals,Orioles,15450,28.3
+P,Aaron Brooks,Royals,Orioles,7500,-13.0
+P,Michael Mariot,Royals,Orioles,7500,3.7
+P,Justin Marks,Royals,Orioles,7500,-4.0
+P,Hector Santiago,Angels,Rays,11250,9.9
+P,Joe Smith,Angels,Rays,7500,4.7
+OF,Brennan Boesch,Angels,Rays,5100,2.1
+P,Jered Weaver,Angels,Rays,12850,24.9
+SS,Erick Aybar,Angels,Rays,8250,11.9
+2B,Howie Kendrick,Angels,Rays,8250,15.5
+P,Kevin Jepsen,Angels,Rays,7500,3.6
+P,Michael Kohn,Angels,Rays,7500,5.7
+C,Hank Conger,Angels,Rays,8300,13.5
+OF,Mike Trout,Angels,Rays,13050,17.2
+P,Garrett Richards,Angels,Rays,14400,32.5
+P,Dane De La Rosa,Angels,Rays,7500,-7.0
+OF,Josh Hamilton,Angels,Rays,11450,23.1
+P,C.J. Wilson,Angels,Rays,14250,29.0
+SS,John McDonald,Angels,Rays,5000,2.9
+3B,John McDonald,Angels,Rays,5000,2.9
+OF,Collin Cowgill,Angels,Rays,5500,8.8
+1B,Carlos Pena,Angels,Rays,6050,9.1
+C,Chris Iannetta,Angels,Rays,6500,13.5
+3B,Ian Stewart,Angels,Rays,5000,7.2
+1B,Ian Stewart,Angels,Rays,5000,7.2
+OF,J.B. Shuck,Angels,Rays,5800,7.8
+OF,Raul Ibanez,Angels,Rays,7400,8.4
+P,Joe Blanton,Angels,Rays,7800,6.7
+1B,Albert Pujols,Angels,Rays,9950,16.5
+3B,David Freese,Angels,Rays,7900,8.0
+P,Fernando Salas,Angels,Rays,7500,4.8
+P,Wade LeBlanc,Angels,Rays,7300,3.2
+P,Ernesto Frieri,Angels,Rays,7500,3.4
+P,Sean Burnett,Angels,Rays,7500,0.0
+P,Tyler Skaggs,Angels,Rays,12850,19.4
+OF,Kole Calhoun,Angels,Rays,9800,16.1
+P,Josh Wall,Angels,Rays,7500,-11.5
+P,Nick Maronde,Angels,Rays,7500,-0.6
+2B,Grant Green,Angels,Rays,6900,5.8
+3B,Luis Jimenez,Angels,Rays,5000,3.2
+P,Ryan Brasier,Angels,Rays,7500,0.0
+P,Jose Alvarez,Angels,Rays,7550,2.0
+P,Matt Shoemaker,Angels,Rays,8150,10.5
+1B,C.J. Cron,Angels,Rays,8250,14.7
+P,Brian Moran,Angels,Rays,7500,0.0
+P,Yoslan Herrera,Angels,Rays,7500,1.9
+2B,Brian Roberts,Yankees,Mets,6150,9.7
+OF,Jacoby Ellsbury,Yankees,Mets,10000,13.5
+P,Alfredo Aceves,Yankees,Mets,8150,6.0
+P,Matt Thornton,Yankees,Mets,7500,0.6
+SS,Derek Jeter,Yankees,Mets,8000,8.3
+P,CC Sabathia,Yankees,Mets,14650,19.9
+1B,Mark Teixeira,Yankees,Mets,9300,17.4
+P,David Robertson,Yankees,Mets,7500,4.9
+OF,Brett Gardner,Yankees,Mets,8950,12.7
+C,Francisco Cervelli,Yankees,Mets,5350,4.4
+P,Ivan Nova,Yankees,Mets,8550,5.2
+3B,Scott Sizemore,Yankees,Mets,7250,11.2
+2B,Scott Sizemore,Yankees,Mets,7250,11.2
+P,Bruce Billings,Yankees,Mets,7500,16.0
+OF,Ichiro Suzuki,Yankees,Mets,8100,5.5
+SS,Brendan Ryan,Yankees,Mets,6650,2.5
+2B,Brendan Ryan,Yankees,Mets,6650,2.5
+P,Shawn Kelley,Yankees,Mets,7500,4.2
+P,Michael Pineda,Yankees,Mets,12450,23.0
+3B,Kelly Johnson,Yankees,Mets,7150,9.0
+1B,Kelly Johnson,Yankees,Mets,7150,9.0
+C,Brian McCann,Yankees,Mets,8000,9.4
+OF,Alfonso Soriano,Yankees,Mets,7600,10.1
+P,Hiroki Kuroda,Yankees,Mets,10800,17.2
+OF,Carlos Beltran,Yankees,Mets,8750,11.4
+C,Austin Romine,Yankees,Mets,5000,-1.0
+P,Dellin Betances,Yankees,Mets,7500,9.1
+P,Cesar Cabral,Yankees,Mets,7500,-2.2
+P,David Phelps,Yankees,Mets,8850,5.6
+P,Adam Warren,Yankees,Mets,7500,6.2
+P,Vidal Nuno,Yankees,Mets,8400,6.4
+OF,Zoilo Almonte,Yankees,Mets,5250,0.0
+C,John Ryan Murphy,Yankees,Mets,5800,9.0
+P,Masahiro Tanaka,Yankees,Mets,19050,43.2
+P,Shane Greene,Yankees,Mets,7500,1.0
+SS,Dean Anna,Yankees,Mets,5000,4.4
+2B,Dean Anna,Yankees,Mets,5000,4.4
+3B,Yangervis Solarte,Yankees,Mets,7300,15.3
+2B,Yangervis Solarte,Yankees,Mets,7300,15.3
+P,Chase Whitley,Yankees,Mets,8450,0.0
+P,Erik Bedard,Rays,Angels,11150,13.8
+P,Grant Balfour,Rays,Angels,7500,2.3
+OF,David DeJesus,Rays,Angels,9100,10.9
+P,Josh Lueke,Rays,Angels,7500,1.9
+P,Joel Peralta,Rays,Angels,7500,2.2
+2B,Ben Zobrist,Rays,Angels,8650,11.5
+OF,Ben Zobrist,Rays,Angels,8650,11.5
+3B,Evan Longoria,Rays,Angels,9450,11.9
+P,David Price,Rays,Angels,17600,32.2
+P,Jake McGee,Rays,Angels,7500,5.2
+OF,Sean Rodriguez,Rays,Angels,7600,11.8
+1B,Sean Rodriguez,Rays,Angels,7600,11.8
+OF,Matt Joyce,Rays,Angels,8050,11.7
+P,Jeremy Hellickson,Rays,Angels,7900,0.0
+P,Cesar Ramos,Rays,Angels,8700,8.9
+OF,Desmond Jennings,Rays,Angels,7200,12.8
+P,Alex Cobb,Rays,Angels,12500,26.3
+P,Brandon Gomes,Rays,Angels,7500,3.3
+OF,Brandon Guyer,Rays,Angels,5950,2.7
+C,Jose Molina,Rays,Angels,5950,0.3
+SS,Yunel Escobar,Rays,Angels,6200,6.6
+C,Ryan Hanigan,Rays,Angels,5200,9.3
+P,Juan Carlos Oviedo,Rays,Angels,7500,5.0
+1B,James Loney,Rays,Angels,7100,12.1
+P,Heath Bell,Rays,Angels,7500,1.5
+2B,Logan Forsythe,Rays,Angels,6750,4.3
+3B,Logan Forsythe,Rays,Angels,6750,4.3
+P,Matt Moore,Rays,Angels,10650,12.0
+P,Chris Archer,Rays,Angels,10150,14.8
+SS,Tim Beckham,Rays,Angels,5000,0.0
+OF,Wil Myers,Rays,Angels,8400,11.8
+P,Brad Boxberger,Rays,Angels,7500,6.6
+P,Jeff Beliveau,Rays,Angels,7500,4.5
+P,Jake Odorizzi,Rays,Angels,10350,18.1
+P,Nathan Karns,Rays,Angels,8400,0.0
+P,Alex Colome,Rays,Angels,6200,17.7
+OF,Kevin Kiermaier,Rays,Angels,5000,-4.0
+2B,Vince Belnome,Rays,Angels,5000,0.0
+P,Mark Buehrle,Blue Jays,Indians,14700,27.2
+P,Sergio Santos,Blue Jays,Indians,7500,2.4
+OF,Melky Cabrera,Blue Jays,Indians,8000,15.4
+2B,Chris Getz,Blue Jays,Indians,5000,2.9
+2B,Maicer Izturis,Blue Jays,Indians,6500,5.9
+3B,Maicer Izturis,Blue Jays,Indians,6500,5.9
+OF,Jose Bautista,Blue Jays,Indians,12250,19.4
+1B,Edwin Encarnacion,Blue Jays,Indians,12250,14.4
+P,Dustin McGowan,Blue Jays,Indians,9400,10.0
+P,Casey Janssen,Blue Jays,Indians,7500,3.5
+1B,Adam Lind,Blue Jays,Indians,9400,14.3
+P,Brandon Morrow,Blue Jays,Indians,12350,11.5
+OF,Colby Rasmus,Blue Jays,Indians,8350,12.3
+P,Brett Cecil,Blue Jays,Indians,7500,4.2
+3B,Brett Lawrie,Blue Jays,Indians,8650,12.4
+3B,Juan Francisco,Blue Jays,Indians,9100,17.6
+1B,Juan Francisco,Blue Jays,Indians,9100,17.6
+P,Esmil Rogers,Blue Jays,Indians,8200,3.5
+P,J.A. Happ,Blue Jays,Indians,9400,6.8
+C,Dioner Navarro,Blue Jays,Indians,5550,9.0
+P,R.A. Dickey,Blue Jays,Indians,13750,18.0
+SS,Jose Reyes,Blue Jays,Indians,11350,14.3
+C,Josh Thole,Blue Jays,Indians,5300,7.0
+OF,Darin Mastroianni,Blue Jays,Indians,5000,2.0
+P,Neil Wagner,Blue Jays,Indians,7500,0.4
+P,Steve Delabar,Blue Jays,Indians,7500,4.4
+C,Erik Kratz,Blue Jays,Indians,6600,6.6
+OF,Anthony Gose,Blue Jays,Indians,7050,13.7
+2B,Munenori Kawasaki,Blue Jays,Indians,7300,8.7
+SS,Munenori Kawasaki,Blue Jays,Indians,7300,8.7
+P,Drew Hutchison,Blue Jays,Indians,11350,20.9
+3B,Steve Tolleson,Blue Jays,Indians,7700,10.0
+OF,Steve Tolleson,Blue Jays,Indians,7700,10.0
+P,Todd Redmond,Blue Jays,Indians,7500,6.2
+P,Aaron Loup,Blue Jays,Indians,7500,3.5
+P,Chad Jenkins,Blue Jays,Indians,7400,0.3
+OF,Matt Tuiasosopo,Blue Jays,Indians,5250,7.7
+3B,Matt Tuiasosopo,Blue Jays,Indians,5250,7.7
+SS,Jonathan Diaz,Blue Jays,Indians,5000,3.0
+OF,Kevin Pillar,Blue Jays,Indians,6050,-3.5
+SS,Ryan Goins,Blue Jays,Indians,6500,2.5
+2B,Ryan Goins,Blue Jays,Indians,6500,2.5
+P,Ryan Rowland-Smith,Blue Jays,Indians,7500,4.3
+C,Jarrod Saltalamacchia,Marlins,Giants,6450,11.4
+P,Jacob Turner,Marlins,Giants,8850,2.5
+C,Jeff Mathis,Marlins,Giants,7400,5.7
+P,Kevin Slowey,Marlins,Giants,10200,5.1
+P,Henderson Alvarez,Marlins,Giants,12200,19.5
+2B,Jeff Baker,Marlins,Giants,7500,7.8
+3B,Jeff Baker,Marlins,Giants,7500,7.8
+OF,Reed Johnson,Marlins,Giants,7400,6.4
+P,Carlos Marmol,Marlins,Giants,7500,1.3
+P,Mike Dunn,Marlins,Giants,7500,5.1
+OF,Giancarlo Stanton,Marlins,Giants,11600,20.7
+P,Steve Cishek,Marlins,Giants,7500,6.6
+P,Brad Hand,Marlins,Giants,7500,2.2
+OF,Brian Bogusevic,Marlins,Giants,6150,10.0
+P,Nathan Eovaldi,Marlins,Giants,14950,26.1
+3B,Casey McGehee,Marlins,Giants,6250,11.1
+1B,Casey McGehee,Marlins,Giants,6250,11.1
+1B,Garrett Jones,Marlins,Giants,6700,10.7
+OF,Garrett Jones,Marlins,Giants,6700,10.7
+2B,Rafael Furcal,Marlins,Giants,5900,0.0
+SS,Rafael Furcal,Marlins,Giants,5900,0.0
+P,Dan Jennings,Marlins,Giants,7500,3.1
+2B,Donovan Solano,Marlins,Giants,6500,1.3
+OF,Donovan Solano,Marlins,Giants,6500,1.3
+SS,Adeiny Hechavarria,Marlins,Giants,6500,8.6
+3B,Adeiny Hechavarria,Marlins,Giants,6500,8.6
+P,Tom Koehler,Marlins,Giants,13650,20.8
+P,A.J. Ramos,Marlins,Giants,7500,6.2
+OF,Christian Yelich,Marlins,Giants,8350,13.9
+P,Jose Fernandez,Marlins,Giants,20900,39.2
+OF,Jake Marisnick,Marlins,Giants,6600,4.0
+OF,Marcell Ozuna,Marlins,Giants,6050,11.2
+2B,Derek Dietrich,Marlins,Giants,6000,10.7
+3B,Ed Lucas,Marlins,Giants,6400,5.1
+2B,Ed Lucas,Marlins,Giants,6400,5.1
+P,Arquimedes Caminero,Marlins,Giants,7500,0.4
+P,Brian Flynn,Marlins,Giants,7150,-0.5
+P,Daisuke Matsuzaka,Mets,Yankees,7500,8.2
+P,Jose Valverde,Mets,Yankees,7500,5.1
+OF,Bobby Abreu,Mets,Yankees,5000,4.1
+P,Bartolo Colon,Mets,Yankees,10900,14.1
+OF,Curtis Granderson,Mets,Yankees,9100,10.7
+P,Kyle Farnsworth,Mets,Yankees,7500,2.0
+SS,Omar Quintanilla,Mets,Yankees,6450,3.1
+2B,Omar Quintanilla,Mets,Yankees,6450,3.1
+OF,Chris Young,Mets,Yankees,7150,11.8
+OF,Eric Young,Mets,Yankees,9250,12.2
+3B,David Wright,Mets,Yankees,10900,12.6
+2B,Daniel Murphy,Mets,Yankees,10250,15.9
+1B,Daniel Murphy,Mets,Yankees,10250,15.9
+P,Jonathon Niese,Mets,Yankees,12450,26.1
+P,Bobby Parnell,Mets,Yankees,7500,0.0
+SS,Ruben Tejada,Mets,Yankees,6350,5.6
+1B,Lucas Duda,Mets,Yankees,7100,10.0
+OF,Lucas Duda,Mets,Yankees,7100,10.0
+P,Dillon Gee,Mets,Yankees,11900,22.6
+OF,Andrew Brown,Mets,Yankees,6500,7.8
+P,John Lannan,Mets,Yankees,7500,-0.4
+C,Anthony Recker,Mets,Yankees,5800,7.9
+1B,Josh Satin,Mets,Yankees,6000,3.3
+P,Jenrry Mejia,Mets,Yankees,10850,18.8
+C,Travis d'Arnaud,Mets,Yankees,5000,7.0
+P,Zack Wheeler,Mets,Yankees,11350,14.2
+OF,Kirk Nieuwenhuis,Mets,Yankees,7700,7.9
+1B,Zach Lutz,Mets,Yankees,6650,5.1
+3B,Zach Lutz,Mets,Yankees,6650,5.1
+P,Carlos Torres,Mets,Yankees,8500,5.0
+P,Matt Harvey,Mets,Yankees,7500,0.0
+P,Jeurys Familia,Mets,Yankees,7500,3.9
+P,Scott Rice,Mets,Yankees,7500,1.2
+OF,Juan Lagares,Mets,Yankees,7450,11.6
+2B,Wilmer Flores,Mets,Yankees,5950,1.7
+P,Gonzalez Germen,Mets,Yankees,7500,4.8
+OF,Matt den Dekker,Mets,Yankees,6200,5.9
+P,Rafael Montero,Mets,Yankees,8350,11.0
+P,Jacob deGrom,Mets,Yankees,8150,0.0
+2B,Marco Scutaro,Giants,Marlins,5650,0.0
+P,David Huff,Giants,Marlins,7500,3.8
+P,Juan Gutierrez,Giants,Marlins,7500,4.3
+P,Tim Hudson,Giants,Marlins,15100,30.9
+2B,Brandon Hicks,Giants,Marlins,8100,12.4
+SS,Brandon Hicks,Giants,Marlins,8100,12.4
+P,Kameron Loe,Giants,Marlins,9150,0.8
+OF,Angel Pagan,Giants,Marlins,8750,12.9
+OF,Hunter Pence,Giants,Marlins,9100,13.5
+P,Ryan Vogelsong,Giants,Marlins,9950,14.2
+P,Jeremy Affeldt,Giants,Marlins,7500,4.8
+P,Javier Lopez,Giants,Marlins,7500,1.1
+P,Santiago Casilla,Giants,Marlins,7500,5.2
+P,Matt Cain,Giants,Marlins,15900,15.8
+P,Tim Lincecum,Giants,Marlins,13000,20.2
+P,Sergio Romo,Giants,Marlins,7500,5.3
+3B,Pablo Sandoval,Giants,Marlins,7550,7.3
+C,Buster Posey,Giants,Marlins,10400,13.2
+P,Madison Bumgarner,Giants,Marlins,16100,25.7
+1B,Brandon Belt,Giants,Marlins,9150,13.6
+SS,Brandon Crawford,Giants,Marlins,5950,12.3
+C,Hector Sanchez,Giants,Marlins,8600,7.9
+OF,Michael Morse,Giants,Marlins,6550,12.6
+OF,Gregor Blanco,Giants,Marlins,6500,3.5
+P,Yusmeiro Petit,Giants,Marlins,9250,9.0
+1B,Travis Ishikawa,Giants,Marlins,5000,5.2
+2B,Joaquin Arias,Giants,Marlins,6600,1.5
+3B,Joaquin Arias,Giants,Marlins,6600,1.5
+2B,Tony Abreu,Giants,Marlins,7350,7.5
+3B,Tony Abreu,Giants,Marlins,7350,7.5
+P,Jean Machi,Giants,Marlins,7500,6.8
+OF,Juan Perez,Giants,Marlins,6900,0.0
+2B,Ehire Adrianza,Giants,Marlins,5950,1.7
