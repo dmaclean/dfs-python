@@ -129,5 +129,8 @@ if __name__ == '__main__':
 	scraper.readCLI()
 
 	if scraper.scrape_yesterdays_players:
+		start = time.time()
 		scraper.scrape_yesterdays_lineups()
+		end = time.time()
+		print "Completed scraping yesterday's lineups in {} minutes".format((end-start)/60)
 	scraper.process()
