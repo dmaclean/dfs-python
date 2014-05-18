@@ -15,7 +15,9 @@ class TestPlayerSplitsParser(unittest.TestCase):
 	def test_parse_pitcher_splits(self):
 		season = "2013"
 		self.player_splits_parser.player_data = {MLBConstants.PLAYER_ID: "verlaju01", MLBConstants.POSITION: "Pitcher"}
-		self.player_splits_parser.parse(open('../test_files/pitcher_splits.html'), season)
+		f = open('../test_files/pitcher_splits.html')
+		data = f.read()
+		self.player_splits_parser.parse(data, season)
 
 		pd = self.player_splits_parser.player_data
 		self.assertTrue(pd[MLBConstants.PITCHER_SPLITS][season]["2013 Totals"][
@@ -106,7 +108,9 @@ class TestPlayerSplitsParser(unittest.TestCase):
 
 	def test_parse_batter_splits(self):
 		self.player_splits_parser.player_data = {MLBConstants.PLAYER_ID: "cabremi01", MLBConstants.POSITION: "Third base"}
-		self.player_splits_parser.parse(open('../test_files/batter_splits.html'), "2014")
+		f = open('../test_files/batter_splits.html')
+		data = f.read()
+		self.player_splits_parser.parse(data, "2014")
 
 		pd = self.player_splits_parser.player_data
 		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["2014"]["2014 Totals"][
@@ -222,6 +226,123 @@ class TestPlayerSplitsParser(unittest.TestCase):
 							MLBConstants.T_OPS_PLUS] == 164)
 		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["2014"][MLBConstants.SPLITS_VS_RHP][
 							MLBConstants.S_OPS_PLUS] == 299)
+
+	def test_parse_batter_splits_career(self):
+		self.player_splits_parser.player_data = {MLBConstants.PLAYER_ID: "cabremi01", MLBConstants.POSITION: "Third base"}
+		f = open('../test_files/batter_career_splits.html')
+		data = f.read()
+		self.player_splits_parser.parse(data, "Career")
+
+		pd = self.player_splits_parser.player_data
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"]["Career Totals"][
+							MLBConstants.GAMES_PLAYED] == 1698)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"]["Career Totals"][
+							MLBConstants.GAMES_STARTED] == 1688)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"]["Career Totals"][
+							MLBConstants.PLATE_APPEARANCES] == 7292)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"]["Career Totals"][
+							MLBConstants.AT_BATS] == 6372)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"]["Career Totals"][
+							MLBConstants.RUNS] == 1085)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"]["Career Totals"][
+							MLBConstants.HITS] == 2042)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"]["Career Totals"][
+							MLBConstants.DOUBLES] == 424)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"]["Career Totals"][
+							MLBConstants.TRIPLES] == 14)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"]["Career Totals"][
+							MLBConstants.HOME_RUNS] == 372)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"]["Career Totals"][
+							MLBConstants.RBI] == 1297)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"]["Career Totals"][
+							MLBConstants.STOLEN_BASES] == 36)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"]["Career Totals"][
+							MLBConstants.CAUGHT_STEALING] == 19)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"]["Career Totals"][
+							MLBConstants.WALKS] == 809)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"]["Career Totals"][
+							MLBConstants.STRIKE_OUTS] == 1231)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"]["Career Totals"][
+							MLBConstants.BATTING_AVERAGE] == 0.320)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"]["Career Totals"][
+							MLBConstants.ON_BASE_PERCENTAGE] == 0.398)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"]["Career Totals"][
+							MLBConstants.SLUGGING_PERCENTAGE] == 0.567)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"]["Career Totals"][
+							MLBConstants.OPS] == 0.964)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"]["Career Totals"][
+							MLBConstants.TOTAL_BASES] == 3610)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"]["Career Totals"][
+							MLBConstants.DOUBLE_PLAYS_GROUNDED_INTO] == 218)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"]["Career Totals"][
+							MLBConstants.HIT_BY_PITCH] == 48)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"]["Career Totals"][
+							MLBConstants.SACRIFICE_HITS] == 5)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"]["Career Totals"][
+							MLBConstants.SACRIFICE_FLIES] == 58)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"]["Career Totals"][
+							MLBConstants.INTENTIONAL_WALKS] == 181)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"]["Career Totals"][
+							MLBConstants.REACHED_ON_ERROR] == 56)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"]["Career Totals"][
+							MLBConstants.BABIP] == 0.346)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"]["Career Totals"][
+							MLBConstants.T_OPS_PLUS] == 100)
+
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"][MLBConstants.SPLITS_VS_RHP][
+							MLBConstants.GAMES_PLAYED] == 1635)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"][MLBConstants.SPLITS_VS_RHP][
+							MLBConstants.GAMES_STARTED] == 0)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"][MLBConstants.SPLITS_VS_RHP][
+							MLBConstants.PLATE_APPEARANCES] == 5531)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"][MLBConstants.SPLITS_VS_RHP][
+							MLBConstants.AT_BATS] == 4931)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"][MLBConstants.SPLITS_VS_RHP][
+							MLBConstants.RUNS] == 810)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"][MLBConstants.SPLITS_VS_RHP][
+							MLBConstants.HITS] == 1584)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"][MLBConstants.SPLITS_VS_RHP][
+							MLBConstants.DOUBLES] == 314)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"][MLBConstants.SPLITS_VS_RHP][
+							MLBConstants.TRIPLES] == 10)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"][MLBConstants.SPLITS_VS_RHP][
+							MLBConstants.HOME_RUNS] == 294)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"][MLBConstants.SPLITS_VS_RHP][
+							MLBConstants.RBI] == 1013)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"][MLBConstants.SPLITS_VS_RHP][
+							MLBConstants.STOLEN_BASES] == 23)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"][MLBConstants.SPLITS_VS_RHP][
+							MLBConstants.CAUGHT_STEALING] == 12)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"][MLBConstants.SPLITS_VS_RHP][
+							MLBConstants.WALKS] == 515)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"][MLBConstants.SPLITS_VS_RHP][
+							MLBConstants.STRIKE_OUTS] == 945)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"][MLBConstants.SPLITS_VS_RHP][
+							MLBConstants.BATTING_AVERAGE] == 0.321)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"][MLBConstants.SPLITS_VS_RHP][
+							MLBConstants.ON_BASE_PERCENTAGE] == 0.387)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"][MLBConstants.SPLITS_VS_RHP][
+							MLBConstants.SLUGGING_PERCENTAGE] == 0.568)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"][MLBConstants.SPLITS_VS_RHP][
+							MLBConstants.OPS] == 0.955)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"][MLBConstants.SPLITS_VS_RHP][
+							MLBConstants.TOTAL_BASES] == 2800)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"][MLBConstants.SPLITS_VS_RHP][
+							MLBConstants.DOUBLE_PLAYS_GROUNDED_INTO] == 163)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"][MLBConstants.SPLITS_VS_RHP][
+							MLBConstants.HIT_BY_PITCH] == 40)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"][MLBConstants.SPLITS_VS_RHP][
+							MLBConstants.SACRIFICE_HITS] == 4)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"][MLBConstants.SPLITS_VS_RHP][
+							MLBConstants.SACRIFICE_FLIES] == 41)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"][MLBConstants.SPLITS_VS_RHP][
+							MLBConstants.INTENTIONAL_WALKS] == 112)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"][MLBConstants.SPLITS_VS_RHP][
+							MLBConstants.REACHED_ON_ERROR] == 43)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"][MLBConstants.SPLITS_VS_RHP][
+							MLBConstants.BABIP] == 0.346)
+		self.assertTrue(pd[MLBConstants.BATTER_SPLITS]["Career"][MLBConstants.SPLITS_VS_RHP][
+							MLBConstants.T_OPS_PLUS] == 97)
 
 
 if __name__ == '__main__':
