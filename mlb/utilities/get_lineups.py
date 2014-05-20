@@ -94,6 +94,8 @@ class LineupScraper:
 			if self.lineup_manager.is_processed(player):
 				continue
 
+			start = time.time()
+
 			# Ignore pitchers
 			player_record = self.player_manager.players_collection.find_one({"player_id": unescaped_player})
 			if player_record[MLBConstants.POSITION].lower() == MLBConstants.PITCHER_TYPE:
@@ -106,6 +108,9 @@ class LineupScraper:
 
 			# Mark the player as processed (write to the lineup) once their stats have been updated.
 			self.lineup_manager.add_player_to_lineup(player, {})
+
+			end = time.time()
+			print "Processed {} in {} seconds".format(player, end-start)
 
 	def process(self):
 		while True:
