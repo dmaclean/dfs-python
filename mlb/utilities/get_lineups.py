@@ -89,6 +89,10 @@ class LineupScraper:
 
 		players = self.lineup_manager.lineups_collection.find_one({"date": str(yesterday)})
 
+		if players is None:
+			logging.info("Looks like we didn't run this yesterday. Going to look for today's lineups...")
+			return
+
 		for player in players["players"]:
 			unescaped_player = player.replace("_", ".")
 			if self.lineup_manager.is_processed(player):
