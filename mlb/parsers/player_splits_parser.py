@@ -214,6 +214,7 @@ class PlayerSplitsParser:
 
 				self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][
 								MLBConstants.FIP] = self.stat_calculator.calculate_fip(self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type])
+				self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type][MLBConstants.WOBA] = self.stat_calculator.calculate_woba(self.player_data[MLBConstants.PITCHER_SPLITS][season][split_type])
 
 	def parse_batter_splits(self, soup, season):
 		split_divs = soup.find_all("div", attrs={"class": "stw"})
