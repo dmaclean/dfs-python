@@ -33,7 +33,7 @@ class StatCalculator:
 		FIP = ((13*HR)+(3*(BB+HBP))-(2*K))/IP + constant
 		"""
 		try:
-			return ((13*data[MLBConstants.HOME_RUNS])+(3*(data[MLBConstants.WALKS] + data[MLBConstants.HIT_BY_PITCH])-(2*data[MLBConstants.STRIKE_OUTS]))/data[MLBConstants.INNINGS_PITCHED]) + 3.08
+			return ((13*data[MLBConstants.HOME_RUNS])+(3*(data[MLBConstants.WALKS] + data[MLBConstants.HIT_BY_PITCH]))-(2*data[MLBConstants.STRIKE_OUTS])/data[MLBConstants.INNINGS_PITCHED]) + 3.08
 		except KeyError, err:
 			return -1
 		except ZeroDivisionError as err:
