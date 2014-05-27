@@ -19,6 +19,7 @@ class MLBConstants:
 	MONGO_MLB_BVP_COLLECTION = "bvp"
 	MONGO_MLB_GAMELOGS_COLLECTION = "gamelogs"
 	MONGO_MLB_YTD_COLLECTION = "ytd"
+	MONGO_MLB_BALLPARK_FACTORS_COLLECTION = "ballpark_factors"
 
 	MONGO_MLB_NAME_MAPPING_BBR = "bbr"
 	MONGO_MLB_NAME_MAPPING_ROTOWIRE = "rotowire"
@@ -191,6 +192,13 @@ class MLBConstants:
 	SPLITS_LAST_365 = "Last 365days"
 
 	SPLITS_VS_RHP = "vs RHP"
+	####################
+	# Ballpark Factors
+	####################
+	BPF_ALL = "all"
+	BPF_VS_RHP = "vs_rhp"
+	BPF_VS_LHP = "vs_lhp"
+	BPF_BALLPARK = "ballpark"
 
 	#########
 	# Stats

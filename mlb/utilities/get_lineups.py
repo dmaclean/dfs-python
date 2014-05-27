@@ -10,6 +10,8 @@ from mlb.models.player_manager import PlayerManager
 from mlb.parsers.rotoworld_lineup_scraper import RotoworldLineupScraper
 from mlb.models.lineup_manager import LineupManager
 from mlb.utilities.bbr_scraper import BaseballReferenceScraper
+from mlb.parsers.rotogrinders_ballpark_factors_parser import RotogrindersBallparkFactorsParser
+from mlb.utilities.mlb_utilities import MLBUtilities
 
 __author__ = 'dan'
 
@@ -71,6 +73,14 @@ class LineupScraper:
 				self.sleep_time = int(pieces[1])
 			elif pieces[0] == "scrape_yesterdays_players":
 				self.scrape_yesterdays_players = pieces[1] == "true"
+
+	def scrape_ballpark_factors(self):
+		"""
+		Scrapes the ballpark factors from Rotogrinders.com.
+		"""
+		data = MLBUtilities.fetch_data("rotogrinders.com", "/pages/Ballpark_Factors-49556", True)
+		ballpark_factors_parser = RotogrindersBallparkFactorsParser()
+		ballpark_factors_parser.parse(data)
 
 	def scrape_yesterdays_lineups(self):
 		"""
@@ -142,4 +152,5 @@ if __name__ == '__main__':
 		scraper.scrape_yesterdays_lineups()
 		end = time.time()
 		print "Completed scraping yesterday's lineups in {} minutes".format((end-start)/60)
+	scraper.scrape_ballpark_factors()
 	scraper.process()

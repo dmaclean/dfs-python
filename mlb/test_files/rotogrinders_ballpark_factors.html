@@ -1,0 +1,1697 @@
+<!DOCTYPE html>
+<!--
+         ______        __          ______       _             __                 
+        / __  /____   / /_ ___    / ____/_____ (_)____   ____/ /___   _____ _____
+       / /_/ // __ \ / __// __ \ / / __ / ___// // __ \ / __  // _ \ / ___// ___/
+      / __  // /_/ // /_ / /_/ // /_/ // /   / // / / // /_/ //  __// /   (__  ) 
+     /_/  \_\\____/ \__/ \____/ \____//_/   /_//_/ /_/ \__,_/ \___//_/   /____/  
+                                                         _____ ____   ____ ___    
+                                                        / ___// __ \ / __ `__ \     
+                                                     _ / /__ / /_/ // / / / / /    
+                                                    (_)\___/ \____//_/ /_/ /_/    
+-->
+<html>
+<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Ballpark Factors</title>
+	<link href="/favicon.ico" type="image/x-icon" rel="icon" /><link href="/favicon.ico" type="image/x-icon" rel="shortcut icon" />	
+
+	<link rel="stylesheet" type="text/css" href="http://rical-rg.s3.amazonaws.com/css/layouts_default.css?42.5" />
+	
+	<link rel="stylesheet" type="text/css" href="http://rical-rg.s3.amazonaws.com/css/pages.css?42.5" />	
+	<script type="text/javascript" src="http://rical-global.s3.amazonaws.com/js/jquery-1.4.2.custom.js?42.5"></script>
+
+	<!--<script type="text/javascript" src=""></script>-->
+
+	
+	<script type="text/javascript" src="http://rical-global.s3.amazonaws.com/js/jquery-ui-1.8.5.core.fx.min.js?42.5"></script>
+	<script type="text/javascript" src="http://rical-global.s3.amazonaws.com/js/jquery-ui-1.8.5.widgets.min.js?42.5"></script>
+	<script type="text/javascript" src="http://rical-global.s3.amazonaws.com/js/jquery.fancybox-1.3.1.pack.js?42.5"></script>
+	<script type="text/javascript" src="http://rical-global.s3.amazonaws.com/js/sortable.js?42.5"></script>
+	<script type="text/javascript" src="http://rical-global.s3.amazonaws.com/js/global.js?42.5"></script>
+	<!-- script type="text/javascript" src="http://rical-rg.s3.amazonaws.com/js/H5F/h5f.js?42.5"></script -->
+
+	<script type="text/javascript" src="http://rical-rg.s3.amazonaws.com/js/layouts_default.js?42.5"></script>
+
+	
+	<script type="text/javascript">
+    function _replace_html(html, striplinks){
+
+        if(striplinks=='none'){
+        html = html
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/((http|ftp|https):\/\/[a-z0-9\-_]+(\.[a-z0-9\-_]+)+([a-z0-9_\-\.,@\?^=%&;:\/~\+#]*[a-z0-9_\-@\?^=%&;\/~\+#])?)/ig, '<a href="$1" target="_blank">$1</a>')
+        }
+        html = html
+                        .replace(/(^|["?'?(]|\s)(Fan ?Duel|FD)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://partners.fanduel.com/processing/clickthrgh.asp?btag=a_282b_432" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(DK|Draft ?Kings)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://partners.draftkings.com/aff_c?offer_id=18&aff_id=2" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(D\$|Draft ?Street|DS)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://www.draftstreet.com?r=grinders&pid=635" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(Draft ?Day|DD)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://www.draftday.com/?affiliateRefCode=RotoGrinders" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(Star ?Street|SS)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="https://www.starstreet.com/?invite_code=RotoGrinders" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(Fantasy ?Feud|Fantasy ?Fued|Feud|Fued|FF)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://www.fantasyfeud.com/l/2013-nfl-grinders/?aid=2&subid=x&referral_code=Grinders&cid=1" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(FTD|Fan ?Throw ?Down|Throwdown)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="https://fanthrowdown.com/?user=RotoGrinders" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(SFL|Star ?Fantasy|Star ?Fantasy ?Leagues)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="https://www.starfantasyleagues.com/?referral=RotoGrinders " target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(StatClash|Stat ?Clash|SC)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="https://statclash.com/account/register/grinders" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(Sports ?Tradex|Tradex|SportsTradex)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="https://sportstradex.com/?friend_code=GRINDERS" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(Fanium|FE|Fantasy ?Elite)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://rg2.fantasyelite.com/" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(Fanex)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://fanex.com" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(ballr)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://go.ballr.com/aff_c?offer_id=5&aff_id=1017" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(FantasyAces|Fantasy ?Aces|FA)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://fantasyaces.com/r/RotoGrinders/" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(SZ|Skyll|Skyll ?Zone)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://www.SKYLLZONE.com?marketingid=501001" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(Draft ?Team|DT|Draftteam)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://www.draftteam.com" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(DailyMVP|Daily ?MVP)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="http://www.dailymvp.com" target="_blank">$2</a>$3')
+                        .replace(/(^|["?'?(]|\s)(WD|War ?Draft|WarDraft)($|["'??),!\?:]|\.+|\s)/ig, '$1<a href="https://www.wardraft.com/crc/0/d64157f04c9085485be77b64fdc08358c35ce389" target="_blank">$2</a>$3')
+            
+            .replace(/"<``>/g, '"http');
+
+        return html;
+    }
+
+    (function($){
+        $.fn.linkify = function() {
+                this.each(function() {
+                var childNodes = this.childNodes;
+                var i = childNodes.length;
+
+                while(i--) {
+                    var n = childNodes[i];
+
+                    if (n.nodeType == 3) {
+                        var html = n.nodeValue;
+
+                        if (html.length > 1 && /\S/.test(html)) {
+                            var pre = html;
+
+                            html = _replace_html(pre,"none");
+
+                            $(n).after(html).remove();
+                        }
+                    } else if (n.nodeType == 1 && !/^(a|button|textarea)$/i.test(n.tagName)) {
+                        $(n).linkify();
+                    }
+                }
+            });
+        };
+    })(jQuery);
+</script>
+
+	<!--[if IE 7]><link rel="stylesheet" type="text/css" href="http://rical-rg.s3.amazonaws.com/css/ie7.css?42.5" /><![endif]-->
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	
+		
+	
+	<link rel="alternate" type="application/rss+xml" title="Articles RSS Feed" href="http://rotogrinders.com/articles/index.rss">
+	<link rel="alternate" type="application/rss+xml" title="Podcasts RSS Feed" href="http://rotogrinders.com/podcasts/feed.rss">
+
+	 
+</head>
+
+<body id="pages" class="view 49556 page-49556 alt">
+	<script src="http://rical-global.s3.amazonaws.com/js/modernizr-1.1.min.js?42.5"></script>
+	<div id="user-meta">
+		<input type="hidden" id="user-meta-id" value="23229" />
+		<input type="hidden" id="user-meta-username" value="dmaclean" />
+		<input type="hidden" id="user-meta-facebook-id" value="" />
+	</div>
+
+	<!--<div class="hidden">-->
+							<!--</div>-->
+		<header id="layout-header">
+	<div id="logo-and-banner">
+		<h2 id="logo-layout" class="logo"><a href="/">Roto Grinders</a></h2>
+				<div id="main-banner">
+			<a href="/lessons/GrindersU_Introduction_Daily_Fantasy_Lessons-177082" class="advert-link"><img src="http://rical-rg.s3.amazonaws.com/ad/20140205_grindersu_728x90.jpg?42.5" class="advert-img" width="728" height="90" /></a>		</div>
+			</div>
+</header>
+	<div id="wrapper">
+		<nav id="mainnav">
+	<div id="first-row" class="top-level-nav">
+		<ul class="nav">
+		    <li id="mainnav-home" class=""><a href="/">Home</a></li>
+		    <li id="mainnav-blogs" class=""><a href="/fantasyblogs">Blogs</a></li>
+			<li id="mainnav-articles" class="has-submenu"><a href="/articles">Articles</a></li>
+		    <li id="mainnav-reviews" class="has-submenu"><a href="/reviews">Reviews</a></li>
+		    <li id="mainnav-podcasts" class=""><a href="/podcasts">Podcasts</a></li>
+		    <li id="mainnav-grindersu" class=""><a href="/lessons/GrindersU_Introduction_Daily_Fantasy_Lessons-177082">GrindersU</a></li>
+				    <li id="mainnav-videos" class=""><a class="" href="/live">GrindersLive</a></li>
+		</ul>
+		<ul id="login-nav" class="nav">
+		   					<li id="mainnav-user" class="has-submenu"><a href="/profiles/dmaclean"><em id="loggedin-username">dmaclean</em></a></li>
+					</ul>
+	</div>
+	<div id="first-row-drawer" class="drawer">
+		<ul id="submenu-user" class="submenu nav">
+			<li><a href="/profiles/dmaclean">Profile</a></li>
+			<li><a href="/users/logout">Sign Out</a></li>
+		</ul>
+
+		<ul id="submenu-articles" class="submenu nav">
+		    <li	class=""><a href="/articles/index">Main</a></li>
+		    <li	class=""><a href="/articles/index/news">News</a></li>
+		    <li	class=""><a href="/articles/index/promotions">Promotions</a></li>
+		    <li	class=""><a href="/articles/index/strategy">Strategy</a></li>
+		    <li	class=""><a href="/pages/RotoGrinders_Championship_Coverage-100358">Championship Coverage</a></li>
+		    <li	class=""><a href="/articles/index/interviews">Interviews</a></li>
+		     <li class=""><a href="/reviews/FanDuel_Promocode-115">Fanduel Promo Code</a></li>
+		    <li	class=""><a href="/reviews/DraftKings-46814">DraftKings Promo Code</a></li>
+		</ul>
+		
+		<ul id="submenu-reviews" class="submenu nav">
+									
+												<li class=""><a href="/reviews/FanDuel_Promocode-115"><img src="/img/sites/2/icon_16.png?1328741534" width="16" height="16" class="site-icon sideid-2" title="FanDuel" alt="FanDuel" /> FanDuel</a></li>
+																				<li class=""><a href="/reviews/DraftKings-46814"><img src="/img/sites/20/icon_16.png?1339697206" width="16" height="16" class="site-icon sideid-20" title="DraftKings" alt="DraftKings" /> DraftKings</a></li>
+																				<li class=""><a href="/reviews/DraftStreet-1151"><img src="/img/sites/9/icon_16.png?1328741534" width="16" height="16" class="site-icon sideid-9" title="DraftStreet" alt="DraftStreet" /> DraftStreet</a></li>
+																				<li class=""><a href="/reviews/DraftDay_Review-12991"><img src="/img/sites/15/icon_16.png?1328741534" width="16" height="16" class="site-icon sideid-15" title="DraftDay" alt="DraftDay" /> DraftDay</a></li>
+																				<li class=""><a href="/reviews/StarStreet-35703"><img src="/img/sites/18/icon_16.png?1348530355" width="16" height="16" class="site-icon sideid-18" title="StarStreet" alt="StarStreet" /> StarStreet</a></li>
+																				<li class=""><a href="/reviews/Fantasy_Feud_Recruiting_Code-38218"><img src="/img/sites/19/icon_16.png?1332954189" width="16" height="16" class="site-icon sideid-19" title="FantasyFeud" alt="FantasyFeud" /> FantasyFeud</a></li>
+																									<li class=""><a href="/reviews/FanThrowDown_Review-117343"><img src="/img/sites/24/icon_16.png?1360274435" width="16" height="16" class="site-icon sideid-24" title="FanThrowDown" alt="FanThrowDown" /> FanThrowDown</a></li>
+																				<li class=""><a href="/reviews/index/">See All</a></li>
+							</ul>
+	</div>
+	<div id="second-row" class="top-level-nav">
+		<ul class="nav">
+		    <li id="mainnav-dailyresearch" class='dailyresearch-box-image has-submenu' ><a href="/sites/offers/FanDuel/Baseball">Daily Research</a></li>	
+		    <li id="mainnav-forums" class=""><a href="/threads">Forums</a></li>
+		    <li id="mainnav-rankings" class="has-submenu"><a href="/rankings">Rankings</a></li>
+							<li id="mainnav-lineups" class=""><a href="/lineups">Lineups</a></li>
+					    <li id="mainnav-incentives" class=""><a href="/incentives">Incentives</a></li>
+		</ul>
+		<div id="mainnav-search">
+			<form id="mainnav-player-search" style="width:150px;">
+				<div class="fake-input" style="width:150px;">
+					<input type="hidden" name="player-slug" id="ds-player-slug" value="" />
+					<input type="text" name="player-name" placeholder="Player Search" class="player-autocomplete" id="ds-search-player" value="" />
+					<button class="button" type="submit">Go</button>
+				</div>
+			</form>
+			<form id="mainnav-site-player-search" action="/site_players/search" method="get" style="width:150px;">
+				<div class="fake-input" style="width:150px;">
+					<input type="text" name="player_name" placeholder="Opponent Search" />
+					<button type="submit">search</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div id="second-row-drawer" class="drawer">
+		
+		
+<div id="daily-research" class="">
+	<nav id='daily-research-nav'>
+		<span id="image-preloader" class="hidden"></span>
+		
+		
+		<div id="daily-research-sites" class="filter-list">
+		
+<ul class="nav-list">
+<li class="active" ><a href="/sites/offers/FanDuel/Baseball" id="siteid-2" class="active"><img src="/img/sites/2/icon_16.png?1328741534" width="16" height="16" class="site-icon sideid-2" title="FanDuel" alt="FanDuel" /> FanDuel</a></li><li ><a href="/sites/offers/DraftKings/Baseball" id="siteid-20"><img src="/img/sites/20/icon_16.png?1339697206" width="16" height="16" class="site-icon sideid-20" title="DraftKings" alt="DraftKings" /> DraftKings</a></li><li ><a href="/sites/offers/DraftStreet/Baseball" id="siteid-9"><img src="/img/sites/9/icon_16.png?1328741534" width="16" height="16" class="site-icon sideid-9" title="DraftStreet" alt="DraftStreet" /> DraftStreet</a></li><li ><a href="/sites/offers/DraftDay/Baseball" id="siteid-15"><img src="/img/sites/15/icon_16.png?1328741534" width="16" height="16" class="site-icon sideid-15" title="DraftDay" alt="DraftDay" /> DraftDay</a></li><li ><a href="/sites/offers/FantasyFeud/Baseball" id="siteid-19"><img src="/img/sites/19/icon_16.png?1332954189" width="16" height="16" class="site-icon sideid-19" title="FantasyFeud" alt="FantasyFeud" /> FantasyFeud</a></li><li ><a href="/sites/offers/StarStreet/Baseball" id="siteid-18"><img src="/img/sites/18/icon_16.png?1348530355" width="16" height="16" class="site-icon sideid-18" title="StarStreet" alt="StarStreet" /> StarStreet</a></li><li ><a href="/sites/offers/FanThrowDown/Baseball" id="siteid-24"><img src="/img/sites/24/icon_16.png?1360274435" width="16" height="16" class="site-icon sideid-24" title="FanThrowDown" alt="FanThrowDown" /> FanThrowDown</a></li></ul>
+	
+	</div>
+		
+		<div id="daily-research-sports" class="filter-list">
+		
+<ul class="nav-list">
+<li class="active" ><a href="/sites/offers/FanDuel/Baseball" id="sportid-2" class="active"><span class="baseball sport-icon"></span>Baseball</a></li><li ><a href="/sites/offers/FanDuel/Football" id="sportid-1"><span class="football sport-icon"></span>Football</a></li><li ><a href="/sites/offers/FanDuel/Basketball" id="sportid-3"><span class="basketball sport-icon"></span>Basketball</a></li><li ><a href="/sites/offers/FanDuel/Hockey" id="sportid-4"><span class="hockey sport-icon"></span>Hockey</a></li><li ><a href="/sites/offers/FanDuel/CFB" id="sportid-7"><span class="CFB sport-icon"></span>CFB</a></li><li ><a href="/sites/offers/FanDuel/CBB" id="sportid-8"><span class="CBB sport-icon"></span>CBB</a></li></ul>
+	
+	</div>
+	</nav>
+	<div id="daily-research-drawer" class="alt drawer-menu">
+		<div id="daily-research-results-container" class="grid-10-2">
+			<div id="daily-research-results" class="column-3">
+				<div id="daily-research-results-holder">
+					
+
+	
+<div id="special-ad">
+    <div id="gold-advice">
+
+    <p>Gold Banner Buttons are for FanDuel Incentives Members. &nbsp<strong> Sign Up Instructions</strong></p>
+            <div class="incentives"></div>
+    </div>
+
+    <div class="incentive-box" style="display:none;">
+    <div class="content">
+    <p class="access-text">Gain access to FanDuel Incentives by following these simple steps:</p>	
+    <ul>
+        <li>
+            <span class="number">1</span>
+            <span class="descrip">
+            <a href="http://partners.fanduel.com/processing/clickthrgh.asp?btag=a_282b_432">Click through this link</a> to create your FanDuel account.
+			NOTE: This option is for new accounts only.  If you already have a  FanDuel Account you can <a href="/incentives"> purchase access to Grinders Incentives through Paypal.</a>
+            </span>
+        </li>
+        <li>
+            <span class="number">2</span>
+            <span class="descrip">Make a deposit.
+            </span>
+        </li>
+        <li>
+            <span class="number">3</span>
+            <span class="descrip">Be sure your FanDuel Screen Name is listed in your Rotogrinders Profile. When we see your FanDuel username show up in our referral reports we will grant you access to FanDuel incentives.
+            </span>
+        </li>
+    </ul>
+    <p>It's that simple. Feel free to email support as soon as you make your first deposit to speed up the process.</p>
+    <!--Content Here--></div>
+    </div>
+</div>
+
+
+<div id="daily-research-boxes">
+
+<ul>
+
+	        
+        <li id="dailyOffers"><a href="/lineups/index/Baseball/FanDuel" class="dLineups"><span>Daily Lineups & Weather </span></a></li>
+        <li id="dailyOffers"><a href="/projected_stats/index/FanDuel/Baseball" class="playerProjections"><span>Player Projections</span></a> <a href="/projected_stats/index/FanDuel/Baseball" class="incentives">Incentives</a></li>
+       				<li id="dailyOffers"><a href="/pages/FanDuel_MLB_STLCardinal84_s_Head_to_Head_50_50_Picks-278095" class="grindDown"><span>STLCardinals84's Head2Head Picks</span></a><a href="/pages/FanDuel_MLB_STLCardinal84_s_Head_to_Head_50_50_Picks-278095" class="incentives">Incentives</a></li>
+							<li id="dailyOffers"><a href="/pages/FanDuel_MLB_Pepsi7_s_Tourney_GPP_Picks-262242" class="grindDown"><span>Pepsi7's Tourney Picks</span></a><a href="/pages/FanDuel_MLB_Pepsi7_s_Tourney_GPP_Picks-262242" class="incentives">Incentives</a></li>
+							<li id="dailyOffers"><a href="/pages/FanDuel_MLB_CrackMonkey83_s_Expert_Picks-269146" class="grindDown"><span>CrackMonkey83's Expert Picks</span></a><a href="/pages/FanDuel_MLB_CrackMonkey83_s_Expert_Picks-269146" class="incentives">Incentives</a></li>
+							<li id="dailyOffers"><a href="/pages/FanDuel_MLB_Notorious_Top_Stacks-262243" class="notoriousTopStacks"><span>Notorious' Top Stacks</span></a><a href="/pages/FanDuel_MLB_Notorious_Top_Stacks-262243" class="incentives">Incentives</a></li>
+		
+					<li id="dailyOffers"><a href="/pages/Expert_Consensus_Rankings_FanDuel-252141" class="weeklyTopTen"><span>Expert Consensus Rankings</span></a> <a href="/pages/Expert_Consensus_Rankings_FanDuel-252141" class="incentives">Incentives</a></li>
+		
+		<li id="dailyOffers"><a href="/split_stats/index/Baseball/Pitcher" class="splitTool"><span>MLB Splits</span></a></li>
+		<li id="dailyOffers"><a href="/pages/Daily_MLB_Pitcher_Analysis-138128" class="PvB"><span>Daily SP Hub</span></a></li>
+		<li id="dailyOffers"><a href="/pages/Hot_Streak_Hitters-56970" class="hotHitters"><span>Daily Batter Hub</span></a></li>
+					<li id="dailyOffers"><a href="/pages/MLB_Bargain_Bin_Ballers_FanDuel-252130" class="bargainBin"><span>Bargain Bin Ballers</span></a><a href="/pages/MLB_Bargain_Bin_Ballers_FanDuel-252130" class="incentives">Incentives</a></li>
+				<li id="dailyOffers"><a href="/pages/expert_chat" class="expertChat"><span>Expert Chat: Notorious</span></a><a href="/pages/expert_chat" class="incentives">Incentives</a></li>
+		        	<li id="dailyOffers"><a href="/salaries/projected/FanDuel/Baseball" class="dProjectedLineup"><span>Algorithm-Projected Lineup</span></a></li>
+				<li id="dailyOffers"><a href="/pages/Lineup_Email_Alerts_MLB-252004" class="lineupsEmailAlerts"><span>Lineup Email Alerts</span></a><a href="" class="incentives">Incentives</a></li>
+		<li id="dailyOffers"><a href="/pages/Vegas_Odds_and_Lines-49366" class="vegasOdds"><span>Vegas Odds and Lines</span></a></li>
+		<li id="dailyOffers"><a href="/pages/MLB_Market_Watch_Tool-127806" class="marketWatch"><span>Market Watch</span></a></li>
+		<li id="dailyOffers"><a href="/pages/Ballpark_Factors-49556" class="ballParkFactors"><span>Ballpark Factors</span></a></li>
+		<li id="dailyOffers"><a href="/pages/MLB_Player_Stats_Table_of_Contents-264478" class="playerStatsMLB"><span>Player Stats, Adv. Stats, & Splits</span></a></li>
+        <li id="dailyOffers"><a href="/pages/MLB_Player_Stats_Table_of_Contents-264478#sv-TeamStats" class="teamStatsMLB"><span>Team Stats & Splits</span></a></li>
+        <li id="dailyOffers"><a href="/pages/MLB_Player_Stats_Table_of_Contents-264478#sv-TeamStats" class="closeChartMLB"><span>The Bullpen</span></a></li>
+        <li id="dailyOffers"><a href="/pages/MLB_Scoring_Systems_By_SIte-59367" class="siteScoring"><span>Site Scoring Comparison</span></a></li>
+        <li id="dailyOffers"><a href="/pages/RotoGrinders_Daily_Fantasy_Browser_Extensions-245335" class="browserExtensions"><span>Browser Extensions</span></a></li>
+       				<li id="dailyOffers"><a href="/pages/Daily_Fantasy_Bankroll_Tracking_FanDuel_Bankroll_Spreadsheet-158034" class="bankrollTracker"><span>Bankroll Tracker</span></a></li>
+		        <li id="dailyOffers"><a href="/articles/Daily_Fantasy_Strategy_Vault-17113" class="strategyArchive"><span>Strategy Vault</span></a></li>
+
+    
+
+
+	
+	</ul>
+
+</div>
+
+				</div>
+				<div id="daily-research-results-mask">
+					<div id="daily-research-results-mask-spinner"></div>
+				</div>
+			</div>
+		</div>
+		<div class="clearer"></div>
+	</div>
+</div>
+
+
+		<ul id="submenu-threads" class="submenu nav navbar">
+
+			
+          <li class=""><a href="/threads/index/all">Main</a></li>
+
+    
+
+
+   
+
+    <li class="dropdown has-submenu">
+      <a class="show-dropdown" href="#">By Sport</a>
+        <ul class="dropdown-menu">
+                     
+          <li class="">
+            <a class="item" href="/threads/index/nfl"><span class="football sport-icon">NFL</a>
+          </li>      
+                     
+          <li class="">
+            <a class="item" href="/threads/index/mlb"><span class="baseball sport-icon"></span>MLB</a>
+          </li>      
+                     
+          <li class="">
+            <a class="item" href="/threads/index/nba"><span class="basketball sport-icon">NBA</a>
+          </li>      
+                     
+          <li class="">
+            <a class="item" href="/threads/index/cfb"><span class="football sport-icon">CFB</a>
+          </li>      
+                     
+          <li class="">
+            <a class="item" href="/threads/index/cbb"><span class="basketball sport-icon"></span>CBB</a>
+          </li>      
+                     
+          <li class="">
+            <a class="item" href="/threads/index/nhl"><span class="hockey sport-icon"></span>NHL</a>
+          </li>      
+                     
+          <li class="">
+            <a class="item" href="/threads/index/pga"><span class="golf sport-icon"></span>PGA</a>
+          </li>      
+          
+        </ul>    
+    </li>
+    
+
+
+          <li class=""><a href="/threads/index/strategy">Strategy</a></li>
+
+    
+
+
+          <li class=""><a href="/threads/index/industry">Industry</a></li>
+
+    
+
+
+          <li class=""><a href="/threads/index/bankroll">Bankroll</a></li>
+
+    
+
+
+          <li class=""><a href="/threads/index/tools">Tools</a></li>
+
+    
+
+
+          <li class=""><a href="/threads/index/rsd">R.S.D.</a></li>
+
+    
+
+
+          <li class=""><a href="/threads/index/support">Support</a></li>
+
+    
+
+
+          <li class=""><a href="/threads/index/off_topic">Off Topic</a></li>
+
+    
+
+    
+
+        </ul>
+
+		<ul id="submenu-rankings" class="submenu nav">
+			<li class=""><a href="/rankings/index/grinder">Grinder Rankings</a></li>
+			<li class=""><a href="/rankings/index/annual">TPOY</a></li>
+			<li class=""><a href="/rankings/index/monthly">Monthly GLB</a></li>
+			<li class=""><a href="/rankings/index/seasonal/all/Baseball">Seasonal GLB</a></li>
+			<li class=""><a href="/pages/RotoGrinders_Rankings_FAQ-158">FAQ</a></li>
+		</ul>
+
+		<ul id="submenu-lineups" class="submenu nav">
+			<li class=""><span class="football sport-icon"></span><a style="display:inline-block;" href="/lineups/index/Football">Football</a></li>
+			<li class=""><span class="basketball sport-icon"></span><a style="display:inline-block;" href="/lineups/index/Basketball">Basketball</a></li>
+			<li class=""><span class="hockey sport-icon"></span><a style="display:inline-block;" href="/lineups/index/Hockey">Hockey</a></li>
+			<li class=""><span class="baseball sport-icon"></span><a style="display:inline-block;" href="/lineups">Baseball</a></li>
+        </ul>
+
+	</div>
+</nav>
+
+
+		
+
+		
+				
+		        
+		<div id="middle">
+												<div id="main-section" >
+									<section id="main-content" >
+						
+
+
+	<article id="main-article" class="post">
+		
+
+<!--<p class="by-line">By </p>-->
+
+	<h1>Ballpark Factors</h1>
+
+	<p>The following table takes a look at stats for all actively played-in Stadiums. The parks are sorted by HRs per AB for Left <strong><span class="caps">AND</span></strong> Right-handedness ratings to help you adjust your daily selections based on where they are playing that day. The higher the percentage, the better situation it is for your hitters (depending on their handedness). Good luck!</p>
+
+	<p><strong><span class="caps">STATS</span> <span class="caps">BELOW</span> <span class="caps">INCLUDE</span> 2013 <span class="caps">AND</span> 2014 <span class="caps">FIGURES</span> <span class="caps">COMBINED</span></strong></p>
+
+	<h3><strong><span class="caps">OVERALL</span> <span class="caps">BALLPARK</span> <span class="caps">FACTORS</span></strong>																						</h3>
+
+	<p><em><strong>Tables are sortable. Click any header to sort by that category!</strong></em>																	</p>
+
+	<table class="sortable">
+		<tr>
+			<th style="text-align:center;">	Ballpark	</th>
+			<th style="text-align:center;">	Team	</th>
+			<th style="text-align:center;">	<span class="caps">RUNS</span>	</th>
+			<th style="text-align:center;">	HR	</th>
+			<th style="text-align:center;">	<span class="caps">HITS</span>	</th>
+			<th style="text-align:center;">	2B	</th>
+			<th style="text-align:center;">	3B	</th>
+			<th style="text-align:center;">	BB	</th>
+			<th style="text-align:center;">	<span class="caps">LHB</span>	</th>
+			<th style="text-align:center;">	<span class="caps">RHB</span>	</th>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Chase Field	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">ARI</span>	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.989	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.962	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.965	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.046	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.258	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	1.001	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.986	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.047	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Turner Field	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">ATL</span>	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.951	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.921	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.991	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.940	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.110	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.936	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.009	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.922	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Camden Yards	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">BAL</span>	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.997	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.172	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.975	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.846	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.643	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.988	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.069	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.020	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Fenway Park	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">BOS</span>	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.020	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.799	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.024	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.297	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.497	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	1.011	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.041	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.062	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Wrigley Field	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">CHC</span>	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.188	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.138	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.087	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.169	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.879	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.062	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.024	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.008	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	U.S. Cellular Field	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">CHW</span>	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.001	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.162	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.946	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.769	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.752	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.197	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.018	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.979	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Great American Park	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">CIN</span>	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.008	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.490	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.980	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.085	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.792	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.987	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.044	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.953	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Progressive Field	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">CLE</span>	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.925	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.036	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.982	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.088	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.604	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.903	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.000	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.990	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Coors Field	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">COL</span>	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.308	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.223	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.191	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.112	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.537	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.015	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.075	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.155	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Comerica Park	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">DET</span>	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.095	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.061	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.034	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	1.006	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.661	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.050	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.006	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.089	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Minute Maid Park	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">HOU</span>	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.110	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.164	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.027	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.940	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.810	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.087	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.039	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.025	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Kauffman Stadium	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">KCR</span>	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.102	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.868	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.046	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.109	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.485	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.020	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.996	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.977	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Angel Stadium	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">LAA</span>	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.014	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.915	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.041	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.960	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.121	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.994	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.984	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.064	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Dodger Stadium	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">LAD</span>	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.896	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.053	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.954	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.983	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.471	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.822	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.966	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.961	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Marlins Park	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">MIA</span>	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.051	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.670	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.018	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.182	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.378	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.996	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.937	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.954	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Miller Park	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">MIL</span>	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.024	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.171	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.016	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.934	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.896	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.076	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.023	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.003	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Target Field	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">MIN</span>	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.009	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.831	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.006	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.076	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.980	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.906	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.998	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.024	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Citi Field	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">NYM</span>	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.855	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.061	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.895	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.877	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.709	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.059	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.903	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.950	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Yankee Stadium	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">NYY</span>	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.048	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.181	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.052	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.942	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.654	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.022	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.036	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.015	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	O.co Coliseum	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">OAK</span>	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.866	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.847	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.967	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.059	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.294	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.036	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.947	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.983	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Citizens Bank Park	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">PHI</span>	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.064	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.480	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.973	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.008	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.041	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.049	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.032	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.017	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">PNC</span> Park	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">PIT</span>	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.941	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.675	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.027	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.894	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.906	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.957	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.928	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.941	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Petco Park	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">SDP</span>	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.860	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.983	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.915	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.796	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.113	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.027	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.968	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.912	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	AT&amp;T Park	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">SFG</span>	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.864	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.739	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.955	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.025	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	2.221	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.065	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.993	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.952	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Safeco Field	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">SEA</span>	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.967	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.933	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.984	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.044	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.562	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.938	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.944	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.985	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Busch Stadium	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">STL</span>	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.949	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.869	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.958	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.929	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.973	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.916	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.997	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.943	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Tropicana Field	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">TBR</span>	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.971	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.015	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.973	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.911	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.482	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.972	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.002	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.974	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Rangers Ballpark	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">TEX</span>	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.988	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.890	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.980	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.861	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.145	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.063	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.994	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.015	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Rogers Centre	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">TOR</span>	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.137	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.387	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.034	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.434	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.653	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.047	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.076	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.088	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Nationals Park	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">WSN</span>	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.964	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.737	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.062	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.011	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.539	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.973	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.964	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.992	</td>
+		</tr>
+	</table>
+
+	<h3><strong><span class="caps">LEFT</span> <span class="caps">HANDED</span> <span class="caps">BATTERS</span> <span class="caps">BALLPARK</span> <span class="caps">FACTORS</span></strong>																						</h3>
+
+	<table class="sortable">
+		<tr>
+			<th style="text-align:center;">	Ballpark	</th>
+			<th style="text-align:center;">	Team	</th>
+			<th style="text-align:center;">	<span class="caps">SPLIT</span>	</th>
+			<th style="text-align:center;">	<span class="caps">AVG</span>	</th>
+			<th style="text-align:center;">	<span class="caps">OBP</span>	</th>
+			<th style="text-align:center;">	<span class="caps">SLG</span>	</th>
+			<th style="text-align:center;">	<span class="caps">OPS</span>	</th>
+			<th style="text-align:center;">	HR %	</th>
+			<th style="text-align:center;">	TB/H	</th>
+			<th style="text-align:center;">	XBH %	</th>
+			<th style="text-align:center;">	<span class="caps">LHB</span>-Rtg	</th>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Chase Field	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">ARI</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">LEFT</span>	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.254	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.314	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.393	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.708	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	2.52%	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	1.55	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	8.23%	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.99	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Turner Field	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">ATL</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">LEFT</span>	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.259	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.325	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.399	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.725	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	2.79%	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	1.54	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	8.12%	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.01	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Camden Yards	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">BAL</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">LEFT</span>	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.263	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.328	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.441	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.768	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	4.17%	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.67	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	9.11%	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.07	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Fenway Park	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">BOS</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">LEFT</span>	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.262	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.331	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.417	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.748	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	2.20%	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.59	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	10.14%	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.04	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Wrigley Field	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">CHC</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">LEFT</span>	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.255	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.330	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.405	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.736	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	2.74%	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.59	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	9.03%	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.02	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	U.S. Cellular Field	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">CHW</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">LEFT</span>	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.239	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.327	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.404	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.731	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	3.78%	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.69	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	8.34%	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.02	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Great American Park	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">CIN</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">LEFT</span>	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.243	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.327	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.423	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.750	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	4.09%	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.74	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	9.34%	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.04	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Progressive Field	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">CLE</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">LEFT</span>	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.252	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.323	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.396	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.719	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	2.80%	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.57	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	8.48%	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.00	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Coors Field	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">COL</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">LEFT</span>	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.273	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.333	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.439	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.773	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	2.99%	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.61	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	9.45%	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.08	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Comerica Park	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">DET</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">LEFT</span>	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.259	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.325	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.398	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.723	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	2.66%	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	1.54	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	7.96%	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.01	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Minute Maid Park	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">HOU</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">LEFT</span>	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.253	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.335	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.413	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.747	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	3.34%	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.63	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	8.62%	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.04	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Kauffman Stadium	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">KCR</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">LEFT</span>	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.261	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.319	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.396	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.715	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	2.29%	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	1.51	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	8.18%	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	1.00	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Angel Stadium	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">LAA</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">LEFT</span>	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.252	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.316	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.391	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.707	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	2.62%	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	1.56	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	8.08%	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.98	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Dodger Stadium	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">LAD</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">LEFT</span>	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.255	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.316	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.377	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.694	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	2.33%	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	1.48	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	7.46%	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.97	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Marlins Park	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">MIA</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">LEFT</span>	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.245	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.317	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.357	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.674	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	1.56%	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	1.46	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	7.36%	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.94	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Miller Park	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">MIL</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">LEFT</span>	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.258	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.330	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.405	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.735	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	3.28%	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.57	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	7.78%	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.02	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Target Field	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">MIN</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">LEFT</span>	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.260	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.324	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.393	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.717	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	2.32%	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	1.51	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	8.17%	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	1.00	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Citi Field	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">NYM</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">LEFT</span>	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.223	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.301	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.348	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.649	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	2.42%	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.56	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	7.12%	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.90	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Yankee Stadium	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">NYY</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">LEFT</span>	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.269	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.333	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.412	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.745	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	2.76%	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	1.53	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	8.44%	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.04	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	O.co Coliseum	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">OAK</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">LEFT</span>	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.237	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.313	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.367	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.680	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	2.41%	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	1.55	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	7.68%	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.95	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Citizens Bank Park	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">PHI</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">LEFT</span>	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.259	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.329	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.412	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.741	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	2.86%	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.59	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	8.78%	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.03	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">PNC</span> Park	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">PIT</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">LEFT</span>	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.236	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.315	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.352	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.667	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	2.43%	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	1.50	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	6.49%	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.93	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Petco Park	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">SDP</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">LEFT</span>	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.243	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.314	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.382	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.695	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	2.66%	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.57	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	7.86%	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.97	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	AT&amp;T Park	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">SFG</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">LEFT</span>	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.251	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.316	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.397	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.714	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	3.05%	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.58	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	8.15%	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.99	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Safeco Field	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">SEA</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">LEFT</span>	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.247	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.312	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.366	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.678	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	1.56%	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	1.49	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	7.77%	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.94	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Busch Stadium	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">STL</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">LEFT</span>	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.266	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.329	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.387	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.717	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	1.81%	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	1.45	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	7.91%	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	1.00	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Tropicana Field	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">TBR</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">LEFT</span>	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.247	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.319	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.402	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.720	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	3.10%	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.63	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	8.61%	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.00	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Rangers Ballpark	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">TEX</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">LEFT</span>	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.253	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.321	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.393	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.714	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	2.93%	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	1.55	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	7.61%	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.99	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Rogers Centre	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">TOR</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">LEFT</span>	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.261	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.331	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.442	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.773	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	3.70%	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.69	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	10.16%	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.08	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Nationals Park	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">WSN</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">LEFT</span>	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.254	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.317	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.376	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.693	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	2.17%	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	1.48	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	7.24%	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.96	</td>
+		</tr>
+	</table>
+
+	<h3><strong><span class="caps">RIGHT</span> <span class="caps">HANDED</span> <span class="caps">BATTERS</span> <span class="caps">BALLPARK</span> <span class="caps">FACTORS</span></strong>																						</h3>
+
+	<table class="sortable">
+		<tr>
+			<th style="text-align:center;">	Ballpark	</th>
+			<th style="text-align:center;">	Team	</th>
+			<th style="text-align:center;">	<span class="caps">SPLIT</span>	</th>
+			<th style="text-align:center;">	<span class="caps">AVG</span>	</th>
+			<th style="text-align:center;">	<span class="caps">OBP</span>	</th>
+			<th style="text-align:center;">	<span class="caps">SLG</span>	</th>
+			<th style="text-align:center;">	<span class="caps">OPS</span>	</th>
+			<th style="text-align:center;">	HR %	</th>
+			<th style="text-align:center;">	TB/H	</th>
+			<th style="text-align:center;">	XBH %	</th>
+			<th style="text-align:center;">	<span class="caps">LHB</span>-Rtg	</th>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Chase Field	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">ARI</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">RIGHT</span>	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.261	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.325	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.416	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.741	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	2.87%	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.60	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	9.26%	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.05	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Turner Field	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">ATL</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">RIGHT</span>	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.234	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.292	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.360	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.653	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	2.57%	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	1.54	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	7.07%	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.92	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Camden Yards	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">BAL</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">RIGHT</span>	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.255	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.308	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.415	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.722	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	3.52%	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.62	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	8.65%	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.02	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Fenway Park	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">BOS</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">RIGHT</span>	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.264	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.335	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.417	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.752	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	2.90%	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.57	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	9.20%	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.06	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Wrigley Field	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">CHC</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">RIGHT</span>	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.246	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.308	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.406	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.714	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	3.29%	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.65	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	9.11%	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.01	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	U.S. Cellular Field	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">CHW</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">RIGHT</span>	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.254	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.311	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.383	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.694	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	2.78%	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	1.51	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	7.09%	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.98	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Great American Park	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">CIN</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">RIGHT</span>	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.233	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.292	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.383	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.674	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	3.10%	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.64	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	8.48%	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.95	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Progressive Field	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">CLE</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">RIGHT</span>	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.242	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.312	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.388	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.701	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	2.88%	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.61	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	8.58%	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.99	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Coors Field	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">COL</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">RIGHT</span>	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.301	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.353	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.465	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.818	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	3.06%	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	1.54	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	9.82%	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.16	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Comerica Park	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">DET</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">RIGHT</span>	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.281	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.339	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.432	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.771	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	2.74%	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	1.53	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	8.91%	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.09	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Minute Maid Park	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">HOU</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">RIGHT</span>	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.252	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.315	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.410	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.726	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	3.17%	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.63	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	8.90%	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.03	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Kauffman Stadium	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">KCR</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">RIGHT</span>	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.258	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.316	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.375	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.692	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	2.04%	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	1.46	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	7.11%	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.98	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Angel Stadium	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">LAA</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">RIGHT</span>	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.269	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.337	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.416	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.753	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	2.97%	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	1.55	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	8.24%	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.06	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Dodger Stadium	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">LAD</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">RIGHT</span>	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.244	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.302	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.378	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.680	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	2.66%	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.55	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	7.77%	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.96	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Marlins Park	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">MIA</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">RIGHT</span>	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.246	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.306	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.369	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.676	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	1.86%	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	1.49	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	7.63%	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.95	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Miller Park	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">MIL</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">RIGHT</span>	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.254	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.307	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.403	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.710	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	3.27%	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.59	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	7.81%	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.00	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Target Field	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">MIN</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">RIGHT</span>	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.262	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.322	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.403	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.725	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	2.55%	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	1.53	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	8.60%	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.02	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Citi Field	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">NYM</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">RIGHT</span>	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.239	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.303	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.370	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.673	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	2.66%	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.55	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	7.54%	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.95	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Yankee Stadium	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">NYY</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">RIGHT</span>	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.253	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.312	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.408	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.719	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	3.45%	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.61	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	8.25%	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.02	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	O.co Coliseum	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">OAK</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">RIGHT</span>	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.244	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.303	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.393	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.696	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	3.07%	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.61	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	8.38%	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.98	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Citizens Bank Park	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">PHI</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">RIGHT</span>	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.248	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.308	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.412	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.720	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	3.39%	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.66	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	9.09%	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.02	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">PNC</span> Park	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">PIT</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">RIGHT</span>	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.249	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.311	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.356	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.666	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	1.75%	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	1.43	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	6.68%	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.94	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Petco Park	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">SDP</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">RIGHT</span>	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.232	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.291	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.355	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.646	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	2.45%	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	1.54	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	6.98%	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.91	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	AT&amp;T Park	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">SFG</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">RIGHT</span>	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.232	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.294	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.379	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.674	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	2.97%	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.63	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	8.40%	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.95	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Safeco Field	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">SEA</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">RIGHT</span>	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.250	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.315	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.381	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.697	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	2.37%	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	1.53	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	7.95%	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.98	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Busch Stadium	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">STL</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">RIGHT</span>	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.244	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.305	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.362	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.667	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	2.09%	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	1.49	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	7.24%	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.94	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Tropicana Field	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">TBR</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">RIGHT</span>	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.244	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.314	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	0.376	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.689	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	2.53%	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	1.54	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	7.74%	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.97	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Rangers Ballpark	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">TEX</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">RIGHT</span>	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.261	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.327	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.392	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.719	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	2.51%	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	1.50	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	7.74%	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	1.02	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Rogers Centre	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">TOR</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">RIGHT</span>	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.255	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.323	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.448	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.770	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	4.00%	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.75	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	10.88%	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	1.09	</td>
+		</tr>
+		<tr>
+			<td style="background:white; color:black; text-align:center;">	Nationals Park	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">WSN</span>	</td>
+			<td style="background:white; color:black; text-align:center;">	<span class="caps">RIGHT</span>	</td>
+			<td style="background:#99C2FF; color:black; text-align:center;">	0.261	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.316	</td>
+			<td style="background:#FFFFB2; color:black; text-align:center;">	0.386	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.703	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	2.42%	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	1.48	</td>
+			<td style="background:#FFB2B2; color:black; text-align:center;">	7.54%	</td>
+			<td style="background:#B8FFB8; color:black; text-align:center;">	0.99	</td>
+		</tr>
+	</table>
+
+	<h3><strong>Legend:</strong></h3>
+
+	<p>Rating = (Ballpark <span class="caps">OPS</span>)*(League Average <span class="caps">OPS</span> / 1)<br />
+L/R &#8211; Stats for Left or Right Handed Batters<br />
+<span class="caps">AVG</span> &#8211; Batting Average<br />
+<span class="caps">OBP</span> &#8211; On Base Percentage<br />
+<span class="caps">SLG</span> &#8211; Slugging Percentage<br />
+<span class="caps">OPS</span> &#8211; On Base + Slugging<br />
+HR % &#8211; Home Runs Per AB<br />
+TB/H &#8211; Total Bases Per Hit<br />
+<span class="caps">XBH</span> % &#8211; Extra Base Hits Per AB</p>
+
+	<ul>
+		<li><span style="color:blue;"><strong>Cells in blue indicate ballpark stats where batters have the greatest advantage</strong></span></li>
+		<li><span style="color:green;"><strong>Cells in green indicate ballpark stats where batters are favored over pitchers</strong></span></li>
+		<li><span style="color:goldenrod;"><strong>Cells in yellow indicate ballpark stats where neither pitchers or batters have a real advantage</strong></span></li>
+		<li><span style="color:red;"><strong>Cells in red indicate ballpark stats where pitchers are heavily favored</strong></span></li>
+	</ul>
+	</article>
+		
+
+					</section>
+								<div class="clearer"></div>
+			</div>
+			<div class="clearer"></div>
+		</div>
+		
+		<footer id="main-footer" class="grid-3-9">
+			<div class="column-1">
+				<a id="footer-logo" href="/">Roto Grinders</a>
+			</div>
+			<div class="column-2">
+				<ul class="nav-list">
+					<li><a href="/">Home</a>					</li><li><a href="/pages/view/1140">Contact Us</a>					</li><li><a href="/pages/terms">Terms of Service</a>					</li><li><a href="/pages/privacy_policy">Privacy Policy</a>					</li><li><a href="/threads">Forums</a>					</li><li><a href="/reviews/FanDuel_Promocode-115">FanDuel Review</a>					</li><li><a href="/reviews/DraftStreet-1151">DraftStreet Review</a>					</li> 
+				</ul>
+				<p>RotoGrinders.com is the home of the daily fantasy sports community.  Our content, rankings, member blogs, promotions and forum discussion all cater to the players that like to create a new fantasy team every day of the week.  Our goal is to help all of our members make more money playing daily fantasy sports!</p>
+			</div>
+			
+			<div id="copyright">RotoGrinders.com &copy; 2014 | 10.250.58.19</div>
+		</footer>
+
+		<div style="display:none;">
+			
+<div id="user-login">
+		<h2>Sign In</h2>
+	
+	<form id="UserAddForm" method="post" action="/users/signin"><fieldset style="display:none;"><input type="hidden" name="_method" value="POST" /></fieldset>		<div class="input text"><label for="UserUsername">Username or E-Mail Address</label><input name="data[User][username]" type="text" class="notEmpty" placeholder="Username" maxlength="32" value="" id="UserUsername" /></div>	<div class="input password"><label for="UserPassword">Password</label><input type="password" name="data[User][password]" placeholder="Password" class="notEmpty" value="" id="UserPassword" /></div>	<div class="input checkbox"><input type="hidden" name="data[User][remember]" id="UserRemember_" value="0" /><input type="checkbox" name="data[User][remember]" checked="checked" value="1" id="UserRemember" /><label for="UserRemember">Remember</label></div>	<input type="hidden" name="data[User][redirect]" value="" id="UserRedirect" />
+	<div class="submit">
+		<button type="submit">Sign In</button>
+	</div>
+	</form>	
+	<div id="signup">
+		<a href="/users/forgot_password" id="forgot-password">Forgot your username or password?</a>		Don&#39;t have an account? <a href="/users/signup" class="button call">Sign Up</a> 
+	</div>
+</div>
+		</div>
+	</div>
+	
+	<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-PZPRPW" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-PZPRPW');</script>
+</body>
+</html>
