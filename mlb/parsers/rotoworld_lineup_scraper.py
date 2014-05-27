@@ -1,6 +1,7 @@
 import logging
 import re
 from bs4 import BeautifulSoup
+import time
 from mlb.constants.mlb_constants import MLBConstants
 from mlb.models.lineup_manager import LineupManager
 from mlb.models.name_mapping_manager import NameMappingManager
@@ -26,6 +27,16 @@ class RotoworldLineupScraper:
 
 		matchups = soup.find_all(attrs={"class": "offset1 span15"})
 		for matchup in matchups:
+			# Is this an ad tile?
+			promo_div = matchup.find(attrs={"class": "dlineups-toolpromo-head"})
+			if promo_div is not None:
+				continue
+
+			# Is this game postponed?
+			postponed_div = matchup.find(attrs={"class": "dlineups-postponed"})
+			if postponed_div is not None:
+				continue
+
 			away_team = matchup.find(attrs={"class": "dlineups-topboxleft"}).text
 			home_team = matchup.find(attrs={"class": "span5 dlineups-topboxright"}).text
 
@@ -56,7 +67,8 @@ class RotoworldLineupScraper:
 						"batting_order_position": batting_order_position,
 					    "opposing_pitcher": home_pitcher if lineup == away_lineup else away_pitcher,
 					    "team": home_team if lineup == home_lineup else away_team,
-					    "opponent": home_team if lineup == away_lineup else home_team
+					    "opponent": home_team if lineup == away_lineup else home_team,
+					    "home": True if lineup == home_lineup else False
 					})
 
 					batting_order_position += 1
@@ -66,14 +78,16 @@ class RotoworldLineupScraper:
 				"batting_order_position": -1,
 			    "opposing_pitcher": home_pitcher,
 			    "team": away_team,
-			    "opponent": home_team
+			    "opponent": home_team,
+			    "home": False
 			})
 
 			self.process_player(home_pitcher, {
 				"batting_order_position": -1,
 			    "opposing_pitcher": away_pitcher,
 			    "team": home_team,
-			    "opponent": away_team
+			    "opponent": away_team,
+			    "home": True
 			})
 
 	def process_player(self, player_name, additional_data):
@@ -81,6 +95,8 @@ class RotoworldLineupScraper:
 		Perform data scraping and creation of lineup data for each player.  We also save
 		the player's entry into the day's lineup from here.
 		"""
+		start = time.time()
+
 		player_data = self.player_manager.players_collection.find_one({'name': player_name}, {"player_id": 1})
 		if player_data is None:
 			original_name = player_name
@@ -104,6 +120,10 @@ class RotoworldLineupScraper:
 			"batting_order_position": additional_data["batting_order_position"],
 		    "opposing_pitcher": additional_data["opposing_pitcher"],
 		    "team": additional_data["team"],
-		    "opponent": additional_data["opponent"]
+		    "opponent": additional_data["opponent"],
+		    "home": additional_data["home"]
 		}
 		self.lineup_manager.add_player_to_lineup(escaped_player_id, player_lineup_data)
+
+		end = time.time()
+		print "Processed {} in {} seconds".format(player_id, end-start)
