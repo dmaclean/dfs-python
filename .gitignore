@@ -1,5 +1,6 @@
 *.pyc
 nba/projections/*
+mlb/projections/*
 .idea/*
 regression.csv
 output.txt
