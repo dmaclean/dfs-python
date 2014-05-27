@@ -157,6 +157,9 @@ class MLBConstants:
 	BASE_OUT_RUNS_ADDED = "base_out_runs_added"
 	GAMES_PLAYED = "games_played"
 	TOTAL_BASES = "total_bases"
+	HOME_RUNS_PER_AT_BAT = "home_runs_per_at_bat"
+	TOTAL_BASES_PER_HIT = "total_bases_per_hit"
+	EXTRA_BASE_HITS_PER_AT_BAT = "extra_base_hits_per_at_bat"
 
 	PLAYER_VALUE_BATTING = "player_value_batting"
 	RUNS_BATTING = "runs_batting"
@@ -192,6 +195,8 @@ class MLBConstants:
 	SPLITS_LAST_365 = "Last 365days"
 
 	SPLITS_VS_RHP = "vs RHP"
+	SPLITS_VS_LHP = "vs LHP"
+
 	####################
 	# Ballpark Factors
 	####################
