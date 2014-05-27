@@ -131,21 +131,24 @@ class PlayerSeasonStatsParser:
 				elif i == 26:
 					self.player_data[MLBConstants.STANDARD_PITCHING][season][MLBConstants.ERA_PLUS] = MLBUtilities.resolve_value(td.text, "float")
 				elif i == 27:
-					self.player_data[MLBConstants.STANDARD_PITCHING][season][MLBConstants.WHIP] = MLBUtilities.resolve_value(td.text, "float")
+					self.player_data[MLBConstants.STANDARD_PITCHING][season][MLBConstants.FIP] = MLBUtilities.resolve_value(td.text, "float")
 				elif i == 28:
-					self.player_data[MLBConstants.STANDARD_PITCHING][season][MLBConstants.HITS_PER_9_INNINGS] = MLBUtilities.resolve_value(td.text, "float")
+					self.player_data[MLBConstants.STANDARD_PITCHING][season][MLBConstants.WHIP] = MLBUtilities.resolve_value(td.text, "float")
 				elif i == 29:
-					self.player_data[MLBConstants.STANDARD_PITCHING][season][MLBConstants.HOME_RUNS_PER_9_INNINGS] = MLBUtilities.resolve_value(td.text, "float")
+					self.player_data[MLBConstants.STANDARD_PITCHING][season][MLBConstants.HITS_PER_9_INNINGS] = MLBUtilities.resolve_value(td.text, "float")
 				elif i == 30:
-					self.player_data[MLBConstants.STANDARD_PITCHING][season][MLBConstants.WALKS_PER_9_INNINGS] = MLBUtilities.resolve_value(td.text, "float")
+					self.player_data[MLBConstants.STANDARD_PITCHING][season][MLBConstants.HOME_RUNS_PER_9_INNINGS] = MLBUtilities.resolve_value(td.text, "float")
 				elif i == 31:
-					self.player_data[MLBConstants.STANDARD_PITCHING][season][MLBConstants.STRIKE_OUTS_PER_9_INNINGS] = MLBUtilities.resolve_value(td.text, "float")
+					self.player_data[MLBConstants.STANDARD_PITCHING][season][MLBConstants.WALKS_PER_9_INNINGS] = MLBUtilities.resolve_value(td.text, "float")
 				elif i == 32:
+					self.player_data[MLBConstants.STANDARD_PITCHING][season][MLBConstants.STRIKE_OUTS_PER_9_INNINGS] = MLBUtilities.resolve_value(td.text, "float")
+				elif i == 33:
 					self.player_data[MLBConstants.STANDARD_PITCHING][season][MLBConstants.STRIKE_OUT_TO_WALK_RATIO] = MLBUtilities.resolve_value(td.text, "float")
 
 				i += 1
 
-			self.player_data[MLBConstants.STANDARD_PITCHING][season][MLBConstants.FIP] = self.stat_calculator.calculate_fip(self.player_data[MLBConstants.STANDARD_PITCHING][season])
+			# self.player_data[MLBConstants.STANDARD_PITCHING][season][MLBConstants.FIP] = self.stat_calculator.calculate_fip(self.player_data[MLBConstants.STANDARD_PITCHING][season])
+			self.player_data[MLBConstants.STANDARD_PITCHING][season][MLBConstants.WOBA] = self.stat_calculator.calculate_woba(self.player_data[MLBConstants.STANDARD_PITCHING][season])
 
 	def parse_player_value_pitchers(self, soup):
 		"""
