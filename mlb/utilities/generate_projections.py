@@ -1,0 +1,180 @@
+from datetime import date
+import sys
+from mlb.constants.mlb_constants import MLBConstants
+from mlb.models.lineup_manager import LineupManager
+from mlb.models.player_manager import PlayerManager
+
+__author__ = 'dan'
+
+class ProjectionGenerator:
+	def __init__(self):
+		self.lineup_manager = LineupManager()
+		self.player_manager = PlayerManager()
+		self.game_date = date.today()
+		self.season = str(self.game_date.year)
+
+	def read_cli(self):
+		for arg in sys.argv:
+			pieces = arg.split("=")
+			if pieces[0] == "date":
+				self.game_date = pieces[1]
+				self.season = str(self.game_date.split("-")[0])
+
+	def process(self):
+		players = self.lineup_manager.lineups_collection.find_one({"date": str(self.game_date)}, {"players": 1})
+
+		batter_csv_contents = [["Name", "Position", "Batting Order Position", "wOBA", "wOBA vs Pitcher Type (LH/RH)",
+		                        "OPS vs Pitcher Type (LH/RH)", "OPS", "Plate Appearances vs Pitcher", "Avg vs Pitcher",
+		                        "Hits vs Pitcher", "HRs vs Pitcher"]]
+		pitcher_csv_contents = [["Name", "LH/RH", "FIP", "FIP vs RHB", "FIP vs LHB", "wOBA", "wOBA vs RHB", "wOBA vs LHB",
+		                         "BABIP vs RHB", "BABIP vs LHB", "K/9", "BB/9"]]
+
+		for player in players["players"]:
+			player_lineup_data = players["players"][player]
+			if len(player_lineup_data) == 0:
+				continue
+
+			player_csv_data = []
+
+			escaped_player_id = player.replace("_", ".")
+
+			player_data = self.player_manager.players_collection.find_one({MLBConstants.PLAYER_ID: escaped_player_id}, {MLBConstants.POSITION: 1, MLBConstants.NAME: 1})
+			player_csv_data.append(player_data[MLBConstants.NAME].encode('ascii', errors='ignore'))
+
+			is_batter = player_data[MLBConstants.POSITION] != "Pitcher"
+
+			######################
+			# Player is a batter
+			######################
+			if is_batter:
+				# Retrieve opposing pitcher data
+				opposing_pitcher_data = self.player_manager.players_collection.find_one({MLBConstants.NAME: player_lineup_data["opposing_pitcher"]}, {MLBConstants.PLAYER_ID: 1, MLBConstants.HANDEDNESS_THROWING: 1})
+				batter_data = self.player_manager.players_collection.find_one({MLBConstants.PLAYER_ID: escaped_player_id},
+				                                                              {MLBConstants.POSITION: 1,
+				                                                               MLBConstants.HANDEDNESS_BATTING: 1,
+				                                                               "{}.{}.{}".format(MLBConstants.STANDARD_BATTING, self.season, MLBConstants.WOBA): 1,
+				                                                               "{}.{}.vs RH Starter.{}".format(MLBConstants.BATTER_SPLITS, self.season, MLBConstants.WOBA): 1,
+				                                                               "{}.{}.vs LH Starter.{}".format(MLBConstants.BATTER_SPLITS, self.season, MLBConstants.WOBA): 1,
+				                                                               "{}.{}.{}".format(MLBConstants.STANDARD_BATTING, self.season, MLBConstants.OPS): 1,
+				                                                               "{}.{}.vs RH Starter.{}".format(MLBConstants.BATTER_SPLITS, self.season, MLBConstants.OPS): 1,
+				                                                               "{}.{}.vs LH Starter.{}".format(MLBConstants.BATTER_SPLITS, self.season, MLBConstants.OPS): 1,
+				                                                               MLBConstants.BATTER_VS_PITCHER: 1})
+
+				player_csv_data.append(batter_data[MLBConstants.POSITION].replace(",", "/"))
+				player_csv_data.append(str(player_lineup_data[MLBConstants.BATTING_ORDER_POSITION]))
+				player_csv_data.append(str(batter_data[MLBConstants.STANDARD_BATTING][self.season][MLBConstants.WOBA]))
+
+				if self.season in batter_data[MLBConstants.BATTER_SPLITS]:
+					if opposing_pitcher_data is None or MLBConstants.HANDEDNESS_THROWING not in opposing_pitcher_data:
+						player_csv_data.append("N/A")
+						player_csv_data.append("N/A")
+					elif opposing_pitcher_data[MLBConstants.HANDEDNESS_THROWING] == "Right":
+						player_csv_data.append(str(batter_data[MLBConstants.BATTER_SPLITS][self.season]["vs RH Starter"][MLBConstants.WOBA]))
+						player_csv_data.append(str(batter_data[MLBConstants.BATTER_SPLITS][self.season]["vs RH Starter"][MLBConstants.OPS]))
+					else:
+						player_csv_data.append(str(batter_data[MLBConstants.BATTER_SPLITS][self.season]["vs LH Starter"][MLBConstants.WOBA]))
+						player_csv_data.append(str(batter_data[MLBConstants.BATTER_SPLITS][self.season]["vs LH Starter"][MLBConstants.OPS]))
+				else:
+					player_csv_data.append("N/A")
+					player_csv_data.append("N/A")
+
+				player_csv_data.append(str(batter_data[MLBConstants.STANDARD_BATTING][self.season][MLBConstants.OPS]))
+
+				# BvP
+				if opposing_pitcher_data is not None and opposing_pitcher_data[MLBConstants.PLAYER_ID] in batter_data[MLBConstants.BATTER_VS_PITCHER]:
+					player_csv_data.append(str(batter_data[MLBConstants.BATTER_VS_PITCHER][opposing_pitcher_data[MLBConstants.PLAYER_ID]][MLBConstants.PLATE_APPEARANCES]))
+					player_csv_data.append(str(batter_data[MLBConstants.BATTER_VS_PITCHER][opposing_pitcher_data[MLBConstants.PLAYER_ID]][MLBConstants.BATTING_AVERAGE]))
+					player_csv_data.append(str(batter_data[MLBConstants.BATTER_VS_PITCHER][opposing_pitcher_data[MLBConstants.PLAYER_ID]][MLBConstants.HITS]))
+					player_csv_data.append(str(batter_data[MLBConstants.BATTER_VS_PITCHER][opposing_pitcher_data[MLBConstants.PLAYER_ID]][MLBConstants.HOME_RUNS]))
+				else:
+					player_csv_data.append("N/A")
+					player_csv_data.append("N/A")
+					player_csv_data.append("N/A")
+					player_csv_data.append("N/A")
+
+				print player_csv_data
+				batter_csv_contents.append(player_csv_data)
+
+			#######################
+			# Player is a pitcher
+			#######################
+			else:
+				pitcher_data = self.player_manager.players_collection.find_one({MLBConstants.PLAYER_ID: escaped_player_id},
+				                                                              {MLBConstants.POSITION: 1,
+				                                                               MLBConstants.HANDEDNESS_THROWING: 1,
+				                                                               "{}.{}.{}".format(MLBConstants.STANDARD_PITCHING, self.season, MLBConstants.FIP): 1,
+				                                                               "{}.{}.vs RHB.{}".format(MLBConstants.BATTER_SPLITS, self.season, MLBConstants.FIP): 1,
+				                                                               "{}.{}.vs LHB.{}".format(MLBConstants.BATTER_SPLITS, self.season, MLBConstants.FIP): 1,
+				                                                               "{}.{}.{}".format(MLBConstants.STANDARD_PITCHING, self.season, MLBConstants.WOBA): 1,
+				                                                               "{}.{}.vs RHB.{}".format(MLBConstants.BATTER_SPLITS, self.season, MLBConstants.WOBA): 1,
+				                                                               "{}.{}.vs LHB.{}".format(MLBConstants.BATTER_SPLITS, self.season, MLBConstants.WOBA): 1,
+				                                                               "{}.{}.vs RHB.{}".format(MLBConstants.BATTER_SPLITS, self.season, MLBConstants.BABIP): 1,
+				                                                               "{}.{}.vs LHB.{}".format(MLBConstants.BATTER_SPLITS, self.season, MLBConstants.BABIP): 1,
+				                                                               "{}.{}.{}".format(MLBConstants.STANDARD_PITCHING, self.season, MLBConstants.STRIKE_OUTS_PER_9_INNINGS): 1,
+				                                                               "{}.{}.{}".format(MLBConstants.STANDARD_PITCHING, self.season, MLBConstants.WALKS_PER_9_INNINGS): 1,
+				                                                               MLBConstants.BATTER_VS_PITCHER: 1})
+
+				player_csv_data.append(pitcher_data[MLBConstants.HANDEDNESS_THROWING])
+				player_csv_data.append(str(pitcher_data[MLBConstants.STANDARD_PITCHING][self.season][MLBConstants.FIP]))
+
+				if MLBConstants.BATTER_SPLITS in pitcher_data:
+					player_csv_data.append(str(pitcher_data[MLBConstants.BATTER_SPLITS][self.season]["vs RHB"][MLBConstants.FIP]))
+					player_csv_data.append(str(pitcher_data[MLBConstants.BATTER_SPLITS][self.season]["vs LHB"][MLBConstants.FIP]))
+				else:
+					player_csv_data.append("N/A")
+					player_csv_data.append("N/A")
+
+				if MLBConstants.WOBA in pitcher_data[MLBConstants.STANDARD_PITCHING][self.season]:
+					player_csv_data.append(str(pitcher_data[MLBConstants.STANDARD_PITCHING][self.season][MLBConstants.WOBA]))
+				else:
+					player_csv_data.append("N/A")
+
+				if MLBConstants.BATTER_SPLITS in pitcher_data:
+					player_csv_data.append(str(pitcher_data[MLBConstants.BATTER_SPLITS][self.season]["vs RHB"][MLBConstants.WOBA]))
+					player_csv_data.append(str(pitcher_data[MLBConstants.BATTER_SPLITS][self.season]["vs LHB"][MLBConstants.WOBA]))
+					player_csv_data.append(str(pitcher_data[MLBConstants.BATTER_SPLITS][self.season]["vs RHB"][MLBConstants.BABIP]))
+					player_csv_data.append(str(pitcher_data[MLBConstants.BATTER_SPLITS][self.season]["vs LHB"][MLBConstants.BABIP]))
+				else:
+					player_csv_data.append("N/A")
+					player_csv_data.append("N/A")
+					player_csv_data.append("N/A")
+					player_csv_data.append("N/A")
+
+				player_csv_data.append(str(pitcher_data[MLBConstants.STANDARD_PITCHING][self.season][MLBConstants.STRIKE_OUTS_PER_9_INNINGS]))
+				player_csv_data.append(str(pitcher_data[MLBConstants.STANDARD_PITCHING][self.season][MLBConstants.WALKS_PER_9_INNINGS]))
+
+				# Look for opponents
+				opponents = []
+
+				# for p in players["players"]:
+				# 	pld = players["players"][p]
+				# 	if len(pld) == 0 or pld["opposing_pitcher"] != player_data[MLBConstants.NAME]:
+				# 		continue
+				#
+				# 	opponent = self.player_manager.players_collection.find_one({MLBConstants.PLAYER_ID: p},
+				#                                                               {MLBConstants.POSITION: 1,
+				#                                                                "{}.{}.{}".format(MLBConstants.STANDARD_BATTING, self.season, MLBConstants.WOBA): 1,
+				#                                                                "{}.{}.vs RH Starter.{}".format(MLBConstants.BATTER_SPLITS, self.season, MLBConstants.WOBA): 1,
+				#                                                                "{}.{}.vs LH Starter.{}".format(MLBConstants.BATTER_SPLITS, self.season, MLBConstants.WOBA): 1,
+				#                                                                MLBConstants.BATTER_VS_PITCHER: 1})
+				# 	opponents.append(opponent)
+				#
+				# for o in opponents:
+				# 	pass
+
+				pitcher_csv_contents.append(player_csv_data)
+
+		# Write results out to file
+		pitcher_output = open("../projections/pitchers_{}.csv".format(str(date.today())), "w")
+		batter_output = open("../projections/batters_{}.csv".format(str(date.today())), "w")
+
+		for line in pitcher_csv_contents:
+			pitcher_output.write(",".join(line) + "\n")
+		for line in batter_csv_contents:
+			batter_output.write(",".join(line) + "\n")
+
+
+if __name__ == '__main__':
+	projection_generator = ProjectionGenerator()
+	projection_generator.read_cli()
+	projection_generator.process()
