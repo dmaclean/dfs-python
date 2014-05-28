@@ -79,7 +79,7 @@ class ProjectionGenerator:
 				if self.season in batter_data[MLBConstants.BATTER_SPLITS]:
 					if opposing_pitcher_data is None or MLBConstants.HANDEDNESS_THROWING not in opposing_pitcher_data\
 							or (MLBConstants.SPLITS_VS_LH_STARTER not in batter_data[MLBConstants.BATTER_SPLITS][self.season] and opposing_pitcher_data[MLBConstants.HANDEDNESS_THROWING] == "Left")\
-							or (MLBConstants.SPLITS_VS_RH_STARTER not in batter_data[MLBConstants.BATTER_SPLITS][self.season] and opposing_pitcher_data[MLBConstants.HANDEDNESS_THROWING] == "Right "):
+							or (MLBConstants.SPLITS_VS_RH_STARTER not in batter_data[MLBConstants.BATTER_SPLITS][self.season] and opposing_pitcher_data[MLBConstants.HANDEDNESS_THROWING] == "Right"):
 						player_csv_data.append("N/A")
 						player_csv_data.append("N/A")
 					elif opposing_pitcher_data[MLBConstants.HANDEDNESS_THROWING] == "Right":
