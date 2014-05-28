@@ -197,6 +197,9 @@ class MLBConstants:
 	SPLITS_VS_RHP = "vs RHP"
 	SPLITS_VS_LHP = "vs LHP"
 
+	SPLITS_VS_LH_STARTER = "vs LH Starter"
+	SPLITS_VS_RH_STARTER = "vs RH Starter"
+
 	####################
 	# Ballpark Factors
 	####################
