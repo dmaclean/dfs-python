@@ -51,6 +51,7 @@ class RotoworldLineupScraper:
 			for lineup in [away_lineup, home_lineup]:
 				players = lineup.find_all(href=self.player_regex)
 				batting_order_position = 1
+				position = ""
 				for player in players:
 					player_name = None
 
@@ -58,13 +59,16 @@ class RotoworldLineupScraper:
 					if "title" not in player.attrs:
 						print "{} (Starting pitcher)".format(player.text)
 						player_name = player.text
+						position = "P"
 					# Position player
 					else:
 						print "{}".format(player.text)
 						player_name = player.attrs["title"]
+						position = player.parent.parent.find_all("div", attrs={"class": "dlineups-pos"})[0].text
 
 					self.process_player(player_name, {
 						"batting_order_position": batting_order_position,
+					    MLBConstants.POSITION: position,
 					    "opposing_pitcher": home_pitcher if lineup == away_lineup else away_pitcher,
 					    "team": home_team if lineup == home_lineup else away_team,
 					    "opponent": home_team if lineup == away_lineup else home_team,
@@ -76,6 +80,7 @@ class RotoworldLineupScraper:
 			# Process the pitchers
 			self.process_player(away_pitcher, {
 				"batting_order_position": -1,
+			    MLBConstants.POSITION: "P",
 			    "opposing_pitcher": home_pitcher,
 			    "team": away_team,
 			    "opponent": home_team,
@@ -84,6 +89,7 @@ class RotoworldLineupScraper:
 
 			self.process_player(home_pitcher, {
 				"batting_order_position": -1,
+			    MLBConstants.POSITION: "P",
 			    "opposing_pitcher": away_pitcher,
 			    "team": home_team,
 			    "opponent": away_team,
