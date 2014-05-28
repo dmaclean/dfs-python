@@ -86,3 +86,19 @@ class MLBUtilities:
 
 		#time.sleep(5 + (5 * random.random()))
 		return data
+
+	@staticmethod
+	def map_rg_team_to_rotowire(rg_team):
+		"""
+		Tool to map the team abbrevation used in Rotogrinders to the one used in Rotowire.
+		"""
+		mapping = {
+			"CWS": "CHW",
+			"KC": "KCR",
+		    "SD": "SDP",
+		    "SF": "SFG",
+		    "TB": "TBR",
+		    "WAS": "WSN"
+		}
+
+		return mapping[rg_team] if rg_team in mapping else rg_team

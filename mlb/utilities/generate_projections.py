@@ -1,8 +1,10 @@
 from datetime import date
 import sys
+from pymongo.mongo_client import MongoClient
 from mlb.constants.mlb_constants import MLBConstants
 from mlb.models.lineup_manager import LineupManager
 from mlb.models.player_manager import PlayerManager
+from mlb.utilities.mlb_utilities import MLBUtilities
 
 __author__ = 'dan'
 
@@ -10,6 +12,7 @@ class ProjectionGenerator:
 	def __init__(self):
 		self.lineup_manager = LineupManager()
 		self.player_manager = PlayerManager()
+		self.ballpark_collection = MongoClient('localhost', 27017)[MLBConstants.MONGO_MLB_DB_NAME][MLBConstants.MONGO_MLB_BALLPARK_FACTORS_COLLECTION]
 		self.game_date = date.today()
 		self.season = str(self.game_date.year)
 
@@ -25,9 +28,11 @@ class ProjectionGenerator:
 
 		batter_csv_contents = [["Name", "Position", "Batting Order Position", "wOBA", "wOBA vs Pitcher Type (LH/RH)",
 		                        "OPS vs Pitcher Type (LH/RH)", "OPS", "Plate Appearances vs Pitcher", "Avg vs Pitcher",
-		                        "Hits vs Pitcher", "HRs vs Pitcher"]]
+		                        "Hits vs Pitcher", "HRs vs Pitcher", "Park Runs", "Park HRs"]]
 		pitcher_csv_contents = [["Name", "LH/RH", "FIP", "FIP vs RHB", "FIP vs LHB", "wOBA", "wOBA vs RHB", "wOBA vs LHB",
-		                         "BABIP vs RHB", "BABIP vs LHB", "K/9", "BB/9"]]
+		                         "BABIP vs RHB", "BABIP vs LHB", "K/9", "BB/9", "Park Runs", "Park HRs"]]
+
+		ballpark_data = self.ballpark_collection.find_one({"date": str(self.game_date)})
 
 		for player in players["players"]:
 			player_lineup_data = players["players"][player]
@@ -60,20 +65,29 @@ class ProjectionGenerator:
 				                                                               "{}.{}.vs LH Starter.{}".format(MLBConstants.BATTER_SPLITS, self.season, MLBConstants.OPS): 1,
 				                                                               MLBConstants.BATTER_VS_PITCHER: 1})
 
+				if player_lineup_data["home"]:
+					ballpark_hits = ballpark_data[MLBConstants.BPF_ALL][MLBUtilities.map_rg_team_to_rotowire(player_lineup_data[MLBConstants.TEAM])][MLBConstants.HITS]
+					ballpark_home_runs = ballpark_data[MLBConstants.BPF_ALL][MLBUtilities.map_rg_team_to_rotowire(player_lineup_data[MLBConstants.TEAM])][MLBConstants.HOME_RUNS]
+				else:
+					ballpark_hits = ballpark_data[MLBConstants.BPF_ALL][MLBUtilities.map_rg_team_to_rotowire(player_lineup_data[MLBConstants.OPPONENT])][MLBConstants.HITS]
+					ballpark_home_runs = ballpark_data[MLBConstants.BPF_ALL][MLBUtilities.map_rg_team_to_rotowire(player_lineup_data[MLBConstants.OPPONENT])][MLBConstants.HOME_RUNS]
+
 				player_csv_data.append(batter_data[MLBConstants.POSITION].replace(",", "/"))
 				player_csv_data.append(str(player_lineup_data[MLBConstants.BATTING_ORDER_POSITION]))
 				player_csv_data.append(str(batter_data[MLBConstants.STANDARD_BATTING][self.season][MLBConstants.WOBA]))
 
 				if self.season in batter_data[MLBConstants.BATTER_SPLITS]:
-					if opposing_pitcher_data is None or MLBConstants.HANDEDNESS_THROWING not in opposing_pitcher_data:
+					if opposing_pitcher_data is None or MLBConstants.HANDEDNESS_THROWING not in opposing_pitcher_data\
+							or (MLBConstants.SPLITS_VS_LH_STARTER not in batter_data[MLBConstants.BATTER_SPLITS][self.season] and opposing_pitcher_data[MLBConstants.HANDEDNESS_THROWING] == "Left")\
+							or (MLBConstants.SPLITS_VS_RH_STARTER not in batter_data[MLBConstants.BATTER_SPLITS][self.season] and opposing_pitcher_data[MLBConstants.HANDEDNESS_THROWING] == "Right "):
 						player_csv_data.append("N/A")
 						player_csv_data.append("N/A")
 					elif opposing_pitcher_data[MLBConstants.HANDEDNESS_THROWING] == "Right":
-						player_csv_data.append(str(batter_data[MLBConstants.BATTER_SPLITS][self.season]["vs RH Starter"][MLBConstants.WOBA]))
-						player_csv_data.append(str(batter_data[MLBConstants.BATTER_SPLITS][self.season]["vs RH Starter"][MLBConstants.OPS]))
+						player_csv_data.append(str(batter_data[MLBConstants.BATTER_SPLITS][self.season][MLBConstants.SPLITS_VS_RH_STARTER][MLBConstants.WOBA]))
+						player_csv_data.append(str(batter_data[MLBConstants.BATTER_SPLITS][self.season][MLBConstants.SPLITS_VS_RH_STARTER][MLBConstants.OPS]))
 					else:
-						player_csv_data.append(str(batter_data[MLBConstants.BATTER_SPLITS][self.season]["vs LH Starter"][MLBConstants.WOBA]))
-						player_csv_data.append(str(batter_data[MLBConstants.BATTER_SPLITS][self.season]["vs LH Starter"][MLBConstants.OPS]))
+						player_csv_data.append(str(batter_data[MLBConstants.BATTER_SPLITS][self.season][MLBConstants.SPLITS_VS_LH_STARTER][MLBConstants.WOBA]))
+						player_csv_data.append(str(batter_data[MLBConstants.BATTER_SPLITS][self.season][MLBConstants.SPLITS_VS_LH_STARTER][MLBConstants.OPS]))
 				else:
 					player_csv_data.append("N/A")
 					player_csv_data.append("N/A")
@@ -91,6 +105,10 @@ class ProjectionGenerator:
 					player_csv_data.append("N/A")
 					player_csv_data.append("N/A")
 					player_csv_data.append("N/A")
+
+				# Park factors
+				player_csv_data.append(str(ballpark_hits))
+				player_csv_data.append(str(ballpark_home_runs))
 
 				print player_csv_data
 				batter_csv_contents.append(player_csv_data)
@@ -113,6 +131,13 @@ class ProjectionGenerator:
 				                                                               "{}.{}.{}".format(MLBConstants.STANDARD_PITCHING, self.season, MLBConstants.STRIKE_OUTS_PER_9_INNINGS): 1,
 				                                                               "{}.{}.{}".format(MLBConstants.STANDARD_PITCHING, self.season, MLBConstants.WALKS_PER_9_INNINGS): 1,
 				                                                               MLBConstants.BATTER_VS_PITCHER: 1})
+
+				if player_lineup_data["home"]:
+					ballpark_hits = ballpark_data[MLBConstants.BPF_ALL][MLBUtilities.map_rg_team_to_rotowire(player_lineup_data[MLBConstants.TEAM])][MLBConstants.HITS]
+					ballpark_home_runs = ballpark_data[MLBConstants.BPF_ALL][MLBUtilities.map_rg_team_to_rotowire(player_lineup_data[MLBConstants.TEAM])][MLBConstants.HOME_RUNS]
+				else:
+					ballpark_hits = ballpark_data[MLBConstants.BPF_ALL][MLBUtilities.map_rg_team_to_rotowire(player_lineup_data[MLBConstants.OPPONENT])][MLBConstants.HITS]
+					ballpark_home_runs = ballpark_data[MLBConstants.BPF_ALL][MLBUtilities.map_rg_team_to_rotowire(player_lineup_data[MLBConstants.OPPONENT])][MLBConstants.HOME_RUNS]
 
 				player_csv_data.append(pitcher_data[MLBConstants.HANDEDNESS_THROWING])
 				player_csv_data.append(str(pitcher_data[MLBConstants.STANDARD_PITCHING][self.season][MLBConstants.FIP]))
@@ -142,6 +167,9 @@ class ProjectionGenerator:
 
 				player_csv_data.append(str(pitcher_data[MLBConstants.STANDARD_PITCHING][self.season][MLBConstants.STRIKE_OUTS_PER_9_INNINGS]))
 				player_csv_data.append(str(pitcher_data[MLBConstants.STANDARD_PITCHING][self.season][MLBConstants.WALKS_PER_9_INNINGS]))
+
+				player_csv_data.append(str(ballpark_hits))
+				player_csv_data.append(str(ballpark_home_runs))
 
 				# Look for opponents
 				opponents = []
