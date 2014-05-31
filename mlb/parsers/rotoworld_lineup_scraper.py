@@ -48,6 +48,12 @@ class RotoworldLineupScraper:
 			away_pitcher = pitchers_divs[0].a.text
 			home_pitcher = pitchers_divs[1].a.text
 
+			# Grab the odds
+			odds_div = matchup.find(attrs={"class": "span4 dlineups-odds-bottom"})
+			odds = odds_div.text.replace("Line:", "").split("O/U:")
+			odds[0] = odds[0].strip()
+			odds[1] = odds[1].strip()
+
 			for lineup in [away_lineup, home_lineup]:
 				players = lineup.find_all(href=self.player_regex)
 				batting_order_position = 1
@@ -72,7 +78,9 @@ class RotoworldLineupScraper:
 					    "opposing_pitcher": home_pitcher if lineup == away_lineup else away_pitcher,
 					    "team": home_team if lineup == home_lineup else away_team,
 					    "opponent": home_team if lineup == away_lineup else home_team,
-					    "home": True if lineup == home_lineup else False
+					    "home": True if lineup == home_lineup else False,
+					    MLBConstants.VEGAS_LINE: odds[0],
+					    MLBConstants.OVER_UNDER: odds[1]
 					})
 
 					batting_order_position += 1
@@ -84,7 +92,9 @@ class RotoworldLineupScraper:
 			    "opposing_pitcher": home_pitcher,
 			    "team": away_team,
 			    "opponent": home_team,
-			    "home": False
+			    "home": False,
+			    MLBConstants.VEGAS_LINE: odds[0],
+				MLBConstants.OVER_UNDER: odds[1]
 			})
 
 			self.process_player(home_pitcher, {
@@ -93,7 +103,9 @@ class RotoworldLineupScraper:
 			    "opposing_pitcher": away_pitcher,
 			    "team": home_team,
 			    "opponent": away_team,
-			    "home": True
+			    "home": True,
+			    MLBConstants.VEGAS_LINE: odds[0],
+				MLBConstants.OVER_UNDER: odds[1]
 			})
 
 	def process_player(self, player_name, additional_data):

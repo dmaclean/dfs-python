@@ -208,6 +208,12 @@ class MLBConstants:
 	BPF_VS_LHP = "vs_lhp"
 	BPF_BALLPARK = "ballpark"
 
+	##############
+	# Vegas Odds
+	##############
+	OVER_UNDER = "over_under"
+	VEGAS_LINE = "vegas_line"
+
 	#########
 	# Stats
 	#########

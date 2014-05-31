@@ -26,11 +26,11 @@ class ProjectionGenerator:
 	def process(self):
 		players = self.lineup_manager.lineups_collection.find_one({"date": str(self.game_date)}, {"players": 1})
 
-		batter_csv_contents = [["Name", "Position", "Batting Order Position", "wOBA", "wOBA vs Pitcher Type (LH/RH)",
+		batter_csv_contents = [["Name", "Team", "Opponent", "Position", "Batting Order Position", "wOBA", "wOBA vs Pitcher Type (LH/RH)",
 		                        "OPS vs Pitcher Type (LH/RH)", "OPS", "Plate Appearances vs Pitcher", "Avg vs Pitcher",
-		                        "Hits vs Pitcher", "HRs vs Pitcher", "Park Runs", "Park HRs"]]
-		pitcher_csv_contents = [["Name", "LH/RH", "FIP", "FIP vs RHB", "FIP vs LHB", "wOBA", "wOBA vs RHB", "wOBA vs LHB",
-		                         "BABIP vs RHB", "BABIP vs LHB", "K/9", "BB/9", "Park Runs", "Park HRs"]]
+		                        "Hits vs Pitcher", "HRs vs Pitcher", "Park Runs", "Park HRs", "Vegas Line", "O/U"]]
+		pitcher_csv_contents = [["Name", "Team", "Opponent", "LH/RH", "FIP", "FIP vs RHB", "FIP vs LHB", "wOBA", "wOBA vs RHB", "wOBA vs LHB",
+		                         "BABIP vs RHB", "BABIP vs LHB", "K/9", "BB/9", "Park Runs", "Park HRs", "Vegas Line", "O/U"]]
 
 		ballpark_data = self.ballpark_collection.find_one({"date": str(self.game_date)})
 
@@ -45,6 +45,8 @@ class ProjectionGenerator:
 
 			player_data = self.player_manager.players_collection.find_one({MLBConstants.PLAYER_ID: escaped_player_id}, {MLBConstants.POSITION: 1, MLBConstants.NAME: 1})
 			player_csv_data.append(player_data[MLBConstants.NAME].encode('ascii', errors='ignore'))
+			player_csv_data.append(player_lineup_data[MLBConstants.TEAM])
+			player_csv_data.append(player_lineup_data[MLBConstants.OPPONENT])
 
 			is_batter = player_data[MLBConstants.POSITION] != "Pitcher"
 
@@ -72,7 +74,7 @@ class ProjectionGenerator:
 					ballpark_hits = ballpark_data[MLBConstants.BPF_ALL][MLBUtilities.map_rg_team_to_rotowire(player_lineup_data[MLBConstants.OPPONENT])][MLBConstants.HITS]
 					ballpark_home_runs = ballpark_data[MLBConstants.BPF_ALL][MLBUtilities.map_rg_team_to_rotowire(player_lineup_data[MLBConstants.OPPONENT])][MLBConstants.HOME_RUNS]
 
-				player_csv_data.append(player_data[MLBConstants.POSITION])
+				player_csv_data.append(player_data[MLBConstants.POSITION].replace(",", "/"))
 				player_csv_data.append(str(player_lineup_data[MLBConstants.BATTING_ORDER_POSITION]))
 				player_csv_data.append(str(batter_data[MLBConstants.STANDARD_BATTING][self.season][MLBConstants.WOBA]))
 
@@ -109,6 +111,19 @@ class ProjectionGenerator:
 				# Park factors
 				player_csv_data.append(str(ballpark_hits))
 				player_csv_data.append(str(ballpark_home_runs))
+
+				######################
+				# Vegas line and O/U
+				######################
+				if MLBConstants.VEGAS_LINE in player_lineup_data:
+					player_csv_data.append(player_lineup_data[MLBConstants.VEGAS_LINE])
+				else:
+					player_csv_data.append("N/A")
+
+				if MLBConstants.OVER_UNDER in player_lineup_data:
+					player_csv_data.append(player_lineup_data[MLBConstants.OVER_UNDER])
+				else:
+					player_csv_data.append("N/A")
 
 				print player_csv_data
 				batter_csv_contents.append(player_csv_data)
@@ -170,6 +185,19 @@ class ProjectionGenerator:
 
 				player_csv_data.append(str(ballpark_hits))
 				player_csv_data.append(str(ballpark_home_runs))
+
+				######################
+				# Vegas line and O/U
+				######################
+				if MLBConstants.VEGAS_LINE in player_lineup_data:
+					player_csv_data.append(player_lineup_data[MLBConstants.VEGAS_LINE])
+				else:
+					player_csv_data.append("N/A")
+
+				if MLBConstants.OVER_UNDER in player_lineup_data:
+					player_csv_data.append(player_lineup_data[MLBConstants.OVER_UNDER])
+				else:
+					player_csv_data.append("N/A")
 
 				# Look for opponents
 				opponents = []
