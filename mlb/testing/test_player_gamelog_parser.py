@@ -19,9 +19,9 @@ class TestPlayerGamelogParser(unittest.TestCase):
 		self.player_gamelog_parser.season = "2013"
 		self.player_gamelog_parser.type = MLBConstants.PITCHER_TYPE
 		self.player_gamelog_parser.player_data = {MLBConstants.PLAYER_ID: "aardsda01"}
-		self.player_gamelog_parser.parse(open('../test_files/gamelog_pitcher.html'))
+		self.player_gamelog_parser.parse(open('test_files/gamelog_pitcher.html'))
 
-		self.assertTrue(strftime("%b %d %Y", self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_PITCHING]["2013"]["57"][MLBConstants.DATE]) == "Jun 08 2013")
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_PITCHING]["2013"]["57"][MLBConstants.DATE].strftime("%b %d %Y") == "Jun 08 2013")
 		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_PITCHING]["2013"]["57"][
 								MLBConstants.TEAM] == "NYM")
 		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_PITCHING]["2013"]["57"][
@@ -116,7 +116,8 @@ class TestPlayerGamelogParser(unittest.TestCase):
 								MLBConstants.EXIT_SITUATION] == "12t 3 out tie")
 
 		# Game 161
-		self.assertTrue(strftime("%b %d %Y", self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_PITCHING]["2013"]["161"][MLBConstants.DATE]) == "Sep 28 2013")
+		# self.assertTrue(strftime("%b %d %Y", self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_PITCHING]["2013"]["161"][MLBConstants.DATE]) == "Sep 28 2013")
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_PITCHING]["2013"]["161"][MLBConstants.DATE].strftime("%b %d %Y") == "Sep 28 2013")
 		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_PITCHING]["2013"]["161"][
 								MLBConstants.TEAM] == "NYM")
 		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_PITCHING]["2013"]["161"][
@@ -216,7 +217,7 @@ class TestPlayerGamelogParser(unittest.TestCase):
 		self.player_gamelog_parser.player_data = {MLBConstants.PLAYER_ID: "cabremi01"}
 		self.player_gamelog_parser.parse(open('test_files/gamelog_batter.html'))
 
-		self.assertTrue(strftime("%b %d %Y", self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][MLBConstants.DATE]) == "Apr 01 2013")
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][MLBConstants.DATE].strftime("%b %d %Y") == "Apr 01 2013")
 		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
 								MLBConstants.TEAM] == "DET")
 		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
@@ -287,7 +288,7 @@ class TestPlayerGamelogParser(unittest.TestCase):
 								MLBConstants.POSITION] == "3B")
 
 		# Game 161
-		self.assertTrue(strftime("%b %d %Y", self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][MLBConstants.DATE]) == "Sep 28 2013")
+		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][MLBConstants.DATE].strftime("%b %d %Y") == "Sep 28 2013")
 		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][
 								MLBConstants.TEAM] == "DET")
 		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["161"][
