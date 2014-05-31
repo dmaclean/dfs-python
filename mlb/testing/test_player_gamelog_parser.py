@@ -214,7 +214,7 @@ class TestPlayerGamelogParser(unittest.TestCase):
 		self.player_gamelog_parser.season = "2013"
 		self.player_gamelog_parser.type = MLBConstants.BATTER_TYPE
 		self.player_gamelog_parser.player_data = {MLBConstants.PLAYER_ID: "cabremi01"}
-		self.player_gamelog_parser.parse(open('../test_files/gamelog_batter.html'))
+		self.player_gamelog_parser.parse(open('test_files/gamelog_batter.html'))
 
 		self.assertTrue(strftime("%b %d %Y", self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][MLBConstants.DATE]) == "Apr 01 2013")
 		self.assertTrue(self.player_gamelog_parser.player_data[MLBConstants.PLAYER_GAMELOG_BATTING]["2013"]["1"][
