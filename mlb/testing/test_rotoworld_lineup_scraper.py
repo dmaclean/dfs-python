@@ -17,5 +17,7 @@ class TestRotoworldLinupScraper(unittest.TestCase):
 		f = open('test_files/rotowire_daily_lineups.html')
 		self.parser.parse(f.read())
 
+		self.fail("Not implemented.")
+
 if __name__ == '__main__':
 	unittest.main()
