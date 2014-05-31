@@ -19,7 +19,7 @@ class TestPlayerSeasonStatsParser(unittest.TestCase):
 
 	def test_parse_pitcher(self):
 		self.player_season_stat_parser.player_data = {MLBConstants.PLAYER_ID: "aardsda01"}
-		self.player_season_stat_parser.parse(open('../test_files/season_stats_pitcher.html'))
+		self.player_season_stat_parser.parse(open('test_files/season_stats_pitcher.html'))
 
 		# Name and position
 		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_ID] == "aardsda01")

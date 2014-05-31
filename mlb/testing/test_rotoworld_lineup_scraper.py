@@ -14,7 +14,7 @@ class TestRotoworldLinupScraper(unittest.TestCase):
 		self.parser = None
 
 	def test_parse(self):
-		f = open('../test_files/rotowire_daily_lineups.html')
+		f = open('test_files/rotowire_daily_lineups.html')
 		self.parser.parse(f.read())
 
 if __name__ == '__main__':
