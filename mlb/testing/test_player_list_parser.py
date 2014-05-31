@@ -24,7 +24,7 @@ class TestPlayerListParser(unittest.TestCase):
 
     def test_parse_active_only(self):
         self.player_list_parser.active_only = True
-        self.player_list_parser.parse(open('../test_files/players_a.html'), 'a')
+        self.player_list_parser.parse(open('test_files/players_a.html'), 'a')
 
         self.assertTrue(self.player_list_parser.active_player_ids[0] == 'aardsda01')
         self.assertTrue(self.player_list_parser.active_player_ids[len(self.player_list_parser.active_player_ids)-1] == 'aybarer01')
