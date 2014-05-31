@@ -30,7 +30,7 @@ class RotogrindersBallparkFactorsParser:
 				if team not in factors:
 					factors[team] = {}
 
-				factors[team][MLBConstants.BPF_BALLPARK] = bp
+				factors[team][MLBConstants.BPF_BALLPARK] = bp.replace("\t", "")
 			elif i == 2:
 				factors[team][MLBConstants.RUNS] = float(td.text)
 			elif i == 3:
@@ -61,7 +61,7 @@ class RotogrindersBallparkFactorsParser:
 				if team not in factors:
 					factors[team] = {}
 
-				factors[team][MLBConstants.BPF_BALLPARK] = bp
+				factors[team][MLBConstants.BPF_BALLPARK] = bp.replace("\t", "")
 			elif i == 2:
 				# Just specifies we're dealing with lefties or righties; we already know this.
 				pass
@@ -115,7 +115,7 @@ class RotogrindersBallparkFactorsParser:
 
 		# Did we already scrape this?
 		existing_factors = self.ballpark_factors_collection.find_one({"date": str(d)})
-		if(existing_factors is not None):
+		if existing_factors is not None:
 			existing_factors[MLBConstants.BPF_ALL] = factors_all
 			existing_factors[MLBConstants.BPF_VS_LHP] = factors_lhb
 			existing_factors[MLBConstants.BPF_VS_RHP] = factors_rhb
