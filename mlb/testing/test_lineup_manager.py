@@ -13,6 +13,7 @@ class TestLineupManager(unittest.TestCase):
 
 	def tearDown(self):
 		self.lineup_manager.lineups_collection.drop()
+		self.player_manager.players_collection.drop()
 		self.lineup_manager = None
 		self.player_manager = None
 
@@ -28,6 +29,9 @@ class TestLineupManager(unittest.TestCase):
 		}
 		self.lineup_manager.lineups_collection.save(lineup)
 
+		# Reset the processed map.
+		self.lineup_manager.processed_players = None
+
 		self.assertTrue(self.lineup_manager.is_processed("dmaclean"))
 
 	def test_is_processed_false(self):
@@ -36,10 +40,10 @@ class TestLineupManager(unittest.TestCase):
 	def test_add_player_to_lineup_none_yet(self):
 		self.assertFalse(self.lineup_manager.is_processed("dmaclean"))
 
-		self.lineup_manager.add_player_to_lineup("dmaclean")
+		self.lineup_manager.add_player_to_lineup("dmaclean", {})
 		self.assertTrue(self.lineup_manager.is_processed("dmaclean"))
 
-		self.lineup_manager.add_player_to_lineup("dmaclean2")
+		self.lineup_manager.add_player_to_lineup("dmaclean2", {})
 		self.assertTrue(self.lineup_manager.is_processed("dmaclean2"))
 
 	def test_get_id_for_player_name(self):
