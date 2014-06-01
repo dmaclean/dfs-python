@@ -155,7 +155,11 @@ class ProjectionGenerator:
 					ballpark_home_runs = ballpark_data[MLBConstants.BPF_ALL][MLBUtilities.map_rg_team_to_rotowire(player_lineup_data[MLBConstants.OPPONENT])][MLBConstants.HOME_RUNS]
 
 				player_csv_data.append(pitcher_data[MLBConstants.HANDEDNESS_THROWING])
-				player_csv_data.append(str(pitcher_data[MLBConstants.STANDARD_PITCHING][self.season][MLBConstants.FIP]))
+
+				if self.season in pitcher_data[MLBConstants.STANDARD_PITCHING]:
+					player_csv_data.append(str(pitcher_data[MLBConstants.STANDARD_PITCHING][self.season][MLBConstants.FIP]))
+				else:
+					player_csv_data.append("N/A")
 
 				if MLBConstants.BATTER_SPLITS in pitcher_data:
 					player_csv_data.append(str(pitcher_data[MLBConstants.BATTER_SPLITS][self.season]["vs RHB"][MLBConstants.FIP]))
@@ -164,7 +168,7 @@ class ProjectionGenerator:
 					player_csv_data.append("N/A")
 					player_csv_data.append("N/A")
 
-				if MLBConstants.WOBA in pitcher_data[MLBConstants.STANDARD_PITCHING][self.season]:
+				if self.season in pitcher_data[MLBConstants.STANDARD_PITCHING] and MLBConstants.WOBA in pitcher_data[MLBConstants.STANDARD_PITCHING][self.season]:
 					player_csv_data.append(str(pitcher_data[MLBConstants.STANDARD_PITCHING][self.season][MLBConstants.WOBA]))
 				else:
 					player_csv_data.append("N/A")
@@ -180,8 +184,12 @@ class ProjectionGenerator:
 					player_csv_data.append("N/A")
 					player_csv_data.append("N/A")
 
-				player_csv_data.append(str(pitcher_data[MLBConstants.STANDARD_PITCHING][self.season][MLBConstants.STRIKE_OUTS_PER_9_INNINGS]))
-				player_csv_data.append(str(pitcher_data[MLBConstants.STANDARD_PITCHING][self.season][MLBConstants.WALKS_PER_9_INNINGS]))
+				if self.season in pitcher_data[MLBConstants.STANDARD_PITCHING]:
+					player_csv_data.append(str(pitcher_data[MLBConstants.STANDARD_PITCHING][self.season][MLBConstants.STRIKE_OUTS_PER_9_INNINGS]))
+					player_csv_data.append(str(pitcher_data[MLBConstants.STANDARD_PITCHING][self.season][MLBConstants.WALKS_PER_9_INNINGS]))
+				else:
+					player_csv_data.append("N/A")
+					player_csv_data.append("N/A")
 
 				player_csv_data.append(str(ballpark_hits))
 				player_csv_data.append(str(ballpark_home_runs))
