@@ -51,8 +51,8 @@ class RotoworldLineupScraper:
 			# Grab the odds
 			odds_div = matchup.find(attrs={"class": "span4 dlineups-odds-bottom"})
 			odds = odds_div.text.replace("Line:", "").split("O/U:")
-			odds[0] = odds[0].strip()
-			odds[1] = odds[1].strip()
+			odds[0] = odds[0].strip().replace(u"\xa0"," ")
+			odds[1] = odds[1].strip().replace(u"\xa0"," ")
 
 			for lineup in [away_lineup, home_lineup]:
 				players = lineup.find_all(href=self.player_regex)
