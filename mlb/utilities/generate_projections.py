@@ -36,7 +36,7 @@ class ProjectionGenerator:
 
 		for player in players["players"]:
 			player_lineup_data = players["players"][player]
-			if len(player_lineup_data) == 0:
+			if len(player_lineup_data) < 8:
 				continue
 
 			player_csv_data = []
@@ -74,7 +74,7 @@ class ProjectionGenerator:
 					ballpark_hits = ballpark_data[MLBConstants.BPF_ALL][MLBUtilities.map_rg_team_to_rotowire(player_lineup_data[MLBConstants.OPPONENT])][MLBConstants.HITS]
 					ballpark_home_runs = ballpark_data[MLBConstants.BPF_ALL][MLBUtilities.map_rg_team_to_rotowire(player_lineup_data[MLBConstants.OPPONENT])][MLBConstants.HOME_RUNS]
 
-				player_csv_data.append(player_data[MLBConstants.POSITION].replace(",", "/"))
+				player_csv_data.append(player_lineup_data[MLBConstants.POSITION].replace(",", "/"))
 				player_csv_data.append(str(player_lineup_data[MLBConstants.BATTING_ORDER_POSITION]))
 				player_csv_data.append(str(batter_data[MLBConstants.STANDARD_BATTING][self.season][MLBConstants.WOBA]))
 
