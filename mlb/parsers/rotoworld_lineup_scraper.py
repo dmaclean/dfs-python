@@ -72,12 +72,14 @@ class RotoworldLineupScraper:
 						player_name = player.attrs["title"]
 						position = player.parent.parent.find_all("div", attrs={"class": "dlineups-pos"})[0].text
 
+					team = home_team if lineup == home_lineup else away_team
+					opponent = home_team if lineup == away_lineup else away_team
 					self.process_player(player_name, {
 						"batting_order_position": batting_order_position,
 					    MLBConstants.POSITION: position,
 					    "opposing_pitcher": home_pitcher if lineup == away_lineup else away_pitcher,
-					    "team": home_team if lineup == home_lineup else away_team,
-					    "opponent": home_team if lineup == away_lineup else home_team,
+					    "team": team,
+					    "opponent": opponent,
 					    "home": True if lineup == home_lineup else False,
 					    MLBConstants.VEGAS_LINE: odds[0],
 					    MLBConstants.OVER_UNDER: odds[1]
