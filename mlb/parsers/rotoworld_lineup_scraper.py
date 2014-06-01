@@ -141,7 +141,10 @@ class RotoworldLineupScraper:
 		    "opposing_pitcher": additional_data["opposing_pitcher"],
 		    "team": additional_data["team"],
 		    "opponent": additional_data["opponent"],
-		    "home": additional_data["home"]
+		    "home": additional_data["home"],
+		    MLBConstants.POSITION: additional_data[MLBConstants.POSITION],
+		    MLBConstants.VEGAS_LINE: additional_data[MLBConstants.VEGAS_LINE],
+		    MLBConstants.OVER_UNDER: additional_data[MLBConstants.OVER_UNDER]
 		}
 		self.lineup_manager.add_player_to_lineup(escaped_player_id, player_lineup_data)
 
