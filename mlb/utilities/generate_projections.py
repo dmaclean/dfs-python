@@ -76,7 +76,11 @@ class ProjectionGenerator:
 
 				player_csv_data.append(player_lineup_data[MLBConstants.POSITION].replace(",", "/"))
 				player_csv_data.append(str(player_lineup_data[MLBConstants.BATTING_ORDER_POSITION]))
-				player_csv_data.append(str(batter_data[MLBConstants.STANDARD_BATTING][self.season][MLBConstants.WOBA]))
+
+				if self.season in batter_data[MLBConstants.STANDARD_BATTING]:
+					player_csv_data.append(str(batter_data[MLBConstants.STANDARD_BATTING][self.season][MLBConstants.WOBA]))
+				else:
+					player_csv_data.append("N/A")
 
 				if self.season in batter_data[MLBConstants.BATTER_SPLITS]:
 					if opposing_pitcher_data is None or MLBConstants.HANDEDNESS_THROWING not in opposing_pitcher_data\
@@ -94,7 +98,10 @@ class ProjectionGenerator:
 					player_csv_data.append("N/A")
 					player_csv_data.append("N/A")
 
-				player_csv_data.append(str(batter_data[MLBConstants.STANDARD_BATTING][self.season][MLBConstants.OPS]))
+				if self.season in batter_data[MLBConstants.STANDARD_BATTING]:
+					player_csv_data.append(str(batter_data[MLBConstants.STANDARD_BATTING][self.season][MLBConstants.OPS]))
+				else:
+					player_csv_data.append("N/A")
 
 				# BvP
 				if opposing_pitcher_data is not None and opposing_pitcher_data[MLBConstants.PLAYER_ID] in batter_data[MLBConstants.BATTER_VS_PITCHER]:
