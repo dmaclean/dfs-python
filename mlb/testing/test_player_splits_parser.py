@@ -15,7 +15,7 @@ class TestPlayerSplitsParser(unittest.TestCase):
 	def test_parse_pitcher_splits(self):
 		season = "2013"
 		self.player_splits_parser.player_data = {MLBConstants.PLAYER_ID: "verlaju01", MLBConstants.POSITION: "Pitcher"}
-		f = open('../test_files/pitcher_splits.html')
+		f = open('test_files/pitcher_splits.html')
 		data = f.read()
 		self.player_splits_parser.parse(data, season)
 
@@ -108,7 +108,7 @@ class TestPlayerSplitsParser(unittest.TestCase):
 
 	def test_parse_batter_splits(self):
 		self.player_splits_parser.player_data = {MLBConstants.PLAYER_ID: "cabremi01", MLBConstants.POSITION: "Third base"}
-		f = open('../test_files/batter_splits.html')
+		f = open('test_files/batter_splits.html')
 		data = f.read()
 		self.player_splits_parser.parse(data, "2014")
 
@@ -229,7 +229,7 @@ class TestPlayerSplitsParser(unittest.TestCase):
 
 	def test_parse_batter_splits_career(self):
 		self.player_splits_parser.player_data = {MLBConstants.PLAYER_ID: "cabremi01", MLBConstants.POSITION: "Third base"}
-		f = open('../test_files/batter_career_splits.html')
+		f = open('test_files/batter_career_splits.html')
 		data = f.read()
 		self.player_splits_parser.parse(data, "Career")
 

@@ -19,7 +19,7 @@ class TestPlayerSeasonStatsParser(unittest.TestCase):
 
 	def test_parse_pitcher(self):
 		self.player_season_stat_parser.player_data = {MLBConstants.PLAYER_ID: "aardsda01"}
-		self.player_season_stat_parser.parse(open('../test_files/season_stats_pitcher.html'))
+		self.player_season_stat_parser.parse(open('test_files/season_stats_pitcher.html'))
 
 		# Name and position
 		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_ID] == "aardsda01")
@@ -83,6 +83,8 @@ class TestPlayerSeasonStatsParser(unittest.TestCase):
 							[MLBConstants.BATTERS_FACED] == 61)
 		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_PITCHING]["2004"]
 							[MLBConstants.ERA_PLUS] == 67)
+		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_PITCHING]["2004"]
+							[MLBConstants.FIP] == 6.71)
 		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_PITCHING]["2004"]
 							[MLBConstants.WHIP] == 2.813)
 		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.STANDARD_PITCHING]["2004"]
@@ -163,7 +165,7 @@ class TestPlayerSeasonStatsParser(unittest.TestCase):
 							[MLBConstants.STRIKE_OUT_TO_WALK_RATIO] == 1.89)
 
 	def test_parse_player_value_pitchers(self):
-		soup = BeautifulSoup(open('../test_files/season_stats_pitcher.html'))
+		soup = BeautifulSoup(open('test_files/season_stats_pitcher.html'))
 
 		self.player_season_stat_parser.player_data = {}
 		self.player_season_stat_parser.parse_player_value_pitchers(soup)
@@ -232,7 +234,7 @@ class TestPlayerSeasonStatsParser(unittest.TestCase):
 
 	def test_parse_standard_batting(self):
 		self.player_season_stat_parser.player_data = {MLBConstants.PLAYER_ID: "cabremi01"}
-		self.player_season_stat_parser.parse(open('../test_files/season_stats_batter.html'))
+		self.player_season_stat_parser.parse(open('test_files/season_stats_batter.html'))
 
 		# Name and position
 		self.assertTrue(self.player_season_stat_parser.player_data[MLBConstants.PLAYER_ID] == "cabremi01")
@@ -354,7 +356,7 @@ class TestPlayerSeasonStatsParser(unittest.TestCase):
 
 	def test_parse_player_value_batting(self):
 		self.player_season_stat_parser.player_data = {MLBConstants.PLAYER_ID: "cabremi01"}
-		self.player_season_stat_parser.parse(open('../test_files/season_stats_batter.html'))
+		self.player_season_stat_parser.parse(open('test_files/season_stats_batter.html'))
 
 		##############################
 		# Player value batting table
