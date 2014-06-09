@@ -132,7 +132,6 @@ class ProjectionGenerator:
 				else:
 					player_csv_data.append("N/A")
 
-				print player_csv_data
 				batter_csv_contents.append(player_csv_data)
 
 			#######################
@@ -234,6 +233,8 @@ class ProjectionGenerator:
 				# 	pass
 
 				pitcher_csv_contents.append(player_csv_data)
+
+			print player_csv_data
 
 		# Write results out to file
 		pitcher_output = open("../projections/pitchers_{}.csv".format(str(date.today())), "w")
