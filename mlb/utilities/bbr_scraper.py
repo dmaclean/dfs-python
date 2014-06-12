@@ -139,7 +139,11 @@ class BaseballReferenceScraper:
 				self.process_player(player_id, url, True)
 
 	def process_player(self, player_id, url, active=False):
+		start = time.time()
 		player = self.player_manager.read({MLBConstants.PLAYER_ID: player_id})
+		end = time.time()
+		print "\t\tDEBUG: Read from player_manager in {} seconds".format(end-start)
+
 		if player is None:
 			player = {MLBConstants.PLAYER_ID: player_id}
 		# We can skip this player
@@ -165,9 +169,20 @@ class BaseballReferenceScraper:
 		###############################################
 		# Fetch detailed season stats for the player.
 		###############################################
+		start = time.time()
 		player_season_stats_detail_data = self.fetch_data(player_season_stats_detail_url, True)
+		end = time.time()
+		print "\t\tDEBUG: Fetched detailed season stats in {} seconds".format(end-start)
+
+		start = time.time()
 		self.player_season_stats_parser.parse(player_season_stats_detail_data)
-		self.player_manager.save(player)
+		end = time.time()
+		print "\t\tDEBUG: Parsed detailed season stats in {} seconds".format(end-start)
+
+		# start = time.time()
+		# self.player_manager.save(player)
+		# end = time.time()
+		# print "\t\tDEBUG: Saved detailed season stats in {} seconds".format(end-start)
 
 		active_seasons = self.determine_active_seasons(player)
 		type = "p" if player[MLBConstants.POSITION] == "Pitcher" else "b"
@@ -184,7 +199,7 @@ class BaseballReferenceScraper:
 			self.player_gamelog_parser.type = MLBConstants.PITCHER_TYPE if player[MLBConstants.POSITION] == "Pitcher" else MLBConstants.BATTER_TYPE
 			self.player_gamelog_parser.season = season
 			self.player_gamelog_parser.parse(data)
-		self.player_manager.save(player)
+		# self.player_manager.save(player)
 
 		###############
 		# Grab splits
@@ -198,23 +213,26 @@ class BaseballReferenceScraper:
 			self.player_splits_parser.player_data = player
 			self.player_splits_parser.season = season
 			self.player_splits_parser.parse(data, season)
-		self.player_manager.save(player)
+		# self.player_manager.save(player)
 
 		#####################
 		# Grab BvP (or PvB)
 		#####################
-		if self.player_season_stats_parser.player_data[MLBConstants.POSITION] == "Pitcher":
-			self.player_bvp_parser.type = MLBConstants.PITCHER_TYPE
-			bvp_url = "/play-index/batter_vs_pitcher.cgi?pitcher={}".format(player_id)
-		else:
-			self.player_bvp_parser.type = MLBConstants.BATTER_TYPE
-			bvp_url = "/play-index/batter_vs_pitcher.cgi?batter={}".format(player_id)
+		# if self.player_season_stats_parser.player_data[MLBConstants.POSITION] == "Pitcher":
+		# 	self.player_bvp_parser.type = MLBConstants.PITCHER_TYPE
+		# 	bvp_url = "/play-index/batter_vs_pitcher.cgi?pitcher={}".format(player_id)
+		# else:
+		# 	self.player_bvp_parser.type = MLBConstants.BATTER_TYPE
+		# 	bvp_url = "/play-index/batter_vs_pitcher.cgi?batter={}".format(player_id)
+		#
+		# data = self.fetch_data(bvp_url, True)
+		# self.player_bvp_parser.player_data = player
+		# self.player_bvp_parser.parse(data)
 
-		data = self.fetch_data(bvp_url, True)
-		self.player_bvp_parser.player_data = player
-		self.player_bvp_parser.parse(data)
-
+		start = time.time()
 		self.player_manager.save(player)
+		end = time.time()
+		print "\t\tDEBUG: Saved player stats in {} seconds".format(end-start)
 
 	def determine_active_seasons(self, player):
 		"""
