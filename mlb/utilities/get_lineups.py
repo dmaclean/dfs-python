@@ -1,10 +1,9 @@
 import logging
-import random
 import sys
 import time
-
 from datetime import date, timedelta
 from httplib import HTTPConnection
+
 from mlb.constants.mlb_constants import MLBConstants
 from mlb.models.player_manager import PlayerManager
 from mlb.parsers.rotoworld_lineup_scraper import RotoworldLineupScraper
@@ -13,6 +12,7 @@ from mlb.scrapers.bbr_scraper import BaseballReferenceScraper
 from mlb.parsers.rotogrinders_ballpark_factors_parser import RotogrindersBallparkFactorsParser
 from mlb.utilities.mlb_utilities import MLBUtilities
 
+
 __author__ = 'dan'
 
 
@@ -20,6 +20,7 @@ class LineupScraper:
 	def __init__(self):
 		self.source = "site"
 		self.scrape_yesterdays_players = True
+		self.scrape_bvp = False
 		self.sleep_time = 2
 		self.player_manager = PlayerManager()
 		self.lineup_manager = LineupManager()
@@ -39,7 +40,7 @@ class LineupScraper:
 				conn.request("GET", url)
 				resp = conn.getresponse()
 				if resp.status == 301:
-					resp = self.resolve_http_redirect(url, 3)
+					resp = MLBUtilities.resolve_http_redirect(url, 3)
 
 				content_type = resp.getheader("content-type")
 
@@ -73,6 +74,8 @@ class LineupScraper:
 				self.sleep_time = int(pieces[1])
 			elif pieces[0] == "scrape_yesterdays_players":
 				self.scrape_yesterdays_players = pieces[1] == "true"
+			elif pieces[0] == "scrape_bvp":
+				self.scrape_yesterdays_players = pieces[1] == "true"
 
 	def scrape_ballpark_factors(self):
 		"""
@@ -91,6 +94,9 @@ class LineupScraper:
 
 		# Reset the sleep on BBR scraper, in case what was passed in from the CLI is different.
 		self.bbr_scraper.sleep_time = self.sleep_time
+
+		# Reset the scrape_bvp flag, in case what was passed in from the CLI is different.
+		self.bbr_scraper.scrape_bvp = self.scrape_bvp
 
 		one_day = timedelta(days=1)
 		yesterday = date.today()-one_day
