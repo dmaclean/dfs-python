@@ -152,6 +152,11 @@ class ProjectionGenerator:
 				                                                               "{}.{}.{}".format(MLBConstants.STANDARD_PITCHING, self.season, MLBConstants.STRIKE_OUTS_PER_9_INNINGS): 1,
 				                                                               "{}.{}.{}".format(MLBConstants.STANDARD_PITCHING, self.season, MLBConstants.WALKS_PER_9_INNINGS): 1,
 				                                                               MLBConstants.BATTER_VS_PITCHER: 1})
+				# Do a quick check to make sure the pitcher has stats for the current season.
+				# If the current season isn't available then bail on this pitcher.
+				if self.season not in pitcher_data[MLBConstants.STANDARD_PITCHING] or self.season not in pitcher_data[MLBConstants.PITCHER_SPLITS]:
+					print "Could not find season {} for either Standard Pitching or Splits for {}.  Not sure how that would happen".format(self.season, escaped_player_id)
+					continue
 
 				if player_lineup_data["home"]:
 					ballpark_hits = ballpark_data[MLBConstants.BPF_ALL][MLBUtilities.map_rg_team_to_rotowire(player_lineup_data[MLBConstants.TEAM])][MLBConstants.HITS]
