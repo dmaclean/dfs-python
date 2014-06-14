@@ -6,7 +6,8 @@ from mlb.constants.mlb_constants import MLBConstants
 from mlb.models.lineup_manager import LineupManager
 from mlb.models.name_mapping_manager import NameMappingManager
 from mlb.models.player_manager import PlayerManager
-from mlb.utilities.bbr_scraper import BaseballReferenceScraper
+from mlb.scrapers.bbr_scraper import BaseballReferenceScraper
+
 
 __author__ = 'dan'
 

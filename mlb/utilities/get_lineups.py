@@ -9,7 +9,7 @@ from mlb.constants.mlb_constants import MLBConstants
 from mlb.models.player_manager import PlayerManager
 from mlb.parsers.rotoworld_lineup_scraper import RotoworldLineupScraper
 from mlb.models.lineup_manager import LineupManager
-from mlb.utilities.bbr_scraper import BaseballReferenceScraper
+from mlb.scrapers.bbr_scraper import BaseballReferenceScraper
 from mlb.parsers.rotogrinders_ballpark_factors_parser import RotogrindersBallparkFactorsParser
 from mlb.utilities.mlb_utilities import MLBUtilities
 

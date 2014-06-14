@@ -1,19 +1,14 @@
-import urlparse
 import sys
 from mlb.constants.mlb_constants import MLBConstants
 from mlb.models.player_manager import PlayerManager
 from mlb.parsers.player_bvp_parser import PlayerBvPParser
 from mlb.parsers.player_gamelog_parser import PlayerGamelogParser
 from mlb.parsers.player_splits_parser import PlayerSplitsParser
-
-__author__ = 'dan'
-
-from httplib import HTTPConnection
+from mlb.utilities.mlb_utilities import MLBUtilities
 from mlb.parsers.player_list_parser import PlayerListParser
 from mlb.parsers.player_season_stats_parser import PlayerSeasonStatsParser
 
 import logging
-import random
 import time
 
 
@@ -25,6 +20,9 @@ class BaseballReferenceScraper:
 	def __init__(self):
 		self.source = "site"
 		self.all_players = False
+		self.scrape_bvp = False
+		self.player_id = None
+		self.url = None
 
 		self.player_list_parser = PlayerListParser()
 		self.player_season_stats_parser = PlayerSeasonStatsParser()
@@ -35,7 +33,11 @@ class BaseballReferenceScraper:
 
 	def process(self):
 		self.readCLI()
-		self.process_players()
+
+		if self.player_id:
+			self.process_player(self.player_id, self.url, True)
+		else:
+			self.process_players()
 
 	def readCLI(self):
 		for arg in sys.argv:
@@ -51,62 +53,11 @@ class BaseballReferenceScraper:
 					self.yesterday_only = pieces[1] == "true"
 				elif pieces[0] == "sleep":
 					self.sleep_time = int(pieces[1])
+				elif pieces[0] == "player_id":
+					self.player_id = pieces[1]
+				elif pieces[0] == "url":
+					self.url = pieces[1]
 
-	# Recursively follow redirects until there isn't a location header
-	# From http://www.zacwitte.com/resolving-http-redirects-in-python
-	def resolve_http_redirect(self, url, depth=0):
-		if depth > 10:
-			raise Exception("Redirected "+depth+" times, giving up.")
-		o = urlparse.urlparse(url,allow_fragments=True)
-		conn = HTTPConnection(o.netloc)
-		path = o.path
-		if o.query:
-			path +='?'+o.query
-		conn.request("HEAD", path)
-		res = conn.getresponse()
-		headers = dict(res.getheaders())
-		if headers.has_key('location') and headers['location'] != url:
-			return self.resolve_http_redirect(headers['location'], depth+1)
-		else:
-			return res
-
-	def fetch_data(self, url, log_to_console):
-		"""
-		Makes connection to baseball-reference and downloads data from URL.
-		"""
-		successful = False
-		data = ""
-
-		while not successful:
-			try:
-				conn = HTTPConnection("www.baseball-reference.com", timeout=5)
-				conn.request("GET", url)
-				resp = conn.getresponse()
-				if resp.status == 301:
-					resp = self.resolve_http_redirect(url, 3)
-
-				content_type = resp.getheader("content-type")
-
-				encoding = None
-				if content_type.find("charset=") > -1:
-					encoding = content_type.split("charset=")[1]
-
-				if log_to_console:
-					print "{} for {}".format(resp.status, url)
-
-				if encoding:
-					data = resp.read().decode(encoding, 'ignore')
-				else:
-					data = resp.read()
-
-				conn.close()
-				successful = True
-			except Exception, err:
-				logging.error("Issue connecting to baseball-reference ({}).  Retrying in 10 seconds...".format(err))
-				time.sleep(10)
-
-		time.sleep(self.sleep_time + (self.sleep_time * random.random()))
-		return data
 
 	def process_players(self):
 		"""
@@ -120,7 +71,7 @@ class BaseballReferenceScraper:
 		# Go through all players by letter
 		for letter in alphabet:
 			url = "/players/{}/".format(letter)
-			data = self.fetch_data(url, True)
+			data = MLBUtilities.fetch_data("www.baseball-reference.com", url, True)
 
 			self.player_list_parser.parse(data, letter)
 
@@ -153,7 +104,7 @@ class BaseballReferenceScraper:
 
 		player_url = "{}{}.shtml".format(url, player_id)
 
-		player_page_data = self.fetch_data(player_url, True)
+		player_page_data = MLBUtilities.fetch_data("www.baseball-reference.com", player_url, True)
 
 		self.player_season_stats_parser.player_data = player
 		self.player_season_stats_parser.parse(player_page_data)
@@ -170,7 +121,7 @@ class BaseballReferenceScraper:
 		# Fetch detailed season stats for the player.
 		###############################################
 		start = time.time()
-		player_season_stats_detail_data = self.fetch_data(player_season_stats_detail_url, True)
+		player_season_stats_detail_data = MLBUtilities.fetch_data("www.baseball-reference.com", player_season_stats_detail_url, True)
 		end = time.time()
 		print "\t\tDEBUG: Fetched detailed season stats in {} seconds".format(end-start)
 
@@ -194,7 +145,7 @@ class BaseballReferenceScraper:
 			if season not in ["2014"]:
 				continue
 			player_gamelog_url = "/players/gl.cgi?id={}&t={}&year={}".format(player_id, type, season)
-			data = self.fetch_data(player_gamelog_url, True)
+			data = MLBUtilities.fetch_data("www.baseball-reference.com", player_gamelog_url, True)
 			self.player_gamelog_parser.player_data = player
 			self.player_gamelog_parser.type = MLBConstants.PITCHER_TYPE if player[MLBConstants.POSITION] == "Pitcher" else MLBConstants.BATTER_TYPE
 			self.player_gamelog_parser.season = season
@@ -209,7 +160,7 @@ class BaseballReferenceScraper:
 			if season not in ["2014", "Career"]:
 				continue
 			player_split_url = "/players/split.cgi?id={}&t={}&year={}".format(player_id, type, season)
-			data = self.fetch_data(player_split_url, True)
+			data = MLBUtilities.fetch_data("www.baseball-reference.com", player_split_url, True)
 			self.player_splits_parser.player_data = player
 			self.player_splits_parser.season = season
 			self.player_splits_parser.parse(data, season)
@@ -218,16 +169,17 @@ class BaseballReferenceScraper:
 		#####################
 		# Grab BvP (or PvB)
 		#####################
-		# if self.player_season_stats_parser.player_data[MLBConstants.POSITION] == "Pitcher":
-		# 	self.player_bvp_parser.type = MLBConstants.PITCHER_TYPE
-		# 	bvp_url = "/play-index/batter_vs_pitcher.cgi?pitcher={}".format(player_id)
-		# else:
-		# 	self.player_bvp_parser.type = MLBConstants.BATTER_TYPE
-		# 	bvp_url = "/play-index/batter_vs_pitcher.cgi?batter={}".format(player_id)
-		#
-		# data = self.fetch_data(bvp_url, True)
-		# self.player_bvp_parser.player_data = player
-		# self.player_bvp_parser.parse(data)
+		if self.scrape_bvp:
+			if self.player_season_stats_parser.player_data[MLBConstants.POSITION] == "Pitcher":
+				self.player_bvp_parser.type = MLBConstants.PITCHER_TYPE
+				bvp_url = "/play-index/batter_vs_pitcher.cgi?pitcher={}".format(player_id)
+			else:
+				self.player_bvp_parser.type = MLBConstants.BATTER_TYPE
+				bvp_url = "/play-index/batter_vs_pitcher.cgi?batter={}".format(player_id)
+
+			data = self.fetch_data(bvp_url, True)
+			self.player_bvp_parser.player_data = player
+			self.player_bvp_parser.parse(data)
 
 		start = time.time()
 		self.player_manager.save(player)
