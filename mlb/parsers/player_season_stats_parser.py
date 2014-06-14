@@ -63,7 +63,7 @@ class PlayerSeasonStatsParser:
 		"""
 		Parses data from the Stanard Pitching table.
 		"""
-		pitching_standard_entries = soup.find_all(id=re.compile(self.pitching_standard_season_regex))
+		pitching_standard_entries = soup.find_all(id=self.pitching_standard_season_regex)
 
 		for entry in pitching_standard_entries:
 			tds = entry.find_all("td")
