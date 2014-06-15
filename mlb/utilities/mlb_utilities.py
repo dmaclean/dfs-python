@@ -29,10 +29,12 @@ class MLBUtilities:
 
 		return new_val
 
-	# Recursively follow redirects until there isn't a location header
-	# From http://www.zacwitte.com/resolving-http-redirects-in-python
 	@staticmethod
 	def resolve_http_redirect(self, url, depth=0):
+		"""
+		Recursively follow redirects until there isn't a location header
+		From http://www.zacwitte.com/resolving-http-redirects-in-python
+		"""
 		if depth > 10:
 			raise Exception("Redirected "+depth+" times, giving up.")
 		o = urlparse.urlparse(url,allow_fragments=True)
@@ -63,6 +65,8 @@ class MLBUtilities:
 				resp = conn.getresponse()
 				if resp.status == 301:
 					resp = MLBUtilities.resolve_http_redirect(url, 3)
+				elif resp.status == 500:
+					raise Exception("500 error")
 
 				content_type = resp.getheader("content-type")
 
