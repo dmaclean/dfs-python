@@ -24,7 +24,7 @@ class RotoworldLineupScraper:
 
 	def parse(self, data):
 		data = data.replace("\r", "").replace("\n", "").replace("\t", "")
-		soup = BeautifulSoup(data)
+		soup = BeautifulSoup(data, "lxml")
 
 		matchups = soup.find_all(attrs={"class": "offset1 span15"})
 		for matchup in matchups:
