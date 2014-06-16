@@ -107,13 +107,13 @@ class RotoworldLineupScraper:
 					opponent = home_team if lineup == away_lineup else away_team
 					self.process_player(player_name, {
 						"batting_order_position": batting_order_position,
-					    MLBConstants.POSITION: position,
-					    "opposing_pitcher": home_pitcher if lineup == away_lineup else away_pitcher,
-					    "team": team,
-					    "opponent": opponent,
-					    "home": True if lineup == home_lineup else False,
-					    MLBConstants.VEGAS_LINE: odds[0],
-					    MLBConstants.OVER_UNDER: odds[1]
+						MLBConstants.POSITION: position,
+						"opposing_pitcher": home_pitcher if lineup == away_lineup else away_pitcher,
+						"team": team,
+						"opponent": opponent,
+						"home": True if lineup == home_lineup else False,
+						MLBConstants.VEGAS_LINE: odds[0],
+						MLBConstants.OVER_UNDER: odds[1]
 					})
 
 					batting_order_position += 1
@@ -121,23 +121,23 @@ class RotoworldLineupScraper:
 			# Process the pitchers
 			self.process_player(away_pitcher, {
 				"batting_order_position": -1,
-			    MLBConstants.POSITION: "P",
-			    "opposing_pitcher": home_pitcher,
-			    "team": away_team,
-			    "opponent": home_team,
-			    "home": False,
-			    MLBConstants.VEGAS_LINE: odds[0],
+				MLBConstants.POSITION: "P",
+				"opposing_pitcher": home_pitcher,
+				"team": away_team,
+				"opponent": home_team,
+				"home": False,
+				MLBConstants.VEGAS_LINE: odds[0],
 				MLBConstants.OVER_UNDER: odds[1]
 			})
 
 			self.process_player(home_pitcher, {
 				"batting_order_position": -1,
-			    MLBConstants.POSITION: "P",
-			    "opposing_pitcher": away_pitcher,
-			    "team": home_team,
-			    "opponent": away_team,
-			    "home": True,
-			    MLBConstants.VEGAS_LINE: odds[0],
+				MLBConstants.POSITION: "P",
+				"opposing_pitcher": away_pitcher,
+				"team": home_team,
+				"opponent": away_team,
+				"home": True,
+				MLBConstants.VEGAS_LINE: odds[0],
 				MLBConstants.OVER_UNDER: odds[1]
 			})
 
@@ -169,13 +169,13 @@ class RotoworldLineupScraper:
 		# Mark the player as processed (write to the lineup) once their stats have been updated.
 		player_lineup_data = {
 			"batting_order_position": additional_data["batting_order_position"],
-		    "opposing_pitcher": additional_data["opposing_pitcher"],
-		    "team": additional_data["team"],
-		    "opponent": additional_data["opponent"],
-		    "home": additional_data["home"],
-		    MLBConstants.POSITION: additional_data[MLBConstants.POSITION],
-		    MLBConstants.VEGAS_LINE: additional_data[MLBConstants.VEGAS_LINE],
-		    MLBConstants.OVER_UNDER: additional_data[MLBConstants.OVER_UNDER]
+			"opposing_pitcher": additional_data["opposing_pitcher"],
+			"team": additional_data["team"],
+			"opponent": additional_data["opponent"],
+			"home": additional_data["home"],
+			MLBConstants.POSITION: additional_data[MLBConstants.POSITION],
+			MLBConstants.VEGAS_LINE: additional_data[MLBConstants.VEGAS_LINE],
+			MLBConstants.OVER_UNDER: additional_data[MLBConstants.OVER_UNDER]
 		}
 		self.lineup_manager.add_player_to_lineup(escaped_player_id, player_lineup_data)
 

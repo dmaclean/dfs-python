@@ -27,10 +27,10 @@ class ProjectionGenerator:
 		players = self.lineup_manager.lineups_collection.find_one({"date": str(self.game_date)}, {"players": 1})
 
 		batter_csv_contents = [["Name", "Team", "Opponent", "Position", "Batting Order Position", "wOBA", "wOBA vs Pitcher Type (LH/RH)",
-		                        "OPS vs Pitcher Type (LH/RH)", "OPS", "Plate Appearances vs Pitcher", "Avg vs Pitcher",
-		                        "Hits vs Pitcher", "HRs vs Pitcher", "Park Runs", "Park HRs", "Vegas Line", "O/U"]]
+								"OPS vs Pitcher Type (LH/RH)", "OPS", "Plate Appearances vs Pitcher", "Avg vs Pitcher",
+								"Hits vs Pitcher", "HRs vs Pitcher", "Park Runs", "Park HRs", "Vegas Line", "O/U"]]
 		pitcher_csv_contents = [["Name", "Team", "Opponent", "LH/RH", "FIP", "FIP vs RHB", "FIP vs LHB", "wOBA", "wOBA vs RHB", "wOBA vs LHB",
-		                         "BABIP vs RHB", "BABIP vs LHB", "K/9", "BB/9", "Park Runs", "Park HRs", "Vegas Line", "O/U"]]
+								 "BABIP vs RHB", "BABIP vs LHB", "K/9", "BB/9", "Park Runs", "Park HRs", "Vegas Line", "O/U"]]
 
 		ballpark_data = self.ballpark_collection.find_one({"date": str(self.game_date)})
 
@@ -57,15 +57,15 @@ class ProjectionGenerator:
 				# Retrieve opposing pitcher data
 				opposing_pitcher_data = self.player_manager.players_collection.find_one({MLBConstants.NAME: player_lineup_data["opposing_pitcher"]}, {MLBConstants.PLAYER_ID: 1, MLBConstants.HANDEDNESS_THROWING: 1})
 				batter_data = self.player_manager.players_collection.find_one({MLBConstants.PLAYER_ID: escaped_player_id},
-				                                                              {MLBConstants.POSITION: 1,
-				                                                               MLBConstants.HANDEDNESS_BATTING: 1,
-				                                                               "{}.{}.{}".format(MLBConstants.STANDARD_BATTING, self.season, MLBConstants.WOBA): 1,
-				                                                               "{}.{}.vs RH Starter.{}".format(MLBConstants.BATTER_SPLITS, self.season, MLBConstants.WOBA): 1,
-				                                                               "{}.{}.vs LH Starter.{}".format(MLBConstants.BATTER_SPLITS, self.season, MLBConstants.WOBA): 1,
-				                                                               "{}.{}.{}".format(MLBConstants.STANDARD_BATTING, self.season, MLBConstants.OPS): 1,
-				                                                               "{}.{}.vs RH Starter.{}".format(MLBConstants.BATTER_SPLITS, self.season, MLBConstants.OPS): 1,
-				                                                               "{}.{}.vs LH Starter.{}".format(MLBConstants.BATTER_SPLITS, self.season, MLBConstants.OPS): 1,
-				                                                               MLBConstants.BATTER_VS_PITCHER: 1})
+																			  {MLBConstants.POSITION: 1,
+																			   MLBConstants.HANDEDNESS_BATTING: 1,
+																			   "{}.{}.{}".format(MLBConstants.STANDARD_BATTING, self.season, MLBConstants.WOBA): 1,
+																			   "{}.{}.vs RH Starter.{}".format(MLBConstants.BATTER_SPLITS, self.season, MLBConstants.WOBA): 1,
+																			   "{}.{}.vs LH Starter.{}".format(MLBConstants.BATTER_SPLITS, self.season, MLBConstants.WOBA): 1,
+																			   "{}.{}.{}".format(MLBConstants.STANDARD_BATTING, self.season, MLBConstants.OPS): 1,
+																			   "{}.{}.vs RH Starter.{}".format(MLBConstants.BATTER_SPLITS, self.season, MLBConstants.OPS): 1,
+																			   "{}.{}.vs LH Starter.{}".format(MLBConstants.BATTER_SPLITS, self.season, MLBConstants.OPS): 1,
+																			   MLBConstants.BATTER_VS_PITCHER: 1})
 
 				if player_lineup_data["home"]:
 					ballpark_hits = ballpark_data[MLBConstants.BPF_ALL][MLBUtilities.map_rg_team_to_rotowire(player_lineup_data[MLBConstants.TEAM])][MLBConstants.HITS]
@@ -139,19 +139,20 @@ class ProjectionGenerator:
 			#######################
 			else:
 				pitcher_data = self.player_manager.players_collection.find_one({MLBConstants.PLAYER_ID: escaped_player_id},
-				                                                              {MLBConstants.POSITION: 1,
-				                                                               MLBConstants.HANDEDNESS_THROWING: 1,
-				                                                               "{}.{}.{}".format(MLBConstants.STANDARD_PITCHING, self.season, MLBConstants.FIP): 1,
-				                                                               "{}.{}.vs RHB.{}".format(MLBConstants.PITCHER_SPLITS, self.season, MLBConstants.FIP): 1,
-				                                                               "{}.{}.vs LHB.{}".format(MLBConstants.PITCHER_SPLITS, self.season, MLBConstants.FIP): 1,
-				                                                               "{}.{}.{}".format(MLBConstants.STANDARD_PITCHING, self.season, MLBConstants.WOBA): 1,
-				                                                               "{}.{}.vs RHB.{}".format(MLBConstants.PITCHER_SPLITS, self.season, MLBConstants.WOBA): 1,
-				                                                               "{}.{}.vs LHB.{}".format(MLBConstants.PITCHER_SPLITS, self.season, MLBConstants.WOBA): 1,
-				                                                               "{}.{}.vs RHB.{}".format(MLBConstants.PITCHER_SPLITS, self.season, MLBConstants.BABIP): 1,
-				                                                               "{}.{}.vs LHB.{}".format(MLBConstants.PITCHER_SPLITS, self.season, MLBConstants.BABIP): 1,
-				                                                               "{}.{}.{}".format(MLBConstants.STANDARD_PITCHING, self.season, MLBConstants.STRIKE_OUTS_PER_9_INNINGS): 1,
-				                                                               "{}.{}.{}".format(MLBConstants.STANDARD_PITCHING, self.season, MLBConstants.WALKS_PER_9_INNINGS): 1,
-				                                                               MLBConstants.BATTER_VS_PITCHER: 1})
+																			  {MLBConstants.POSITION: 1,
+																			   MLBConstants.HANDEDNESS_THROWING: 1,
+																			   "{}.{}.{}".format(MLBConstants.STANDARD_PITCHING, self.season, MLBConstants.FIP): 1,
+																			   "{}.{}.vs RHB.{}".format(MLBConstants.PITCHER_SPLITS, self.season, MLBConstants.FIP): 1,
+																			   "{}.{}.vs LHB.{}".format(MLBConstants.PITCHER_SPLITS, self.season, MLBConstants.FIP): 1,
+																			   "{}.{}.{}".format(MLBConstants.STANDARD_PITCHING, self.season, MLBConstants.WOBA): 1,
+																			   "{}.{}.vs RHB.{}".format(MLBConstants.PITCHER_SPLITS, self.season, MLBConstants.WOBA): 1,
+																			   "{}.{}.vs LHB.{}".format(MLBConstants.PITCHER_SPLITS, self.season, MLBConstants.WOBA): 1,
+																			   "{}.{}.vs RHB.{}".format(MLBConstants.PITCHER_SPLITS, self.season, MLBConstants.BABIP): 1,
+																			   "{}.{}.vs LHB.{}".format(MLBConstants.PITCHER_SPLITS, self.season, MLBConstants.BABIP): 1,
+																			   "{}.{}.{}".format(MLBConstants.STANDARD_PITCHING, self.season, MLBConstants.STRIKE_OUTS_PER_9_INNINGS): 1,
+																			   "{}.{}.{}".format(MLBConstants.STANDARD_PITCHING, self.season, MLBConstants.WALKS_PER_9_INNINGS): 1,
+																			   MLBConstants.BATTER_VS_PITCHER: 1})
+
 				# Do a quick check to make sure the pitcher has stats for the current season.
 				# If the current season isn't available then bail on this pitcher.
 				if self.season not in pitcher_data[MLBConstants.STANDARD_PITCHING] or self.season not in pitcher_data[MLBConstants.PITCHER_SPLITS]:
