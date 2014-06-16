@@ -109,9 +109,27 @@ class LineupScraper:
 			logging.info("Looks like we didn't run this yesterday. Going to look for today's lineups...")
 			return
 
+		rotoworld_scraper = RotoworldLineupScraper(sleep_time=self.sleep_time)
+		data = MLBUtilities.fetch_data("www.rotowire.com", "/baseball/daily_lineups.htm", True)
+		teams = rotoworld_scraper.parse_teams_only(data)
+
 		for player in players["players"]:
 			unescaped_player = player.replace("_", ".")
+
+			# Skip player if they've already been processed.
 			if self.lineup_manager.is_processed(player):
+				logging.info("Skipping {}, already processed.".format(player))
+				continue
+
+			# Skip player if they didn't end up in yesterday's lineup.  This can happen
+			# if we do prefetching on a player from a previous day and they have an off day.
+			if len(players["players"][player]) == 0:
+				logging.info("Skipping {}, wasn't in yesterday's lineup.".format(player))
+				continue
+
+			# Skip player if their team isn't playing today.
+			if players["players"][player][MLBConstants.TEAM] not in teams:
+				logging.info("Skipping {}, {} are not playing today.".format(player, players["players"][player][MLBConstants.TEAM]))
 				continue
 
 			start = time.time()

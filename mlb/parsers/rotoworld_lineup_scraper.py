@@ -1,7 +1,8 @@
 import logging
 import re
-from bs4 import BeautifulSoup
 import time
+
+from bs4 import BeautifulSoup
 from mlb.constants.mlb_constants import MLBConstants
 from mlb.models.lineup_manager import LineupManager
 from mlb.models.name_mapping_manager import NameMappingManager
@@ -21,6 +22,35 @@ class RotoworldLineupScraper:
 		self.name_mapping_manager = NameMappingManager(testing=testing)
 		self.bbr_scraper = BaseballReferenceScraper()
 		self.bbr_scraper.sleep_time = sleep_time
+
+	def parse_teams_only(self, data):
+		"""
+		Parse the rotowire page to determine which teams are playing today.
+		"""
+		data = data.replace("\r", "").replace("\n", "").replace("\t", "")
+		soup = BeautifulSoup(data, "lxml")
+
+		teams = []
+
+		matchups = soup.find_all(attrs={"class": "offset1 span15"})
+		for matchup in matchups:
+			# Is this an ad tile?
+			promo_div = matchup.find(attrs={"class": "dlineups-toolpromo-head"})
+			if promo_div is not None:
+				continue
+
+			# Is this game postponed?
+			postponed_div = matchup.find(attrs={"class": "dlineups-postponed"})
+			if postponed_div is not None:
+				continue
+
+			away_team = matchup.find(attrs={"class": "dlineups-topboxleft"}).text
+			home_team = matchup.find(attrs={"class": "span5 dlineups-topboxright"}).text
+
+			teams.append(away_team)
+			teams.append(home_team)
+
+		return teams
 
 	def parse(self, data):
 		data = data.replace("\r", "").replace("\n", "").replace("\t", "")
