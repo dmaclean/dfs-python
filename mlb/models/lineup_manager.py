@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, timedelta
 from pymongo import MongoClient
 from mlb.constants.mlb_constants import MLBConstants
 from mlb.models.player_manager import PlayerManager
@@ -70,3 +70,22 @@ class LineupManager:
 			return None
 		else:
 			return player_data["player_id"].replace(".", "_")
+
+	def find_team_last_game(self, team):
+		one_day = timedelta(days=1)
+		today = date.today()
+		curr_day = today
+
+		found = False
+		players_list = []
+		while not found:
+			curr_day = curr_day - one_day
+			lineups = self.lineups_collection.find_one({"date": str(curr_day)})
+			players = lineups["players"]
+
+			for player in players:
+				if players[player]["team"] == team:
+					found = True
+					players_list.append(player)
+
+		return players_list

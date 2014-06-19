@@ -1,5 +1,5 @@
 import unittest
-from datetime import date
+from datetime import date, timedelta
 from mlb.models.lineup_manager import LineupManager
 from mlb.models.player_manager import PlayerManager
 
@@ -56,6 +56,49 @@ class TestLineupManager(unittest.TestCase):
 		self.player_manager.save(player_data)
 
 		self.assertTrue(self.lineup_manager.get_id_for_player_name("Dan MacLean") == "dmaclean")
+
+	def test_find_team_last_game(self):
+		one_day = timedelta(days=1)
+		today = date.today()
+		yesterday = today - one_day
+		two_days_ago = yesterday - one_day
+		three_days_ago = two_days_ago - one_day
+
+		yesterday_lineup = {
+			"date": str(yesterday),
+		    "players": {
+			    "dmaclean": {
+				    "team": "BOS"
+			    }
+		    }
+		}
+		self.lineup_manager.lineups_collection.save(yesterday_lineup)
+
+		two_days_ago_lineup = {
+			"date": str(two_days_ago),
+		    "players": {
+			    "asmith": {
+				    "team": "CLE"
+			    }
+		    }
+		}
+		self.lineup_manager.lineups_collection.save(two_days_ago_lineup)
+
+		three_days_ago_lineup = {
+			"date": str(three_days_ago),
+		    "players": {
+			    "bjohnson": {
+				    "team": "CLE"
+			    }
+		    }
+		}
+		self.lineup_manager.lineups_collection.save(three_days_ago_lineup)
+
+		players = self.lineup_manager.find_team_last_game("BOS")
+		self.assertTrue(len(players) == 1 and players[0] == "dmaclean")
+
+		players = self.lineup_manager.find_team_last_game("CLE")
+		self.assertTrue(len(players) == 1 and players[0] == "asmith")
 
 if __name__ == '__main__':
 	unittest.main()
