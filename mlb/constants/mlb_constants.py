@@ -218,3 +218,8 @@ class MLBConstants:
 	# Stats
 	#########
 	STATS_LLC = "stats_llc"
+
+	#######
+	# Misc
+	#######
+	VERIFIED = "verified"

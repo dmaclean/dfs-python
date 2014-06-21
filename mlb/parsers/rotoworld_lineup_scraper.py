@@ -31,6 +31,7 @@ class RotoworldLineupScraper:
 		soup = BeautifulSoup(data, "lxml")
 
 		teams = []
+		team_details = {}
 
 		matchups = soup.find_all(attrs={"class": "offset1 span15"})
 		for matchup in matchups:
@@ -50,11 +51,48 @@ class RotoworldLineupScraper:
 			teams.append(away_team)
 			teams.append(home_team)
 
-		return teams
+			pitchers_divs = matchup.find(attrs={"class": "span11 dlineups-pitchers"}).find_all("div")
+			away_pitcher = pitchers_divs[0].a.text
+			home_pitcher = pitchers_divs[1].a.text
+
+			# Grab the odds
+			odds_div = matchup.find(attrs={"class": "span4 dlineups-odds-bottom"})
+			odds = odds_div.text.replace("Line:", "").split("O/U:")
+			odds[0] = odds[0].strip().replace(u"\xa0"," ")
+			odds[1] = odds[1].strip().replace(u"\xa0"," ")
+
+			team_details[home_team] = {
+				"batting_order_position": -1,
+				MLBConstants.POSITION: "",
+				"opposing_pitcher": away_pitcher,
+				"team": home_team,
+				"opponent": away_team,
+				"home": True,
+				MLBConstants.VEGAS_LINE: odds[0],
+				MLBConstants.OVER_UNDER: odds[1],
+				MLBConstants.VERIFIED: False
+			}
+
+			team_details[away_team] = {
+				"batting_order_position": -1,
+				MLBConstants.POSITION: "",
+				"opposing_pitcher": home_pitcher,
+				"team": away_team,
+				"opponent": home_team,
+				"home": False,
+				MLBConstants.VEGAS_LINE: odds[0],
+				MLBConstants.OVER_UNDER: odds[1],
+				MLBConstants.VERIFIED: False
+			}
+
+		return teams, team_details
 
 	def parse(self, data):
 		data = data.replace("\r", "").replace("\n", "").replace("\t", "")
 		soup = BeautifulSoup(data, "lxml")
+
+		teams = []
+		team_details = {}
 
 		matchups = soup.find_all(attrs={"class": "offset1 span15"})
 		for matchup in matchups:
@@ -70,6 +108,9 @@ class RotoworldLineupScraper:
 
 			away_team = matchup.find(attrs={"class": "dlineups-topboxleft"}).text
 			home_team = matchup.find(attrs={"class": "span5 dlineups-topboxright"}).text
+
+			teams.append(away_team)
+			teams.append(home_team)
 
 			lineup_divs = matchup.find_all(attrs={"class": "dlineups-half"})
 			away_lineup = lineup_divs[0]
@@ -113,7 +154,8 @@ class RotoworldLineupScraper:
 						"opponent": opponent,
 						"home": True if lineup == home_lineup else False,
 						MLBConstants.VEGAS_LINE: odds[0],
-						MLBConstants.OVER_UNDER: odds[1]
+						MLBConstants.OVER_UNDER: odds[1],
+					    MLBConstants.VERIFIED: True
 					})
 
 					batting_order_position += 1
@@ -127,7 +169,8 @@ class RotoworldLineupScraper:
 				"opponent": home_team,
 				"home": False,
 				MLBConstants.VEGAS_LINE: odds[0],
-				MLBConstants.OVER_UNDER: odds[1]
+				MLBConstants.OVER_UNDER: odds[1],
+				MLBConstants.VERIFIED: True
 			})
 
 			self.process_player(home_pitcher, {
@@ -138,7 +181,8 @@ class RotoworldLineupScraper:
 				"opponent": away_team,
 				"home": True,
 				MLBConstants.VEGAS_LINE: odds[0],
-				MLBConstants.OVER_UNDER: odds[1]
+				MLBConstants.OVER_UNDER: odds[1],
+				MLBConstants.VERIFIED: True
 			})
 
 	def process_player(self, player_name, additional_data):
@@ -175,7 +219,8 @@ class RotoworldLineupScraper:
 			"home": additional_data["home"],
 			MLBConstants.POSITION: additional_data[MLBConstants.POSITION],
 			MLBConstants.VEGAS_LINE: additional_data[MLBConstants.VEGAS_LINE],
-			MLBConstants.OVER_UNDER: additional_data[MLBConstants.OVER_UNDER]
+			MLBConstants.OVER_UNDER: additional_data[MLBConstants.OVER_UNDER],
+		    MLBConstants.VERIFIED: additional_data[MLBConstants.VERIFIED]
 		}
 		self.lineup_manager.add_player_to_lineup(escaped_player_id, player_lineup_data)
 
