@@ -72,6 +72,11 @@ class LineupManager:
 			return player_data["player_id"].replace(".", "_")
 
 	def find_team_last_game(self, team):
+		"""
+		Determine the last date that the provided team played and return their starting lineup.
+		:param team:    The team of interest
+		:return:        A list of player ids representing the starting lineup of the last game they played.
+		"""
 		one_day = timedelta(days=1)
 		today = date.today()
 		curr_day = today
@@ -84,8 +89,33 @@ class LineupManager:
 			players = lineups["players"]
 
 			for player in players:
-				if players[player]["team"] == team:
+				if "team" in players[player] and players[player]["team"] == team:
 					found = True
-					players_list.append(player)
+					player_data = {
+						MLBConstants.PLAYER_ID: player,
+					    MLBConstants.POSITION: players[player][MLBConstants.POSITION]
+					}
+					players_list.append(player_data)
 
 		return players_list
+
+	def find_player_position_last_game(self, player_id):
+		"""
+		Return the position that the provided player started at in their last game.
+
+		:param player_id:   The id of the player of interest.
+		:return:            A string representing the player's position.
+		"""
+		one_day = timedelta(days=1)
+		today = date.today()
+		curr_day = today
+
+		found = False
+		while not found:
+			curr_day = curr_day - one_day
+			player_data = self.lineups_collection.find_one({"date": str(curr_day)})
+			if player_id not in player_data["players"]:
+				continue
+			return player_data["players"][player_id][MLBConstants.POSITION]
+
+		return None

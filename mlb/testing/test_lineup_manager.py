@@ -1,5 +1,6 @@
 import unittest
 from datetime import date, timedelta
+from mlb.constants.mlb_constants import MLBConstants
 from mlb.models.lineup_manager import LineupManager
 from mlb.models.player_manager import PlayerManager
 
@@ -68,7 +69,8 @@ class TestLineupManager(unittest.TestCase):
 			"date": str(yesterday),
 		    "players": {
 			    "dmaclean": {
-				    "team": "BOS"
+				    "team": "BOS",
+			        "position": "P"
 			    }
 		    }
 		}
@@ -78,7 +80,8 @@ class TestLineupManager(unittest.TestCase):
 			"date": str(two_days_ago),
 		    "players": {
 			    "asmith": {
-				    "team": "CLE"
+				    "team": "CLE",
+			        "position": "2B"
 			    }
 		    }
 		}
@@ -88,17 +91,68 @@ class TestLineupManager(unittest.TestCase):
 			"date": str(three_days_ago),
 		    "players": {
 			    "bjohnson": {
-				    "team": "CLE"
+				    "team": "CLE",
+			        "position": "3B"
 			    }
 		    }
 		}
 		self.lineup_manager.lineups_collection.save(three_days_ago_lineup)
 
 		players = self.lineup_manager.find_team_last_game("BOS")
-		self.assertTrue(len(players) == 1 and players[0] == "dmaclean")
+		self.assertTrue(len(players) == 1)
+		self.assertTrue(players[0][MLBConstants.PLAYER_ID] == "dmaclean")
+		self.assertTrue(players[0][MLBConstants.POSITION] == "P")
 
 		players = self.lineup_manager.find_team_last_game("CLE")
-		self.assertTrue(len(players) == 1 and players[0] == "asmith")
+		self.assertTrue(len(players) == 1)
+		self.assertTrue(players[0][MLBConstants.PLAYER_ID] == "asmith")
+		self.assertTrue(players[0][MLBConstants.POSITION] == "2B")
+
+	def test_find_player_position_last_game(self):
+		one_day = timedelta(days=1)
+		today = date.today()
+		yesterday = today - one_day
+		two_days_ago = yesterday - one_day
+		three_days_ago = two_days_ago - one_day
+
+		yesterday_lineup = {
+			"date": str(yesterday),
+		    "players": {
+			    "dmaclean": {
+				    "team": "BOS",
+			        "position": "P"
+			    }
+		    }
+		}
+		self.lineup_manager.lineups_collection.save(yesterday_lineup)
+
+		two_days_ago_lineup = {
+			"date": str(two_days_ago),
+		    "players": {
+			    "asmith": {
+				    "team": "CLE",
+			        "position": "2B"
+			    }
+		    }
+		}
+		self.lineup_manager.lineups_collection.save(two_days_ago_lineup)
+
+		three_days_ago_lineup = {
+			"date": str(three_days_ago),
+		    "players": {
+			    "bjohnson": {
+				    "team": "CLE",
+			        "position": "3B"
+			    }
+		    }
+		}
+		self.lineup_manager.lineups_collection.save(three_days_ago_lineup)
+
+		position = self.lineup_manager.find_player_position_last_game("asmith")
+		self.assertTrue(position == "2B")
+
+		position = self.lineup_manager.find_player_position_last_game("bjohnson")
+		self.assertTrue(position == "3B")
 
 if __name__ == '__main__':
 	unittest.main()

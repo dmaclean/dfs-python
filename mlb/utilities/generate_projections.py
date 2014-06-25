@@ -26,10 +26,10 @@ class ProjectionGenerator:
 	def process(self):
 		players = self.lineup_manager.lineups_collection.find_one({"date": str(self.game_date)}, {"players": 1})
 
-		batter_csv_contents = [["Name", "Team", "Opponent", "Position", "Batting Order Position", "wOBA", "wOBA vs Pitcher Type (LH/RH)",
+		batter_csv_contents = [["Name", "Team", "Opponent", "Verified", "Position", "Batting Order Position", "wOBA", "wOBA vs Pitcher Type (LH/RH)",
 								"OPS vs Pitcher Type (LH/RH)", "OPS", "Plate Appearances vs Pitcher", "Avg vs Pitcher",
 								"Hits vs Pitcher", "HRs vs Pitcher", "Park Runs", "Park HRs", "Vegas Line", "O/U"]]
-		pitcher_csv_contents = [["Name", "Team", "Opponent", "LH/RH", "FIP", "FIP vs RHB", "FIP vs LHB", "wOBA", "wOBA vs RHB", "wOBA vs LHB",
+		pitcher_csv_contents = [["Name", "Team", "Opponent", "Verified", "LH/RH", "FIP", "FIP vs RHB", "FIP vs LHB", "wOBA", "wOBA vs RHB", "wOBA vs LHB",
 								 "BABIP vs RHB", "BABIP vs LHB", "K/9", "BB/9", "Park Runs", "Park HRs", "Vegas Line", "O/U"]]
 
 		ballpark_data = self.ballpark_collection.find_one({"date": str(self.game_date)})
@@ -47,6 +47,7 @@ class ProjectionGenerator:
 			player_csv_data.append(player_data[MLBConstants.NAME].encode('ascii', errors='ignore'))
 			player_csv_data.append(player_lineup_data[MLBConstants.TEAM])
 			player_csv_data.append(player_lineup_data[MLBConstants.OPPONENT])
+			player_csv_data.append(str(player_lineup_data[MLBConstants.VERIFIED]))
 
 			is_batter = player_data[MLBConstants.POSITION] != "Pitcher"
 

@@ -72,17 +72,18 @@ class LineupScraper:
 
 		rotoworld_scraper = RotoworldLineupScraper(sleep_time=self.sleep_time)
 		data = MLBUtilities.fetch_data("www.rotowire.com", "/baseball/daily_lineups.htm", True)
-		teams = rotoworld_scraper.parse_teams_only(data)
+		teams, team_details = rotoworld_scraper.parse_teams_only(data)
 
 		for team in teams:
 			players = self.lineup_manager.find_team_last_game(team)
 			for player in players:
 			# for player in players["players"]:
-				unescaped_player = player.replace("_", ".")
+				player_id = player[MLBConstants.PLAYER_ID]
+				unescaped_player = player_id.replace("_", ".")
 
 				# Skip player if they've already been processed.
-				if self.lineup_manager.is_processed(player):
-					logging.info("Skipping {}, already processed.".format(player))
+				if self.lineup_manager.is_processed(player_id):
+					logging.info("Skipping {}, already processed.".format(player_id))
 					continue
 
 				# Skip player if they didn't end up in yesterday's lineup.  This can happen
@@ -109,7 +110,13 @@ class LineupScraper:
 				self.bbr_scraper.process_player(unescaped_player, url, active=True)
 
 				# Mark the player as processed (write to the lineup) once their stats have been updated.
-				self.lineup_manager.add_player_to_lineup(player, {})
+				player_data = team_details[team]
+				if len(player[MLBConstants.POSITION]) == 0:
+					self.lineup_manager.find_player_position_last_game(player_id, team)
+				else:
+					player_data[MLBConstants.POSITION] = player[MLBConstants.POSITION]
+
+				self.lineup_manager.add_player_to_lineup(player[MLBConstants.PLAYER_ID], player_data)
 
 				end = time.time()
 				print "Processed {} in {} seconds".format(player, end-start)
