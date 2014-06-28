@@ -200,6 +200,12 @@ class MLBConstants:
 	SPLITS_VS_LH_STARTER = "vs LH Starter"
 	SPLITS_VS_RH_STARTER = "vs RH Starter"
 
+	##################
+	# Pitcher Splits
+	##################
+	SPLITS_VS_RHB = "vs RHB"
+	SPLITS_VS_LHB = "vs LHB"
+
 	####################
 	# Ballpark Factors
 	####################
