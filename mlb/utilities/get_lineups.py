@@ -112,7 +112,7 @@ class LineupScraper:
 				# Mark the player as processed (write to the lineup) once their stats have been updated.
 				player_data = team_details[team]
 				if len(player[MLBConstants.POSITION]) == 0:
-					self.lineup_manager.find_player_position_last_game(player_id, team)
+					self.lineup_manager.find_player_position_last_game(player_id)
 				else:
 					player_data[MLBConstants.POSITION] = player[MLBConstants.POSITION]
 
