@@ -35,6 +35,8 @@ class StatCalculator:
 		try:
 			return ((13*data[MLBConstants.HOME_RUNS])+(3*(data[MLBConstants.WALKS] + data[MLBConstants.HIT_BY_PITCH]))-(2*data[MLBConstants.STRIKE_OUTS])/data[MLBConstants.INNINGS_PITCHED]) + 3.08
 		except KeyError, err:
+			logging.info("calculate_fip - a required stat is not present. {}".format(str(err)))
 			return -1
 		except ZeroDivisionError as err:
+			logging.info("calculate_fip - division by zero, returning zero.")
 			return -1
