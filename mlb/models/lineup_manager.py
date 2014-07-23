@@ -86,6 +86,8 @@ class LineupManager:
 		while not found:
 			curr_day = curr_day - one_day
 			lineups = self.lineups_collection.find_one({"date": str(curr_day)})
+			if lineups is None:
+				continue
 			players = lineups["players"]
 
 			for player in players:
