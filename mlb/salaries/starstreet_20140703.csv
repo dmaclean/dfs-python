@@ -1,0 +1,556 @@
+Position,Name,Team,Opponent,Game Time,Avg Fantasy Points,Price,Starter,Injury Status
+SP,Clayton Kershaw,LAD,LAD @ COL, 8:10 PM,33.1,33000,"",
+SP,Masahiro Tanaka,NYY,NYY @ MIN, 8:10 PM,31.4,33000,x,
+SP,David Price,TB,TB @ DET, 7:08 PM,27.6,32800,"",
+SP,Jose Fernandez,MIA,MIA vs PHI, 6:10 PM,30.3,32100,"",60-Day DL
+SP,Yu Darvish,TEX,TEX @ BAL, 7:05 PM,29.2,32000,x,
+SP,Adam Wainwright,STL,STL @ SF, 3:45 PM,28.6,30800,"",
+SP,Max Scherzer,DET,DET vs TB, 7:08 PM,24.9,30400,x,
+SP,Madison Bumgarner,SF,SF vs STL, 3:45 PM,24.2,27800,x,
+SP,Garrett Richards,LAA,LAA vs HOU,10:05 PM,24.2,27700,"",
+SP,Zack Greinke,LAD,LAD @ COL, 8:10 PM,24.1,27500,x,
+SP,Cole Hamels,PHI,PHI @ MIA, 6:10 PM,21.9,24900,"",
+SP,Dallas Keuchel,HOU,HOU @ LAA,10:05 PM,23.2,24600,"",Day-To-Day
+SP,Rick Porcello,DET,DET vs TB, 7:08 PM,19.6,24200,"",
+SP,Collin McHugh,HOU,HOU @ LAA,10:05 PM,22.8,24100,"",
+SP,Josh Beckett,LAD,LAD @ COL, 8:10 PM,22.3,23800,"",
+SP,Scott Kazmir,OAK,OAK vs TOR, 9:05 PM,22.4,23700,"",Day-To-Day
+SP,Vance Worley,PIT,PIT vs ARI, 7:05 PM,23.3,23400,x,
+SP,Tim Hudson,SF,SF vs STL, 3:45 PM,20.4,23000,"",
+SP,Sonny Gray,OAK,OAK vs TOR, 9:05 PM,20.8,23000,x,
+SP,Phil Hughes,MIN,MIN vs NYY, 8:10 PM,20.7,22900,x,
+SP,Cliff Lee,PHI,PHI @ MIA, 6:10 PM,21.5,22800,"",15-Day DL
+SP,Jaime Garcia,STL,STL @ SF, 3:45 PM,20.1,22500,"",15-Day DL
+SP,Bud Norris,BAL,BAL vs TEX, 7:05 PM,18.0,22300,"",15-Day DL
+SP,Jered Weaver,LAA,LAA vs HOU,10:05 PM,20.0,22300,"",
+SP,Tim Lincecum,SF,SF vs STL, 3:45 PM,17.7,22000,"",
+SP,Michael Wacha,STL,STL @ SF, 3:45 PM,20.7,21900,"",15-Day DL
+SP,Hyun-Jin Ryu,LAD,LAD @ COL, 8:10 PM,19.7,21700,"",
+SP,CJ Wilson,LAA,LAA vs HOU,10:05 PM,20.2,21400,"",
+SP,Jesse Chavez,OAK,OAK vs TOR, 9:05 PM,19.1,21300,"",
+SP,Anibal Sanchez,DET,DET vs TB, 7:08 PM,20.0,21200,"",
+SP,Mark Buehrle,TOR,TOR @ OAK, 9:05 PM,19.8,21000,"",
+SP,Christopher Archer,TB,TB @ DET, 7:08 PM,17.8,20900,"",
+SP,Charlie Morton,PIT,PIT vs ARI, 7:05 PM,18.7,20900,"",
+SP,Jake Odorizzi,TB,TB @ DET, 7:08 PM,17.1,20900,"",
+SP,AJ Burnett,PHI,PHI @ MIA, 6:10 PM,17.2,20600,"",
+SP,Lance Lynn,STL,STL @ SF, 3:45 PM,19.1,20200,"",Day-To-Day
+SP,RA Dickey,TOR,TOR @ OAK, 9:05 PM,16.4,20000,x,
+SP,Gerrit Cole,PIT,PIT vs ARI, 7:05 PM,18.6,19700,"",
+SP,Henderson Alvarez,MIA,MIA vs PHI, 6:10 PM,17.4,19700,"",
+SP,Nathan Eovaldi,MIA,MIA vs PHI, 6:10 PM,16.6,19600,"",
+SP,Jeff Locke,PIT,PIT vs ARI, 7:05 PM,18.2,19300,"",
+SP,Michael Pineda,NYY,NYY @ MIN, 8:10 PM,18.3,19300,"",60-Day DL
+SP,Wade Miley,ARI,ARI @ PIT, 7:05 PM,17.2,19100,"",
+SP,Drew Hutchison,TOR,TOR @ OAK, 9:05 PM,18.0,19100,"",
+SP,Tom Koehler,MIA,MIA vs PHI, 6:10 PM,18.1,19000,"",Day-to-Day
+SP,Chase Anderson,ARI,ARI @ PIT, 7:05 PM,16.0,18600,"",
+SP,Matt Shoemaker,LAA,LAA vs HOU,10:05 PM,13.4,18300,x,
+SP,Hiroki Kuroda,NYY,NYY @ MIN, 8:10 PM,15.6,18200,"",
+SP,Dan Haren,LAD,LAD @ COL, 8:10 PM,17.1,18200,"",
+SP,Kyle Kendrick,PHI,PHI @ MIA, 6:10 PM,13.8,18100,x,
+SP,Tyler Skaggs,LAA,LAA vs HOU,10:05 PM,17.4,17800,"",
+SP,Alex Cobb,TB,TB @ DET, 7:08 PM,16.6,17600,"",
+SP,Tyler Chatwood,COL,COL vs LAD, 8:10 PM,16.3,17500,"",60-Day DL
+SP,Erik Bedard,TB,TB @ DET, 7:08 PM,13.2,17400,x,
+SP,Joe Kelly,STL,STL @ SF, 3:45 PM,16.3,17300,"",60-Day DL
+SP,CC Sabathia,NYY,NYY @ MIN, 8:10 PM,16.3,17200,"",60-Day DL
+SP,Wei-Yin Chen,BAL,BAL vs TEX, 7:05 PM,15.2,17200,x,
+SP,Ryan Vogelsong,SF,SF vs STL, 3:45 PM,16.8,17200,"",
+SP,Bronson Arroyo,ARI,ARI @ PIT, 7:05 PM,14.6,17100,"",15-Day DL
+SP,Martin Perez,TEX,TEX @ BAL, 7:05 PM,16.1,17100,"",60-Day DL
+SP,Francisco Liriano,PIT,PIT vs ARI, 7:05 PM,14.1,16900,"",15-Day DL
+SP,Ubaldo Jimenez,BAL,BAL vs TEX, 7:05 PM,14.1,16900,"",
+SP,Jordan Lyles,COL,COL vs LAD, 8:10 PM,15.9,16900,"",15-Day DL
+SP,Brandon Mccarthy,ARI,ARI @ PIT, 7:05 PM,14.1,16800,x,
+SP,JA Happ,TOR,TOR @ OAK, 9:05 PM,13.6,16700,"",
+SP,Nick Tepesch,TEX,TEX @ BAL, 7:05 PM,14.1,16400,"",
+SP,Michael Bolsinger,ARI,ARI @ PIT, 7:05 PM,13.5,16400,"",
+SP,Chris Tillman,BAL,BAL vs TEX, 7:05 PM,13.4,16400,"",
+SP,Tom Milone,OAK,OAK vs TOR, 9:05 PM,15.3,16200,"",
+SP,Marcus Stroman,TOR,TOR @ OAK, 9:05 PM,12.2,16000,"",
+SP,Brett Oberholtzer,HOU,HOU @ LAA,10:05 PM,13.8,16000,x,
+SP,Jarred Cosart,HOU,HOU @ LAA,10:05 PM,15.0,16000,"",
+SP,Justin Verlander,DET,DET vs TB, 7:08 PM,15.2,15900,"",
+SP,Kyle Gibson,MIN,MIN vs NYY, 8:10 PM,14.4,15700,"",
+SP,David Buchanan,PHI,PHI @ MIA, 6:10 PM,13.9,15400,"",
+SP,Shelby Miller,STL,STL @ SF, 3:45 PM,14.5,15400,"",
+SP,Edinson Volquez,PIT,PIT vs ARI, 7:05 PM,14.3,15200,"",
+SP,Matt Cain,SF,SF vs STL, 3:45 PM,14.2,15000,"",
+SP,Drew Smyly,DET,DET vs TB, 7:08 PM,13.6,14900,"",Day-To-Day
+SP,Scott Feldman,HOU,HOU @ LAA,10:05 PM,13.0,14800,"",
+SP,Jorge De La Rosa,COL,COL vs LAD, 8:10 PM,13.9,14700,"",
+SP,Brad Mills,OAK,OAK vs TOR, 9:05 PM,13.7,14500,"",
+SP,Josh Collmenter,ARI,ARI @ PIT, 7:05 PM,12.6,14400,"",
+SP,Brad Peacock,HOU,HOU @ LAA,10:05 PM,12.1,13200,"",
+RP,Blaine Hardy,DET,DET vs TB, 7:08 PM,4.9,13000,"",
+SP,Randall Delgado,ARI,ARI @ PIT, 7:05 PM,4.3,13000,"",
+RP,Jeanmar Gomez,PIT,PIT vs ARI, 7:05 PM,4.3,13000,"",
+RP,Tony Watson,PIT,PIT vs ARI, 7:05 PM,5.0,13000,"",
+RP,Stolmy Pimentel,PIT,PIT vs ARI, 7:05 PM,8.7,13000,"",
+RP,Joe Thatcher,ARI,ARI @ PIT, 7:05 PM,2.4,13000,"",
+RP,Ernesto Frieri,PIT,PIT vs ARI, 7:05 PM,2.6,13000,"",
+RP,Justin Wilson,PIT,PIT vs ARI, 7:05 PM,2.8,13000,"",
+RP,Matt Stites,ARI,ARI @ PIT, 7:05 PM,2.1,13000,"",
+RP,Oliver Perez,ARI,ARI @ PIT, 7:05 PM,3.0,13000,"",
+RP,Evan Marshall,ARI,ARI @ PIT, 7:05 PM,3.1,13000,"",
+RP,Addison Reed,ARI,ARI @ PIT, 7:05 PM,3.2,13000,"",
+RP,Mark Melancon,PIT,PIT vs ARI, 7:05 PM,3.3,13000,"",
+RP,Jared Hughes,PIT,PIT vs ARI, 7:05 PM,3.4,13000,"",
+RP,Brad Ziegler,ARI,ARI @ PIT, 7:05 PM,3.4,13000,"",
+SP,Daniel Hudson,ARI,ARI @ PIT, 7:05 PM,0,13000,"",60-Day DL
+RP,David Hernandez,ARI,ARI @ PIT, 7:05 PM,0,13000,"",
+SP,Patrick Corbin,ARI,ARI @ PIT, 7:05 PM,0,13000,"",60-Day DL
+RP,Matt Reynolds,ARI,ARI @ PIT, 7:05 PM,0,13000,"",60-Day DL
+RP,Jonathan Papelbon,PHI,PHI @ MIA, 6:10 PM,3.8,13000,"",
+RP,Carter Capps,MIA,MIA vs PHI, 6:10 PM,5.0,13000,"",60-Day DL
+RP,Kenneth Giles,PHI,PHI @ MIA, 6:10 PM,5.2,13000,"",
+SP,Andrew Heaney,MIA,MIA vs PHI, 6:10 PM,12.0,13000,"",
+SP,Roberto Hernandez,PHI,PHI @ MIA, 6:10 PM,11.0,13000,"",
+RP,Sam Dyson,MIA,MIA vs PHI, 6:10 PM,6.0,13000,"",
+SP,Jacob Turner,MIA,MIA vs PHI, 6:10 PM,5.8,13000,"",
+RP,Steven Cishek,MIA,MIA vs PHI, 6:10 PM,4.3,13000,"",
+RP,Antonio Bastardo,PHI,PHI @ MIA, 6:10 PM,4.4,13000,"",
+RP,Justin De Fratus,PHI,PHI @ MIA, 6:10 PM,4.2,13000,"",
+RP,Bryan Morris,MIA,MIA vs PHI, 6:10 PM,4.2,13000,"",
+RP,Chris Hatcher,MIA,MIA vs PHI, 6:10 PM,3.9,13000,"",
+RP,Mike Adams,PHI,PHI @ MIA, 6:10 PM,3.9,13000,"",60-Day DL
+RP,Jake Diekman,PHI,PHI @ MIA, 6:10 PM,3.9,13000,"",
+RP,AJ Ramos,MIA,MIA vs PHI, 6:10 PM,3.8,13000,"",
+RP,Mike Dunn,MIA,MIA vs PHI, 6:10 PM,3.5,13000,"",
+RP,Dan Jennings,MIA,MIA vs PHI, 6:10 PM,3.1,13000,"",
+RP,Mario Hollands,PHI,PHI @ MIA, 6:10 PM,2.7,13000,"",Day-To-Day
+RP,Jeff Manship,PHI,PHI @ MIA, 6:10 PM,2.3,13000,"",15-Day DL
+RP,Brad Hand,MIA,MIA vs PHI, 6:10 PM,2.2,13000,x,
+RP,Kevin Gregg,MIA,MIA vs PHI, 6:10 PM,1.4,13000,"",
+RP,BJ Rosenberg,PHI,PHI @ MIA, 6:10 PM,1.4,13000,"",
+RP,Aaron Loup,TOR,TOR @ OAK, 9:05 PM,3.1,13000,"",
+RP,Fernando Abad,OAK,OAK vs TOR, 9:05 PM,3.4,13000,"",
+SP,Drew Pomeranz,OAK,OAK vs TOR, 9:05 PM,11.1,13000,"",15-Day DL
+SP,Brandon Morrow,TOR,TOR @ OAK, 9:05 PM,9.5,13000,"",60-Day DL
+RP,Dustin Mcgowan,TOR,TOR @ OAK, 9:05 PM,5.5,13000,"",
+RP,Todd Redmond,TOR,TOR @ OAK, 9:05 PM,5.3,13000,"",
+RP,Sean Doolittle,OAK,OAK vs TOR, 9:05 PM,4.9,13000,"",
+RP,Dan Otero,OAK,OAK vs TOR, 9:05 PM,4.2,13000,"",
+RP,Jeff Francis,OAK,OAK vs TOR, 9:05 PM,4.0,13000,"",
+RP,Luke Gregerson,OAK,OAK vs TOR, 9:05 PM,3.7,13000,"",
+RP,Casey Janssen,TOR,TOR @ OAK, 9:05 PM,4.0,13000,"",
+RP,Sergio Santos,TOR,TOR @ OAK, 9:05 PM,2.1,13000,"",
+RP,Chad Jenkins,TOR,TOR @ OAK, 9:05 PM,2.3,13000,"",
+RP,Jim Johnson,OAK,OAK vs TOR, 9:05 PM,2.2,13000,"",
+RP,Brett Cecil,TOR,TOR @ OAK, 9:05 PM,2.6,13000,"",15-Day DL
+RP,Ryan Cook,OAK,OAK vs TOR, 9:05 PM,2.8,13000,"",
+SP,Jarrod Parker,OAK,OAK vs TOR, 9:05 PM,0,13000,"",60-Day DL
+RP,Eric O'Flaherty,OAK,OAK vs TOR, 9:05 PM,0,13000,"",60-Day DL
+SP,AJ Griffin,OAK,OAK vs TOR, 9:05 PM,0,13000,"",60-Day DL
+RP,TJ McFarland,BAL,BAL vs TEX, 7:05 PM,4.9,13000,"",
+RP,Jason Frasor,TEX,TEX @ BAL, 7:05 PM,2.8,13000,"",
+RP,Brad Brach,BAL,BAL vs TEX, 7:05 PM,5.3,13000,"",
+RP,Zach Britton,BAL,BAL vs TEX, 7:05 PM,4.5,13000,"",
+RP,Joakim Soria,TEX,TEX @ BAL, 7:05 PM,4.4,13000,"",
+SP,Nicholas Martinez,TEX,TEX @ BAL, 7:05 PM,4.3,13000,"",
+RP,Shawn Tolleson,TEX,TEX @ BAL, 7:05 PM,3.9,13000,"",
+RP,Darren O'Day,BAL,BAL vs TEX, 7:05 PM,3.8,13000,"",
+RP,Ben Rowen,TEX,TEX @ BAL, 7:05 PM,3.3,13000,"",
+RP,Ryan Webb,BAL,BAL vs TEX, 7:05 PM,3.4,13000,"",
+RP,Neal Cotts,TEX,TEX @ BAL, 7:05 PM,3.2,13000,"",
+SP,Miguel Gonzalez,BAL,BAL vs TEX, 7:05 PM,12.2,13000,"",
+SP,Colby Lewis,TEX,TEX @ BAL, 7:05 PM,11.4,13000,"",
+SP,Matt Harrison,TEX,TEX @ BAL, 7:05 PM,7.5,13000,"",60-Day DL
+RP,Scott Baker,TEX,TEX @ BAL, 7:05 PM,7.1,13000,"",
+SP,Derek Holland,TEX,TEX @ BAL, 7:05 PM,0,13000,"",60-Day DL
+SP,Miles Mikolas,TEX,TEX @ BAL, 7:05 PM,13.0,13000,"",
+RP,Joe Ortiz,TEX,TEX @ BAL, 7:05 PM,0,13000,"",60-Day DL
+RP,Ramon Ramirez,BAL,BAL vs TEX, 7:05 PM,6.0,13000,"",
+SP,Johan Santana,BAL,BAL vs TEX, 7:05 PM,0,13000,"",60-Day DL
+RP,Alexi Ogando,TEX,TEX @ BAL, 7:05 PM,1.7,13000,"",15-Day DL
+RP,Brian Matusz,BAL,BAL vs TEX, 7:05 PM,1.8,13000,"",
+RP,Tanner Scheppers,TEX,TEX @ BAL, 7:05 PM,2.0,13000,"",15-Day DL
+RP,Tommy Hunter,BAL,BAL vs TEX, 7:05 PM,2.2,13000,"",
+RP,Pedro Figueroa,TEX,TEX @ BAL, 7:05 PM,2.4,13000,"",60-Day DL
+RP,Aaron Poreda,TEX,TEX @ BAL, 7:05 PM,2.6,13000,"",
+RP,Santiago Casilla,SF,SF vs STL, 3:45 PM,4.0,13000,"",
+RP,Pat Neshek,STL,STL @ SF, 3:45 PM,4.0,13000,"",
+RP,Sam Freeman,STL,STL @ SF, 3:45 PM,4.1,13000,"",
+RP,Jean Machi,SF,SF vs STL, 3:45 PM,3.9,13000,"",
+RP,Trevor Rosenthal,STL,STL @ SF, 3:45 PM,3.7,13000,"",
+RP,Kevin Siegrist,STL,STL @ SF, 3:45 PM,3.4,13000,"",15-Day DL
+RP,Javier Lopez,SF,SF vs STL, 3:45 PM,1.1,13000,"",
+RP,Sergio Romo,SF,SF vs STL, 3:45 PM,3.0,13000,"",
+RP,Seth Maness,STL,STL @ SF, 3:45 PM,3.1,13000,"",
+RP,Jeremy Affeldt,SF,SF vs STL, 3:45 PM,3.1,13000,"",
+RP,Juan Gutierrez,SF,SF vs STL, 3:45 PM,3.2,13000,"",
+RP,Jason Motte,STL,STL @ SF, 3:45 PM,2.0,13000,"",
+RP,Randy Choate,STL,STL @ SF, 3:45 PM,1.9,13000,"",
+SP,Carlos Martinez,STL,STL @ SF, 3:45 PM,3.7,13000,x,
+SP,Marco Gonzales,STL,STL @ SF, 3:45 PM,0.0,13000,"",
+RP,Yusmeiro Petit,SF,SF vs STL, 3:45 PM,8.1,13000,"",
+RP,Nick Greenwood,STL,STL @ SF, 3:45 PM,5.6,13000,"",
+RP,Rich Hill,LAA,LAA vs HOU,10:05 PM,0.0,13000,"",
+RP,Sean Burnett,LAA,LAA vs HOU,10:05 PM,0.0,13000,"",60-Day DL
+RP,Jesse Crain,HOU,HOU @ LAA,10:05 PM,0,13000,"",60-Day DL
+RP,Brian Moran,LAA,LAA vs HOU,10:05 PM,0,13000,"",60-Day DL
+RP,Jose Veras,HOU,HOU @ LAA,10:05 PM,1.3,13000,"",
+RP,Josh Zeid,HOU,HOU @ LAA,10:05 PM,1.8,13000,"",
+SP,Hector Santiago,LAA,LAA vs HOU,10:05 PM,10.4,13000,"",
+RP,David Carpenter,LAA,LAA vs HOU,10:05 PM,8.0,13000,"",
+RP,Tony Sipp,HOU,HOU @ LAA,10:05 PM,5.0,13000,"",
+RP,Mike Morin,LAA,LAA vs HOU,10:05 PM,3.8,13000,"",
+RP,Matt Albers,HOU,HOU @ LAA,10:05 PM,3.9,13000,"",15-Day DL
+RP,Fernando Salas,LAA,LAA vs HOU,10:05 PM,3.9,13000,"",15-Day DL
+RP,Cory Rasmus,LAA,LAA vs HOU,10:05 PM,3.8,13000,"",
+RP,Joe Smith,LAA,LAA vs HOU,10:05 PM,3.8,13000,"",
+RP,Chad Qualls,HOU,HOU @ LAA,10:05 PM,3.3,13000,"",
+RP,Kevin Jepsen,LAA,LAA vs HOU,10:05 PM,3.3,13000,"",
+RP,Josh Fields,HOU,HOU @ LAA,10:05 PM,3.1,13000,"",15-Day DL
+RP,Jason Grilli,LAA,LAA vs HOU,10:05 PM,2.3,13000,"",
+RP,Darin Downs,HOU,HOU @ LAA,10:05 PM,2.2,13000,"",
+RP,Anthony Bass,HOU,HOU @ LAA,10:05 PM,2.0,13000,"",
+RP,Jose Cisnero,HOU,HOU @ LAA,10:05 PM,0.4,13000,"",60-Day DL
+RP,Ryan Brasier,LAA,LAA vs HOU,10:05 PM,0,13000,"",60-Day DL
+RP,JP Howell,LAD,LAD @ COL, 8:10 PM,3.0,13000,"",
+RP,Brandon League,LAD,LAD @ COL, 8:10 PM,3.1,13000,"",
+SP,Paul Maholm,LAD,LAD @ COL, 8:10 PM,3.2,13000,"",
+RP,Jamey Wright,LAD,LAD @ COL, 8:10 PM,3.8,13000,"",
+RP,Chris Withrow,LAD,LAD @ COL, 8:10 PM,3.9,13000,"",
+RP,Tommy Kahnle,COL,COL vs LAD, 8:10 PM,4.6,13000,"",
+SP,Christian Bergman,COL,COL vs LAD, 8:10 PM,5.3,13000,"",60-Day DL
+SP,Brett Anderson,COL,COL vs LAD, 8:10 PM,7.3,13000,"",60-Day DL
+SP,Franklin Morales,COL,COL vs LAD, 8:10 PM,7.0,13000,x,
+RP,Rob Scahill,COL,COL vs LAD, 8:10 PM,1.7,13000,"",
+RP,Chris Perez,LAD,LAD @ COL, 8:10 PM,2.0,13000,"",
+RP,Nick Masset,COL,COL vs LAD, 8:10 PM,2.2,13000,"",
+RP,LaTroy Hawkins,COL,COL vs LAD, 8:10 PM,2.3,13000,"",
+RP,Matt Belisle,COL,COL vs LAD, 8:10 PM,2.3,13000,"",
+RP,Boone Logan,COL,COL vs LAD, 8:10 PM,2.5,13000,"",15-Day DL
+RP,Brian Wilson,LAD,LAD @ COL, 8:10 PM,2.2,13000,"",
+RP,Adam Ottavino,COL,COL vs LAD, 8:10 PM,2.6,13000,"",
+RP,Rex Brothers,COL,COL vs LAD, 8:10 PM,2.6,13000,"",
+SP,Jhoulys Chacin,COL,COL vs LAD, 8:10 PM,10.3,13000,"",15-Day DL
+SP,Yohan Flande,COL,COL vs LAD, 8:10 PM,8.5,13000,"",
+SP,Chad Billingsley,LAD,LAD @ COL, 8:10 PM,0,13000,"",60-Day DL
+RP,Scott Elbert,LAD,LAD @ COL, 8:10 PM,0,13000,"",60-Day DL
+RP,Onelki Garcia,LAD,LAD @ COL, 8:10 PM,0,13000,"",
+RP,Chad Bettis,COL,COL vs LAD, 8:10 PM,0.0,13000,"",
+SP,Eddie Butler,COL,COL vs LAD, 8:10 PM,0.0,13000,"",15-Day DL
+SP,Tyler Matzek,COL,COL vs LAD, 8:10 PM,12.6,13000,"",
+RP,Kenley Jansen,LAD,LAD @ COL, 8:10 PM,3.7,13000,"",
+SP,Christian Friedrich,COL,COL vs LAD, 8:10 PM,3.7,13000,"",
+RP,Jim Miller,NYY,NYY @ MIN, 8:10 PM,0,13000,"",
+SP,Ricky Nolasco,MIN,MIN vs NYY, 8:10 PM,11.5,13000,"",
+SP,Chase Whitley,NYY,NYY @ MIN, 8:10 PM,11.3,13000,"",
+SP,David Phelps,NYY,NYY @ MIN, 8:10 PM,10.0,13000,"",
+SP,Kevin Correia,MIN,MIN vs NYY, 8:10 PM,9.6,13000,"",
+SP,Vidal Nuno,NYY,NYY @ MIN, 8:10 PM,9.4,13000,"",
+SP,Yohan Pino,MIN,MIN vs NYY, 8:10 PM,9.0,13000,"",
+RP,Dellin Betances,NYY,NYY @ MIN, 8:10 PM,7.6,13000,"",
+RP,Samuel Deduno,MIN,MIN vs NYY, 8:10 PM,7.6,13000,"",
+SP,Ivan Nova,NYY,NYY @ MIN, 8:10 PM,5.5,13000,"",60-Day DL
+RP,David Robertson,NYY,NYY @ MIN, 8:10 PM,5.0,13000,"",
+RP,Glen Perkins,MIN,MIN vs NYY, 8:10 PM,4.3,13000,"",
+RP,Caleb Thielbar,MIN,MIN vs NYY, 8:10 PM,2.8,13000,"",
+RP,Shawn Kelley,NYY,NYY @ MIN, 8:10 PM,2.8,13000,"",
+RP,Brian Duensing,MIN,MIN vs NYY, 8:10 PM,2.4,13000,"",
+RP,Matt Guerrier,MIN,MIN vs NYY, 8:10 PM,2.2,13000,"",
+RP,Jared Burton,MIN,MIN vs NYY, 8:10 PM,2.0,13000,"",
+RP,Matt Thornton,NYY,NYY @ MIN, 8:10 PM,1.5,13000,"",
+SP,Mike Pelfrey,MIN,MIN vs NYY, 8:10 PM,0.4,13000,"",60-Day DL
+RP,David Huff,NYY,NYY @ MIN, 8:10 PM,2.8,13000,"",
+RP,Anthony Swarzak,MIN,MIN vs NYY, 8:10 PM,3.0,13000,"",
+RP,Casey Fien,MIN,MIN vs NYY, 8:10 PM,3.4,13000,"",
+RP,Adam Warren,NYY,NYY @ MIN, 8:10 PM,3.7,13000,"",
+RP,Jake Mcgee,TB,TB @ DET, 7:08 PM,4.5,13000,"",
+RP,Kirby Yates,TB,TB @ DET, 7:08 PM,4.3,13000,"",
+RP,Patrick McCoy,DET,DET vs TB, 7:08 PM,2.0,13000,"",
+RP,Phil Coke,DET,DET vs TB, 7:08 PM,2.0,13000,"",
+RP,Chad Smith,DET,DET vs TB, 7:08 PM,2.3,13000,"",
+RP,Grant Balfour,TB,TB @ DET, 7:08 PM,2.3,13000,"",
+RP,Luke Putkonen,DET,DET vs TB, 7:08 PM,0.0,13000,"",60-Day DL
+RP,Bruce Rondon,DET,DET vs TB, 7:08 PM,0,13000,"",60-Day DL
+SP,Jeremy Hellickson,TB,TB @ DET, 7:08 PM,0,13000,"",15-Day DL
+RP,Joel Hanrahan,DET,DET vs TB, 7:08 PM,0,13000,"",15-Day DL
+RP,Ian Krol,DET,DET vs TB, 7:08 PM,1.5,13000,"",15-Day DL
+RP,Joe Nathan,DET,DET vs TB, 7:08 PM,2.6,13000,"",
+RP,Al Alburquerque,DET,DET vs TB, 7:08 PM,2.8,13000,"",
+RP,Joel Peralta,TB,TB @ DET, 7:08 PM,3.3,13000,"",
+RP,Joba Chamberlain,DET,DET vs TB, 7:08 PM,3.2,13000,"",
+RP,Juan Carlos Oviedo,TB,TB @ DET, 7:08 PM,3.7,13000,"",
+RP,Jeff Beliveau,TB,TB @ DET, 7:08 PM,4.0,13000,"",
+SP,Matt Moore,TB,TB @ DET, 7:08 PM,10.5,13000,"",60-Day DL
+SP,Cesar Ramos,TB,TB @ DET, 7:08 PM,5.3,13000,"",
+RP,Brad Boxberger,TB,TB @ DET, 7:08 PM,4.7,13000,"",
+OF,Mike Trout,LAA,LAA vs HOU,10:05 PM,10.3,11100,"",
+OF,Giancarlo Stanton,MIA,MIA vs PHI, 6:10 PM,9.6,10700,"",
+1B,Edwin Encarnacion,TOR,TOR @ OAK, 9:05 PM,9.1,9800,"",
+1B,Miguel Cabrera,DET,DET vs TB, 7:08 PM,8.3,9700,"",
+SS,Troy Tulowitzki,COL,COL vs LAD, 8:10 PM,9.1,9700,"",
+2B,Ian Kinsler,DET,DET vs TB, 7:08 PM,7.9,9500,"",
+OF,Andrew McCutchen,PIT,PIT vs ARI, 7:05 PM,8.7,9200,"",Day-To-Day
+1B,Paul Goldschmidt,ARI,ARI @ PIT, 7:05 PM,8.8,9200,"",
+2B,Jose Altuve,HOU,HOU @ LAA,10:05 PM,8.4,9200,"",
+OF,Jose Bautista,TOR,TOR @ OAK, 9:05 PM,8.6,9100,"",
+OF,Nelson Cruz,BAL,BAL vs TEX, 7:05 PM,8.3,9000,"",
+DH,Victor Martinez,DET,DET vs TB, 7:08 PM,8.3,8800,"",Day-To-Day
+2B,Dee Gordon,LAD,LAD @ COL, 8:10 PM,8.3,8800,"",
+OF,JD Martinez,DET,DET vs TB, 7:08 PM,7.7,8800,"",
+OF,Yasiel Puig,LAD,LAD @ COL, 8:10 PM,8.1,8700,"",
+OF,Adam Jones,BAL,BAL vs TEX, 7:05 PM,7.2,8700,"",
+3B,Adrian Beltre,TEX,TEX @ BAL, 7:05 PM,7.4,8400,"",
+1B,Brandon Moss,OAK,OAK vs TOR, 9:05 PM,7.5,8300,"",
+OF,Yoenis Cespedes,OAK,OAK vs TOR, 9:05 PM,7.3,8300,"",
+OF,Kole Calhoun,LAA,LAA vs HOU,10:05 PM,7.1,8200,"",
+SS,Hanley Ramirez,LAD,LAD @ COL, 8:10 PM,7.4,8100,"",Day-To-Day
+OF,George Springer,HOU,HOU @ LAA,10:05 PM,7.1,8100,"",
+OF,Josh Hamilton,LAA,LAA vs HOU,10:05 PM,7.6,8000,"",
+3B,Josh Donaldson,OAK,OAK vs TOR, 9:05 PM,7.5,7900,"",
+OF,Coco Crisp,OAK,OAK vs TOR, 9:05 PM,7.7,7900,"",
+OF,Corey Dickerson,COL,COL vs LAD, 8:10 PM,7.3,7900,"",
+OF,Jacoby Ellsbury,NYY,NYY @ MIN, 8:10 PM,7.0,7900,"",Day-To-Day
+2B,Brian Dozier,MIN,MIN vs NYY, 8:10 PM,7.6,7800,"",
+OF,Melky Cabrera,TOR,TOR @ OAK, 9:05 PM,7.0,7800,"",
+OF,Charlie Blackmon,COL,COL vs LAD, 8:10 PM,7.3,7800,"",
+1B,Steve Pearce,BAL,BAL vs TEX, 7:05 PM,7.2,7600,"",
+OF,Matt Holliday,STL,STL @ SF, 3:45 PM,5.8,7600,"",
+OF,Marlon Byrd,PHI,PHI @ MIA, 6:10 PM,6.4,7500,"",
+OF,Matt Kemp,LAD,LAD @ COL, 8:10 PM,5.5,7500,"",
+OF,Gregory Polanco,PIT,PIT vs ARI, 7:05 PM,8.6,7500,"",
+1B,Chris Davis,BAL,BAL vs TEX, 7:05 PM,5.9,7500,"",
+C,Buster Posey,SF,SF vs STL, 3:45 PM,5.5,7500,"",
+OF,Carlos Gonzalez,COL,COL vs LAD, 8:10 PM,6.1,7500,"",15-Day DL
+OF,Hunter Pence,SF,SF vs STL, 3:45 PM,6.9,7400,"",
+1B,Justin Morneau,COL,COL vs LAD, 8:10 PM,6.8,7400,"",
+SS,Jose Reyes,TOR,TOR @ OAK, 9:05 PM,6.9,7400,"",
+OF,Rajai Davis,DET,DET vs TB, 7:08 PM,6.9,7400,"",
+1B,Matthew Adams,STL,STL @ SF, 3:45 PM,5.9,7400,"",
+OF,Christian Yelich,MIA,MIA vs PHI, 6:10 PM,6.8,7300,"",
+OF,AJ Pollock,ARI,ARI @ PIT, 7:05 PM,7.0,7300,"",15-Day DL
+C,John Jaso,OAK,OAK vs TOR, 9:05 PM,5.0,7300,"",
+OF,Brett Gardner,NYY,NYY @ MIN, 8:10 PM,7.0,7200,"",
+3B,Pablo Sandoval,SF,SF vs STL, 3:45 PM,5.1,7200,"",
+OF,Shin-Soo Choo,TEX,TEX @ BAL, 7:05 PM,5.6,7200,"",
+1B,Adrian Gonzalez,LAD,LAD @ COL, 8:10 PM,6.3,7100,"",Day-To-Day
+1B,Albert Pujols,LAA,LAA vs HOU,10:05 PM,6.6,7100,"",
+OF,Mark Trumbo,ARI,ARI @ PIT, 7:05 PM,7.1,7000,"",15-Day DL
+3B,Evan Longoria,TB,TB @ DET, 7:08 PM,5.4,7000,"",
+OF,Michael Cuddyer,COL,COL vs LAD, 8:10 PM,7.2,7000,"",60-Day DL
+2B,Chase Utley,PHI,PHI @ MIA, 6:10 PM,6.3,7000,"",
+1B,Mark Teixeira,NYY,NYY @ MIN, 8:10 PM,6.6,6900,"",Day-To-Day
+OF,Josh Willingham,MIN,MIN vs NYY, 8:10 PM,6.4,6900,"",
+SS,Danny Santana,MIN,MIN vs NYY, 8:10 PM,6.6,6900,"",15-Day DL
+3B,Matt Carpenter,STL,STL @ SF, 3:45 PM,6.1,6800,"",
+1B,CJ Cron,LAA,LAA vs HOU,10:05 PM,5.3,6800,"",
+OF,Matt Joyce,TB,TB @ DET, 7:08 PM,5.0,6800,"",
+OF,Starling Marte,PIT,PIT vs ARI, 7:05 PM,6.4,6700,"",
+2B,Howie Kendrick,LAA,LAA vs HOU,10:05 PM,6.0,6700,"",
+OF,Angel Pagan,SF,SF vs STL, 3:45 PM,6.3,6700,"",15-Day DL
+1B,Prince Fielder,TEX,TEX @ BAL, 7:05 PM,4.8,6700,"",60-Day DL
+1B,Joe Mauer,MIN,MIN vs NYY, 8:10 PM,5.0,6600,"",15-Day DL
+C,Wilin Rosario,COL,COL vs LAD, 8:10 PM,5.0,6600,"",
+C,Miguel Montero,ARI,ARI @ PIT, 7:05 PM,5.7,6600,"",
+2B,Ben Zobrist,TB,TB @ DET, 7:08 PM,5.2,6600,"",
+OF,Kevin Kiermaier,TB,TB @ DET, 7:08 PM,5.4,6600,"",
+1B,Adam Lind,TOR,TOR @ OAK, 9:05 PM,6.2,6500,"",
+1B,Brandon Belt,SF,SF vs STL, 3:45 PM,6.5,6500,"",15-Day DL
+C,Derek Norris,OAK,OAK vs TOR, 9:05 PM,6.2,6500,"",
+SS,Erick Aybar,LAA,LAA vs HOU,10:05 PM,6.0,6400,"",
+3B,Pedro Alvarez,PIT,PIT vs ARI, 7:05 PM,5.5,6400,"",
+C,Russell Martin,PIT,PIT vs ARI, 7:05 PM,6.2,6400,"",
+SS,Jimmy Rollins,PHI,PHI @ MIA, 6:10 PM,6.0,6300,"",
+OF,Alex Rios,TEX,TEX @ BAL, 7:05 PM,6.0,6300,"",
+C,Chris Iannetta,LAA,LAA vs HOU,10:05 PM,5.5,6200,"",
+OF,Dexter Fowler,HOU,HOU @ LAA,10:05 PM,5.9,6200,"",15-Day DL
+OF,Nick Markakis,BAL,BAL vs TEX, 7:05 PM,5.6,6200,"",
+OF,Desmond Jennings,TB,TB @ DET, 7:08 PM,5.4,6200,"",
+OF,Marcell Ozuna,MIA,MIA vs PHI, 6:10 PM,5.8,6200,"",
+OF,Colby Rasmus,TOR,TOR @ OAK, 9:05 PM,5.5,6100,"",
+OF,Josh Harrison,PIT,PIT vs ARI, 7:05 PM,5.3,6100,"",
+C,Matt Wieters,BAL,BAL vs TEX, 7:05 PM,6.9,6000,"",15-Day DL
+OF,Michael Morse,SF,SF vs STL, 3:45 PM,5.5,6000,"",
+OF,Drew Stubbs,COL,COL vs LAD, 8:10 PM,5.3,6000,"",
+OF,Wil Myers,TB,TB @ DET, 7:08 PM,5.1,6000,"",15-Day DL
+1B,Juan Francisco,TOR,TOR @ OAK, 9:05 PM,5.6,5900,"",
+OF,Carl Crawford,LAD,LAD @ COL, 8:10 PM,5.6,5900,"",15-Day DL
+3B,Casey Mcgehee,MIA,MIA vs PHI, 6:10 PM,5.7,5900,"",
+OF,Torii Hunter,DET,DET vs TB, 7:08 PM,5.4,5800,"",
+2B,Neil Walker,PIT,PIT vs ARI, 7:05 PM,5.5,5800,"",
+1B,Ryan Howard,PHI,PHI @ MIA, 6:10 PM,5.5,5800,"",
+C,Yadier Molina,STL,STL @ SF, 3:45 PM,4.6,5800,"",
+SS,Jhonny Peralta,STL,STL @ SF, 3:45 PM,4.9,5700,"",
+1B,James Loney,TB,TB @ DET, 7:08 PM,5.1,5600,"",
+OF,Allen Craig,STL,STL @ SF, 3:45 PM,4.4,5600,"",
+SS,Didi Gregorius,ARI,ARI @ PIT, 7:05 PM,4.9,5600,"",
+2B,DJ LeMahieu,COL,COL vs LAD, 8:10 PM,4.4,5600,"",
+3B,Nolan Arenado,COL,COL vs LAD, 8:10 PM,6.7,5600,"",15-Day DL
+SS,Elvis Andrus,TEX,TEX @ BAL, 7:05 PM,5.3,5600,"",
+OF,Leonys Martin,TEX,TEX @ BAL, 7:05 PM,5.2,5600,"",
+1B,Garrett Jones,MIA,MIA vs PHI, 6:10 PM,5.3,5500,"",
+SS,JJ Hardy,BAL,BAL vs TEX, 7:05 PM,3.8,5500,"",
+OF,Ben Revere,PHI,PHI @ MIA, 6:10 PM,5.0,5500,"",
+OF,Austin Jackson,DET,DET vs TB, 7:08 PM,4.8,5500,"",
+3B,Nick Castellanos,DET,DET vs TB, 7:08 PM,4.6,5500,"",
+SS,Eugenio Suarez,DET,DET vs TB, 7:08 PM,5.4,5400,"",
+SS,Brandon Crawford,SF,SF vs STL, 3:45 PM,5.0,5400,"",
+OF,Brandon Guyer,TB,TB @ DET, 7:08 PM,4.2,5300,"",
+C,Dioner Navarro,TOR,TOR @ OAK, 9:05 PM,4.0,5300,"",
+2B,Derek Dietrich,MIA,MIA vs PHI, 6:10 PM,5.0,5300,"",
+SS,Jordy Mercer,PIT,PIT vs ARI, 7:05 PM,3.3,5200,"",
+OF,Carlos Beltran,NYY,NYY @ MIN, 8:10 PM,4.5,5200,"",
+C,Stephen Vogt,OAK,OAK vs TOR, 9:05 PM,4.8,5200,"",
+3B,Kevin Kouzmanoff,TEX,TEX @ BAL, 7:05 PM,8.8,5200,"",15-Day DL
+3B,Brett Lawrie,TOR,TOR @ OAK, 9:05 PM,5.0,5200,"",15-Day DL
+3B,Juan Uribe,LAD,LAD @ COL, 8:10 PM,4.7,5100,"",
+OF,David Peralta,ARI,ARI @ PIT, 7:05 PM,4.8,5100,"",
+OF,Domonic Brown,PHI,PHI @ MIA, 6:10 PM,3.9,5100,"",Day-to-Day
+C,Jarrod Saltalamacchia,MIA,MIA vs PHI, 6:10 PM,4.9,5100,"",
+1B,Chris Colabello,MIN,MIN vs NYY, 8:10 PM,4.9,5100,"",
+C,Alex Avila,DET,DET vs TB, 7:08 PM,4.0,5100,"",
+SS,Chris Owings,ARI,ARI @ PIT, 7:05 PM,4.8,5000,"",15-Day DL
+3B,Yangervis Solarte,NYY,NYY @ MIN, 8:10 PM,4.6,5000,"",
+C,Kurt Suzuki,MIN,MIN vs NYY, 8:10 PM,4.7,5000,"",
+SS,Eduardo Nunez,MIN,MIN vs NYY, 8:10 PM,4.9,5000,"",
+2B,Aaron Hill,ARI,ARI @ PIT, 7:05 PM,4.2,5000,"",
+OF,Josh Reddick,OAK,OAK vs TOR, 9:05 PM,4.0,5000,"",15-Day DL
+OF,Oscar Taveras,STL,STL @ SF, 3:45 PM,2.0,4900,"",
+SS,Derek Jeter,NYY,NYY @ MIN, 8:10 PM,4.0,4900,"",
+SS,Jed Lowrie,OAK,OAK vs TOR, 9:05 PM,4.5,4800,"",
+1B,Jonathan Singleton,HOU,HOU @ LAA,10:05 PM,4.3,4800,"",
+1B,Ike Davis,PIT,PIT vs ARI, 7:05 PM,4.0,4800,"",
+2B,Justin Turner,LAD,LAD @ COL, 8:10 PM,4.4,4700,"",15-Day DL
+OF,Gerardo Parra,ARI,ARI @ PIT, 7:05 PM,4.5,4700,"",
+OF,Sean Rodriguez,TB,TB @ DET, 7:08 PM,4.5,4600,"",
+3B,Cody Asche,PHI,PHI @ MIA, 6:10 PM,4.2,4600,"",
+OF,Scott Van Slyke,LAD,LAD @ COL, 8:10 PM,4.5,4600,"",
+OF,Jon Jay,STL,STL @ SF, 3:45 PM,3.4,4600,"",
+DH,Kendrys Morales,MIN,MIN vs NYY, 8:10 PM,3.5,4600,"",
+C,Brian Mccann,NYY,NYY @ MIN, 8:10 PM,4.1,4500,"",
+3B,Trevor Plouffe,MIN,MIN vs NYY, 8:10 PM,5.6,4500,"",
+3B,Martin Prado,ARI,ARI @ PIT, 7:05 PM,4.3,4500,"",
+3B,Matt Dominguez,HOU,HOU @ LAA,10:05 PM,4.2,4500,"",
+OF,Sam Fuld,MIN,MIN vs NYY, 8:10 PM,4.7,4500,"",
+C,Robinson Chirinos,TEX,TEX @ BAL, 7:05 PM,4.2,4500,"",
+2B,Rougned Odor,TEX,TEX @ BAL, 7:05 PM,4.1,4500,"",
+OF,Andre Ethier,LAD,LAD @ COL, 8:10 PM,4.0,4400,"",
+C,Wil Nieves,PHI,PHI @ MIA, 6:10 PM,4.2,4400,"",15-Day DL
+OF,David Dejesus,TB,TB @ DET, 7:08 PM,4.1,4400,"",15-Day DL
+2B,Logan Forsythe,TB,TB @ DET, 7:08 PM,2.5,4400,"",
+2B,Josh Rutledge,COL,COL vs LAD, 8:10 PM,4.1,4400,"",
+OF,Tyler Colvin,SF,SF vs STL, 3:45 PM,3.9,4300,"",
+OF,Chris Parmelee,MIN,MIN vs NYY, 8:10 PM,3.7,4300,"",
+2B,Brian Roberts,NYY,NYY @ MIN, 8:10 PM,4.1,4300,"",
+OF,Oswaldo Arcia,MIN,MIN vs NYY, 8:10 PM,4.0,4300,"",
+C,Jason Castro,HOU,HOU @ LAA,10:05 PM,4.1,4300,"",
+C,Carlos Corporan,HOU,HOU @ LAA,10:05 PM,3.9,4300,"",
+2B,Kolten Wong,STL,STL @ SF, 3:45 PM,4.1,4300,"",15-Day DL
+OF,Collin Cowgill,LAA,LAA vs HOU,10:05 PM,3.9,4200,"",
+3B,David Freese,LAA,LAA vs HOU,10:05 PM,3.9,4200,"",
+1B,Mitch Moreland,TEX,TEX @ BAL, 7:05 PM,3.9,4100,"",15-Day DL
+OF,Craig Gentry,OAK,OAK vs TOR, 9:05 PM,3.9,4100,"",
+C,Caleb Joseph,BAL,BAL vs TEX, 7:05 PM,2.6,4100,"",
+1B,Kyle Blanks,OAK,OAK vs TOR, 9:05 PM,3.9,4100,"",15-Day DL
+1B,Chris Carter,HOU,HOU @ LAA,10:05 PM,3.9,4100,"",
+2B,Jonathan Schoop,BAL,BAL vs TEX, 7:05 PM,3.2,4000,"",
+SS,Eduardo Escobar,MIN,MIN vs NYY, 8:10 PM,3.9,4000,"",
+SS,Reid Brignac,PHI,PHI @ MIA, 6:10 PM,3.8,4000,"",15-Day DL
+DH,Delmon Young,BAL,BAL vs TEX, 7:05 PM,3.5,4000,"",
+OF,Jim Adduci,TEX,TEX @ BAL, 7:05 PM,4.2,4000,"",15-Day DL
+C,Hank Conger,LAA,LAA vs HOU,10:05 PM,3.7,3900,"",
+2B,Alberto Callaspo,OAK,OAK vs TOR, 9:05 PM,3.5,3800,"",
+C,Chris Gimenez,TEX,TEX @ BAL, 7:05 PM,5.3,3800,"",
+2B,Grant Green,LAA,LAA vs HOU,10:05 PM,3.4,3700,"",
+C,Michael McKenry,COL,COL vs LAD, 8:10 PM,4.4,3600,"",
+2B,Brandon Hicks,SF,SF vs STL, 3:45 PM,3.3,3600,"",
+C,Ryan Hanigan,TB,TB @ DET, 7:08 PM,3.3,3500,"",
+SS,Munenori Kawasaki,TOR,TOR @ OAK, 9:05 PM,2.9,3500,"",
+1B,Gaby Sanchez,PIT,PIT vs ARI, 7:05 PM,3.3,3500,"",
+DH,Alfonso Soriano,NYY,NYY @ MIN, 8:10 PM,3.4,3500,"",
+OF,Ender Inciarte,ARI,ARI @ PIT, 7:05 PM,2.5,3500,"",
+SS,Adeiny Hechavarria,MIA,MIA vs PHI, 6:10 PM,3.4,3500,"",15-Day DL
+3B,Kelly Johnson,NYY,NYY @ MIN, 8:10 PM,3.2,3500,"",
+OF,Darin Mastroianni,TOR,TOR @ OAK, 9:05 PM,1.9,3400,"",
+1B,Ryan Wheeler,COL,COL vs LAD, 8:10 PM,2.9,3400,"",
+SS,Yunel Escobar,TB,TB @ DET, 7:08 PM,2.8,3300,"",15-Day DL
+C,Nick Hundley,BAL,BAL vs TEX, 7:05 PM,1.7,3200,"",
+SS,Marwin Gonzalez,HOU,HOU @ LAA,10:05 PM,2.8,3200,"",
+OF,Brandon Barnes,COL,COL vs LAD, 8:10 PM,2.9,3100,"",
+1B,Carlos Pena,TEX,TEX @ BAL, 7:05 PM,0.4,3100,"",
+OF,John Mayberry,PHI,PHI @ MIA, 6:10 PM,2.8,3100,"",
+SS,Nick Punto,OAK,OAK vs TOR, 9:05 PM,2.8,3100,"",
+OF,Michael Choice,TEX,TEX @ BAL, 7:05 PM,2.8,3000,"",
+3B,Ryan Flaherty,BAL,BAL vs TEX, 7:05 PM,3.2,3000,"",
+C,Drew Butera,LAD,LAD @ COL, 8:10 PM,2.8,3000,"",
+OF,Reed Johnson,MIA,MIA vs PHI, 6:10 PM,2.7,3000,"",
+OF,Anthony Gose,TOR,TOR @ OAK, 9:05 PM,2.8,3000,"",
+C,Jordan Pacheco,ARI,ARI @ PIT, 7:05 PM,2.7,2900,"",15-Day DL
+OF,Ichiro Suzuki,NYY,NYY @ MIN, 8:10 PM,2.7,2900,"",
+2B,Maicer Izturis,TOR,TOR @ OAK, 9:05 PM,2.7,2900,"",60-Day DL
+OF,Gregor Blanco,SF,SF vs STL, 3:45 PM,2.6,2900,"",
+2B,Enrique Hernandez,HOU,HOU @ LAA,10:05 PM,13.0,2800,"",
+C,AJ Ellis,LAD,LAD @ COL, 8:10 PM,2.6,2800,"",
+OF,Alex Presley,HOU,HOU @ LAA,10:05 PM,2.5,2800,"",
+C,Tony Cruz,STL,STL @ SF, 3:45 PM,2.6,2800,"",
+OF,Travis Snider,PIT,PIT vs ARI, 7:05 PM,1.9,2800,"",
+2B,Donnie Murphy,TEX,TEX @ BAL, 7:05 PM,2.6,2700,"",
+1B,Justin Bour,MIA,MIA vs PHI, 6:10 PM,2.4,2700,"",
+3B,Charlie Culberson,COL,COL vs LAD, 8:10 PM,1.6,2700,"",
+C,Bryan Holaday,DET,DET vs TB, 7:08 PM,2.6,2700,"",
+OF,Peter Bourjos,STL,STL @ SF, 3:45 PM,2.5,2700,"",
+SS,Cliff Pennington,ARI,ARI @ PIT, 7:05 PM,2.5,2600,"",15-Day DL
+2B,Jeff Baker,MIA,MIA vs PHI, 6:10 PM,2.6,2600,"",
+SS,Andrew Romine,DET,DET vs TB, 7:08 PM,2.5,2600,"",
+3B,Eric Chavez,ARI,ARI @ PIT, 7:05 PM,2.5,2600,"",60-Day DL
+C,Hector Sanchez,SF,SF vs STL, 3:45 PM,2.4,2500,"",
+2B,Ed Lucas,MIA,MIA vs PHI, 6:10 PM,2.4,2500,"",
+C,Jeff Mathis,MIA,MIA vs PHI, 6:10 PM,2.1,2500,"",
+C,Francisco Cervelli,NYY,NYY @ MIN, 8:10 PM,2.2,2500,"",
+2B,Mark Ellis,STL,STL @ SF, 3:45 PM,2.3,2500,"",
+OF,David Lough,BAL,BAL vs TEX, 7:05 PM,2.2,2400,"",
+C,Tuffy Gosewisch,ARI,ARI @ PIT, 7:05 PM,2.2,2300,"",
+2B,Eric Sogard,OAK,OAK vs TOR, 9:05 PM,2.2,2300,"",
+2B,Chone Figgins,LAD,LAD @ COL, 8:10 PM,2.2,2300,"",15-Day DL
+SS,Clint Barmes,PIT,PIT vs ARI, 7:05 PM,2.1,2300,"",
+OF,Don Kelly,DET,DET vs TB, 7:08 PM,2.1,2200,"",
+OF,LJ Hoes,HOU,HOU @ LAA,10:05 PM,2.0,2100,"",
+2B,Steve Tolleson,TOR,TOR @ OAK, 9:05 PM,2.0,2100,"",
+C,Chris Stewart,PIT,PIT vs ARI, 7:05 PM,2.0,2100,"",
+OF,Dan Robertson,TEX,TEX @ BAL, 7:05 PM,2.0,2100,"",
+OF,Jerry Sands,TB,TB @ DET, 7:08 PM,1.6,2000,"",15-Day DL
+C,Jose Molina,TB,TB @ DET, 7:08 PM,0.0,2000,"",
+1B,Clint Robinson,LAD,LAD @ COL, 8:10 PM,0.8,2000,"",
+SS,Miguel Rojas,LAD,LAD @ COL, 8:10 PM,1.3,2000,"",
+SS,Carlos Triunfel,LAD,LAD @ COL, 8:10 PM,1.1,2000,"",
+C,Josh Thole,TOR,TOR @ OAK, 9:05 PM,1.8,2000,"",
+2B,Andres Blanco,PHI,PHI @ MIA, 6:10 PM,0.0,2000,"",
+1B,Nate Freiman,OAK,OAK vs TOR, 9:05 PM,9.0,2000,"",
+C,Cameron Rupp,PHI,PHI @ MIA, 6:10 PM,0.0,2000,"",
+OF,Brad Glenn,TOR,TOR @ OAK, 9:05 PM,0.0,2000,"",
+OF,Cody Ross,ARI,ARI @ PIT, 7:05 PM,1.2,2000,"",
+1B,Nick Evans,ARI,ARI @ PIT, 7:05 PM,0.8,2000,"",
+SS,Nick Ahmed,ARI,ARI @ PIT, 7:05 PM,0.5,2000,"",
+1B,Jesus Guzman,HOU,HOU @ LAA,10:05 PM,1.7,2000,"",
+2B,Joe Panik,SF,SF vs STL, 3:45 PM,1.2,2000,"",
+SS,Daniel Descalso,STL,STL @ SF, 3:45 PM,0.8,2000,"",
+OF,Juan Perez,SF,SF vs STL, 3:45 PM,0.8,2000,"",
+3B,Adam Duvall,SF,SF vs STL, 3:45 PM,2.5,2000,"",
+SS,Ehire Adrianza,SF,SF vs STL, 3:45 PM,1.1,2000,"",15-Day DL
+OF,Roger Kieschnick,ARI,ARI @ PIT, 7:05 PM,1.7,2000,"",
+OF,Domingo Santana,HOU,HOU @ LAA,10:05 PM,0.0,2000,"",
+2B,Rafael Furcal,MIA,MIA vs PHI, 6:10 PM,1.8,2000,"",15-Day DL
+3B,Cesar Hernandez,PHI,PHI @ MIA, 6:10 PM,1.3,2000,"",
+2B,Joaquin Arias,SF,SF vs STL, 3:45 PM,0.4,2000,"",
+OF,Shane Robinson,STL,STL @ SF, 3:45 PM,0.1,2000,"",
+2B,Marco Scutaro,SF,SF vs STL, 3:45 PM,0,2000,"",60-Day DL
+OF,Tony Gwynn,PHI,PHI @ MIA, 6:10 PM,1.2,2000,"",
+2B,Donovan Solano,MIA,MIA vs PHI, 6:10 PM,1.0,2000,"",
+C,Koyie Hill,PHI,PHI @ MIA, 6:10 PM,2.0,2000,"",
+2B,John Mcdonald,LAA,LAA vs HOU,10:05 PM,0.8,2000,"",
+2B,Cole Figueroa,TB,TB @ DET, 7:08 PM,0.4,2000,"",
+OF,Engel Beltre,TEX,TEX @ BAL, 7:05 PM,0,2000,"",60-Day DL
+C,Geovany Soto,TEX,TEX @ BAL, 7:05 PM,0,2000,"",60-Day DL
+2B,Jurickson Profar,TEX,TEX @ BAL, 7:05 PM,0,2000,"",60-Day DL
+OF,Aaron Altherr,PHI,PHI @ MIA, 6:10 PM,0.0,2000,"",
+SS,Jose Iglesias,DET,DET vs TB, 7:08 PM,0,2000,"",60-Day DL
+SS,Adam Rosales,TEX,TEX @ BAL, 7:05 PM,4.0,2000,"",
+2B,Tim Beckham,TB,TB @ DET, 7:08 PM,0,2000,"",60-Day DL
+C,Eric Fryer,MIN,MIN vs NYY, 8:10 PM,0.8,2000,"",
+SS,Brendan Ryan,NYY,NYY @ MIN, 8:10 PM,1.2,2000,"",
+OF,Andy Dirks,DET,DET vs TB, 7:08 PM,0,2000,"",60-Day DL

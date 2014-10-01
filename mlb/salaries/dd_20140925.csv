@@ -1,0 +1,760 @@
+Position,PlayerName,Team,Opponent,Salary,PPG
+2B,Brian Roberts,Yankees,Orioles,5700,8.9
+P,Jeremy Guthrie,Royals,White Sox,11200,15.6
+SS,J.J. Hardy,Orioles,Yankees,5800,9.3
+2B,Robert Andino,Pirates,Braves,5050,3.6
+SS,Robert Andino,Pirates,Braves,5050,3.6
+OF,Nick Markakis,Orioles,Yankees,8100,11.4
+OF,Adam Jones,Orioles,Yankees,9300,13.4
+P,Jim Johnson,Tigers,Twins,7500,2.0
+1B,Chris Davis,Orioles,Yankees,9450,12.5
+3B,Chris Davis,Orioles,Yankees,9450,12.5
+P,Tommy Hunter,Orioles,Yankees,7500,3.6
+C,Matt Wieters,Orioles,Yankees,9100,14.3
+P,Chris Tillman,Orioles,Yankees,14450,21.6
+P,Brian Matusz,Orioles,Yankees,7500,3.2
+P,Zach Britton,Orioles,Yankees,5650,4.7
+1B,David Ortiz,Red Sox,Rays,10550,15.2
+P,Erik Bedard,Rays,Red Sox,9900,13.2
+2B,Marco Scutaro,Giants,Padres,5000,1.0
+2B,Dustin Pedroia,Red Sox,Rays,9100,11.5
+P,Jon Lester,Athletics,Rangers,21050,33.2
+P,Andrew Miller,Orioles,Yankees,7500,6.2
+P,Daisuke Matsuzaka,Mets,Nationals,11050,8.4
+OF,Jacoby Ellsbury,Yankees,Orioles,9100,13.1
+P,Clay Buchholz,Red Sox,Rays,14100,16.5
+SS,Jed Lowrie,Athletics,Rangers,6900,9.8
+P,Alfredo Aceves,Yankees,Orioles,5800,4.6
+P,Junichi Tazawa,Red Sox,Rays,7500,4.0
+OF,Josh Reddick,Athletics,Rangers,7000,10.8
+SS,Jose Iglesias,Tigers,Twins,5000,0.0
+3B,Jose Iglesias,Tigers,Twins,5000,0.0
+1B,Paul Konerko,White Sox,Royals,5000,5.5
+1B,Adam Dunn,Athletics,Rangers,7550,11.8
+P,Jake Peavy,Giants,Padres,15850,19.9
+P,Matt Thornton,Nationals,Mets,7500,2.1
+OF,Alex Rios,Rangers,Athletics,8400,10.5
+P,Gavin Floyd,Braves,Pirates,13650,22.1
+P,Jason Frasor,Royals,White Sox,7500,3.5
+OF,Carlos Quentin,Padres,Giants,6850,6.8
+P,John Danks,White Sox,Royals,10850,14.4
+OF,Alejandro De Aza,Orioles,Yankees,7500,9.5
+SS,Alexei Ramirez,White Sox,Royals,8600,11.9
+OF,Dayan Viciedo,White Sox,Royals,7450,10.1
+C,Tyler Flowers,White Sox,Royals,6400,8.8
+P,Chris Sale,White Sox,Royals,22350,37.4
+3B,Brent Morel,Pirates,Braves,5000,2.2
+OF,Shin-Soo Choo,Rangers,Athletics,9100,11.1
+P,Ubaldo Jimenez,Orioles,Yankees,11100,15.7
+OF,Trevor Crowe,Tigers,Twins,5250,6.7
+SS,Asdrubal Cabrera,Nationals,Mets,7350,11.4
+2B,Asdrubal Cabrera,Nationals,Mets,7350,11.4
+P,David Huff,Yankees,Orioles,7500,4.0
+OF,Ezequiel Carrera,Tigers,Twins,5000,4.1
+P,Jeanmar Gomez,Pirates,Braves,5900,3.5
+2B,Cord Phelps,Orioles,Yankees,5000,-1.0
+P,Joaquin Benoit,Padres,Giants,7500,6.1
+1B,Victor Martinez,Tigers,Twins,10500,16.7
+P,Jose Valverde,Mets,Nationals,7500,3.2
+1B,Miguel Cabrera,Tigers,Twins,11850,15.9
+3B,Miguel Cabrera,Tigers,Twins,11850,15.9
+OF,Delmon Young,Orioles,Yankees,5950,8.8
+P,Justin Verlander,Tigers,Twins,13650,20.0
+3B,Don Kelly,Tigers,Twins,5000,4.3
+OF,Don Kelly,Tigers,Twins,5000,4.3
+P,Max Scherzer,Tigers,Twins,22050,33.4
+P,Phil Coke,Tigers,Twins,7500,3.1
+P,Rick Porcello,Tigers,Twins,13150,22.0
+C,Alex Avila,Tigers,Twins,6800,9.6
+P,Doug Fister,Nationals,Mets,15150,22.8
+SS,Danny Worth,Tigers,Twins,5000,3.8
+2B,Danny Worth,Tigers,Twins,5000,3.8
+P,Al Alburquerque,Tigers,Twins,7500,3.7
+OF,Andy Dirks,Tigers,Twins,5000,0.0
+P,Bruce Chen,Royals,White Sox,9850,5.2
+P,Jeff Francis,Yankees,Orioles,5550,4.5
+OF,Jeff Francoeur,Padres,Giants,5000,1.8
+1B,Billy Butler,Royals,White Sox,7050,9.9
+OF,Alex Gordon,Royals,White Sox,8650,13.1
+P,Luke Hochevar,Royals,White Sox,7500,0.0
+P,Joakim Soria,Tigers,Twins,7500,4.3
+P,Felipe Paulino,White Sox,Royals,7500,-5.0
+P,Jesse Chavez,Athletics,Rangers,11550,17.6
+SS,Alcides Escobar,Royals,White Sox,7600,9.8
+P,Aaron Crow,Royals,White Sox,7500,2.7
+3B,Mike Moustakas,Royals,White Sox,5900,8.2
+P,Blake Wood,Royals,White Sox,7500,1.9
+P,Greg Holland,Royals,White Sox,7500,5.8
+OF,Jarrod Dyson,Royals,White Sox,5700,6.8
+1B,Eric Hosmer,Royals,White Sox,8250,10.6
+P,Tim Collins,Royals,White Sox,7500,1.8
+P,Louis Coleman,Royals,White Sox,7500,1.4
+P,Danny Duffy,Royals,White Sox,11900,19.7
+2B,Johnny Giavotella,Royals,White Sox,6550,8.4
+C,Salvador Perez,Royals,White Sox,6800,9.9
+OF,Bobby Abreu,Mets,Nationals,5000,4.8
+OF,Torii Hunter,Tigers,Twins,8700,12.7
+P,Scott Downs,Royals,White Sox,7500,1.3
+P,Scott Kazmir,Athletics,Rangers,15250,23.7
+P,Ervin Santana,Braves,Pirates,16750,24.6
+2B,Alberto Callaspo,Athletics,Rangers,5050,6.9
+3B,Alberto Callaspo,Athletics,Rangers,5050,6.9
+P,Jordan Walden,Braves,Pirates,7500,4.0
+SS,Andrew Romine,Tigers,Twins,6100,5.2
+3B,Andrew Romine,Tigers,Twins,6100,5.2
+SS,Alexi Amarista,Padres,Giants,6850,6.5
+3B,Alexi Amarista,Padres,Giants,6850,6.5
+P,Joe Nathan,Tigers,Twins,7500,3.2
+1B,Joe Mauer,Twins,Tigers,8950,11.8
+C,Joe Mauer,Twins,Tigers,8950,11.8
+OF,Jason Kubel,Twins,Tigers,6150,7.5
+C,Rene Rivera,Padres,Giants,7500,8.7
+P,Francisco Liriano,Pirates,Braves,15750,24.0
+P,Scott Baker,Rangers,Athletics,10150,7.3
+P,Glen Perkins,Twins,Tigers,7500,4.3
+P,Brian Duensing,Twins,Tigers,7500,2.5
+OF,Denard Span,Nationals,Mets,9100,13.0
+P,Anthony Swarzak,Twins,Tigers,9150,3.5
+3B,Trevor Plouffe,Twins,Tigers,7900,12.9
+P,Scott Diamond,Twins,Tigers,5600,4.5
+3B,Alex Rodriguez,Yankees,Orioles,5000,0.0
+SS,Derek Jeter,Yankees,Orioles,7300,8.3
+P,Bartolo Colon,Mets,Nationals,15150,22.0
+P,Freddy Garcia,Braves,Pirates,7500,10.3
+P,CC Sabathia,Yankees,Orioles,13850,19.9
+P,Rafael Soriano,Nationals,Mets,7500,4.2
+1B,Mark Teixeira,Yankees,Orioles,8600,11.7
+OF,Curtis Granderson,Mets,Nationals,8950,11.7
+C,Russell Martin,Pirates,Braves,8550,13.6
+P,Phil Hughes,Twins,Tigers,18450,26.2
+P,Joba Chamberlain,Tigers,Twins,7500,3.3
+P,David Robertson,Yankees,Orioles,7500,6.1
+OF,Brett Gardner,Yankees,Orioles,7800,12.9
+C,Francisco Cervelli,Yankees,Orioles,6050,8.6
+2B,Ramiro Pena,Braves,Pirates,5000,3.6
+SS,Ramiro Pena,Braves,Pirates,5000,3.6
+P,Ivan Nova,Yankees,Orioles,6350,5.2
+SS,Eduardo Nunez,Twins,Tigers,5900,7.9
+3B,Eduardo Nunez,Twins,Tigers,5900,7.9
+P,Hector Noesi,White Sox,Royals,10000,13.9
+P,Grant Balfour,Rays,Red Sox,7500,2.8
+OF,Coco Crisp,Athletics,Rangers,8150,12.0
+OF,David DeJesus,Rays,Red Sox,6800,8.7
+OF,Josh Willingham,Royals,White Sox,8250,12.2
+P,Brandon McCarthy,Yankees,Orioles,14700,21.4
+P,Craig Breslow,Red Sox,Rays,7500,1.8
+1B,Daric Barton,Athletics,Rangers,5000,3.1
+3B,Kevin Kouzmanoff,Rangers,Athletics,9600,17.3
+C,Kurt Suzuki,Twins,Tigers,6700,9.5
+P,Jerry Blevins,Nationals,Mets,7500,3.2
+P,Gio Gonzalez,Nationals,Mets,15850,23.7
+3B,Adam Rosales,Rangers,Athletics,7350,9.5
+1B,Adam Rosales,Rangers,Athletics,7350,9.5
+P,Josh Outman,Yankees,Orioles,7500,3.4
+3B,Scott Sizemore,Yankees,Orioles,6700,9.8
+2B,Scott Sizemore,Yankees,Orioles,6700,9.8
+P,Tyson Ross,Padres,Giants,17450,27.9
+3B,Josh Donaldson,Athletics,Rangers,9550,14.8
+2B,Eric Sogard,Athletics,Rangers,5000,5.9
+2B,Jemile Weeks,Red Sox,Rays,5000,9.1
+OF,Ichiro Suzuki,Yankees,Orioles,5900,5.8
+P,Jason Vargas,Royals,White Sox,13350,19.7
+SS,Brendan Ryan,Yankees,Orioles,5000,2.5
+2B,Brendan Ryan,Yankees,Orioles,5000,2.5
+P,Shawn Kelley,Yankees,Orioles,7500,4.2
+1B,Mike Carp,Rangers,Athletics,5000,4.4
+OF,Mike Carp,Rangers,Athletics,5000,4.4
+C,Adam Moore,Padres,Giants,5000,2.1
+P,Michael Pineda,Yankees,Orioles,16100,24.3
+P,Josh Lueke,Rays,Red Sox,7500,2.3
+OF,Carlos Peguero,Royals,White Sox,5000,2.7
+OF,B.J. Upton,Braves,Pirates,6500,9.4
+P,Joel Peralta,Rays,Red Sox,7500,4.1
+P,James Shields,Royals,White Sox,17800,25.3
+2B,Ben Zobrist,Rays,Red Sox,8900,12.6
+OF,Ben Zobrist,Rays,Red Sox,8900,12.6
+3B,Evan Longoria,Rays,Red Sox,9700,12.7
+OF,Sam Fuld,Athletics,Rangers,7800,9.3
+P,Wade Davis,Royals,White Sox,7500,7.7
+P,David Price,Tigers,Twins,21050,34.2
+P,Jake McGee,Rays,Red Sox,7500,5.7
+2B,Sean Rodriguez,Rays,Red Sox,5900,8.0
+OF,Sean Rodriguez,Rays,Red Sox,5900,8.0
+OF,Matt Joyce,Rays,Red Sox,6700,9.7
+C,John Jaso,Athletics,Rangers,7050,10.3
+P,Jeremy Hellickson,Rays,Red Sox,10550,15.2
+C,Jose Lobaton,Nationals,Mets,7850,6.0
+P,Cesar Ramos,Rays,Red Sox,7500,5.8
+OF,Desmond Jennings,Rays,Red Sox,7100,11.2
+P,Alex Cobb,Rays,Red Sox,17350,26.0
+P,Brandon Gomes,Rays,Red Sox,7500,3.9
+OF,Brandon Guyer,Rays,Red Sox,6300,8.0
+C,Robinson Chirinos,Rangers,Athletics,6350,9.6
+P,Alex Torres,Padres,Giants,7500,2.9
+3B,Adrian Beltre,Rangers,Athletics,9850,14.0
+P,Colby Lewis,Rangers,Athletics,11200,15.6
+2B,Ian Kinsler,Tigers,Twins,9450,13.3
+SS,Omar Quintanilla,Mets,Nationals,5000,3.1
+2B,Omar Quintanilla,Mets,Nationals,5000,3.1
+OF,Nelson Cruz,Orioles,Yankees,10550,15.7
+1B,Mike Napoli,Red Sox,Rays,8600,12.6
+P,Matt Harrison,Rangers,Athletics,7350,8.8
+P,Darren O'Day,Orioles,Yankees,7500,5.3
+C,Taylor Teagarden,Mets,Nationals,7900,5.7
+P,Koji Uehara,Red Sox,Rays,7500,5.9
+SS,Elvis Andrus,Rangers,Athletics,7700,9.7
+P,Neftali Feliz,Rangers,Athletics,5350,3.8
+P,Derek Holland,Rangers,Athletics,14000,29.0
+OF,Craig Gentry,Athletics,Rangers,5650,6.6
+P,Alexi Ogando,Rangers,Athletics,5250,2.0
+1B,Mitch Moreland,Rangers,Athletics,6550,8.3
+C,Jose Molina,Rays,Red Sox,5000,2.3
+OF,Rajai Davis,Tigers,Twins,7500,11.2
+SS,Yunel Escobar,Rays,Red Sox,6150,7.7
+3B,Jayson Nix,Royals,White Sox,5000,1.4
+SS,Jayson Nix,Royals,White Sox,5000,1.4
+OF,Travis Snider,Pirates,Braves,6000,7.0
+P,P.J. Walters,Royals,White Sox,5100,3.9
+C,J.P. Arencibia,Rangers,Athletics,6500,9.1
+1B,J.P. Arencibia,Rangers,Athletics,6500,9.1
+3B,Kelly Johnson,Orioles,Yankees,6400,7.0
+1B,Kelly Johnson,Orioles,Yankees,6400,7.0
+SS,Stephen Drew,Yankees,Orioles,5800,6.4
+2B,Stephen Drew,Yankees,Orioles,5800,6.4
+P,Joe Saunders,Orioles,Yankees,8750,0.5
+OF,Chris Young,Yankees,Orioles,6150,8.8
+3B,Ryan Roberts,Red Sox,Rays,5000,1.6
+2B,Ryan Roberts,Red Sox,Rays,5000,1.6
+OF,Justin Upton,Braves,Pirates,9400,14.4
+P,Juan Gutierrez,Giants,Padres,7500,2.7
+P,Ian Kennedy,Padres,Giants,16050,25.2
+P,Ryan Cook,Athletics,Rangers,7500,3.6
+SS,Alex Gonzalez,Tigers,Twins,5000,5.6
+P,Tim Hudson,Giants,Padres,13800,18.0
+C,David Ross,Red Sox,Rays,6800,8.0
+OF,Nate McLouth,Nationals,Mets,5000,3.2
+C,Brian McCann,Yankees,Orioles,8050,10.7
+2B,Dan Uggla,Giants,Padres,5000,4.2
+3B,Martin Prado,Yankees,Orioles,8350,10.5
+2B,Martin Prado,Yankees,Orioles,8350,10.5
+P,Eric O'Flaherty,Athletics,Rangers,7500,3.8
+2B,Brooks Conrad,Padres,Giants,5000,3.3
+P,Kris Medlen,Braves,Pirates,7500,0.0
+OF,Wilkin Ramirez,Twins,Tigers,5350,4.7
+OF,Jason Heyward,Braves,Pirates,8550,12.1
+P,Craig Kimbrel,Braves,Pirates,7500,6.0
+1B,Freddie Freeman,Braves,Pirates,9750,14.5
+P,Jonny Venters,Braves,Pirates,7500,0.0
+2B,Brandon Hicks,Giants,Padres,5600,8.0
+P,Mike Minor,Braves,Pirates,12700,16.4
+P,Brandon Beachy,Braves,Pirates,5900,0.0
+P,Anthony Varvaro,Braves,Pirates,7500,3.8
+P,Julio Teheran,Braves,Pirates,19050,28.3
+P,Cory Gearrin,Braves,Pirates,7500,0.0
+OF,Jose Constanza,Braves,Pirates,5000,0.1
+P,Ryan Dempster,Red Sox,Rays,7500,0.0
+OF,Alfonso Soriano,Yankees,Orioles,5900,7.5
+1B,Carlos Pena,Rangers,Athletics,5500,4.1
+C,Geovany Soto,Athletics,Rangers,5600,8.2
+1B,Brad Snyder,Rangers,Athletics,5600,8.5
+OF,Brad Snyder,Rangers,Athletics,5600,8.5
+P,Jeff Samardzija,Athletics,Rangers,19300,26.8
+OF,Tyler Colvin,Giants,Padres,5400,6.6
+P,Andrew Cashner,Padres,Giants,14650,20.8
+P,James Russell,Braves,Pirates,7500,2.4
+C,Ramon Hernandez,Royals,White Sox,5950,9.2
+P,Edinson Volquez,Pirates,Braves,15100,20.4
+P,Jared Burton,Twins,Tigers,7500,2.7
+C,Ryan Hanigan,Rays,Red Sox,5050,7.4
+1B,Yonder Alonso,Padres,Giants,7400,8.5
+P,Jason Hammel,Athletics,Rangers,14800,23.0
+P,Eric Stults,Padres,Giants,10850,13.4
+P,Matt Lindstrom,White Sox,Royals,7500,1.6
+OF,Seth Smith,Padres,Giants,8300,11.3
+SS,Jonathan Herrera,Red Sox,Rays,6200,5.0
+3B,Jonathan Herrera,Red Sox,Rays,6200,5.0
+OF,Eric Young,Mets,Nationals,7050,8.4
+3B,Chris Nelson,Padres,Giants,5050,5.3
+2B,Chris Nelson,Padres,Giants,5050,5.3
+P,Esmil Rogers,Yankees,Orioles,8150,4.4
+P,Edgmer Escalona,Yankees,Orioles,7500,0.0
+2B,Omar Infante,Royals,White Sox,7450,9.8
+1B,Greg Dobbs,Nationals,Mets,5000,0.6
+3B,Greg Dobbs,Nationals,Mets,5000,0.6
+2B,Donnie Murphy,Braves,Pirates,5600,6.2
+SS,Donnie Murphy,Braves,Pirates,5600,6.2
+P,Juan Carlos Oviedo,Rays,Red Sox,7500,3.7
+P,Josh Johnson,Padres,Giants,5300,0.0
+P,Anibal Sanchez,Tigers,Twins,14100,22.7
+P,Ricky Nolasco,Twins,Tigers,9150,12.4
+P,Edward Mujica,Red Sox,Rays,7500,2.6
+OF,Emilio Bonifacio,Braves,Pirates,6700,9.2
+2B,Emilio Bonifacio,Braves,Pirates,6700,9.2
+P,Burke Badenhop,Red Sox,Rays,7500,2.6
+1B,Gaby Sanchez,Pirates,Braves,5000,6.1
+C,Brett Hayes,Royals,White Sox,5000,1.5
+P,Ryan Webb,Orioles,Yankees,7500,3.3
+SS,Clint Barmes,Pirates,Braves,5450,5.3
+P,Wandy Rodriguez,Pirates,Braves,10150,5.8
+OF,Jordan Schafer,Twins,Tigers,6000,6.0
+P,Mark Melancon,Pirates,Braves,7500,4.8
+P,Fernando Rodriguez,Athletics,Rangers,7500,5.7
+P,Bud Norris,Orioles,Yankees,13550,22.3
+3B,Chris Johnson,Braves,Pirates,5950,8.3
+1B,Chris Johnson,Braves,Pirates,5950,8.3
+P,Fernando Abad,Athletics,Rangers,7500,3.8
+P,David Carpenter,Braves,Pirates,7500,4.6
+OF,J.D. Martinez,Tigers,Twins,8700,14.8
+3B,Jimmy Paredes,Orioles,Yankees,7400,9.6
+OF,Jimmy Paredes,Orioles,Yankees,7400,9.6
+1B,James Loney,Rays,Red Sox,6600,10.4
+P,Hiroki Kuroda,Yankees,Orioles,14550,20.1
+P,Josh Lindblom,Athletics,Rangers,7500,6.0
+OF,Jerry Sands,Rays,Red Sox,5000,4.0
+P,Rubby De La Rosa,Red Sox,Rays,9400,13.8
+1B,Prince Fielder,Rangers,Athletics,8550,11.1
+P,Kameron Loe,Giants,Padres,9150,0.8
+2B,Josh Wilson,Rangers,Athletics,5000,6.0
+3B,Josh Wilson,Rangers,Athletics,5000,6.0
+P,John Axford,Pirates,Braves,7500,3.8
+OF,Scott Hairston,Nationals,Mets,5000,2.5
+P,Chris Capuano,Yankees,Orioles,12600,6.5
+3B,David Wright,Mets,Nationals,9250,10.8
+OF,Angel Pagan,Giants,Padres,8000,11.2
+P,Mike Pelfrey,Twins,Tigers,7500,-2.2
+2B,Daniel Murphy,Mets,Nationals,7650,12.2
+P,Jonathon Niese,Mets,Nationals,13550,19.4
+P,Bobby Parnell,Mets,Nationals,7500,0.0
+P,Dale Thayer,Padres,Giants,7500,4.4
+1B,Ike Davis,Pirates,Braves,6850,8.4
+SS,Ruben Tejada,Mets,Nationals,5900,7.2
+1B,Lucas Duda,Mets,Nationals,8600,13.5
+P,Dillon Gee,Mets,Nationals,11800,19.3
+P,Pedro Beato,Braves,Pirates,7500,5.3
+OF,Raul Ibanez,Royals,White Sox,5350,6.2
+OF,Shane Victorino,Red Sox,Rays,8700,10.7
+OF,Hunter Pence,Giants,Padres,8300,14.0
+P,Vance Worley,Pirates,Braves,15250,20.8
+2B,Michael Martinez,Pirates,Braves,5000,1.4
+3B,Michael Martinez,Pirates,Braves,5000,1.4
+C,Ryan Doumit,Braves,Pirates,5000,3.2
+OF,Ryan Doumit,Braves,Pirates,5000,3.2
+P,Ross Ohlendorf,Nationals,Mets,7500,0.0
+OF,Andrew McCutchen,Pirates,Braves,11700,17.2
+1B,Steve Pearce,Orioles,Yankees,9700,14.0
+OF,Steve Pearce,Orioles,Yankees,9700,14.0
+P,Evan Meek,Orioles,Yankees,7500,1.7
+P,Charlie Morton,Pirates,Braves,12600,19.1
+P,Daniel McCutchen,White Sox,Royals,7500,-5.0
+2B,Neil Walker,Pirates,Braves,8200,13.0
+3B,Neil Walker,Pirates,Braves,8200,13.0
+3B,Pedro Alvarez,Pirates,Braves,8400,10.5
+OF,Jose Tabata,Pirates,Braves,5100,4.8
+3B,Pedro Ciriaco,Royals,White Sox,5000,3.7
+2B,Pedro Ciriaco,Royals,White Sox,5000,3.7
+3B,Josh Harrison,Pirates,Braves,7450,12.4
+OF,Josh Harrison,Pirates,Braves,7450,12.4
+P,Tony Watson,Pirates,Braves,7500,5.9
+SS,Chase d'Arnaud,Pirates,Braves,5000,1.4
+C,Eric Fryer,Twins,Tigers,8450,5.6
+2B,Nick Punto,Athletics,Rangers,5450,6.2
+SS,Nick Punto,Athletics,Rangers,5450,6.2
+C,Gerald Laird,Braves,Pirates,5000,5.0
+OF,Allen Craig,Red Sox,Rays,6200,8.1
+1B,Allen Craig,Red Sox,Rays,6200,8.1
+P,Maikel Cleto,White Sox,Royals,7500,2.8
+OF,Andrew Brown,Mets,Nationals,5450,6.5
+P,Aaron Harang,Braves,Pirates,14450,20.5
+SS,Jason Bartlett,Twins,Tigers,5000,5.7
+P,Heath Bell,Yankees,Orioles,7500,1.5
+P,Tim Stauffer,Padres,Giants,7500,6.5
+OF,Cameron Maybin,Padres,Giants,6150,5.7
+3B,Chase Headley,Yankees,Orioles,8800,10.1
+C,Nick Hundley,Orioles,Yankees,5300,6.0
+OF,Will Venable,Padres,Giants,7150,6.5
+1B,Kyle Blanks,Athletics,Rangers,6450,8.3
+OF,Kyle Blanks,Athletics,Rangers,6450,8.3
+SS,Everth Cabrera,Padres,Giants,7800,8.0
+P,Luke Gregerson,Athletics,Rangers,7500,4.5
+P,Ernesto Frieri,Pirates,Braves,7500,2.4
+P,Cory Luebke,Padres,Giants,7500,0.0
+P,Evan Scribner,Athletics,Rangers,7500,3.7
+2B,Logan Forsythe,Rays,Red Sox,6350,6.5
+3B,Logan Forsythe,Rays,Red Sox,6350,6.5
+OF,Blake Tekotte,White Sox,Royals,5100,3.8
+OF,Carlos Beltran,Yankees,Orioles,7750,10.8
+P,Ryan Vogelsong,Giants,Padres,12600,18.9
+P,Jeremy Affeldt,Giants,Padres,7500,3.5
+P,Javier Lopez,Giants,Padres,7500,1.6
+P,Santiago Casilla,Giants,Padres,7500,4.7
+3B,Jeff Keppinger,White Sox,Royals,5000,0.0
+P,Matt Cain,Giants,Padres,14050,17.3
+C,Chris Stewart,Pirates,Braves,5000,6.2
+P,Tim Lincecum,Giants,Padres,10750,15.9
+OF,Nate Schierholtz,Nationals,Mets,5800,6.1
+P,Sergio Romo,Giants,Padres,7500,4.4
+3B,Pablo Sandoval,Giants,Padres,7350,11.0
+3B,Conor Gillaspie,White Sox,Royals,7000,10.7
+C,Buster Posey,Giants,Padres,9600,13.4
+1B,Buster Posey,Giants,Padres,9600,13.4
+P,Madison Bumgarner,Giants,Padres,20900,31.1
+1B,Brandon Belt,Giants,Padres,6800,10.7
+SS,Brandon Crawford,Giants,Padres,6600,9.9
+C,Hector Sanchez,Giants,Padres,5600,5.2
+OF,Jayson Werth,Nationals,Mets,10250,14.6
+OF,Jonny Gomes,Athletics,Rangers,5750,7.0
+1B,Adam LaRoche,Nationals,Mets,9100,14.7
+OF,Michael Morse,Giants,Padres,7400,11.1
+1B,Michael Morse,Giants,Padres,7400,11.1
+3B,Ryan Zimmerman,Nationals,Mets,10300,13.3
+OF,Ryan Zimmerman,Nationals,Mets,10300,13.3
+P,Tyler Clippard,Nationals,Mets,7500,5.6
+P,John Lannan,Mets,Nationals,7500,-0.4
+P,Ross Detwiler,Nationals,Mets,7500,3.1
+P,Jordan Zimmermann,Nationals,Mets,18800,27.0
+P,Craig Stammen,Nationals,Mets,7500,5.3
+P,Stephen Strasburg,Nationals,Mets,20900,30.1
+SS,Ian Desmond,Nationals,Mets,10250,13.1
+P,Drew Storen,Nationals,Mets,7500,3.8
+C,Wilson Ramos,Nationals,Mets,8950,10.6
+2B,Danny Espinosa,Nationals,Mets,6450,7.2
+SS,Danny Espinosa,Nationals,Mets,6450,7.2
+P,Ryan Mattheus,Nationals,Mets,5000,4.0
+C,Ryan Lavarnway,Red Sox,Rays,5000,-1.0
+1B,Ryan Lavarnway,Red Sox,Rays,5000,-1.0
+C,Anthony Recker,Mets,Nationals,7150,8.7
+SS,Andy Parrino,Athletics,Rangers,5000,3.9
+2B,Andy Parrino,Athletics,Rangers,5000,3.9
+P,Eric Surkamp,White Sox,Royals,5100,2.3
+P,Neil Wagner,Rays,Red Sox,7500,0.4
+OF,Leonys Martin,Rangers,Athletics,7200,9.6
+P,Tommy Milone,Twins,Tigers,8700,13.4
+P,Josh Stinson,Orioles,Yankees,7500,0.8
+1B,Josh Satin,Mets,Nationals,5000,2.6
+OF,Justin Maxwell,Royals,White Sox,5000,2.8
+SS,Eduardo Escobar,Twins,Tigers,6800,8.2
+OF,Michael Taylor,White Sox,Royals,5000,5.9
+P,Liam Hendriks,Royals,White Sox,8100,8.5
+OF,Antoan Richardson,Yankees,Orioles,5000,5.3
+OF,Chris Parmelee,Twins,Tigers,6150,7.7
+1B,Chris Parmelee,Twins,Tigers,6150,7.7
+SS,Pedro Florimon,Nationals,Mets,5000,2.8
+P,Jeff Locke,Pirates,Braves,13900,18.5
+2B,Steve Lombardozzi,Orioles,Yankees,5850,5.9
+OF,Steve Lombardozzi,Orioles,Yankees,5850,5.9
+OF,Corey Brown,Red Sox,Rays,5000,-0.3
+P,Drew Pomeranz,Athletics,Rangers,10750,15.8
+P,Dellin Betances,Yankees,Orioles,7500,8.7
+2B,Tommy Field,Pirates,Braves,5000,0.0
+SS,Tommy Field,Pirates,Braves,5000,0.0
+C,Austin Romine,Yankees,Orioles,5000,0.2
+P,Matt Moore,Rays,Red Sox,9200,12.0
+P,Zach Putnam,White Sox,Royals,7500,5.2
+P,Xavier Cedeno,Nationals,Mets,7500,3.7
+1B,Brandon Moss,Athletics,Rangers,9450,12.8
+OF,Brandon Moss,Athletics,Rangers,9450,12.8
+C,Erik Kratz,Royals,White Sox,6000,6.0
+C,Steve Clevenger,Orioles,Yankees,5000,6.1
+P,Jarrod Parker,Athletics,Rangers,7500,0.0
+P,Kelvin Herrera,Royals,White Sox,7500,4.3
+OF,Lorenzo Cain,Royals,White Sox,7800,10.8
+2B,Tyler Pastornicky,Braves,Pirates,5000,2.8
+SS,Tyler Pastornicky,Braves,Pirates,5000,2.8
+OF,David Lough,Orioles,Yankees,5400,4.9
+P,Jenrry Mejia,Mets,Nationals,7500,5.8
+C,Bryan Anderson,Athletics,Rangers,5000,-1.0
+P,Sean Doolittle,Athletics,Rangers,7500,6.0
+P,Chris Archer,Rays,Red Sox,14850,22.5
+OF,Bryce Harper,Nationals,Mets,8500,10.3
+P,Donnie Veal,White Sox,Royals,7500,1.0
+C,Derek Norris,Athletics,Rangers,7050,10.2
+P,Martin Perez,Rangers,Athletics,12350,21.8
+OF,Kevin Frandsen,Nationals,Mets,5000,3.8
+2B,Kevin Frandsen,Nationals,Mets,5000,3.8
+P,Wei-Yin Chen,Orioles,Yankees,13750,22.0
+OF,Nori Aoki,Royals,White Sox,8550,10.6
+P,Yu Darvish,Rangers,Athletics,21250,33.2
+C,Travis d'Arnaud,Mets,Nationals,6150,10.4
+C,Yasmani Grandal,Padres,Giants,7950,9.1
+2B,Jonathan Schoop,Orioles,Yankees,5250,7.4
+3B,Jonathan Schoop,Orioles,Yankees,5250,7.4
+3B,Will Middlebrooks,Red Sox,Rays,5300,5.7
+3B,Nick Castellanos,Tigers,Twins,5800,9.6
+OF,Nick Castellanos,Tigers,Twins,5800,9.6
+2B,Jedd Gyorko,Padres,Giants,7250,9.0
+3B,Jedd Gyorko,Padres,Giants,7250,9.0
+3B,Anthony Rendon,Nationals,Mets,10400,15.5
+2B,Anthony Rendon,Nationals,Mets,10400,15.5
+3B,Manny Machado,Orioles,Yankees,8200,11.4
+SS,Nick Franklin,Rays,Red Sox,6000,6.5
+2B,Nick Franklin,Rays,Red Sox,6000,6.5
+SS,Tim Beckham,Rays,Red Sox,5000,0.0
+2B,Jurickson Profar,Rangers,Athletics,5000,0.0
+SS,Jurickson Profar,Rangers,Athletics,5000,0.0
+OF,Wil Myers,Rays,Red Sox,7100,9.5
+OF,Starling Marte,Pirates,Braves,9700,13.4
+P,Gerrit Cole,Pirates,Braves,16850,24.9
+OF,Gary Brown,Giants,Padres,5000,-0.4
+P,Zack Wheeler,Mets,Nationals,15850,22.5
+OF,Yoenis Cespedes,Red Sox,Rays,9150,13.7
+OF,Gregor Blanco,Giants,Padres,6850,8.1
+P,Ronald Belisario,White Sox,Royals,7500,2.7
+P,Casey Kelly,Padres,Giants,7500,0.0
+P,Yusmeiro Petit,Giants,Padres,10700,13.6
+P,Cesar Cabral,Yankees,Orioles,7500,-2.2
+P,Robbie Ross Jr.,Rangers,Athletics,7500,4.1
+P,Drew Smyly,Rays,Red Sox,14650,21.9
+P,Nate Jones,White Sox,Royals,7500,-8.5
+2B,Ryan Flaherty,Orioles,Yankees,6500,7.4
+3B,Ryan Flaherty,Orioles,Yankees,6500,7.4
+C,Stephen Vogt,Athletics,Rangers,6600,9.6
+1B,Stephen Vogt,Athletics,Rangers,6600,9.6
+1B,Travis Ishikawa,Giants,Padres,5000,5.3
+P,David Phelps,Yankees,Orioles,8250,10.6
+P,Dan Otero,Athletics,Rangers,7500,4.3
+OF,Kirk Nieuwenhuis,Mets,Nationals,6600,7.3
+P,Joe Wieland,Padres,Giants,7500,5.0
+P,Pedro Figueroa,Rangers,Athletics,7500,2.9
+1B,Zach Lutz,Mets,Nationals,5150,5.1
+3B,Zach Lutz,Mets,Nationals,5150,5.1
+2B,Joaquin Arias,Giants,Padres,5350,3.2
+3B,Joaquin Arias,Giants,Padres,5350,3.2
+P,Luke Putkonen,Tigers,Twins,7500,-11.0
+1B,Tyler Moore,Nationals,Mets,5450,5.4
+OF,Tyler Moore,Nationals,Mets,5450,5.4
+P,Carlos Torres,Mets,Nationals,6850,5.9
+P,Miles Mikolas,Rangers,Athletics,9850,9.7
+2B,Brian Dozier,Twins,Tigers,9850,14.4
+SS,Brian Dozier,Twins,Tigers,9850,14.4
+P,Jose Quintana,White Sox,Royals,16150,23.7
+OF,Daniel Nava,Red Sox,Rays,7500,8.9
+C,Sandy Leon,Nationals,Mets,5000,4.8
+P,Nick Vincent,Padres,Giants,7500,3.9
+OF,Quintin Berry,Orioles,Yankees,5000,1.8
+SS,Jordy Mercer,Pirates,Braves,6100,9.1
+P,Miguel Gonzalez,Orioles,Yankees,13150,19.6
+SS,Andrelton Simmons,Braves,Pirates,6000,7.7
+P,Stephen Pryor,Twins,Tigers,7500,5.0
+OF,Alex Castellanos,Padres,Giants,5250,4.4
+P,Steve Johnson,Orioles,Yankees,6050,5.1
+P,Shawn Tolleson,Rangers,Athletics,7500,4.7
+C,Bryan Holaday,Tigers,Twins,5350,4.8
+P,Tanner Scheppers,Rangers,Athletics,5000,0.9
+OF,Jordan Danks,White Sox,Royals,5650,5.8
+P,Joe Kelly,Red Sox,Rays,12200,16.1
+2B,Hernan Perez,Tigers,Twins,5000,2.2
+P,Brad Boxberger,Rays,Red Sox,7500,7.1
+P,Francisley Bueno,Royals,White Sox,7500,2.3
+P,Adam Warren,Yankees,Orioles,7500,4.5
+P,Casey Fien,Twins,Tigers,7500,3.2
+P,Luis Avilan,Braves,Pirates,7500,1.6
+P,Josh Wall,Pirates,Braves,7500,-11.5
+P,Jeff Beliveau,Rays,Red Sox,7500,4.1
+P,Matt Harvey,Mets,Nationals,7500,0.0
+OF,Moises Sierra,White Sox,Royals,5000,3.7
+P,Evan Reed,Tigers,Twins,7500,2.4
+2B,Tony Abreu,Giants,Padres,5300,-1.3
+3B,Tony Abreu,Giants,Padres,5300,-1.3
+2B,Ryan Jackson,Padres,Giants,5000,0.0
+SS,Ryan Jackson,Padres,Giants,5000,0.0
+P,Justin Wilson,Pirates,Braves,7500,3.3
+P,Hector Ambriz,Padres,Giants,7500,2.0
+OF,Francisco Peguero,Orioles,Yankees,5000,0.0
+OF,Avisail Garcia,White Sox,Royals,8450,13.1
+P,Jean Machi,Giants,Padres,7500,4.4
+OF,Eury Perez,Yankees,Orioles,5000,0.0
+3B,Brock Holt,Red Sox,Rays,7800,11.8
+OF,Brock Holt,Red Sox,Rays,7800,11.8
+P,Jeurys Familia,Mets,Nationals,7500,4.1
+OF,Adam Eaton,White Sox,Royals,8250,12.1
+C,Ali Solis,Rays,Red Sox,5000,-0.1
+C,Guillermo Quiroz,Giants,Padres,5000,-1.5
+OF,Chris Herrmann,Twins,Tigers,5000,2.8
+P,Jake Odorizzi,Rays,Red Sox,14350,22.0
+P,Bruce Rondon,Tigers,Twins,7500,0.0
+P,Kyle Gibson,Twins,Tigers,10400,15.4
+P,Allen Webster,Red Sox,Rays,8850,10.9
+SS,Xander Bogaerts,Red Sox,Rays,7000,9.3
+3B,Xander Bogaerts,Red Sox,Rays,7000,9.3
+OF,Aaron Hicks,Twins,Tigers,6000,7.2
+P,Kevin Gausman,Orioles,Yankees,13800,19.7
+OF,Jackie Bradley Jr.,Red Sox,Rays,5000,6.3
+3B,Matt Davidson,White Sox,Royals,6350,8.3
+OF,Oswaldo Arcia,Twins,Tigers,8450,12.1
+P,Phil Irwin,Rangers,Athletics,8650,0.0
+2B,Leury Garcia,White Sox,Royals,5000,2.8
+SS,Leury Garcia,White Sox,Royals,5000,2.8
+P,Nick Tepesch,Rangers,Athletics,9650,10.4
+P,Joseph Ortiz,Rangers,Athletics,7500,0.0
+P,Scott Rice,Mets,Nationals,7500,1.1
+1B,Nate Freiman,Athletics,Rangers,8450,8.4
+C,Evan Gattis,Braves,Pirates,8050,11.8
+OF,Evan Gattis,Braves,Pirates,8050,11.8
+P,Alex Wilson,Red Sox,Rays,5000,5.8
+P,Bobby LaFromboise,Pirates,Braves,7500,4.0
+P,Justin Miller,Tigers,Twins,7500,3.1
+P,Steven Wright,Red Sox,Rays,8700,13.0
+1B,Shane Peterson,Athletics,Rangers,5350,7.0
+OF,Juan Lagares,Mets,Nationals,7050,10.0
+P,Robbie Erlin,Padres,Giants,10850,15.2
+P,Caleb Thielbar,Twins,Tigers,7500,2.7
+P,Neal Cotts,Rangers,Athletics,7500,3.2
+OF,Chris Colabello,Twins,Tigers,6550,9.9
+1B,Chris Colabello,Twins,Tigers,6550,9.9
+OF,Jeff Kobernus,Nationals,Mets,5250,4.0
+P,Nathan Karns,Rays,Red Sox,13050,27.0
+P,Alex Colome,Rays,Red Sox,8150,9.5
+P,Alex Wood,Braves,Pirates,16550,22.3
+P,Erik Davis,Nationals,Mets,7500,0.0
+P,Ian Krol,Tigers,Twins,7500,1.6
+OF,Juan Perez,Giants,Padres,5000,2.8
+OF,Jaff Decker,Pirates,Braves,5000,-1.0
+P,Brandon Cumpton,Pirates,Braves,9350,9.9
+OF,Zoilo Almonte,Yankees,Orioles,5000,3.0
+C,Tony Sanchez,Pirates,Braves,6200,6.7
+OF,Engel Beltre,Rangers,Athletics,5000,0.0
+P,Taylor Jordan,Nationals,Mets,7050,7.2
+P,Gonzalez Germen,Mets,Nationals,7500,3.6
+OF,Joey Terdoslavich,Braves,Pirates,5000,4.3
+C,Josh Phegley,White Sox,Royals,5000,0.8
+P,Michael Tonkin,Twins,Tigers,7500,1.6
+P,Brandon Workman,Red Sox,Rays,9950,10.8
+P,Sonny Gray,Athletics,Rangers,17150,25.6
+2B,Doug Bernier,Twins,Tigers,5000,3.0
+P,Andre Rienzo,White Sox,Royals,7500,6.3
+SS,Wilmer Flores,Mets,Nationals,8000,8.2
+2B,Wilmer Flores,Mets,Nationals,8000,8.2
+P,Tanner Roark,Nationals,Mets,16100,24.4
+OF,Andrew Lambo,Pirates,Braves,5000,3.6
+2B,Phil Gosselin,Braves,Pirates,5000,5.5
+3B,Phil Gosselin,Braves,Pirates,5000,5.5
+P,Jake Petricka,White Sox,Royals,7500,3.4
+P,Kris Johnson,Twins,Tigers,8150,9.7
+OF,Matt den Dekker,Mets,Nationals,6300,7.1
+OF,Abraham Almonte,Padres,Giants,5600,7.4
+C,Josmil Pinto,Twins,Tigers,6000,9.6
+P,Stolmy Pimentel,Pirates,Braves,7500,6.2
+C,John Ryan Murphy,Yankees,Orioles,5000,5.6
+OF,Michael Choice,Rangers,Athletics,5750,6.8
+OF,Jim Adduci,Rangers,Athletics,5000,4.9
+P,Daniel Webb,White Sox,Royals,7500,4.4
+P,Erik Johnson,White Sox,Royals,7000,8.0
+3B,Marcus Semien,White Sox,Royals,7200,10.0
+2B,Marcus Semien,White Sox,Royals,7200,10.0
+2B,Ehire Adrianza,Giants,Padres,5200,3.4
+SS,Ehire Adrianza,Giants,Padres,5200,3.4
+P,David Hale,Braves,Pirates,8650,4.5
+C,Juan Centeno,Mets,Nationals,5000,4.1
+C,Christian Bethancourt,Braves,Pirates,5000,6.2
+1B,Tommy Medica,Padres,Giants,6000,7.2
+OF,Tommy Medica,Padres,Giants,6000,7.2
+OF,Nick Buss,Athletics,Rangers,5000,0.0
+P,Yordano Ventura,Royals,White Sox,16600,24.0
+OF,Freddy Guzman,Rays,Red Sox,5700,15.0
+OF,Kevin Kiermaier,Rays,Red Sox,5100,9.5
+1B,Jose Abreu,White Sox,Royals,11200,17.2
+2B,Tommy La Stella,Braves,Pirates,5350,8.0
+P,Anthony Ranaudo,Red Sox,Rays,8750,12.1
+3B,Garin Cecchini,Red Sox,Rays,5000,10.6
+OF,Mookie Betts,Red Sox,Rays,6300,13.0
+1B,Kennys Vargas,Twins,Tigers,6500,13.8
+P,Rafael Montero,Mets,Nationals,9350,13.2
+OF,Gregory Polanco,Pirates,Braves,6900,10.3
+2B,Jace Peterson,Padres,Giants,5000,0.8
+3B,Jace Peterson,Padres,Giants,5000,0.8
+OF,Rymer Liriano,Padres,Giants,5000,6.3
+2B,Rougned Odor,Rangers,Athletics,5550,9.3
+C,Andrew Susac,Giants,Padres,5250,10.2
+P,Masahiro Tanaka,Yankees,Orioles,19400,38.0
+C,Adrian Nieto,White Sox,Royals,5000,4.7
+OF,Tyler Collins,Tigers,Twins,5000,4.3
+P,Aaron Barrett,Nationals,Mets,7500,4.2
+SS,Dean Anna,Pirates,Braves,5000,4.4
+2B,Dean Anna,Pirates,Braves,5000,4.4
+P,Ryan Buchter,Braves,Pirates,7500,15.0
+3B,Yangervis Solarte,Padres,Giants,6500,10.2
+2B,Yangervis Solarte,Padres,Giants,6500,10.2
+3B,Michael Almanzar,Orioles,Yankees,5000,0.0
+P,Gus Schlosser,Braves,Pirates,7500,1.1
+P,Ian Thomas,Braves,Pirates,7500,3.1
+P,Donn Roach,Padres,Giants,8350,3.1
+P,Nick Martinez,Rangers,Athletics,9950,8.8
+2B,Vince Belnome,Rays,Red Sox,5000,6.5
+P,Marcus Walden,Athletics,Rangers,7500,0.0
+P,Aaron Brooks,Royals,White Sox,8350,-21.0
+P,Michael Mariot,Royals,White Sox,7500,3.0
+P,Shane Greene,Yankees,Orioles,13600,20.9
+OF,Steven Souza Jr.,Nationals,Mets,5000,1.4
+P,Blake Treinen,Nationals,Mets,10400,10.9
+P,Justin Marks,Rangers,Athletics,7500,-4.0
+P,Aaron Poreda,Rangers,Athletics,7500,2.6
+2B,Luis Sardinas,Rangers,Athletics,5000,6.0
+SS,Luis Sardinas,Rangers,Athletics,5000,6.0
+OF,Daniel Robertson,Rangers,Athletics,5000,7.0
+P,Scott Carroll,White Sox,Royals,10550,8.1
+P,Casey Sadler,Pirates,Braves,7500,1.2
+P,Robbie Ray,Tigers,Twins,8150,4.2
+P,Logan Darnell,Twins,Tigers,8150,5.9
+OF,Danny Santana,Twins,Tigers,8950,14.3
+SS,Danny Santana,Twins,Tigers,8950,14.3
+P,Arnold Leon,Athletics,Rangers,8100,0.0
+C,Caleb Joseph,Orioles,Yankees,5000,7.3
+1B,Eric Campbell,Mets,Nationals,5000,5.8
+3B,Eric Campbell,Mets,Nationals,5000,5.8
+P,Jacob deGrom,Mets,Nationals,19750,28.6
+P,Chase Whitley,Yankees,Orioles,8450,7.6
+2B,Cole Figueroa,Rays,Red Sox,5000,5.1
+C,Francisco Pena,Royals,White Sox,5000,0.0
+OF,Alex Hassan,Red Sox,Rays,5000,2.7
+P,Jesse Hahn,Padres,Giants,11650,22.1
+P,Jason Lane,Padres,Giants,9950,13.0
+SS,Eugenio Suarez,Tigers,Twins,5000,8.0
+P,Yohan Pino,Twins,Tigers,11150,14.0
+1B,Jake Goebbert,Padres,Giants,5000,5.7
+2B,Joe Panik,Giants,Padres,5000,8.5
+SS,Joe Panik,Giants,Padres,5000,8.5
+P,Odrisamer Despaigne,Padres,Giants,12000,18.4
+1B,Adam Duvall,Giants,Padres,5000,4.7
+SS,Jorge Polanco,Twins,Tigers,6200,11.2
+2B,Christian Colon,Royals,White Sox,5000,7.2
+3B,Christian Colon,Royals,White Sox,5000,7.2
+3B,Zelous Wheeler,Yankees,Orioles,5000,3.8
+OF,Zelous Wheeler,Yankees,Orioles,5000,3.8
+SS,Jake Smolinski,Rangers,Athletics,7100,13.4
+C,Christian Vazquez,Red Sox,Rays,5000,6.2
+2B,Carlos Sanchez,White Sox,Royals,5000,5.0
+SS,Carlos Sanchez,White Sox,Royals,5000,5.0
+C,Curt Casali,Rays,Red Sox,5500,4.3
+P,Drew VerHagen,Tigers,Twins,8150,5.0
+OF,Billy Burns,Athletics,Rangers,5350,2.7
+SS,Matt Duffy,Giants,Padres,5000,3.0
+2B,Matt Duffy,Giants,Padres,5000,3.0
+OF,Jarrett Parker,Giants,Padres,5000,0.0
+C,Daniel Butler,Red Sox,Rays,5000,3.6
+P,Trevor May,Twins,Tigers,8150,8.0
+OF,Michael A. Taylor,Nationals,Mets,5500,7.0
+P,Melvin Mercedes,Tigers,Twins,5000,12.0
+P,Kyle Lobstein,Tigers,Twins,8750,17.3
+3B,Carlos Rivero,Red Sox,Rays,8700,19.0
+C,Tomas Telis,Rangers,Athletics,5000,7.1
+P,Chris Bassitt,White Sox,Royals,8750,12.2
+2B,Dilson Herrera,Mets,Nationals,5250,10.8
+SS,Dilson Herrera,Mets,Nationals,5250,10.8
+1B,Ryan Rua,Rangers,Athletics,6000,12.0
+OF,Ryan Rua,Rangers,Athletics,6000,12.0
+1B,Andy Wilkins,White Sox,Royals,5000,1.3
+3B,Andy Wilkins,White Sox,Royals,5000,1.3
+OF,Terrance Gore,Royals,White Sox,5000,4.9
+OF,Lane Adams,Royals,White Sox,5000,0.8
+3B,Chris Dominguez,Giants,Padres,5000,4.8
+OF,Chris Dominguez,Giants,Padres,5000,4.8
+OF,Steven Moya,Tigers,Twins,5000,2.3
+C,James McCann,Tigers,Twins,5000,2.3
+P,Lisalverto Bonilla,Rangers,Athletics,9300,19.2
+OF,Slade Heathcott,Yankees,Orioles,5000,0.0
+2B,Guilder Rodriguez,Rangers,Athletics,5000,2.9
+SS,Guilder Rodriguez,Rangers,Athletics,5000,2.9
+SS,Jose Pirela,Yankees,Orioles,6100,11.7
+2B,Jose Pirela,Yankees,Orioles,6100,11.7
+OF,Rusney Castillo,Red Sox,Rays,5000,4.3
+1B,Christian Walker,Orioles,Yankees,5000,7.4
